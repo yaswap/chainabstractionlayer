@@ -15,6 +15,7 @@ import * as ethereum from './ethereum'
 import * as near from './near'
 import * as terra from './terra'
 import * as solana from './solana'
+import * as yacoin from './yacoin'
 
 interface IClient {
   /**
@@ -53,5 +54,6 @@ export {
   ethereum,
   near,
   terra,
-  solana
+  solana,
+  yacoin
 }
