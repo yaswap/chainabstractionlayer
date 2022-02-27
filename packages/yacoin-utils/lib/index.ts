@@ -1,13 +1,13 @@
 import { base58, padHexStart } from '@liquality/crypto'
-import { BitcoinNetworks, BitcoinNetwork } from '@liquality/bitcoin-networks'
-import { Address, Transaction, bitcoin as bT, TxStatus } from '@liquality/types'
+import { YacoinNetworks, YacoinNetwork } from '@liquality/yacoin-networks'
+import { Address, Transaction, yacoin as bT, TxStatus } from '@liquality/types'
 import { addressToString } from '@liquality/utils'
 import { InvalidAddressError } from '@liquality/errors'
 
 import { findKey } from 'lodash'
 import BigNumber from 'bignumber.js'
-import * as bitcoin from 'bitcoinjs-lib'
-import * as classify from 'bitcoinjs-lib/src/classify'
+import * as yacoin from 'yacoinjs-lib'
+import * as classify from 'yacoinjs-lib/src/classify'
 import * as varuint from 'bip174/src/lib/converter/varint'
 import coinselect from 'coinselect'
 import coinselectAccumulative from 'coinselect/accumulative'
@@ -34,24 +34,21 @@ function compressPubKey(pubKey: string) {
 
 /**
  * Get a network object from an address
- * @param {string} address The bitcoin address
+ * @param {string} address The yacoin address
  * @return {Network}
  */
 function getAddressNetwork(address: string) {
-  // TODO: can this be simplified using just bitcoinjs-lib??
+  // TODO: can this be simplified using just yacoinjs-lib??
   let networkKey
-  // bech32
-  networkKey = findKey(BitcoinNetworks, (network) => address.startsWith(network.bech32))
-  // base58
-  if (!networkKey) {
-    const prefix = base58.decode(address).toString('hex').substring(0, 2)
-    networkKey = findKey(BitcoinNetworks, (network) => {
-      const pubKeyHashPrefix = padHexStart(network.pubKeyHash.toString(16), 1)
-      const scriptHashPrefix = padHexStart(network.scriptHash.toString(16), 1)
-      return [pubKeyHashPrefix, scriptHashPrefix].includes(prefix)
-    })
-  }
-  return (BitcoinNetworks as { [key: string]: BitcoinNetwork })[networkKey]
+
+  const prefix = base58.decode(address).toString('hex').substring(0, 2)
+  networkKey = findKey(YacoinNetworks, (network) => {
+    const pubKeyHashPrefix = padHexStart(network.pubKeyHash.toString(16), 1)
+    const scriptHashPrefix = padHexStart(network.scriptHash.toString(16), 1)
+    return [pubKeyHashPrefix, scriptHashPrefix].includes(prefix)
+  })
+
+  return (YacoinNetworks as { [key: string]: YacoinNetwork })[networkKey]
 }
 
 type CoinSelectTarget = {
@@ -98,18 +95,17 @@ const OUTPUT_TYPES_MAP = {
   [classify.types.P2WSH]: 'witness_v0_scripthash'
 }
 
-function decodeRawTransaction(hex: string, network: BitcoinNetwork): bT.Transaction {
-  const bjsTx = bitcoin.Transaction.fromHex(hex)
+function decodeRawTransaction(hex: string, network: YacoinNetwork): bT.Transaction {
+  const bjsTx = yacoin.Transaction.fromHex(hex)
 
   const vin = bjsTx.ins.map((input) => {
     return <bT.Input>{
       txid: Buffer.from(input.hash).reverse().toString('hex'),
       vout: input.index,
       scriptSig: {
-        asm: bitcoin.script.toASM(input.script),
+        asm: yacoin.script.toASM(input.script),
         hex: input.script.toString('hex')
       },
-      txinwitness: input.witness.map((w) => w.toString('hex')),
       sequence: input.sequence
     }
   })
@@ -118,10 +114,10 @@ function decodeRawTransaction(hex: string, network: BitcoinNetwork): bT.Transact
     const type = classify.output(output.script)
 
     const vout: bT.Output = {
-      value: output.value / 1e8,
+      value: output.value / 1e6,
       n,
       scriptPubKey: {
-        asm: bitcoin.script.toASM(output.script),
+        asm: yacoin.script.toASM(output.script),
         hex: output.script.toString('hex'),
         reqSigs: 1, // TODO: not sure how to derive this
         type: OUTPUT_TYPES_MAP[type] || type,
@@ -130,7 +126,7 @@ function decodeRawTransaction(hex: string, network: BitcoinNetwork): bT.Transact
     }
 
     try {
-      const address = bitcoin.address.fromOutputScript(output.script, network)
+      const address = yacoin.address.fromOutputScript(output.script, network)
       vout.scriptPubKey.addresses.push(address)
     } catch (e) {
       /** If output script is not parasable, we just skip it */
@@ -143,6 +139,7 @@ function decodeRawTransaction(hex: string, network: BitcoinNetwork): bT.Transact
     txid: bjsTx.getHash(false).reverse().toString('hex'),
     hash: bjsTx.getHash(true).reverse().toString('hex'),
     version: bjsTx.version,
+    time: bjsTx.time,
     locktime: bjsTx.locktime,
     size: bjsTx.byteLength(),
     vsize: bjsTx.virtualSize(),
@@ -186,57 +183,20 @@ function normalizeTransactionObject(
   return result
 }
 
-// TODO: This is copy pasta because it's not exported from bitcoinjs-lib
-// https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/csv.spec.ts#L477
-function witnessStackToScriptWitness(witness: Buffer[]): Buffer {
-  let buffer = Buffer.allocUnsafe(0)
-
-  function writeSlice(slice: Buffer): void {
-    buffer = Buffer.concat([buffer, Buffer.from(slice)])
-  }
-
-  function writeVarInt(i: number): void {
-    const currentLen = buffer.length
-    const varintLen = varuint.encodingLength(i)
-
-    buffer = Buffer.concat([buffer, Buffer.allocUnsafe(varintLen)])
-    varuint.encode(i, buffer, currentLen)
-  }
-
-  function writeVarSlice(slice: Buffer): void {
-    writeVarInt(slice.length)
-    writeSlice(slice)
-  }
-
-  function writeVector(vector: Buffer[]): void {
-    writeVarInt(vector.length)
-    vector.forEach(writeVarSlice)
-  }
-
-  writeVector(witness)
-
-  return buffer
-}
-
-function getPubKeyHash(address: string, network: BitcoinNetwork) {
-  const outputScript = bitcoin.address.toOutputScript(address, network)
+function getPubKeyHash(address: string, network: YacoinNetwork) {
+  const outputScript = yacoin.address.toOutputScript(address, network)
   const type = classify.output(outputScript)
-  if (![classify.types.P2PKH, classify.types.P2WPKH].includes(type)) {
+  if (type !== classify.types.P2PKH) {
     throw new Error(
-      `Bitcoin swap doesn't support the address ${address} type of ${type}. Not possible to derive public key hash.`
+      `Yacoin swap doesn't support the address ${address} type of ${type}. Not possible to derive public key hash.`
     )
   }
 
-  try {
-    const bech32 = bitcoin.address.fromBech32(address)
-    return bech32.data
-  } catch (e) {
-    const base58 = bitcoin.address.fromBase58Check(address)
-    return base58.hash
-  }
+  const base58 = yacoin.address.fromBase58Check(address)
+  return base58.hash
 }
 
-function validateAddress(_address: Address | string, network: BitcoinNetwork) {
+function validateAddress(_address: Address | string, network: YacoinNetwork) {
   const address = addressToString(_address)
 
   if (typeof address !== 'string') {
@@ -263,7 +223,6 @@ export {
   selectCoins,
   decodeRawTransaction,
   normalizeTransactionObject,
-  witnessStackToScriptWitness,
   AddressTypes,
   getPubKeyHash,
   validateAddress
