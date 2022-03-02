@@ -8,7 +8,6 @@ import { findKey } from 'lodash'
 import BigNumber from 'bignumber.js'
 import * as yacoin from 'yacoinjs-lib'
 import * as classify from 'yacoinjs-lib/src/classify'
-import * as varuint from 'bip174/src/lib/converter/varint'
 import coinselect from 'coinselect'
 import coinselectAccumulative from 'coinselect/accumulative'
 
@@ -136,8 +135,8 @@ function decodeRawTransaction(hex: string, network: YacoinNetwork): bT.Transacti
   })
 
   return {
-    txid: bjsTx.getHash(false).reverse().toString('hex'),
-    hash: bjsTx.getHash(true).reverse().toString('hex'),
+    txid: bjsTx.getHash().reverse().toString('hex'),
+    hash: bjsTx.getHash().reverse().toString('hex'),
     version: bjsTx.version,
     time: bjsTx.time,
     locktime: bjsTx.locktime,
