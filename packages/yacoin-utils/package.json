@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/bitcoin-utils",
+  "name": "@liquality/yacoin-utils",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
