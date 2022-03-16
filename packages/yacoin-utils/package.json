@@ -1,6 +1,6 @@
 {
   "name": "@liquality/yacoin-utils",
-  "version": "1.13.7",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/yacoin-networks": "^1.13.7",
+    "@liquality/yacoin-networks": "^1.0.0",
     "@liquality/crypto": "^1.13.7",
     "@liquality/errors": "^1.13.7",
     "@liquality/types": "^1.13.7",

@@ -1,6 +1,6 @@
 {
   "name": "@liquality/yacoin-networks",
-  "version": "1.13.7",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
