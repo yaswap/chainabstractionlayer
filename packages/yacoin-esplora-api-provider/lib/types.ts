@@ -16,20 +16,11 @@ export type UTXO = {
 
 export type Address = {
   address: string
-  chain_stats: {
-    funded_txo_count: number
-    funded_txo_sum: number
-    spent_txo_count: number
-    spent_txo_sum: number
-    tx_count: number
-  }
-  mempool_stats: {
-    funded_txo_count: number
-    funded_txo_sum: number
-    spent_txo_count: number
-    spent_txo_sum: number
-    tx_count: number
-  }
+  funded_txo_count: number
+  funded_txo_sum: number
+  spent_txo_count: number
+  spent_txo_sum: number
+  tx_count: number
 }
 
 export type Vout = {
@@ -51,15 +42,11 @@ export type Vin = {
 }
 
 export type Transaction = {
-  txid: string
-  version: number
-  locktime: number
-  vin: Vin[]
-  vout: Vout[]
-  size: number
-  weight: number
+  hex: string
+  block_hash: string
+  confirmations: number
+  block_height: number
   fee: number
-  status: TxStatus
 }
 
 export type Block = {

@@ -2,7 +2,7 @@ import { NodeProvider } from '@liquality/node-provider'
 import { addressToString } from '@liquality/utils'
 import { decodeRawTransaction, normalizeTransactionObject } from '@liquality/yacoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
-import { ChainProvider, Address, bitcoin, BigNumber } from '@liquality/types'
+import { ChainProvider, Address, yacoin, BigNumber } from '@liquality/types'
 import * as esplora from './types'
 import { YacoinNetwork } from '@liquality/yacoin-networks'
 
@@ -63,7 +63,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
     return utxos.reduce((acc, utxo) => acc.plus(utxo.value), new BigNumber(0))
   }
 
-  async _getUnspentTransactions(address: string): Promise<bitcoin.UTXO[]> {
+  async _getUnspentTransactions(address: string): Promise<yacoin.UTXO[]> {
     const data: esplora.UTXO[] = await this.nodeGet(`/address/${address}/utxo`)
     return data.map((utxo) => ({
       ...utxo,
@@ -73,7 +73,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
     }))
   }
 
-  async getUnspentTransactions(_addresses: (Address | string)[]): Promise<bitcoin.UTXO[]> {
+  async getUnspentTransactions(_addresses: (Address | string)[]): Promise<yacoin.UTXO[]> {
     const addresses = _addresses.map(addressToString)
     const utxoSets = await Promise.all(addresses.map((addr) => this._getUnspentTransactions(addr)))
     const utxos = flatten(utxoSets)
@@ -82,7 +82,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
 
   async _getAddressTransactionCount(address: string) {
     const data: esplora.Address = await this.nodeGet(`/address/${address}`)
-    return data.chain_stats.tx_count + data.mempool_stats.tx_count
+    return data.tx_count
   }
 
   async getAddressTransactionCounts(_addresses: (Address | string)[]) {
@@ -115,23 +115,20 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
       throw e
     }
 
-    const currentHeight = await this.getBlockHeight()
-    return this.formatTransaction(data, currentHeight)
+    return this.formatTransaction(data)
   }
 
-  async formatTransaction(tx: esplora.Transaction, currentHeight: number) {
-    const hex = await this.getTransactionHex(tx.txid)
-    const confirmations = tx.status.confirmed ? currentHeight - tx.status.block_height + 1 : 0
-    const decodedTx = decodeRawTransaction(hex, this._network)
-    decodedTx.confirmations = confirmations
-    return normalizeTransactionObject(decodedTx, tx.fee, { hash: tx.status.block_hash, number: tx.status.block_height })
+  async formatTransaction(tx: esplora.Transaction) {
+    const decodedTx = decodeRawTransaction(tx.hex, this._network)
+    decodedTx.confirmations = tx.confirmations
+    return normalizeTransactionObject(decodedTx, tx.fee, { hash: tx.block_hash, number: tx.block_height })
   }
 
   async getBlockByHash(blockHash: string) {
     let data
 
     try {
-      data = await this.nodeGet(`/block/${blockHash}`)
+      data = await this.nodeGet(`/getblock?hash=${blockHash}`)
     } catch (e) {
       if (e.name === 'NodeError' && e.message.includes('Block not found')) {
         const { name, message, ...attrs } = e
@@ -164,7 +161,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async getBlockHash(blockNumber: number): Promise<string> {
-    return this.nodeGet(`/block-height/${blockNumber}`)
+    return this.nodeGet(`/getblockhash?index=${blockNumber}`)
   }
 
   async getBlockByNumber(blockNumber: number) {
@@ -172,7 +169,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async getBlockHeight(): Promise<number> {
-    const data = await this.nodeGet('/blocks/tip/height')
+    const data = await this.nodeGet('/getblockcount')
     return parseInt(data)
   }
 
