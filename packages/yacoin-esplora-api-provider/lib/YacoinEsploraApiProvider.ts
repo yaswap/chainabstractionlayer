@@ -24,7 +24,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   _usedAddressCache: { [index: string]: boolean }
 
   constructor(options: EsploraApiProviderOptions) {
-    const { url, network, numberOfBlockConfirmation = 1, defaultFeePerByte = 3 } = options
+    const { url, network, numberOfBlockConfirmation = 1, defaultFeePerByte = 0.00001 } = options
     super({
       baseURL: url,
       responseType: 'text',
@@ -38,21 +38,21 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async getFeePerByte(numberOfBlocks = this._numberOfBlockConfirmation) {
-    try {
-      const feeEstimates: esplora.FeeEstimates = await this.nodeGet('/fee-estimates')
-      const blockOptions = Object.keys(feeEstimates).map((block) => parseInt(block))
-      const closestBlockOption = blockOptions.reduce((prev, curr) => {
-        return Math.abs(prev - numberOfBlocks) < Math.abs(curr - numberOfBlocks) ? prev : curr
-      })
-      const rate = Math.round(feeEstimates[closestBlockOption])
-      return rate
-    } catch (e) {
+    // try {
+    //   const feeEstimates: esplora.FeeEstimates = await this.nodeGet('/fee-estimates')
+    //   const blockOptions = Object.keys(feeEstimates).map((block) => parseInt(block))
+    //   const closestBlockOption = blockOptions.reduce((prev, curr) => {
+    //     return Math.abs(prev - numberOfBlocks) < Math.abs(curr - numberOfBlocks) ? prev : curr
+    //   })
+    //   const rate = Math.round(feeEstimates[closestBlockOption])
+    //   return rate
+    // } catch (e) {
       return this._defaultFeePerByte
-    }
+    // }
   }
 
   async getMinRelayFee() {
-    return 1
+    return 0.00001 // min fee = 0.01/kb = 0.00001/bytes
   }
 
   async getBalance(_addresses: (string | Address)[]) {
