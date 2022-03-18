@@ -126,7 +126,6 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
 
   async getBlockByHash(blockHash: string) {
     let data
-    console.log("TACA ===> getBlockByHash, blockHash = %s", blockHash)
 
     try {
       data = await this.nodeGet(`/getblock?hash=${blockHash}`)
@@ -139,7 +138,6 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
       throw e
     }
 
-    console.log("TACA ===> getBlockByHash, data = %s", data)
     const {
       hash,
       height: number,
