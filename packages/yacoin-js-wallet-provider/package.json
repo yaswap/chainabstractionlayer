@@ -1,6 +1,6 @@
 {
-  "name": "@liquality/bitcoin-js-wallet-provider",
-  "version": "1.13.7",
+  "name": "@liquality/yacoin-js-wallet-provider",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -23,15 +23,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/bitcoin-networks": "^1.13.7",
-    "@liquality/bitcoin-utils": "^1.13.7",
-    "@liquality/bitcoin-wallet-provider": "^1.13.7",
+    "@liquality/yacoin-networks": "^1.0.0",
+    "@liquality/yacoin-utils": "^1.0.0",
+    "@liquality/yacoin-wallet-provider": "^1.0.0",
     "@liquality/types": "^1.13.7",
     "@liquality/utils": "^1.13.7",
     "@liquality/wallet-provider": "^1.13.7",
     "bip32": "^2.0.6",
     "bip39": "^3.0.2",
-    "bitcoinjs-lib": "^5.2.0",
+    "yacoinjs-lib": "file:/home/chaunguyen/project/yacoin/yacoinjs-lib",
     "bitcoinjs-message": "^2.1.0"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

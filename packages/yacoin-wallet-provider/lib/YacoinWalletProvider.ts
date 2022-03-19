@@ -3,13 +3,13 @@ import {
   normalizeTransactionObject,
   decodeRawTransaction,
   CoinSelectTarget
-} from '@liquality/bitcoin-utils'
-import { BitcoinNetwork } from '@liquality/bitcoin-networks'
-import { bitcoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@liquality/types'
+} from '@liquality/yacoin-utils'
+import { YacoinNetwork } from '@liquality/yacoin-networks'
+import { yacoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@liquality/types'
 import { asyncSetImmediate, addressToString } from '@liquality/utils'
 import { Provider } from '@liquality/provider'
 import { InsufficientBalanceError } from '@liquality/errors'
-import { BIP32Interface, payments, script } from 'bitcoinjs-lib'
+import { BIP32Interface, payments, script } from 'yacoinjs-lib'
 import memoize from 'memoizee'
 
 const ADDRESS_GAP = 20
@@ -24,23 +24,23 @@ type DerivationCache = { [index: string]: Address }
 
 type Constructor<T = unknown> = new (...args: any[]) => T
 
-interface BitcoinWalletProviderOptions {
-  network: BitcoinNetwork
+interface YacoinWalletProviderOptions {
+  network: YacoinNetwork
   baseDerivationPath: string
-  addressType?: bitcoin.AddressType
+  addressType?: yacoin.AddressType
 }
 
 export default <T extends Constructor<Provider>>(superclass: T) => {
-  abstract class BitcoinWalletProvider extends superclass implements Partial<ChainProvider>, Partial<WalletProvider> {
+  abstract class YacoinWalletProvider extends superclass implements Partial<ChainProvider>, Partial<WalletProvider> {
     _baseDerivationPath: string
-    _network: BitcoinNetwork
-    _addressType: bitcoin.AddressType
+    _network: YacoinNetwork
+    _addressType: yacoin.AddressType
     _derivationCache: DerivationCache
 
     constructor(...args: any[]) {
-      const options = args[0] as BitcoinWalletProviderOptions
-      const { network, baseDerivationPath, addressType = bitcoin.AddressType.BECH32 } = options
-      const addressTypes = Object.values(bitcoin.AddressType)
+      const options = args[0] as YacoinWalletProviderOptions
+      const { network, baseDerivationPath, addressType = yacoin.AddressType.BECH32 } = options
+      const addressTypes = Object.values(yacoin.AddressType)
       if (!addressTypes.includes(addressType)) {
         throw new Error(`addressType must be one of ${addressTypes.join(',')}`)
       }
@@ -55,15 +55,15 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     abstract baseDerivationNode(): Promise<BIP32Interface>
     abstract _buildTransaction(
-      targets: bitcoin.OutputTarget[],
+      targets: yacoin.OutputTarget[],
       feePerByte?: number,
-      fixedInputs?: bitcoin.Input[]
+      fixedInputs?: yacoin.Input[]
     ): Promise<{ hex: string; fee: number }>
     abstract _buildSweepTransaction(
       externalChangeAddress: string,
       feePerByte?: number
     ): Promise<{ hex: string; fee: number }>
-    abstract signPSBT(data: string, inputs: bitcoin.PsbtInputTarget[]): Promise<string>
+    abstract signPSBT(data: string, inputs: yacoin.PsbtInputTarget[]): Promise<string>
     abstract signBatchP2SHTransaction(
       inputs: [{ inputTxHex: string; index: number; vout: any; outputScript: Buffer }],
       addresses: string,
@@ -76,8 +76,8 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       return this._derivationCache
     }
 
-    sendOptionsToOutputs(transactions: SendOptions[]): bitcoin.OutputTarget[] {
-      const targets: bitcoin.OutputTarget[] = []
+    sendOptionsToOutputs(transactions: SendOptions[]): yacoin.OutputTarget[] {
+      const targets: yacoin.OutputTarget[] = []
 
       transactions.forEach((tx) => {
         if (tx.to && tx.value && tx.value.gt(0)) {
@@ -107,15 +107,15 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       this._derivationCache = derivationCache
     }
 
-    async buildTransaction(output: bitcoin.OutputTarget, feePerByte: number) {
+    async buildTransaction(output: yacoin.OutputTarget, feePerByte: number) {
       return this._buildTransaction([output], feePerByte)
     }
 
-    async buildBatchTransaction(outputs: bitcoin.OutputTarget[]) {
+    async buildBatchTransaction(outputs: yacoin.OutputTarget[]) {
       return this._buildTransaction(outputs)
     }
 
-    async _sendTransaction(transactions: bitcoin.OutputTarget[], feePerByte?: number) {
+    async _sendTransaction(transactions: yacoin.OutputTarget[], feePerByte?: number) {
       const { hex, fee } = await this._buildTransaction(transactions, feePerByte)
       await this.getMethod('sendRawTransaction')(hex)
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
@@ -139,9 +139,9 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
     }
 
-    async updateTransactionFee(tx: Transaction<bitcoin.Transaction> | string, newFeePerByte: number) {
+    async updateTransactionFee(tx: Transaction<yacoin.Transaction> | string, newFeePerByte: number) {
       const txHash = typeof tx === 'string' ? tx : tx.hash
-      const transaction: bitcoin.Transaction = (await this.getMethod('getTransactionByHash')(txHash))._raw
+      const transaction: yacoin.Transaction = (await this.getMethod('getTransactionByHash')(txHash))._raw
       const fixedInputs = [transaction.vin[0]] // TODO: should this pick more than 1 input? RBF doesn't mandate it
 
       const lookupAddresses = transaction.vout.map((vout) => vout.scriptPubKey.addresses[0])
@@ -192,14 +192,14 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     getPaymentVariantFromPublicKey(publicKey: Buffer) {
-      if (this._addressType === bitcoin.AddressType.LEGACY) {
+      if (this._addressType === yacoin.AddressType.LEGACY) {
         return payments.p2pkh({ pubkey: publicKey, network: this._network })
-      } else if (this._addressType === bitcoin.AddressType.P2SH_SEGWIT) {
+      } else if (this._addressType === yacoin.AddressType.P2SH_SEGWIT) {
         return payments.p2sh({
           redeem: payments.p2wpkh({ pubkey: publicKey, network: this._network }),
           network: this._network
         })
-      } else if (this._addressType === bitcoin.AddressType.BECH32) {
+      } else if (this._addressType === yacoin.AddressType.BECH32) {
         return payments.p2wpkh({ pubkey: publicKey, network: this._network })
       }
     }
@@ -213,7 +213,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async getDerivationPathAddress(path: string) {
       console.log(
-        'TACA ===> BitcoinWalletProvider, getDerivationPathAddress, path = ',
+        'TACA ===> YacoinWalletProvider, getDerivationPathAddress, path = ',
         path
       )
       if (path in this._derivationCache) {
@@ -231,7 +231,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       })
 
       console.log(
-        'TACA ===> BitcoinWalletProvider, getDerivationPathAddress, baseDerivationNode = ',
+        'TACA ===> YacoinWalletProvider, getDerivationPathAddress, baseDerivationNode = ',
         baseDerivationNode,
         ', subPath = ',
         subPath,
@@ -253,7 +253,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       }
 
       console.log(
-        'TACA ===> BitcoinWalletProvider, getAddresses, startingIndex = ',
+        'TACA ===> YacoinWalletProvider, getAddresses, startingIndex = ',
         startingIndex,
         ', numAddresses = ',
         numAddresses,
@@ -279,7 +279,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async _getUsedUnusedAddresses(numAddressPerCall = 100, addressType: AddressSearchType) {
       console.log(
-        'TACA ===> BitcoinWalletProvider, _getUsedUnusedAddresses, numAddressPerCall = ',
+        'TACA ===> YacoinWalletProvider, _getUsedUnusedAddresses, numAddressPerCall = ',
         numAddressPerCall,
         ', addressType = ',
         addressType
@@ -323,7 +323,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
           addrList = addrList.concat(externalAddresses)
         }
 
-        const transactionCounts: bitcoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
+        const transactionCounts: yacoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
 
         for (const address of addrList) {
           const isUsed = transactionCounts[address.address] > 0
@@ -360,7 +360,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async getUnusedAddress(change = false, numAddressPerCall = 100) {
       console.log(
-        'TACA ===> BitcoinWalletProvider, getUnusedAddress, change = ',
+        'TACA ===> YacoinWalletProvider, getUnusedAddress, change = ',
         change,
         ', numAddressPerCall = ',
         numAddressPerCall
@@ -423,9 +423,9 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     async getInputsForAmount(
-      _targets: bitcoin.OutputTarget[],
+      _targets: yacoin.OutputTarget[],
       feePerByte?: number,
-      fixedInputs: bitcoin.Input[] = [],
+      fixedInputs: yacoin.Input[] = [],
       numAddressPerCall = 100,
       sweep = false
     ) {
@@ -438,7 +438,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       }
 
       const feePerBytePromise = this.getMethod('getFeePerByte')()
-      let utxos: bitcoin.UTXO[] = []
+      let utxos: yacoin.UTXO[] = []
 
       while (addressCountMap.change < ADDRESS_GAP || addressCountMap.nonChange < ADDRESS_GAP) {
         let addrList: Address[] = []
@@ -457,7 +457,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
           addrList = addrList.concat(externalAddresses)
         }
 
-        const fixedUtxos: bitcoin.UTXO[] = []
+        const fixedUtxos: yacoin.UTXO[] = []
         if (fixedInputs.length > 0) {
           for (const input of fixedInputs) {
             const txHex = await this.getMethod('getRawTransactionByHash')(input.txid)
@@ -471,7 +471,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         }
 
         if (!sweep || fixedUtxos.length === 0) {
-          const _utxos: bitcoin.UTXO[] = await this.getMethod('getUnspentTransactions')(addrList)
+          const _utxos: yacoin.UTXO[] = await this.getMethod('getUnspentTransactions')(addrList)
           utxos.push(
             ..._utxos.map((utxo) => {
               const addr = addrList.find((a) => a.address === utxo.address)
@@ -487,7 +487,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
         const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0)
 
-        const transactionCounts: bitcoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
+        const transactionCounts: yacoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
 
         if (!feePerByte) feePerByte = await feePerBytePromise
         const minRelayFee = await this.getMethod('getMinRelayFee')()
@@ -546,5 +546,5 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       throw new InsufficientBalanceError('Not enough balance')
     }
   }
-  return BitcoinWalletProvider
+  return YacoinWalletProvider
 }

@@ -1,3 +1,3 @@
-import BitcoinJsWalletProvider from './BitcoinJsWalletProvider'
+import YacoinJsWalletProvider from './YacoinJsWalletProvider'
 
-export { BitcoinJsWalletProvider }
+export { YacoinJsWalletProvider }

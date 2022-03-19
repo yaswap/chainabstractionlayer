@@ -1,31 +1,31 @@
-import { BitcoinWalletProvider } from '@liquality/bitcoin-wallet-provider'
+import { YacoinWalletProvider } from '@liquality/yacoin-wallet-provider'
 import { WalletProvider } from '@liquality/wallet-provider'
-import { BitcoinNetwork } from '@liquality/bitcoin-networks'
-import { bitcoin } from '@liquality/types'
+import { YacoinNetwork } from '@liquality/yacoin-networks'
+import { yacoin } from '@liquality/types'
 
-import { Psbt, ECPair, ECPairInterface, Transaction as BitcoinJsTransaction, script } from 'bitcoinjs-lib'
-import { signAsync as signBitcoinMessage } from 'bitcoinjs-message'
+import { Psbt, ECPair, ECPairInterface, Transaction as YacoinJsTransaction, script } from 'yacoinjs-lib'
+import { signAsync as signYacoinMessage } from 'bitcoinjs-message'
 import { mnemonicToSeed } from 'bip39'
 import { BIP32Interface, fromSeed } from 'bip32'
 
 type WalletProviderConstructor<T = WalletProvider> = new (...args: any[]) => T
 
-interface BitcoinJsWalletProviderOptions {
-  network: BitcoinNetwork
+interface YacoinJsWalletProviderOptions {
+  network: YacoinNetwork
   mnemonic: string
   baseDerivationPath: string
-  addressType?: bitcoin.AddressType
+  addressType?: yacoin.AddressType
 }
 
-export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
+export default class YacoinJsWalletProvider extends YacoinWalletProvider(
   WalletProvider as WalletProviderConstructor
 ) {
   _mnemonic: string
   _seedNode: BIP32Interface
   _baseDerivationNode: BIP32Interface
 
-  constructor(options: BitcoinJsWalletProviderOptions) {
-    const { network, mnemonic, baseDerivationPath, addressType = bitcoin.AddressType.BECH32 } = options
+  constructor(options: YacoinJsWalletProviderOptions) {
+    const { network, mnemonic, baseDerivationPath, addressType = yacoin.AddressType.BECH32 } = options
     super({ network, baseDerivationPath, addressType })
 
     if (!mnemonic) throw new Error('Mnemonic should not be empty')
@@ -40,7 +40,7 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
     this._seedNode = fromSeed(seed, this._network)
 
     console.log(
-      'TACA ===> BitcoinJsWalletProvider, seedNode, this._mnemonic = ',
+      'TACA ===> YacoinJsWalletProvider, seedNode, this._mnemonic = ',
       this._mnemonic,
       ', this._seedNode = ',
       this._seedNode
@@ -56,7 +56,7 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
     this._baseDerivationNode = baseNode.derivePath(this._baseDerivationPath)
 
     console.log(
-      'TACA ===> BitcoinJsWalletProvider, baseDerivationNode, baseNode = ',
+      'TACA ===> YacoinJsWalletProvider, baseDerivationNode, baseNode = ',
       baseNode,
       ', this._baseDerivationNode = ',
       this._baseDerivationNode
@@ -82,11 +82,11 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
   async signMessage(message: string, from: string) {
     const address = await this.getWalletAddress(from)
     const keyPair = await this.keyPair(address.derivationPath)
-    const signature = await signBitcoinMessage(message, keyPair.privateKey, keyPair.compressed)
+    const signature = await signYacoinMessage(message, keyPair.privateKey, keyPair.compressed)
     return signature.toString('hex')
   }
 
-  async _buildTransaction(targets: bitcoin.OutputTarget[], feePerByte?: number, fixedInputs?: bitcoin.Input[]) {
+  async _buildTransaction(targets: yacoin.OutputTarget[], feePerByte?: number, fixedInputs?: yacoin.Input[]) {
     const network = this._network
 
     const unusedAddress = await this.getUnusedAddress(true)
@@ -101,7 +101,7 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
 
     const psbt = new Psbt({ network })
 
-    const needsWitness = [bitcoin.AddressType.BECH32, bitcoin.AddressType.P2SH_SEGWIT].includes(this._addressType)
+    const needsWitness = [yacoin.AddressType.BECH32, yacoin.AddressType.P2SH_SEGWIT].includes(this._addressType)
 
     for (let i = 0; i < inputs.length; i++) {
       const wallet = await this.getWalletAddress(inputs[i].address)
@@ -124,7 +124,7 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
         psbtInput.nonWitnessUtxo = Buffer.from(inputTxRaw, 'hex')
       }
 
-      if (this._addressType === bitcoin.AddressType.P2SH_SEGWIT) {
+      if (this._addressType === yacoin.AddressType.P2SH_SEGWIT) {
         psbtInput.redeemScript = paymentVariant.redeem.output
       }
 
@@ -178,7 +178,7 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
     return this._buildTransaction(_outputs, feePerByte, inputs)
   }
 
-  async signPSBT(data: string, inputs: bitcoin.PsbtInputTarget[]) {
+  async signPSBT(data: string, inputs: yacoin.PsbtInputTarget[]) {
     const psbt = Psbt.fromBase64(data, { network: this._network })
     for (const input of inputs) {
       const keyPair = await this.keyPair(input.derivationPath)
@@ -210,13 +210,13 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
           index,
           inputs[i].outputScript,
           inputs[i].vout.vSat,
-          BitcoinJsTransaction.SIGHASH_ALL
+          YacoinJsTransaction.SIGHASH_ALL
         )
       } else {
-        sigHash = tx.hashForSignature(index, inputs[i].outputScript, BitcoinJsTransaction.SIGHASH_ALL)
+        sigHash = tx.hashForSignature(index, inputs[i].outputScript, YacoinJsTransaction.SIGHASH_ALL)
       }
 
-      const sig = script.signature.encode(keyPairs[i].sign(sigHash), BitcoinJsTransaction.SIGHASH_ALL)
+      const sig = script.signature.encode(keyPairs[i].sign(sigHash), YacoinJsTransaction.SIGHASH_ALL)
       sigs.push(sig)
     }
 
@@ -224,9 +224,9 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
   }
 
   getScriptType() {
-    if (this._addressType === bitcoin.AddressType.LEGACY) return 'p2pkh'
-    else if (this._addressType === bitcoin.AddressType.P2SH_SEGWIT) return 'p2sh-p2wpkh'
-    else if (this._addressType === bitcoin.AddressType.BECH32) return 'p2wpkh'
+    if (this._addressType === yacoin.AddressType.LEGACY) return 'p2pkh'
+    else if (this._addressType === yacoin.AddressType.P2SH_SEGWIT) return 'p2sh-p2wpkh'
+    else if (this._addressType === yacoin.AddressType.BECH32) return 'p2wpkh'
   }
 
   async getConnectedNetwork() {
