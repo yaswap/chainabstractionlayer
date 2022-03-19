@@ -39,7 +39,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     constructor(...args: any[]) {
       const options = args[0] as YacoinWalletProviderOptions
-      const { network, baseDerivationPath, addressType = yacoin.AddressType.BECH32 } = options
+      const { network, baseDerivationPath, addressType = yacoin.AddressType.LEGACY } = options
       const addressTypes = Object.values(yacoin.AddressType)
       if (!addressTypes.includes(addressType)) {
         throw new Error(`addressType must be one of ${addressTypes.join(',')}`)
@@ -194,14 +194,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     getPaymentVariantFromPublicKey(publicKey: Buffer) {
       if (this._addressType === yacoin.AddressType.LEGACY) {
         return payments.p2pkh({ pubkey: publicKey, network: this._network })
-      } else if (this._addressType === yacoin.AddressType.P2SH_SEGWIT) {
-        return payments.p2sh({
-          redeem: payments.p2wpkh({ pubkey: publicKey, network: this._network }),
-          network: this._network
-        })
-      } else if (this._addressType === yacoin.AddressType.BECH32) {
-        return payments.p2wpkh({ pubkey: publicKey, network: this._network })
-      }
+      } else throw new Error('Unknown script type')
     }
 
     async importAddresses() {

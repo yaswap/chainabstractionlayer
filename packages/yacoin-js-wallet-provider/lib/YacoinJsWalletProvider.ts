@@ -25,7 +25,7 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
   _baseDerivationNode: BIP32Interface
 
   constructor(options: YacoinJsWalletProviderOptions) {
-    const { network, mnemonic, baseDerivationPath, addressType = yacoin.AddressType.BECH32 } = options
+    const { network, mnemonic, baseDerivationPath, addressType = yacoin.AddressType.LEGACY } = options
     super({ network, baseDerivationPath, addressType })
 
     if (!mnemonic) throw new Error('Mnemonic should not be empty')
@@ -101,7 +101,7 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
 
     const psbt = new Psbt({ network })
 
-    const needsWitness = [yacoin.AddressType.BECH32, yacoin.AddressType.P2SH_SEGWIT].includes(this._addressType)
+    const needsWitness = false
 
     for (let i = 0; i < inputs.length; i++) {
       const wallet = await this.getWalletAddress(inputs[i].address)
@@ -122,10 +122,6 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
       } else {
         const inputTxRaw = await this.getMethod('getRawTransactionByHash')(inputs[i].txid)
         psbtInput.nonWitnessUtxo = Buffer.from(inputTxRaw, 'hex')
-      }
-
-      if (this._addressType === yacoin.AddressType.P2SH_SEGWIT) {
-        psbtInput.redeemScript = paymentVariant.redeem.output
       }
 
       psbt.addInput(psbtInput)
@@ -225,8 +221,7 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
 
   getScriptType() {
     if (this._addressType === yacoin.AddressType.LEGACY) return 'p2pkh'
-    else if (this._addressType === yacoin.AddressType.P2SH_SEGWIT) return 'p2sh-p2wpkh'
-    else if (this._addressType === yacoin.AddressType.BECH32) return 'p2wpkh'
+    else throw new Error('Unknown script type')
   }
 
   async getConnectedNetwork() {
