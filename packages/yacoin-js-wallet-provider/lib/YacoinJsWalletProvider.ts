@@ -3,7 +3,7 @@ import { WalletProvider } from '@liquality/wallet-provider'
 import { YacoinNetwork } from '@liquality/yacoin-networks'
 import { yacoin } from '@liquality/types'
 
-import { Psbt, ECPair, ECPairInterface, Transaction as YacoinJsTransaction, script } from 'yacoinjs-lib'
+import { Psbt, ECPair, ECPairInterface, TransactionBuilder, Transaction as YacoinJsTransaction, script } from 'yacoinjs-lib'
 import { signAsync as signYacoinMessage } from 'bitcoinjs-message'
 import { mnemonicToSeed } from 'bip39'
 import { BIP32Interface, fromSeed } from 'bip32'
@@ -99,58 +99,31 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
       })
     }
 
-    const psbt = new Psbt({ network })
-
-    const needsWitness = false
-
+    var tx = new TransactionBuilder(network);
+    // Add input
     for (let i = 0; i < inputs.length; i++) {
-      const wallet = await this.getWalletAddress(inputs[i].address)
-      const keyPair = await this.keyPair(wallet.derivationPath)
-      const paymentVariant = this.getPaymentVariantFromPublicKey(keyPair.publicKey)
-
-      const psbtInput: any = {
-        hash: inputs[i].txid,
-        index: inputs[i].vout,
-        sequence: 0
-      }
-
-      if (needsWitness) {
-        psbtInput.witnessUtxo = {
-          script: paymentVariant.output,
-          value: inputs[i].value
-        }
-      } else {
-        const inputTxRaw = await this.getMethod('getRawTransactionByHash')(inputs[i].txid)
-        psbtInput.nonWitnessUtxo = Buffer.from(inputTxRaw, 'hex')
-      }
-
-      psbt.addInput(psbtInput)
+      tx.addInput(inputs[i].txid, inputs[i].vout)
     }
 
+    // Add output
     for (const output of targets) {
       if (output.script) {
-        psbt.addOutput({
-          value: output.value,
-          script: output.script
-        })
+        tx.addOutput(output.script, output.value)
       } else {
-        psbt.addOutput({
-          value: output.value,
-          address: output.address
-        })
+        tx.addOutput(output.address, output.value)
       }
     }
 
+    // Sign transaction
     for (let i = 0; i < inputs.length; i++) {
       const wallet = await this.getWalletAddress(inputs[i].address)
       const keyPair = await this.keyPair(wallet.derivationPath)
-      psbt.signInput(i, keyPair)
-      psbt.validateSignaturesOfInput(i)
+      tx.sign(i, keyPair)
     }
 
-    psbt.finalizeAllInputs()
+    console.log("TACA ===> _buildTransaction, signed raw transaction = ", tx.build().toHex());
 
-    return { hex: psbt.extractTransaction().toHex(), fee }
+    return { hex: tx.build().toHex(), fee }
   }
 
   async _buildSweepTransaction(externalChangeAddress: string, feePerByte: number) {

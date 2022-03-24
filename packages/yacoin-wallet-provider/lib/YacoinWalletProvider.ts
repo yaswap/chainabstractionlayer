@@ -156,7 +156,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       // TODO more checks?
       const transactions = outputs.map((output) => ({
         address: output.scriptPubKey.addresses[0],
-        value: new BigNumber(output.value).times(1e8).toNumber()
+        value: new BigNumber(output.value).times(1e6).toNumber()
       }))
       const { hex, fee } = await this._buildTransaction(transactions, newFeePerByte, fixedInputs)
       await this.getMethod('sendRawTransaction')(hex)
