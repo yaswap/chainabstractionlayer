@@ -83,7 +83,7 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
     const address = await this.getWalletAddress(from)
     const keyPair = await this.keyPair(address.derivationPath)
     const signature = await signYacoinMessage(message, keyPair.privateKey, keyPair.compressed)
-    return signature.toString('hex')
+    return signature.toString('base64')
   }
 
   async _buildTransaction(targets: yacoin.OutputTarget[], feePerByte?: number, fixedInputs?: yacoin.Input[]) {
@@ -120,8 +120,6 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
       const keyPair = await this.keyPair(wallet.derivationPath)
       tx.sign(i, keyPair)
     }
-
-    console.log("TACA ===> _buildTransaction, signed raw transaction = ", tx.build().toHex());
 
     return { hex: tx.build().toHex(), fee }
   }
