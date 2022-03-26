@@ -455,7 +455,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
           for (const input of fixedInputs) {
             const txHex = await this.getMethod('getRawTransactionByHash')(input.txid)
             const tx = decodeRawTransaction(txHex, this._network)
-            const value = new BigNumber(tx.vout[input.vout].value).times(1e8).toNumber()
+            const value = new BigNumber(tx.vout[input.vout].value).times(1e6).toNumber()
             const address = tx.vout[input.vout].scriptPubKey.addresses[0]
             const walletAddress = await this.getWalletAddress(address)
             const utxo = { ...input, value, address, derivationPath: walletAddress.derivationPath }

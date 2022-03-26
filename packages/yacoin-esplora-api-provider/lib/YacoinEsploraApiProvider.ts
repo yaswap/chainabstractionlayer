@@ -24,7 +24,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   _usedAddressCache: { [index: string]: boolean }
 
   constructor(options: EsploraApiProviderOptions) {
-    const { url, network, numberOfBlockConfirmation = 1, defaultFeePerByte = 0.00001 } = options
+    const { url, network, numberOfBlockConfirmation = 1, defaultFeePerByte = 20 } = options
     super({
       baseURL: url,
       responseType: 'text',
@@ -52,7 +52,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async getMinRelayFee() {
-    return 0.00001 // min fee = 0.01/kb = 0.00001/bytes
+    return 10 // min fee = 0.01 YAC/kb = 0.00001 YAC /byte = 10 satoshis / byte
   }
 
   async getBalance(_addresses: (string | Address)[]) {
