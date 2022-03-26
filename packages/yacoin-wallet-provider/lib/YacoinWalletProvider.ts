@@ -135,7 +135,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async sendSweepTransaction(externalChangeAddress: Address | string, feePerByte: number) {
       const { hex, fee } = await this._buildSweepTransaction(addressToString(externalChangeAddress), feePerByte)
-      await this.getMethod('sendRawTransaction')(hex)
+      await this.getMethod('sendRawTransaction')(`data=${hex}`)
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
     }
 
@@ -159,7 +159,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         value: new BigNumber(output.value).times(1e6).toNumber()
       }))
       const { hex, fee } = await this._buildTransaction(transactions, newFeePerByte, fixedInputs)
-      await this.getMethod('sendRawTransaction')(hex)
+      await this.getMethod('sendRawTransaction')(`data=${hex}`)
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
     }
 
