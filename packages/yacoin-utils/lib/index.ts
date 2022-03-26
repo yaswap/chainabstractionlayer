@@ -154,7 +154,7 @@ function normalizeTransactionObject(
   fee: number,
   block?: { number: number; hash: string }
 ): Transaction<bT.Transaction> {
-  const value = tx.vout.reduce((p, n) => p.plus(new BigNumber(n.value).times(1e8)), new BigNumber(0))
+  const value = tx.vout.reduce((p, n) => p.plus(new BigNumber(n.value).times(1e6)), new BigNumber(0))
   const result = {
     hash: tx.txid,
     value: value.toNumber(),
