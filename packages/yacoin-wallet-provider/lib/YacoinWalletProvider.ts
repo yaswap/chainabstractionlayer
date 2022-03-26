@@ -117,7 +117,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async _sendTransaction(transactions: yacoin.OutputTarget[], feePerByte?: number) {
       const { hex, fee } = await this._buildTransaction(transactions, feePerByte)
-      await this.getMethod('sendRawTransaction')(hex)
+      await this.getMethod('sendRawTransaction')(`data=${hex}`)
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
     }
 
