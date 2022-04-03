@@ -1,3 +1,3 @@
-import YaccoinRpcFeeProvider from './YacoinRpcFeeProvider'
+import YacoinRpcFeeProvider from './YacoinRpcFeeProvider'
 
-export { YaccoinRpcFeeProvider }
+export { YacoinRpcFeeProvider }
