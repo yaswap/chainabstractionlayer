@@ -161,7 +161,7 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
     let _feePerByte = feePerByte || null
     if (!_feePerByte) _feePerByte = await this.getMethod('getFeePerByte')()
 
-    const { inputs, outputs, change } = await this.getInputsForAmount([], _feePerByte, [], 100, true)
+    const { inputs, outputs, change } = await this.getInputsForAmount([], _feePerByte, [], 20, true)
 
     if (change) {
       throw new Error('There should not be any change for sweeping transaction')
