@@ -105,8 +105,11 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
     let data: esplora.Transaction
 
     try {
+      console.log("TACA ===> YacoinEsploraApiProvider, getTransaction, transactionHash = ", transactionHash)
       data = await this.nodeGet(`/tx/${transactionHash}`)
+      console.log("TACA ===> YacoinEsploraApiProvider, getTransaction, data = ", data)
     } catch (e) {
+      console.log("TACA ===> YacoinEsploraApiProvider, getTransaction, e = ", e)
       if (e.name === 'NodeError' && e.message.includes('Transaction not found')) {
         const { name, message, ...attrs } = e
         throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs)
