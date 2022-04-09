@@ -12,7 +12,7 @@ import { InsufficientBalanceError } from '@liquality/errors'
 import { BIP32Interface, payments, script } from 'yacoinjs-lib'
 import memoize from 'memoizee'
 
-const ADDRESS_GAP = 20
+const ADDRESS_GAP = 10
 
 export enum AddressSearchType {
   EXTERNAL,
@@ -270,7 +270,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       return addresses
     }
 
-    async _getUsedUnusedAddresses(numAddressPerCall = 100, addressType: AddressSearchType) {
+    async _getUsedUnusedAddresses(numAddressPerCall = 20, addressType: AddressSearchType) {
       console.log(
         'TACA ===> YacoinWalletProvider, _getUsedUnusedAddresses, numAddressPerCall = ',
         numAddressPerCall,
@@ -345,13 +345,13 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       }
     }
 
-    async getUsedAddresses(numAddressPerCall = 100) {
+    async getUsedAddresses(numAddressPerCall = 20) {
       return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
         ({ usedAddresses }) => usedAddresses
       )
     }
 
-    async getUnusedAddress(change = false, numAddressPerCall = 100) {
+    async getUnusedAddress(change = false, numAddressPerCall = 20) {
       console.log(
         'TACA ===> YacoinWalletProvider, getUnusedAddress, change = ',
         change,
@@ -396,7 +396,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
           targets.filter((t) => !t.value),
           opts.fee as number,
           [],
-          100,
+          20,
           true
         )
         return fee
@@ -419,7 +419,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       _targets: yacoin.OutputTarget[],
       feePerByte?: number,
       fixedInputs: yacoin.Input[] = [],
-      numAddressPerCall = 100,
+      numAddressPerCall = 20,
       sweep = false
     ) {
       let addressIndex = 0
