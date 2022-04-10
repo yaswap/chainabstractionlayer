@@ -117,7 +117,11 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async _sendTransaction(transactions: yacoin.OutputTarget[], feePerByte?: number) {
       const { hex, fee } = await this._buildTransaction(transactions, feePerByte)
-      await this.getMethod('sendRawTransaction')(`data=${hex}`)
+      const result =  await this.getMethod('sendRawTransaction')(`data=${hex}`)
+      if (result == 'There was an error. Check your console.')
+      {
+        throw new Error("Cannot send transaction, it might be the fee is not enough, please try increasing the fee.")
+      }
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
     }
 
