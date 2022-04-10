@@ -13,6 +13,8 @@ import { BIP32Interface, payments, script } from 'yacoinjs-lib'
 import memoize from 'memoizee'
 
 const ADDRESS_GAP = 10
+const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
+const NUMBER_ADDRESS_LIMIT = 200
 
 export enum AddressSearchType {
   EXTERNAL,
@@ -169,7 +171,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async findAddress(addresses: string[], change = false) {
       // A maximum number of addresses to lookup after which it is deemed that the wallet does not contain this address
-      const maxAddresses = 5000
+      const maxAddresses = NUMBER_ADDRESS_LIMIT
       const addressesPerCall = 50
       let index = 0
       while (index < maxAddresses) {
@@ -274,7 +276,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       return addresses
     }
 
-    async _getUsedUnusedAddresses(numAddressPerCall = 20, addressType: AddressSearchType) {
+    async _getUsedUnusedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL, addressType: AddressSearchType) {
       console.log(
         'TACA ===> YacoinWalletProvider, _getUsedUnusedAddresses, numAddressPerCall = ',
         numAddressPerCall,
@@ -283,6 +285,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       )
       const usedAddresses = []
       const addressCountMap = { change: 0, external: 0 }
+      const numAddressAlreadyGet = { change: 0, external: 0 }
       const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null }
 
       let addrList: Address[]
@@ -293,31 +296,36 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       /* eslint-disable no-unmodified-loop-condition */
       while (
         (addressType === AddressSearchType.EXTERNAL_OR_CHANGE &&
-          (addressCountMap.change < ADDRESS_GAP || addressCountMap.external < ADDRESS_GAP)) ||
-        (addressType === AddressSearchType.EXTERNAL && addressCountMap.external < ADDRESS_GAP) ||
-        (addressType === AddressSearchType.CHANGE && addressCountMap.change < ADDRESS_GAP)
+          ((addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT) ||
+            (addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT)) ||
+        (addressType === AddressSearchType.EXTERNAL &&
+          addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT) ||
+        (addressType === AddressSearchType.CHANGE &&
+          addressCountMap.change < ADDRESS_GAP || numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT))
       ) {
         /* eslint-enable no-unmodified-loop-condition */
         addrList = []
 
         if (
           (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.CHANGE) &&
-          addressCountMap.change < ADDRESS_GAP
+          addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT
         ) {
           // Scanning for change addr
           changeAddresses = await this.getAddresses(addressIndex, numAddressPerCall, true)
           addrList = addrList.concat(changeAddresses)
+          numAddressAlreadyGet['change'] += numAddressPerCall
         } else {
           changeAddresses = []
         }
 
         if (
           (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.EXTERNAL) &&
-          addressCountMap.external < ADDRESS_GAP
+          addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT
         ) {
           // Scanning for non change addr
           externalAddresses = await this.getAddresses(addressIndex, numAddressPerCall, false)
           addrList = addrList.concat(externalAddresses)
+          numAddressAlreadyGet['external'] += numAddressPerCall
         }
 
         const transactionCounts: yacoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
@@ -343,19 +351,27 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         addressIndex += numAddressPerCall
       }
 
+      if (!unusedAddressMap['change']) {
+        unusedAddressMap['change'] = changeAddresses[0]
+      }
+
+      if (!unusedAddressMap['external']) {
+        unusedAddressMap['external'] = externalAddresses[0]
+      }
+
       return {
         usedAddresses,
         unusedAddress: unusedAddressMap
       }
     }
 
-    async getUsedAddresses(numAddressPerCall = 20) {
+    async getUsedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
       return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
         ({ usedAddresses }) => usedAddresses
       )
     }
 
-    async getUnusedAddress(change = false, numAddressPerCall = 20) {
+    async getUnusedAddress(change = false, numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
       console.log(
         'TACA ===> YacoinWalletProvider, getUnusedAddress, change = ',
         change,
@@ -400,7 +416,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
           targets.filter((t) => !t.value),
           opts.fee as number,
           [],
-          20,
+          NUMBER_ADDRESS_PER_CALL,
           true
         )
         return fee
@@ -423,7 +439,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       _targets: yacoin.OutputTarget[],
       feePerByte?: number,
       fixedInputs: yacoin.Input[] = [],
-      numAddressPerCall = 20,
+      numAddressPerCall = NUMBER_ADDRESS_PER_CALL,
       sweep = false
     ) {
       let addressIndex = 0
