@@ -24,7 +24,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   _usedAddressCache: { [index: string]: boolean }
 
   constructor(options: EsploraApiProviderOptions) {
-    const { url, network, numberOfBlockConfirmation = 1, defaultFeePerByte = 10 } = options
+    const { url, network, numberOfBlockConfirmation = 1, defaultFeePerByte = 11 } = options
     super({
       baseURL: url,
       responseType: 'text',
