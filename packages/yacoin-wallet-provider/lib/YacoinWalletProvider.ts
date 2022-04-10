@@ -301,7 +301,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         (addressType === AddressSearchType.EXTERNAL &&
           addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT) ||
         (addressType === AddressSearchType.CHANGE &&
-          addressCountMap.change < ADDRESS_GAP || numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT))
+          addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT))
       ) {
         /* eslint-enable no-unmodified-loop-condition */
         addrList = []
