@@ -364,7 +364,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     async getUsedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
       return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
         ({ usedAddresses }) => {
-          console.log("TACA ===> YacoinWalletProvider, getUsedAddresses, usedAddresses = %s", usedAddresses)
+          console.log("TACA ===> YacoinWalletProvider, getUsedAddresses, usedAddresses = ", usedAddresses)
           return usedAddresses
         }
       )
