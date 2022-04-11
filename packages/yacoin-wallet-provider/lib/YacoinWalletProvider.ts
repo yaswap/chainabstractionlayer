@@ -285,6 +285,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null }
 
       let addrList: Address[]
+      let uniqueAddresses: string[]
       let addressIndex = 0
       let changeAddresses: Address[] = []
       let externalAddresses: Address[] = []
@@ -327,6 +328,13 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         const transactionCounts: yacoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
 
         for (const address of addrList) {
+            // Remove duplicate addresses
+            if (!uniqueAddresses.includes(address.address)) {
+              uniqueAddresses.push(address.address);
+            } else {
+              continue
+            }
+
           const isUsed = transactionCounts[address.address] > 0
           const isChangeAddress = changeAddresses.find((a) => address.address === a.address)
           const key = isChangeAddress ? 'change' : 'external'
@@ -354,6 +362,8 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       if (!unusedAddressMap['external']) {
         unusedAddressMap['external'] = externalAddresses[0]
       }
+
+
 
       return {
         usedAddresses,

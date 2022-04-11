@@ -56,7 +56,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async getBalance(_addresses: (string | Address)[]) {
-    console.log("TACA ===> YacoinEsploraApiProvider, getBalance, _addresses = %s", _addresses)
+    console.log("TACA ===> YacoinEsploraApiProvider, getBalance, _addresses = ", _addresses)
     const addresses = _addresses.map(addressToString)
     const _utxos = await this.getUnspentTransactions(addresses)
     const utxos = flatten(_utxos)
@@ -76,7 +76,15 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
 
   async getUnspentTransactions(_addresses: (Address | string)[]): Promise<yacoin.UTXO[]> {
     const addresses = _addresses.map(addressToString)
-    const utxoSets = await Promise.all(addresses.map((addr) => this._getUnspentTransactions(addr)))
+    // Remove duplicate addresses
+    var uniqueAddresses: string[] = [];
+    addresses.forEach(element => {
+        if (!uniqueAddresses.includes(element)) {
+          uniqueAddresses.push(element);
+        }
+    });
+
+    const utxoSets = await Promise.all(uniqueAddresses.map((addr) => this._getUnspentTransactions(addr)))
     const utxos = flatten(utxoSets)
     return utxos
   }
