@@ -212,10 +212,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     async getDerivationPathAddress(path: string) {
-      console.log(
-        'TACA ===> BitcoinWalletProvider, getDerivationPathAddress, path = ',
-        path
-      )
       if (path in this._derivationCache) {
         return this._derivationCache[path]
       }

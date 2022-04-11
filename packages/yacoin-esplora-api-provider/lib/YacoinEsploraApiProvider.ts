@@ -56,6 +56,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async getBalance(_addresses: (string | Address)[]) {
+    console.log("TACA ===> YacoinEsploraApiProvider, getBalance, _addresses = %s", _addresses)
     const addresses = _addresses.map(addressToString)
     const _utxos = await this.getUnspentTransactions(addresses)
     const utxos = flatten(_utxos)

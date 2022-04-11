@@ -211,10 +211,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     async getDerivationPathAddress(path: string) {
-      console.log(
-        'TACA ===> YacoinWalletProvider, getDerivationPathAddress, path = ',
-        path
-      )
       if (path in this._derivationCache) {
         return this._derivationCache[path]
       }
@@ -367,21 +363,28 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
 
     async getUsedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
       return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
-        ({ usedAddresses }) => usedAddresses
+        ({ usedAddresses }) => {
+          console.log("TACA ===> YacoinWalletProvider, getUsedAddresses, usedAddresses = %s", usedAddresses)
+          return usedAddresses
+        }
       )
     }
 
     async getUnusedAddress(change = false, numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
-      console.log(
-        'TACA ===> YacoinWalletProvider, getUnusedAddress, change = ',
-        change,
-        ', numAddressPerCall = ',
-        numAddressPerCall
-      )
       const addressType = change ? AddressSearchType.CHANGE : AddressSearchType.EXTERNAL
       const key = change ? 'change' : 'external'
       return this._getUsedUnusedAddresses(numAddressPerCall, addressType).then(
-        ({ unusedAddress }) => unusedAddress[key]
+        ({ unusedAddress }) => {
+          console.log(
+            'TACA ===> YacoinWalletProvider, getUnusedAddress, change = ',
+            change,
+            ', numAddressPerCall = ',
+            numAddressPerCall,
+            ', unusedAddress = ',
+            unusedAddress[key]
+          )
+          return unusedAddress[key]
+        }
       )
     }
 
