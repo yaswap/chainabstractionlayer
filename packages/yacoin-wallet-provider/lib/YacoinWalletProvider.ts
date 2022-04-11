@@ -287,7 +287,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null }
 
       let addrList: Address[]
-      let uniqueAddresses: string[]
+      let uniqueAddresses: string[] = []
       let addressIndex = 0
       let changeAddresses: Address[] = []
       let externalAddresses: Address[] = []
