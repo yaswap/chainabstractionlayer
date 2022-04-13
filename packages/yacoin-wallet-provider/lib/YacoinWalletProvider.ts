@@ -123,7 +123,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       if (result == 'There was an error. Check your console.')
       {
         throw new Error(
-          "Cannot send transaction, there might some reasons:\n 1) It might be the fee is not enough, please try increasing the fee.\n 2) The wallet haven't updated latest balance info, please try again later."
+          "Cannot send transaction, there might some reasons:\n 1) It might be the fee is not enough, please try increasing the fee.\n 2) The wallet haven't updated latest balance info, please wait 10 seconds and try again."
         )
       }
       return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
