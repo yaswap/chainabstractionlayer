@@ -39,13 +39,6 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
     const seed = await mnemonicToSeed(this._mnemonic)
     this._seedNode = fromSeed(seed, this._network)
 
-    console.log(
-      'TACA ===> YacoinJsWalletProvider, seedNode, this._mnemonic = ',
-      this._mnemonic,
-      ', this._seedNode = ',
-      this._seedNode
-    )
-
     return this._seedNode
   }
 
@@ -54,13 +47,6 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
 
     const baseNode = await this.seedNode()
     this._baseDerivationNode = baseNode.derivePath(this._baseDerivationPath)
-
-    console.log(
-      'TACA ===> YacoinJsWalletProvider, baseDerivationNode, baseNode = ',
-      baseNode,
-      ', this._baseDerivationNode = ',
-      this._baseDerivationNode
-    )
 
     return this._baseDerivationNode
   }

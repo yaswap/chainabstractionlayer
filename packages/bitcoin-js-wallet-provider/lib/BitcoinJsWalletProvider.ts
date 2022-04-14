@@ -39,13 +39,6 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
     const seed = await mnemonicToSeed(this._mnemonic)
     this._seedNode = fromSeed(seed, this._network)
 
-    console.log(
-      'TACA ===> BitcoinJsWalletProvider, seedNode, this._mnemonic = ',
-      this._mnemonic,
-      ', this._seedNode = ',
-      this._seedNode
-    )
-
     return this._seedNode
   }
 
@@ -54,13 +47,6 @@ export default class BitcoinJsWalletProvider extends BitcoinWalletProvider(
 
     const baseNode = await this.seedNode()
     this._baseDerivationNode = baseNode.derivePath(this._baseDerivationPath)
-
-    console.log(
-      'TACA ===> BitcoinJsWalletProvider, baseDerivationNode, baseNode = ',
-      baseNode,
-      ', this._baseDerivationNode = ',
-      this._baseDerivationNode
-    )
 
     return this._baseDerivationNode
   }

@@ -227,19 +227,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         derivationPath: path
       })
 
-      console.log(
-        'TACA ===> YacoinWalletProvider, getDerivationPathAddress, baseDerivationNode = ',
-        baseDerivationNode,
-        ', subPath = ',
-        subPath,
-        ', publicKey = ',
-        publicKey,
-        ', address = ',
-        address,
-        ', addressObject = ',
-        addressObject
-      )
-
       this._derivationCache[path] = addressObject
       return addressObject
     }
@@ -248,15 +235,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       if (numAddresses < 1) {
         throw new Error('You must return at least one address')
       }
-
-      console.log(
-        'TACA ===> YacoinWalletProvider, getAddresses, startingIndex = ',
-        startingIndex,
-        ', numAddresses = ',
-        numAddresses,
-        ', change = ',
-        change
-      )
 
       const addresses = []
       const lastIndex = startingIndex + numAddresses
@@ -275,12 +253,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     async _getUsedUnusedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL, addressType: AddressSearchType) {
-      console.log(
-        'TACA ===> YacoinWalletProvider, _getUsedUnusedAddresses, numAddressPerCall = ',
-        numAddressPerCall,
-        ', addressType = ',
-        addressType
-      )
       const usedAddresses = []
       const addressCountMap = { change: 0, external: 0 }
       const numAddressAlreadyGet = { change: 0, external: 0 }
@@ -376,7 +348,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     async getUsedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
       return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
         ({ usedAddresses }) => {
-          console.log("TACA ===> YacoinWalletProvider, getUsedAddresses, usedAddresses = ", usedAddresses)
           return usedAddresses
         }
       )
@@ -387,14 +358,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       const key = change ? 'change' : 'external'
       return this._getUsedUnusedAddresses(numAddressPerCall, addressType).then(
         ({ unusedAddress }) => {
-          console.log(
-            'TACA ===> YacoinWalletProvider, getUnusedAddress, change = ',
-            change,
-            ', numAddressPerCall = ',
-            numAddressPerCall,
-            ', unusedAddress = ',
-            unusedAddress[key]
-          )
           return unusedAddress[key]
         }
       )

@@ -226,19 +226,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         derivationPath: path
       })
 
-      console.log(
-        'TACA ===> BitcoinWalletProvider, getDerivationPathAddress, baseDerivationNode = ',
-        baseDerivationNode,
-        ', subPath = ',
-        subPath,
-        ', publicKey = ',
-        publicKey,
-        ', address = ',
-        address,
-        ', addressObject = ',
-        addressObject
-      )
-
       this._derivationCache[path] = addressObject
       return addressObject
     }
@@ -247,15 +234,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       if (numAddresses < 1) {
         throw new Error('You must return at least one address')
       }
-
-      console.log(
-        'TACA ===> BitcoinWalletProvider, getAddresses, startingIndex = ',
-        startingIndex,
-        ', numAddresses = ',
-        numAddresses,
-        ', change = ',
-        change
-      )
 
       const addresses = []
       const lastIndex = startingIndex + numAddresses
@@ -274,12 +252,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     async _getUsedUnusedAddresses(numAddressPerCall = 20, addressType: AddressSearchType) {
-      console.log(
-        'TACA ===> BitcoinWalletProvider, _getUsedUnusedAddresses, numAddressPerCall = ',
-        numAddressPerCall,
-        ', addressType = ',
-        addressType
-      )
       const usedAddresses = []
       const addressCountMap = { change: 0, external: 0 }
       const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null }
@@ -355,12 +327,6 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     }
 
     async getUnusedAddress(change = false, numAddressPerCall = 20) {
-      console.log(
-        'TACA ===> BitcoinWalletProvider, getUnusedAddress, change = ',
-        change,
-        ', numAddressPerCall = ',
-        numAddressPerCall
-      )
       const addressType = change ? AddressSearchType.CHANGE : AddressSearchType.EXTERNAL
       const key = change ? 'change' : 'external'
       return this._getUsedUnusedAddresses(numAddressPerCall, addressType).then(
