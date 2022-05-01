@@ -42,6 +42,7 @@ export default class BitcoinWalletApiProvider extends BitcoinWalletProvider(
   }
 
   async sendTransaction(sendOptions: SendOptions) {
+    console.log("TACA ===> BitcoinWalletApiProvider.ts, calling wallet_sendTransaction")
     return this.request('wallet_sendTransaction', { ...sendOptions, value: sendOptions.value.toNumber() })
   }
 

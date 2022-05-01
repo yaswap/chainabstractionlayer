@@ -80,6 +80,8 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
         toBlock
       })
 
+      console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findAddressTransaction, page = ", page, ", data = ", data)
+
       const transactions: any[] = data.data.txs
       if (transactions.length === 0) return
 
@@ -87,7 +89,10 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
         .filter((tx) => tx.status === true)
         .map(this.normalizeTransactionResponse)
       const tx = normalizedTransactions.find(predicate)
-      if (tx) return this.ensureFeeInfo(tx)
+      if (tx) {
+        console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findAddressTransaction, FOUND TX = ", tx)
+        return this.ensureFeeInfo(tx)
+      }
 
       if (transactions.length < limit) return
     }
@@ -95,9 +100,13 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
 
   async findAddressEvent(type: string, contractAddress: string) {
     const data = await this.nodeGet(`/events/${type}/${contractAddress}`)
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findAddressEvent, type = ", type)
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findAddressEvent, contractAddress = ", contractAddress)
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findAddressEvent, data = ", data)
     const { tx } = data.data
 
     if (tx && tx.status === true) {
+      console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findAddressEvent, FOUND tx = ", tx)
       return this.ensureFeeInfo(this.normalizeTransactionResponse(tx))
     }
   }
@@ -105,6 +114,7 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
   async findInitiateSwapTransaction(swapParams: SwapParams) {
     this.validateSwapParams(swapParams)
 
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findInitiateSwapTransaction, swapParams = ", swapParams)
     return this.findAddressTransaction(addressToString(swapParams.refundAddress), (tx) =>
       this.getMethod('doesTransactionMatchInitiation')(swapParams, tx)
     )
@@ -121,10 +131,13 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
   async findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string) {
     this.validateSwapParams(swapParams)
 
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findClaimSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findClaimSwapTransaction, initiationTxHash = ", initiationTxHash)
     const initiationTransactionReceipt = await this.getMethod('getTransactionReceipt')(initiationTxHash)
     if (!initiationTransactionReceipt)
       throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
 
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findClaimSwapTransaction, calling findAddressEvent")
     const tx = await this.findAddressEvent('swapClaim', initiationTransactionReceipt.contractAddress)
 
     if (tx) {
@@ -136,12 +149,15 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
   async findRefundSwapTransaction(swapParams: SwapParams, initiationTxHash: string) {
     this.validateSwapParams(swapParams)
 
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findRefundSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findRefundSwapTransaction, initiationTxHash = ", initiationTxHash)
     const initiationTransactionReceipt: ethereum.TransactionReceipt = await this.getMethod('getTransactionReceipt')(
       initiationTxHash
     )
     if (!initiationTransactionReceipt)
       throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
 
+      console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findRefundSwapTransaction, calling findAddressEvent")
     return this.findAddressEvent('swapRefund', initiationTransactionReceipt.contractAddress)
   }
 
