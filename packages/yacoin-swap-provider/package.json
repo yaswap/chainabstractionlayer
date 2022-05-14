@@ -1,0 +1,48 @@
+{
+  "name": "@liquality/yacoin-swap-provider",
+  "version": "1.0.0",
+  "description": "",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/lib/index.d.ts",
+  "directories": {
+    "dist": "dist",
+    "src": "lib"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "build": "webpack --config ../../webpack/webpack.config.js"
+  },
+  "author": "Liquality <info@liquality.io>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.12.1",
+    "@liquality/yacoin-networks": "^1.0.0",
+    "@liquality/yacoin-utils": "^1.0.0",
+    "@liquality/errors": "^1.13.7",
+    "@liquality/provider": "^1.13.7",
+    "@liquality/types": "^1.13.7",
+    "@liquality/utils": "^1.13.7",
+    "@types/node": "^14.14.36",
+    "bignumber.js": "^9.0.0",
+    "yacoinjs-lib": "file:/home/chaunguyen/project/yacoin/yacoinjs-lib"
+  },
+  "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liquality/chainabstractionlayer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liquality/chainabstractionlayer/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

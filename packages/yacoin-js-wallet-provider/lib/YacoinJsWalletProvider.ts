@@ -131,6 +131,11 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
     return this._buildTransaction(_outputs, feePerByte, inputs)
   }
 
+  async signTx(hash: Buffer, derivationPath: string) {
+    const keyPair = await this.keyPair(derivationPath)
+    return keyPair.sign(hash)
+  }
+
   async signPSBT(data: string, inputs: yacoin.PsbtInputTarget[]) {
     const psbt = Psbt.fromBase64(data, { network: this._network })
     for (const input of inputs) {

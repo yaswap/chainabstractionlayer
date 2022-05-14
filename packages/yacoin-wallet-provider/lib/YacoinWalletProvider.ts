@@ -66,6 +66,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       feePerByte?: number
     ): Promise<{ hex: string; fee: number }>
     abstract signPSBT(data: string, inputs: yacoin.PsbtInputTarget[]): Promise<string>
+    abstract signTx(hash: Buffer, derivationPath: string): Promise<Buffer>
     abstract signBatchP2SHTransaction(
       inputs: [{ inputTxHex: string; index: number; vout: any; outputScript: Buffer }],
       addresses: string,
