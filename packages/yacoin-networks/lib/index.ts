@@ -13,7 +13,7 @@ const yacoin: YacoinNetwork = {
 const yacoin_testnet: YacoinNetwork = {
   name: 'yacoin_testnet',
   ...networks.testnet,
-  coinType: '1',
+  coinType: '0',
   isTestnet: true
 }
 
