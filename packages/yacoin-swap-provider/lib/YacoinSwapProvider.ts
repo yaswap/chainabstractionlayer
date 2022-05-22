@@ -220,8 +220,11 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     const signatureHash = tx.hashForSignature(0, redeemScript, hashType)
 
     // Sign transaction
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, address = ", address)
     const walletAddress: Address = await this.getMethod('getWalletAddress')(address)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling signTx, signatureHash = ", signatureHash)
     const signedSignatureHash = await this.getMethod('signTx')(signatureHash, walletAddress.derivationPath)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, signedSignatureHash = ", signedSignatureHash)
     const swapInput = this.getSwapInput(
       bScript.signature.encode(signedSignatureHash, hashType),
       Buffer.from(walletAddress.publicKey, 'hex'),
@@ -241,6 +244,7 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     // END CHANGE
 
     const hex = tx.toHex()
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling sendRawTransaction for tx = ", hex)
     await this.getMethod('sendRawTransaction')(hex)
     return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee)
   }
