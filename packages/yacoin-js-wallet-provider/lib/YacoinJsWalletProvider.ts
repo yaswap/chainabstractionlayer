@@ -55,6 +55,7 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
     console.log("TACA ===> YacoinJsWalletProvider.ts, keyPair, derivationPath = ", derivationPath)
     console.log("TACA ===> YacoinJsWalletProvider.ts, keyPair, this._network = ", this._network)
     const wif = await this._toWIF(derivationPath)
+    console.log("TACA ===> YacoinJsWalletProvider.ts, keyPair, wif = ", wif)
     return ECPair.fromWIF(wif, this._network)
   }
 
@@ -133,15 +134,15 @@ export default class YacoinJsWalletProvider extends YacoinWalletProvider(
     return this._buildTransaction(_outputs, feePerByte, inputs)
   }
 
-  async signTx(hash: Buffer, derivationPath: string) {
+  async signTx(transaction: string, hash: string, derivationPath: string, txfee: number) {
     console.log("TACA ===> YacoinJsWalletProvider.ts, signTx, hash = ", hash)
     console.log("TACA ===> YacoinJsWalletProvider.ts, signTx, derivationPath = ", derivationPath)
     console.log("TACA ===> YacoinJsWalletProvider.ts, signTx calling keyPair")
     const keyPair = await this.keyPair(derivationPath)
     console.log("TACA ===> YacoinJsWalletProvider.ts, signTx calling sign")
-    const result = keyPair.sign(hash)
+    const result = keyPair.sign(Buffer.from(hash, 'hex'))
     console.log("TACA ===> YacoinJsWalletProvider.ts, return result = ", result)
-    return result
+    return result.toString('hex')
   }
 
   async signPSBT(data: string, inputs: yacoin.PsbtInputTarget[]) {

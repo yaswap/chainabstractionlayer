@@ -17,7 +17,7 @@ import {
 } from '@liquality/utils'
 import { YacoinNetwork } from '@liquality/yacoin-networks'
 
-import { Transaction as TransactionYacoinJs, TransactionBuilder, script as bScript, payments } from 'yacoinjs-lib'
+import { Transaction as TransactionYacoinJs, script as bScript, address as AddressYacoinJs, payments } from 'yacoinjs-lib'
 
 interface YacoinSwapProviderOptions {
   network: YacoinNetwork
@@ -206,27 +206,33 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     }
 
     // BEGIN CHANGE
-    var txb = new TransactionBuilder(network)
-    if (!isClaim) {
-      txb.setLockTime(expiration)
-    }
-    // Note: nSequence MUST be <= 0xfffffffe otherwise LockTime is ignored, and is immediately spendable.
-    txb.addInput(initiationTxHash, swapVout.n, 0)
-    txb.addOutput(address, swapValue - txfee)
-
-    const tx = txb.buildIncomplete()
-    const redeemScript = paymentVariant.redeem.output
     const hashType = TransactionYacoinJs.SIGHASH_ALL
-    const signatureHash = tx.hashForSignature(0, redeemScript, hashType)
+    const redeemScript = paymentVariant.redeem.output
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, redeemScript = ", redeemScript)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, initiationTxHash = ", initiationTxHash)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, swapVout.n = ", swapVout.n)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, address = ", address)
+
+    var tx = new TransactionYacoinJs()
+
+    if (!isClaim) {
+      tx.locktime = expiration
+    }
+    tx.addInput(Buffer.from(initiationTxHash, 'hex').reverse(), swapVout.n, 0)
+    tx.addOutput(AddressYacoinJs.toOutputScript(address, network), swapValue - txfee)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, tx = ", tx)
+    let signatureHash = tx.hashForSignature(0, redeemScript, hashType)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, signatureHash = ", signatureHash)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, unsigned tx hex = ", tx.toHex())
 
     // Sign transaction
     console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, address = ", address)
     const walletAddress: Address = await this.getMethod('getWalletAddress')(address)
     console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling signTx, signatureHash = ", signatureHash)
-    const signedSignatureHash = await this.getMethod('signTx')(signatureHash, walletAddress.derivationPath)
+    const signedSignatureHash = await this.getMethod('signTx')(tx.toHex(), signatureHash.toString('hex'), walletAddress.derivationPath, txfee)
     console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, signedSignatureHash = ", signedSignatureHash)
     const swapInput = this.getSwapInput(
-      bScript.signature.encode(signedSignatureHash, hashType),
+      bScript.signature.encode(Buffer.from(signedSignatureHash, 'hex'), hashType),
       Buffer.from(walletAddress.publicKey, 'hex'),
       isClaim,
       secret
@@ -244,8 +250,9 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     // END CHANGE
 
     const hex = tx.toHex()
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling sendRawTransaction for tx = ", hex)
-    await this.getMethod('sendRawTransaction')(hex)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling sendRawTransaction for signed tx = ", hex)
+    const result = await this.getMethod('sendRawTransaction')(`data=${hex}`)
+    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, result = ", result)
     return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee)
   }
 
