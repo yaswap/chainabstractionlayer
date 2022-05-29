@@ -260,15 +260,15 @@ export default class EthereumSwapProvider extends Provider implements Partial<Sw
     this.validateSwapParams(swapParams)
 
 
-    console.log("TACA ===> EthereumSwapProvider.ts, findInitiateSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> EthereumSwapProvider.ts, findInitiateSwapTransaction, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> EthereumSwapProvider.ts, findInitiateSwapTransaction, blockNumber = ", blockNumber)
+    console.log("TACA ===> EthereumSwapProvider.ts, findClaimSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumSwapProvider.ts, findClaimSwapTransaction, initiationTxHash = ", initiationTxHash)
+    console.log("TACA ===> EthereumSwapProvider.ts, findClaimSwapTransaction, blockNumber = ", blockNumber)
 
     const initiationTransactionReceipt = await this.getMethod('getTransactionReceipt')(initiationTxHash)
     if (!initiationTransactionReceipt)
       throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
 
-      console.log("TACA ===> EthereumSwapProvider.ts, findInitiateSwapTransaction, calling findSwapTransaction")
+      console.log("TACA ===> EthereumSwapProvider.ts, findClaimSwapTransaction, calling findSwapTransaction")
     const transaction = await this.findSwapTransaction(blockNumber, (transaction) =>
       this.doesTransactionMatchClaim(transaction, initiationTransactionReceipt)
     )
@@ -280,7 +280,7 @@ export default class EthereumSwapProvider extends Provider implements Partial<Sw
     if (transactionReceipt && transactionReceipt.status === '0x1') {
       const secret = await this.getSwapSecret(transaction.hash)
       validateSecretAndHash(secret, swapParams.secretHash)
-      console.log("TACA ===> EthereumSwapProvider.ts, findInitiateSwapTransaction, secret = ", secret)
+      console.log("TACA ===> EthereumSwapProvider.ts, findClaimSwapTransaction, secret = ", secret)
       transaction.secret = secret
       return transaction
     }

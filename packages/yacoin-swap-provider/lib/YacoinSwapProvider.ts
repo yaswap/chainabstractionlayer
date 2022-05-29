@@ -415,8 +415,10 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
       if (!swapInput) {
         throw new Error('Claim input missing')
       }
+      console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, swapInput = ", swapInput)
       const inputScript = this.getInputScript(swapInput)
       const secret = inputScript[2] as string
+      console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, secret = ", secret)
       validateSecretAndHash(secret, swapParams.secretHash)
       return {
         ...claimSwapTransaction,

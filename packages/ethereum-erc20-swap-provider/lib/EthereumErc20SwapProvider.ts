@@ -247,8 +247,12 @@ export default class EthereumErc20SwapProvider extends Provider implements Parti
   async findInitiateSwapTransaction(swapParams: SwapParams, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findInitiateSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findInitiateSwapTransaction, blockNumber = ", blockNumber)
+
     const block: Block<Transaction<ethereum.Transaction>> = await this.getMethod('getBlockByNumber')(blockNumber, true)
     if (!block) throw new BlockNotFoundError(`Block #${blockNumber} is not available`)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findInitiateSwapTransaction, already found block ", blockNumber)
 
     return block.transactions.find((transaction) => this.doesTransactionMatchInitiation(swapParams, transaction))
   }
@@ -256,8 +260,14 @@ export default class EthereumErc20SwapProvider extends Provider implements Parti
   async findFundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findFundSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findFundSwapTransaction, initiationTxHash = ", initiationTxHash)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findFundSwapTransaction, blockNumber = ", blockNumber)
+
     const block: Block<Transaction<ethereum.Transaction>> = await this.getMethod('getBlockByNumber')(blockNumber, true)
     if (!block) throw new BlockNotFoundError(`Block #${blockNumber} is not available`)
+
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findFundSwapTransaction, already found block ", blockNumber)
 
     const initiationTransactionReceipt = await this.getMethod('getTransactionReceipt')(initiationTxHash)
     if (!initiationTransactionReceipt)
@@ -269,17 +279,24 @@ export default class EthereumErc20SwapProvider extends Provider implements Parti
       swapParams.value
     )
 
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findFundSwapTransaction, contractData = ", contractData)
+
     const tx = block.transactions.find((transaction) =>
       this.doesTransactionMatchFunding(transaction, erc20TokenContractAddress, contractData)
     )
 
     if (!tx) throw new TxNotFoundError(`Funding transaction is not available: ${initiationTxHash}`)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findFundSwapTransaction, tx = ", tx)
 
     return tx
   }
 
   async findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
+
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findClaimSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findClaimSwapTransaction, initiationTxHash = ", initiationTxHash)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findClaimSwapTransaction, blockNumber = ", blockNumber)
 
     const block: Block<Transaction<ethereum.Transaction>> = await this.getMethod('getBlockByNumber')(blockNumber, true)
     if (!block) throw new BlockNotFoundError(`Block #${blockNumber} is not available`)
@@ -300,6 +317,7 @@ export default class EthereumErc20SwapProvider extends Provider implements Parti
 
     if (transactionReceipt.status === '0x1') {
       const secret = await this.getSwapSecret(transaction.hash)
+      console.log("TACA ===> EthereumErc20SwapProvider.ts, findClaimSwapTransaction, secret = ", secret)
       validateSecretAndHash(secret, swapParams.secretHash)
       transaction.secret = secret
       return transaction
@@ -308,6 +326,10 @@ export default class EthereumErc20SwapProvider extends Provider implements Parti
 
   async findRefundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
+
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findRefundSwapTransaction, swapParams = ", swapParams)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findRefundSwapTransaction, initiationTxHash = ", initiationTxHash)
+    console.log("TACA ===> EthereumErc20SwapProvider.ts, findRefundSwapTransaction, blockNumber = ", blockNumber)
 
     const block: Block<Transaction<ethereum.Transaction>> = await this.getMethod('getBlockByNumber')(blockNumber, true)
     if (!block) throw new BlockNotFoundError(`Block #${blockNumber} is not available`)
