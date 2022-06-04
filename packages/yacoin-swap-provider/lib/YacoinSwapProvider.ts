@@ -109,11 +109,8 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     this.validateSwapParams(swapParams)
 
     const swapOutput = this.getSwapOutput(swapParams)
-    console.log("TACA ===> YacoinSwapProvider.ts, initiateSwap, swapOutput = ", swapOutput)
     // BY DEFAULT, USING SEGWIT ADDRESS
     const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address
-    console.log("TACA ===> YacoinSwapProvider.ts, initiateSwap, address = ", address)
-    console.log("TACA ===> YacoinSwapProvider.ts, calling sendTransaction")
     return this.client.chain.sendTransaction({
       to: address,
       value: swapParams.value,
@@ -208,10 +205,6 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     // BEGIN CHANGE
     const hashType = TransactionYacoinJs.SIGHASH_ALL
     const redeemScript = paymentVariant.redeem.output
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, redeemScript = ", redeemScript)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, swapVout.n = ", swapVout.n)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, address = ", address)
 
     var tx = new TransactionYacoinJs()
 
@@ -220,17 +213,11 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     }
     tx.addInput(Buffer.from(initiationTxHash, 'hex').reverse(), swapVout.n, 0)
     tx.addOutput(AddressYacoinJs.toOutputScript(address, network), swapValue - txfee)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, tx = ", tx)
     let signatureHash = tx.hashForSignature(0, redeemScript, hashType)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, signatureHash = ", signatureHash)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, unsigned tx hex = ", tx.toHex())
 
     // Sign transaction
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, address = ", address)
     const walletAddress: Address = await this.getMethod('getWalletAddress')(address)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling signTx, signatureHash = ", signatureHash)
     const signedSignatureHash = await this.getMethod('signTx')(tx.toHex(), signatureHash.toString('hex'), walletAddress.derivationPath, txfee)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, signedSignatureHash = ", signedSignatureHash)
     const swapInput = this.getSwapInput(
       bScript.signature.encode(Buffer.from(signedSignatureHash, 'hex'), hashType),
       Buffer.from(walletAddress.publicKey, 'hex'),
@@ -250,9 +237,7 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     // END CHANGE
 
     const hex = tx.toHex()
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, calling sendRawTransaction for signed tx = ", hex)
-    const result = await this.getMethod('sendRawTransaction')(`data=${hex}`)
-    console.log("TACA ===> YacoinSwapProvider.ts, _redeemSwapOutput, result = ", result)
+    await this.getMethod('sendRawTransaction')(`data=${hex}`)
     return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee)
   }
 
@@ -330,12 +315,7 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
   }
 
   doesTransactionMatchRedeem(initiationTxHash: string, tx: Transaction<yacoin.Transaction>, isRefund: boolean) {
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, tx = ", tx)
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, isRefund = ", isRefund)
-
     const swapInput = tx._raw.vin.find((vin) => vin.txid === initiationTxHash)
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, swapInput = ", swapInput)
     if (!swapInput) return false
     const inputScript = this.getInputScript(swapInput)
     if (!inputScript) return false
@@ -348,7 +328,6 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
   }
 
   doesTransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<yacoin.Transaction>) {
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchInitiation, transaction = ", transaction)
     const swapOutput = this.getSwapOutput(swapParams)
     const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput)
     const vout = transaction._raw.vout.find((vout) =>
@@ -358,9 +337,6 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
           new BigNumber(vout.value).times(1e6).eq(new BigNumber(swapParams.value))
       )
     )
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchInitiation, swapOutput = ", swapOutput)
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchInitiation, swapPaymentVariants = ", swapPaymentVariants)
-    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchInitiation, vout = ", vout)
     return Boolean(vout)
   }
 
@@ -377,19 +353,15 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
     predicate: (tx: Transaction<yacoin.Transaction>) => boolean
   ) {
     // It doesn't go here, it goes to YacoinEsploraSwapFindProvider
-    console.log("TACA ===> YacoinSwapProvider.ts, findSwapTransaction, blockNumber = ", blockNumber)
     // TODO: Are mempool TXs possible?
     const block = await this.getMethod('getBlockByNumber')(blockNumber, true)
     const swapTransaction = block.transactions.find(predicate)
-    console.log("TACA ===> YacoinSwapProvider.ts, findSwapTransaction, swapTransaction = ", swapTransaction)
     return swapTransaction
   }
 
   async findInitiateSwapTransaction(swapParams: SwapParams, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> YacoinSwapProvider.ts, findInitiateSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> YacoinSwapProvider.ts, findInitiateSwapTransaction, blockNumber = ", blockNumber)
     return this.getMethod('findSwapTransaction', false)(
       swapParams,
       blockNumber,
@@ -400,9 +372,6 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
   async findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, blockNumber = ", blockNumber)
     const claimSwapTransaction: Transaction<yacoin.Transaction> = await this.getMethod(
       'findSwapTransaction',
       false
@@ -415,10 +384,8 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
       if (!swapInput) {
         throw new Error('Claim input missing')
       }
-      console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, swapInput = ", swapInput)
       const inputScript = this.getInputScript(swapInput)
       const secret = inputScript[2] as string
-      console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, secret = ", secret)
       validateSecretAndHash(secret, swapParams.secretHash)
       return {
         ...claimSwapTransaction,
@@ -430,9 +397,6 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
   async findRefundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> YacoinSwapProvider.ts, findRefundSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> YacoinSwapProvider.ts, findRefundSwapTransaction, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> YacoinSwapProvider.ts, findRefundSwapTransaction, blockNumber = ", blockNumber)
     const refundSwapTransaction = await this.getMethod('findSwapTransaction', false)(
       swapParams,
       blockNumber,

@@ -119,10 +119,7 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
     this.validateSwapParams(swapParams)
 
     const swapOutput = this.getSwapOutput(swapParams)
-    console.log("TACA ===> BitcoinSwapProvider.ts, initiateSwap, swapOutput = ", swapOutput)
     const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address
-    console.log("TACA ===> BitcoinSwapProvider.ts, initiateSwap, address = ", address)
-    console.log("TACA ===> BitcoinSwapProvider.ts, calling sendTransaction")
     return this.client.chain.sendTransaction({
       to: address,
       value: swapParams.value,
@@ -362,12 +359,7 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
   }
 
   doesTransactionMatchRedeem(initiationTxHash: string, tx: Transaction<bitcoin.Transaction>, isRefund: boolean) {
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchRedeem, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchRedeem, tx = ", tx)
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchRedeem, isRefund = ", isRefund)
-
     const swapInput = tx._raw.vin.find((vin) => vin.txid === initiationTxHash)
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchRedeem, swapInput = ", swapInput)
     if (!swapInput) return false
     const inputScript = this.getInputScript(swapInput)
     if (!inputScript) return false
@@ -380,7 +372,6 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
   }
 
   doesTransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<bitcoin.Transaction>) {
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchInitiation, transaction = ", transaction)
     const swapOutput = this.getSwapOutput(swapParams)
     const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput)
     const vout = transaction._raw.vout.find((vout) =>
@@ -390,9 +381,6 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
           new BigNumber(vout.value).times(1e8).eq(new BigNumber(swapParams.value))
       )
     )
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchInitiation, swapOutput = ", swapOutput)
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchInitiation, swapPaymentVariants = ", swapPaymentVariants)
-    console.log("TACA ===> BitcoinSwapProvider.ts, doesTransactionMatchInitiation, vout = ", vout)
     return Boolean(vout)
   }
 
@@ -409,19 +397,15 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
     predicate: (tx: Transaction<bitcoin.Transaction>) => boolean
   ) {
     // It doesn't go here, it goes to BitcoinEsplorarSwapFindProvider
-    console.log("TACA ===> BitcoinSwapProvider.ts, findSwapTransaction, blockNumber = ", blockNumber)
     // TODO: Are mempool TXs possible?
     const block = await this.getMethod('getBlockByNumber')(blockNumber, true)
     const swapTransaction = block.transactions.find(predicate)
-    console.log("TACA ===> BitcoinSwapProvider.ts, findSwapTransaction, swapTransaction = ", swapTransaction)
     return swapTransaction
   }
 
   async findInitiateSwapTransaction(swapParams: SwapParams, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> BitcoinSwapProvider.ts, findInitiateSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> BitcoinSwapProvider.ts, findInitiateSwapTransaction, blockNumber = ", blockNumber)
     return this.getMethod('findSwapTransaction', false)(
       swapParams,
       blockNumber,
@@ -432,9 +416,6 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
   async findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> BitcoinSwapProvider.ts, findClaimSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> BitcoinSwapProvider.ts, findClaimSwapTransaction, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> BitcoinSwapProvider.ts, findClaimSwapTransaction, blockNumber = ", blockNumber)
     const claimSwapTransaction: Transaction<bitcoin.Transaction> = await this.getMethod(
       'findSwapTransaction',
       false
@@ -460,9 +441,6 @@ export default class BitcoinSwapProvider extends Provider implements Partial<Swa
   async findRefundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> BitcoinSwapProvider.ts, findRefundSwapTransaction, swapParams = ", swapParams)
-    console.log("TACA ===> BitcoinSwapProvider.ts, findRefundSwapTransaction, initiationTxHash = ", initiationTxHash)
-    console.log("TACA ===> BitcoinSwapProvider.ts, findRefundSwapTransaction, blockNumber = ", blockNumber)
     const refundSwapTransaction = await this.getMethod('findSwapTransaction', false)(
       swapParams,
       blockNumber,

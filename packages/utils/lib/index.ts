@@ -71,7 +71,6 @@ function validateSecretAndHash(secret: string, secretHash: string) {
   validateSecretHash(secretHash)
 
   const computedSecretHash = Buffer.from(sha256(secret), 'hex')
-  console.log("TACA ===> validateSecretAndHash, computedSecretHash = ", computedSecretHash)
   if (!computedSecretHash.equals(Buffer.from(secretHash, 'hex'))) {
     throw new InvalidSecretError(`Invalid secret: Does not match expected secret hash: ${secretHash}`)
   }

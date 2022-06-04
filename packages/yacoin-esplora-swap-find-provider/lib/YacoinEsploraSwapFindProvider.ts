@@ -19,19 +19,13 @@ export default class YacoinEsploraSwapFindProvider extends NodeProvider {
   async findAddressTransaction(address: string, predicate: TransactionMatchesFunction) {
     // TODO: This does not go through pages as swap addresses have at most 2 transactions
     // Investigate whether retrieving more transactions is required.
-    console.log('TACA ===> YacoinEsploraSwapFindProvider.ts, findAddressTransaction, address = ', address)
     const addressInfo = await this.nodeGet(`/ext/getaddress/${address}`)
-    console.log('TACA ===> YacoinEsploraSwapFindProvider.ts, findAddressTransaction, addressInfo = ', addressInfo)
 
     for (const transaction of addressInfo.last_txs) {
       const formattedTransaction: Transaction<yacoin.Transaction> = await this.getMethod('getTransaction')(
         transaction.addresses
       )
       if (predicate(formattedTransaction)) {
-        console.log(
-          'TACA ===> YacoinEsploraSwapFindProvider.ts, findAddressTransaction, FOUND TRANSACTION = ',
-          formattedTransaction
-        )
         return formattedTransaction
       }
     }
@@ -40,14 +34,8 @@ export default class YacoinEsploraSwapFindProvider extends NodeProvider {
   async findSwapTransaction(swapParams: SwapParams, blockNumber: number, predicate: TransactionMatchesFunction) {
     const swapOutput: Buffer = this.getMethod('getSwapOutput')(swapParams)
     const paymentVariants: PaymentVariants = this.getMethod('getSwapPaymentVariants')(swapOutput)
-    console.log('TACA ===> YacoinEsploraSwapFindProvider.ts, findSwapTransaction, swapOutput = ', swapOutput)
-    console.log('TACA ===> YacoinEsploraSwapFindProvider.ts, findSwapTransaction, paymentVariants = ', paymentVariants)
     for (const paymentVariant of Object.values(paymentVariants)) {
       const addressTransaction = this.findAddressTransaction(paymentVariant.address, predicate)
-      console.log(
-        'TACA ===> YacoinEsploraSwapFindProvider.ts, findSwapTransaction, addressTransaction = ',
-        addressTransaction
-      )
       if (addressTransaction) return addressTransaction
     }
   }

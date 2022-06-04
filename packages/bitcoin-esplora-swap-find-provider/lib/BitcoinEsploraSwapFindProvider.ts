@@ -21,9 +21,7 @@ export default class BitcoinEsploraSwapFindProvider extends NodeProvider {
   async findAddressTransaction(address: string, currentHeight: number, predicate: TransactionMatchesFunction) {
     // TODO: This does not go through pages as swap addresses have at most 2 transactions
     // Investigate whether retrieving more transactions is required.
-    console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findAddressTransaction, address = ", address)
     const transactions = await this.nodeGet(`/address/${address}/txs`)
-    console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findAddressTransaction, transactions = ", transactions)
 
     for (const transaction of transactions) {
       const formattedTransaction: Transaction<bitcoin.Transaction> = await this.getMethod('formatTransaction')(
@@ -31,7 +29,6 @@ export default class BitcoinEsploraSwapFindProvider extends NodeProvider {
         currentHeight
       )
       if (predicate(formattedTransaction)) {
-        console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findAddressTransaction, FOUND TRANSACTION = ", formattedTransaction)
         return formattedTransaction
       }
     }
@@ -41,12 +38,8 @@ export default class BitcoinEsploraSwapFindProvider extends NodeProvider {
     const currentHeight: number = await this.getMethod('getBlockHeight')()
     const swapOutput: Buffer = this.getMethod('getSwapOutput')(swapParams)
     const paymentVariants: PaymentVariants = this.getMethod('getSwapPaymentVariants')(swapOutput)
-    console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findSwapTransaction, currentHeight = ", currentHeight)
-    console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findSwapTransaction, swapOutput = ", swapOutput)
-    console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findSwapTransaction, paymentVariants = ", paymentVariants)
     for (const paymentVariant of Object.values(paymentVariants)) {
       const addressTransaction = this.findAddressTransaction(paymentVariant.address, currentHeight, predicate)
-      console.log("TACA ===> BitcoinEsploraSwapFindProvider.ts, findSwapTransaction, addressTransaction = ", addressTransaction)
       if (addressTransaction) return addressTransaction
     }
   }

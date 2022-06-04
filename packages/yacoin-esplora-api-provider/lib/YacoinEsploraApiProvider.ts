@@ -189,7 +189,6 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async sendRawTransaction(rawTransaction: string): Promise<string> {
-    console.log("TACA ===> YacoinEsploraApiProvider.ts, sendRawTransaction, rawTransaction = ", rawTransaction)
     return this.nodePost('/tx', rawTransaction)
   }
 }

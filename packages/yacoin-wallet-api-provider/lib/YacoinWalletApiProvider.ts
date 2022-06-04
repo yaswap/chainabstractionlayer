@@ -45,7 +45,6 @@ export default class YacoinWalletApiProvider extends YacoinWalletProvider(
   }
 
   async sendTransaction(sendOptions: SendOptions) {
-    console.log("TACA ===> YacoinWalletApiProvider.ts, calling wallet_sendTransaction")
     return this.request('wallet_sendTransaction', { ...sendOptions, value: sendOptions.value.toNumber() })
   }
 
