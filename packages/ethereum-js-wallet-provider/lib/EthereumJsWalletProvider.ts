@@ -149,7 +149,9 @@ export default class EthereumJsWalletProvider extends WalletProvider {
     }
 
     const txData = buildTransaction(txOptions)
+    console.log("TACA ===> EthereumJsWalletProvider.ts, sendTransaction, txData = ", txData)
     const gas = await this.getMethod('estimateGas')(txData)
+    console.log("TACA ===> EthereumJsWalletProvider.ts, sendTransaction, gas = ", gas)
     txData.gas = numberToHex(gas)
 
     const serializedTx = await this.signTransaction(txData)

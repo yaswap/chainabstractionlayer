@@ -315,9 +315,12 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
   }
 
   doesTransactionMatchRedeem(initiationTxHash: string, tx: Transaction<yacoin.Transaction>, isRefund: boolean) {
+    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, initiationTxHash = ", initiationTxHash, ", tx = ", tx)
     const swapInput = tx._raw.vin.find((vin) => vin.txid === initiationTxHash)
+    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, swapInput = ", swapInput)
     if (!swapInput) return false
     const inputScript = this.getInputScript(swapInput)
+    console.log("TACA ===> YacoinSwapProvider.ts, doesTransactionMatchRedeem, inputScript = ", inputScript)
     if (!inputScript) return false
     if (isRefund) {
       if (inputScript.length !== 4) return false // 4 because there is 4 parameters: signature, pubkey, false, original redeemscript
@@ -370,14 +373,20 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
   }
 
   async findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber: number) {
-    this.validateSwapParams(swapParams)
+    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, swapParams = ", swapParams, ", initiationTxHash = ", initiationTxHash)
 
+    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, calling validateSwapParams")
+    this.validateSwapParams(swapParams)
+    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, finished calling validateSwapParams")
+
+    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, calling findSwapTransaction")
     const claimSwapTransaction: Transaction<yacoin.Transaction> = await this.getMethod(
       'findSwapTransaction',
       false
     )(swapParams, blockNumber, (tx: Transaction<yacoin.Transaction>) =>
       this.doesTransactionMatchRedeem(initiationTxHash, tx, false)
     )
+    console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, finished calling findSwapTransaction, claimSwapTransaction = ", claimSwapTransaction)
 
     if (claimSwapTransaction) {
       const swapInput = claimSwapTransaction._raw.vin.find((vin) => vin.txid === initiationTxHash)
@@ -385,6 +394,7 @@ export default class YacoinSwapProvider extends Provider implements Partial<Swap
         throw new Error('Claim input missing')
       }
       const inputScript = this.getInputScript(swapInput)
+      console.log("TACA ===> YacoinSwapProvider.ts, findClaimSwapTransaction, inputScript = ", inputScript)
       const secret = inputScript[2] as string
       validateSecretAndHash(secret, swapParams.secretHash)
       return {
