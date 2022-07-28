@@ -144,9 +144,6 @@ export default class EthereumSwapProvider extends Provider implements Partial<Sw
     this.validateSwapParams(swapParams)
 
     const bytecode = this.createSwapScript(swapParams)
-    console.log("TACA ===> EthereumSwapProvider.ts, initiateSwap, swapParams = ", swapParams)
-    console.log("TACA ===> EthereumSwapProvider.ts, initiateSwap, bytecode = ", bytecode)
-    console.log("TACA ===> EthereumSwapProvider.ts, initiateSwap, gasPrice = ", gasPrice)
     return this.client.chain.sendTransaction({ to: null, value: swapParams.value, data: bytecode, fee: gasPrice })
   }
 
@@ -192,8 +189,6 @@ export default class EthereumSwapProvider extends Provider implements Partial<Sw
 
   doesTransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<ethereum.Transaction>) {
     const data = this.createSwapScript(swapParams)
-    console.log("TACA ===> EthereumSwapProvider.ts, doesTransactionMatchInitiation, data = ", data)
-    console.log("TACA ===> EthereumSwapProvider.ts, doesTransactionMatchInitiation, transaction = ", transaction)
     return (
       transaction._raw.to === null &&
       remove0x(transaction._raw.input) === data &&

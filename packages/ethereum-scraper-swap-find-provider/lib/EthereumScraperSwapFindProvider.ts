@@ -107,7 +107,6 @@ export default class EthereumScraperSwapFindProvider extends NodeProvider implem
   async findInitiateSwapTransaction(swapParams: SwapParams) {
     this.validateSwapParams(swapParams)
 
-    console.log("TACA ===> EthereumScraperSwapFindProvider.ts, findInitiateSwapTransaction, swapParams = ", swapParams)
     return this.findAddressTransaction(addressToString(swapParams.refundAddress), (tx) =>
       this.getMethod('doesTransactionMatchInitiation')(swapParams, tx)
     )

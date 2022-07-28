@@ -38,7 +38,6 @@ export default class EthereumEIP1559FeeProvider extends Provider implements FeeP
       confirmationTimeByPriorityFee
     } = await suggestFees(this._jsonRpcProvider)
 
-    console.log("TACA ===> EthereumEIP1559FeeProvider.ts, getFees, this._jsonRpcProvider = ", this._jsonRpcProvider)
     const bigCurrentBaseFee = toGwei(currentBaseFee)
     const bigBaseFeeSuggestion = toGwei(baseFeeSuggestion)
     const slowMaxPriorityFeePerGas = toGwei(confirmationTimeByPriorityFee[45])
@@ -79,7 +78,6 @@ export default class EthereumEIP1559FeeProvider extends Provider implements FeeP
         }
       }
     }
-    console.log("TACA ===> EthereumEIP1559FeeProvider.ts, getFees, fees = ", fees)
     return fees
   }
 }
