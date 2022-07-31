@@ -9,6 +9,7 @@ export default class NodeProvider extends Provider {
   constructor(config: AxiosRequestConfig) {
     super()
     this._node = axios.create(config)
+    this._node.defaults.timeout = 10000;
   }
 
   _handleNodeError(e: Error, context: any) {
