@@ -264,6 +264,7 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
       let addressIndex = 0
       let changeAddresses: Address[] = []
       let externalAddresses: Address[] = []
+      let loop = 1
 
       /* eslint-disable no-unmodified-loop-condition */
       while (
@@ -278,12 +279,17 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
         /* eslint-enable no-unmodified-loop-condition */
         addrList = []
 
+        console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, loop ", loop, ", addressCountMap = ", addressCountMap, ", numAddressAlreadyGet = ", numAddressAlreadyGet)
+        loop += 1
+
         if (
           (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.CHANGE) &&
           addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT
         ) {
           // Scanning for change addr
+          console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, Scanning for change addr")
           changeAddresses = await this.getAddresses(addressIndex, numAddressPerCall, true)
+          console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, changeAddresses = ", changeAddresses)
           addrList = addrList.concat(changeAddresses)
           numAddressAlreadyGet['change'] += numAddressPerCall
         } else {
@@ -295,12 +301,16 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
           addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT
         ) {
           // Scanning for non change addr
+          console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, Scanning for external addr")
           externalAddresses = await this.getAddresses(addressIndex, numAddressPerCall, false)
+          console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, externalAddresses = ", externalAddresses)
           addrList = addrList.concat(externalAddresses)
           numAddressAlreadyGet['external'] += numAddressPerCall
         }
 
+        console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, getting AddressTransactionCounts")
         const transactionCounts: yacoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
+        console.log("TACA ===> YacoinWalletProvider.ts, _getUsedUnusedAddresses, transactionCounts = ", transactionCounts)
 
         for (const address of addrList) {
             // Remove duplicate addresses
@@ -357,8 +367,10 @@ export default <T extends Constructor<Provider>>(superclass: T) => {
     async getUnusedAddress(change = false, numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
       const addressType = change ? AddressSearchType.CHANGE : AddressSearchType.EXTERNAL
       const key = change ? 'change' : 'external'
+      console.log("TACA ===> YacoinWalletProvider.ts, getUnusedAddress, numAddressPerCall = ", numAddressPerCall, ", addressType = ", addressType)
       return this._getUsedUnusedAddresses(numAddressPerCall, addressType).then(
         ({ unusedAddress }) => {
+          console.log("TACA ===> YacoinWalletProvider.ts, getUnusedAddress, result unusedAddress = ", unusedAddress)
           return unusedAddress[key]
         }
       )
