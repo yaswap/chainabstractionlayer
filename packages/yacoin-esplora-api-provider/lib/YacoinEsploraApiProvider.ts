@@ -64,9 +64,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async _getUnspentTransactions(address: string): Promise<yacoin.UTXO[]> {
-    console.log("TACA ===> YacoinEsploraApiProvider.ts, _getUnspentTransactions, getting for address ", address)
     const data: esplora.UTXO[] = await this.nodeGet(`/address/${address}/utxo`)
-    console.log("TACA ===> YacoinEsploraApiProvider.ts, _getUnspentTransactions, complete getting for address ", address)
     return data.map((utxo) => ({
       ...utxo,
       address,
@@ -91,9 +89,7 @@ export default class YacoinEsploraApiProvider extends NodeProvider implements Pa
   }
 
   async _getAddressTransactionCount(address: string) {
-    console.log("TACA ===> YacoinEsploraApiProvider.ts, _getAddressTransactionCount, getting for address ", address)
     const data: esplora.Address = await this.nodeGet(`/address/${address}`)
-    console.log("TACA ===> YacoinEsploraApiProvider.ts, _getAddressTransactionCount, address ", address, " has ", data.tx_count, " txcount")
     return data.tx_count
   }
 
