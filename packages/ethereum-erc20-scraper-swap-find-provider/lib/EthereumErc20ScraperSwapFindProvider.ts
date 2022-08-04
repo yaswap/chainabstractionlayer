@@ -17,6 +17,9 @@ export default class EthereumErc20ScraperSwapFindProvider extends EthereumScrape
     erc20ContractAddress = ensure0x(erc20ContractAddress)
     address = ensure0x(address)
 
+    console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, findErc20Events, erc20ContractAddress = ", erc20ContractAddress)
+    console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, findErc20Events, address = ", address)
+
     for (let page = 1; ; page++) {
       const data = await this.nodeGet(`/events/erc20Transfer/${erc20ContractAddress}`, {
         address,
@@ -27,16 +30,30 @@ export default class EthereumErc20ScraperSwapFindProvider extends EthereumScrape
         toBlock
       })
 
+      console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, findErc20Events, data = ", data)
+
       const transactions: any[] = data.data.txs
-      if (transactions.length === 0) return
+      if (transactions.length === 0)
+      {
+        console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, transactions.length === 0")
+        return
+      }
 
       const normalizedTransactions = transactions
         .filter((tx) => tx.status === true)
         .map(this.normalizeTransactionResponse)
       const tx = normalizedTransactions.find(predicate)
-      if (tx) return this.ensureFeeInfo(tx)
+      if (tx)
+      {
+        console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, there is tx = ", tx)
+        return this.ensureFeeInfo(tx)
+      }
 
-      if (transactions.length < limit) return
+      if (transactions.length < limit)
+      {
+        console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, transactions.length < limit")
+        return
+      }
     }
   }
 
@@ -52,11 +69,15 @@ export default class EthereumErc20ScraperSwapFindProvider extends EthereumScrape
     this.validateSwapParams(swapParams)
 
     const initiationTransactionReceipt = await this.getMethod('getTransactionReceipt')(initiationTxHash)
+    console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, initiationTransactionReceipt = ", initiationTransactionReceipt)
     if (!initiationTransactionReceipt)
       throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
 
     const { contractAddress } = initiationTransactionReceipt
     const erc20TokenContractAddress = await this.getMethod('getContractAddress')()
+
+    console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, contractAddress = ", contractAddress)
+    console.log("TACA ===> EthereumErc20ScraperSwapFindProvider.js, erc20TokenContractAddress = ", erc20TokenContractAddress)
 
     const tx = await this.findErc20Events(
       erc20TokenContractAddress,
