@@ -1,4 +1,4 @@
-import { NodeProvider } from '@liquality/node-provider'
+import { NodeProvider } from '@yac-swap/node-provider'
 import { SwapParams, Transaction, yacoin } from '@liquality/types'
 import { payments } from '@yac-swap/yacoinjs-lib'
 

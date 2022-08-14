@@ -1,4 +1,4 @@
-import { NodeProvider } from '@liquality/node-provider'
+import { NodeProvider } from '@yac-swap/node-provider'
 import { FeeProvider, FeeDetails } from '@liquality/types'
 
 export default class YacoinFeeApiProvider extends NodeProvider implements FeeProvider {

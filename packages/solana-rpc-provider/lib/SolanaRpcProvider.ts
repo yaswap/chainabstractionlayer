@@ -1,4 +1,4 @@
-import { NodeProvider as NodeProvider } from '@liquality/node-provider'
+import { NodeProvider as NodeProvider } from '@yac-swap/node-provider'
 import {
   BigNumber,
   ChainProvider,

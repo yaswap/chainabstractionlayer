@@ -1,4 +1,4 @@
-import { NodeProvider as NodeProvider } from '@liquality/node-provider'
+import { NodeProvider as NodeProvider } from '@yac-swap/node-provider'
 import { BigNumber, ChainProvider, Address, Block, Transaction, terra, FeeProvider } from '@liquality/types'
 import { addressToString } from '@liquality/utils'
 import { TxNotFoundError } from '@liquality/errors'

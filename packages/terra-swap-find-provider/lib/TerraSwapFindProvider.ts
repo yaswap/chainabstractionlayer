@@ -3,7 +3,7 @@ import { addressToString, validateSecretAndHash } from '@liquality/utils'
 import { TerraNetwork } from '@liquality/terra-networks'
 import { normalizeTransaction, doesTransactionMatchInitiation, validateSwapParams } from '@liquality/terra-utils'
 import { TxNotFoundError } from '@liquality/errors'
-import { NodeProvider } from '@liquality/node-provider'
+import { NodeProvider } from '@yac-swap/node-provider'
 
 export default class TerraSwapFindProvider extends NodeProvider implements Partial<SwapProvider> {
   private _network: TerraNetwork

@@ -1,4 +1,4 @@
-import { NodeProvider } from '@liquality/node-provider'
+import { NodeProvider } from '@yac-swap/node-provider'
 import { BigNumber, Address } from '@liquality/types'
 import { addressToString } from '@liquality/utils'
 import { BitcoinEsploraApiProvider, EsploraApiProviderOptions, esplora } from '@yac-swap/bitcoin-esplora-api-provider'

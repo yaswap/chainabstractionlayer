@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@yac-swap/bitcoin-esplora-api-provider": "^1.0.0",
-    "@liquality/node-provider": "^1.13.7",
+    "@yac-swap/node-provider": "^1.0.0",
     "@liquality/types": "^1.13.7",
     "@liquality/utils": "^1.13.7",
     "bignumber.js": "^9.0.0",

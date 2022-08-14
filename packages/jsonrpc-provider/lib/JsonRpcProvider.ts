@@ -1,4 +1,4 @@
-import { NodeProvider, AxiosRequestConfig, AxiosResponse } from '@liquality/node-provider'
+import { NodeProvider, AxiosRequestConfig, AxiosResponse } from '@yac-swap/node-provider'
 import { Debug } from '@liquality/debug'
 import { NodeError } from '@liquality/errors'
 

@@ -1,4 +1,4 @@
-import { NodeProvider } from '@liquality/node-provider'
+import { NodeProvider } from '@yac-swap/node-provider'
 import { addressToString } from '@liquality/utils'
 import { decodeRawTransaction, normalizeTransactionObject } from '@yac-swap/bitcoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'

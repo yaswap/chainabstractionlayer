@@ -27,7 +27,7 @@
     "@liquality/nft-base-provider": "^1.13.7",
     "@liquality/nft-erc1155-provider": "^1.13.7",
     "@liquality/nft-erc721-provider": "^1.13.7",
-    "@liquality/node-provider": "^1.13.7",
+    "@yac-swap/node-provider": "^1.0.0",
     "@liquality/types": "^1.13.7",
     "@liquality/utils": "^1.13.7"
   },
