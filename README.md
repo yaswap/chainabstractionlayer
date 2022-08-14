@@ -18,15 +18,15 @@ Query different blockchains with account management using a single and simple in
 
 |Package|Version|
 |---|---|
-|[@liquality/bitcoin-js-wallet-provider](./packages/bitcoin-js-wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-js-wallet-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-js-wallet-provider)|
-|[@liquality/bitcoin-ledger-provider](./packages/bitcoin-ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-ledger-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-ledger-provider)|
-|[@liquality/bitcoin-networks](./packages/bitcoin-networks)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-networks.svg)](https://npmjs.com/package/@liquality/bitcoin-networks)|
-|[@liquality/bitcoin-rpc-provider](./packages/bitcoin-rpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-rpc-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-rpc-provider)|
-|[@liquality/bitcoin-wallet-node-provider](./packages/bitcoin-node-wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-node-wallet-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-node-wallet-provider)|
-|[@liquality/bitcoin-swap-provider](./packages/bitcoin-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-swap-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-swap-provider)|
-|[@liquality/bitcoin-esplora-api-provider](./packages/bitcoin-esplora-api-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-esplora-api-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-esplora-api-provider)|
-|[@liquality/bitcoin-esplora-swap-find-provider](./packages/bitcoin-esplora-swap-find-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-esplora-swap-find-provider.svg)](https://npmjs.com/package/@liquality/bitcoin-esplora-swap-find-provider)|
-|[@liquality/bitcoin-utils](./packages/bitcoin-utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/bitcoin-utils.svg)](https://npmjs.com/package/@liquality/bitcoin-utils)|
+|[@yac-swap/bitcoin-js-wallet-provider](./packages/bitcoin-js-wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-js-wallet-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-js-wallet-provider)|
+|[@yac-swap/bitcoin-ledger-provider](./packages/bitcoin-ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-ledger-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-ledger-provider)|
+|[@yac-swap/bitcoin-networks](./packages/bitcoin-networks)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-networks.svg)](https://npmjs.com/package/@yac-swap/bitcoin-networks)|
+|[@yac-swap/bitcoin-rpc-provider](./packages/bitcoin-rpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-rpc-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-rpc-provider)|
+|[@yac-swap/bitcoin-wallet-node-provider](./packages/bitcoin-node-wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-node-wallet-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-node-wallet-provider)|
+|[@yac-swap/bitcoin-swap-provider](./packages/bitcoin-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-swap-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-swap-provider)|
+|[@yac-swap/bitcoin-esplora-api-provider](./packages/bitcoin-esplora-api-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-esplora-api-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-esplora-api-provider)|
+|[@yac-swap/bitcoin-esplora-swap-find-provider](./packages/bitcoin-esplora-swap-find-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-esplora-swap-find-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-esplora-swap-find-provider)|
+|[@yac-swap/bitcoin-utils](./packages/bitcoin-utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-utils.svg)](https://npmjs.com/package/@yac-swap/bitcoin-utils)|
 |[@liquality/client](./packages/client)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/client.svg)](https://npmjs.com/package/@liquality/client)|
 |[@liquality/crypto](./packages/crypto)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/crypto.svg)](https://npmjs.com/package/@liquality/crypto)|
 |[@liquality/debug](./packages/debug)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/debug.svg)](https://npmjs.com/package/@liquality/debug)|
@@ -53,13 +53,13 @@ Query different blockchains with account management using a single and simple in
 
 ```javascript
 import { Client } from '@liquality/client'
-import { BitcoinRpcProvider } from '@liquality/bitcoin-rpc-provider'
+import { BitcoinRpcProvider } from '@yac-swap/bitcoin-rpc-provider'
 import { EthereumRpcProvider } from '@liquality/ethereum-rpc-provider'
 
-import { BitcoinLedgerProvider } from '@liquality/bitcoin-ledger-provider'
+import { BitcoinLedgerProvider } from '@yac-swap/bitcoin-ledger-provider'
 import { EthereumLedgerProvider } from '@liquality/ethereum-ledger-provider'
 
-import { BitcoinNetworks } from '@liquality/bitcoin-networks'
+import { BitcoinNetworks } from '@yac-swap/bitcoin-networks'
 import { EthereumNetworks } from '@liquality/ethereum-networks'
 
 const bitcoin = new Client()

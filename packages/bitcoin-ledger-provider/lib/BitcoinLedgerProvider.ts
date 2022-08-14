@@ -1,9 +1,9 @@
 import { LedgerProvider } from '@liquality/ledger-provider'
-import { BitcoinWalletProvider } from '@liquality/bitcoin-wallet-provider'
+import { BitcoinWalletProvider } from '@yac-swap/bitcoin-wallet-provider'
 
 import { padHexStart } from '@liquality/crypto'
-import { compressPubKey, getAddressNetwork, decodeRawTransaction } from '@liquality/bitcoin-utils'
-import { BitcoinNetworks, BitcoinNetwork } from '@liquality/bitcoin-networks'
+import { compressPubKey, getAddressNetwork, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
+import { BitcoinNetworks, BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { bitcoin, BigNumber } from '@liquality/types'
 import HwAppBitcoin from '@ledgerhq/hw-app-btc'
 import { fromPublicKey, BIP32Interface } from 'bip32'

@@ -3,8 +3,8 @@ import {
   normalizeTransactionObject,
   decodeRawTransaction,
   CoinSelectTarget
-} from '@liquality/bitcoin-utils'
-import { BitcoinNetwork } from '@liquality/bitcoin-networks'
+} from '@yac-swap/bitcoin-utils'
+import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { bitcoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@liquality/types'
 import { asyncSetImmediate, addressToString } from '@liquality/utils'
 import { Provider } from '@liquality/provider'

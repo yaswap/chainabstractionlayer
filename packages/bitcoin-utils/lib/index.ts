@@ -1,5 +1,5 @@
 import { base58, padHexStart } from '@liquality/crypto'
-import { BitcoinNetworks, BitcoinNetwork } from '@liquality/bitcoin-networks'
+import { BitcoinNetworks, BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { Address, Transaction, bitcoin as bT, TxStatus } from '@liquality/types'
 import { addressToString } from '@liquality/utils'
 import { InvalidAddressError } from '@liquality/errors'

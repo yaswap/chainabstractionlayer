@@ -3,8 +3,8 @@ import { uniq, flatten, isString } from 'lodash'
 import { WalletProvider } from '@liquality/wallet-provider'
 import { JsonRpcProvider } from '@liquality/jsonrpc-provider'
 import { bitcoin, SendOptions, BigNumber, Transaction, Address } from '@liquality/types'
-import { BitcoinNetworks, BitcoinNetwork } from '@liquality/bitcoin-networks'
-import { normalizeTransactionObject, decodeRawTransaction } from '@liquality/bitcoin-utils'
+import { BitcoinNetworks, BitcoinNetwork } from '@yac-swap/bitcoin-networks'
+import { normalizeTransactionObject, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
 import { sha256 } from '@liquality/crypto'
 
 const BIP70_CHAIN_TO_NETWORK: { [index: string]: BitcoinNetwork } = {

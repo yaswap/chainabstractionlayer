@@ -7,7 +7,7 @@ import {
   witnessStackToScriptWitness,
   getPubKeyHash,
   validateAddress
-} from '@liquality/bitcoin-utils'
+} from '@yac-swap/bitcoin-utils'
 import {
   addressToString,
   validateValue,
@@ -16,7 +16,7 @@ import {
   validateSecretAndHash,
   validateExpiration
 } from '@liquality/utils'
-import { BitcoinNetwork } from '@liquality/bitcoin-networks'
+import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 
 import { Psbt, script as bScript, payments } from 'bitcoinjs-lib'
 

@@ -1,8 +1,8 @@
 import { JsonRpcProvider } from '@liquality/jsonrpc-provider'
 import { addressToString } from '@liquality/utils'
-import { normalizeTransactionObject, decodeRawTransaction } from '@liquality/bitcoin-utils'
+import { normalizeTransactionObject, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
-import { BitcoinNetwork } from '@liquality/bitcoin-networks'
+import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { bitcoin, Transaction, Block, ChainProvider, SendOptions, Address, BigNumber } from '@liquality/types'
 
 import { flatten } from 'lodash'
