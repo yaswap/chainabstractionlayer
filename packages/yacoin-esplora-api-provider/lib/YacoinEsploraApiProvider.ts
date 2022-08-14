@@ -1,10 +1,10 @@
 import { NodeProvider } from '@liquality/node-provider'
 import { addressToString } from '@liquality/utils'
-import { decodeRawTransaction, normalizeTransactionObject } from '@liquality/yacoin-utils'
+import { decodeRawTransaction, normalizeTransactionObject } from '@yac-swap/yacoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
 import { ChainProvider, Address, yacoin, BigNumber } from '@liquality/types'
 import * as esplora from './types'
-import { YacoinNetwork } from '@liquality/yacoin-networks'
+import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 
 import { flatten } from 'lodash'
 

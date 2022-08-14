@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/yacoin-wallet-api-provider",
+  "name": "@yac-swap/yacoin-wallet-api-provider",
   "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/yacoin-networks": "^1.0.0",
-    "@liquality/yacoin-wallet-provider": "^1.0.0",
+    "@yac-swap/yacoin-networks": "^1.0.0",
+    "@yac-swap/yacoin-wallet-provider": "^1.0.0",
     "@liquality/types": "^1.13.7",
     "@liquality/utils": "^1.13.7",
     "@liquality/wallet-provider": "^1.13.7"

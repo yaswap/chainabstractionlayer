@@ -1,1 +1,1 @@
-declare module 'yacoinjs-lib/src/classify'
+declare module '@yac-swap/yacoinjs-lib/src/classify'

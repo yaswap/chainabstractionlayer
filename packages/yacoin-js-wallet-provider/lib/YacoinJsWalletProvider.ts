@@ -1,9 +1,9 @@
-import { YacoinWalletProvider } from '@liquality/yacoin-wallet-provider'
+import { YacoinWalletProvider } from '@yac-swap/yacoin-wallet-provider'
 import { WalletProvider } from '@liquality/wallet-provider'
-import { YacoinNetwork } from '@liquality/yacoin-networks'
+import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 import { yacoin } from '@liquality/types'
 
-import { Psbt, ECPair, ECPairInterface, TransactionBuilder, Transaction as YacoinJsTransaction, script } from 'yacoinjs-lib'
+import { Psbt, ECPair, ECPairInterface, TransactionBuilder, Transaction as YacoinJsTransaction, script } from '@yac-swap/yacoinjs-lib'
 import { signAsync as signYacoinMessage } from 'bitcoinjs-message'
 import { mnemonicToSeed } from 'bip39'
 import { BIP32Interface, fromSeed } from 'bip32'

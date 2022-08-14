@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/yacoin-esplora-api-provider",
+  "name": "@yac-swap/yacoin-esplora-api-provider",
   "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/yacoin-networks": "^1.0.0",
-    "@liquality/yacoin-utils": "^1.0.0",
+    "@yac-swap/yacoin-networks": "^1.0.0",
+    "@yac-swap/yacoin-utils": "^1.0.0",
     "@liquality/errors": "^1.13.7",
     "@liquality/node-provider": "^1.13.7",
     "@liquality/types": "^1.13.7",

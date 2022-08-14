@@ -1,6 +1,6 @@
-import { YacoinWalletProvider } from '@liquality/yacoin-wallet-provider'
+import { YacoinWalletProvider } from '@yac-swap/yacoin-wallet-provider'
 import { WalletProvider } from '@liquality/wallet-provider'
-import { YacoinNetwork } from '@liquality/yacoin-networks'
+import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 import { Address, yacoin, SendOptions } from '@liquality/types'
 
 declare global {

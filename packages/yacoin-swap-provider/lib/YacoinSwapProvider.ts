@@ -6,7 +6,7 @@ import {
   normalizeTransactionObject,
   getPubKeyHash,
   validateAddress
-} from '@liquality/yacoin-utils'
+} from '@yac-swap/yacoin-utils'
 import {
   addressToString,
   validateValue,
@@ -15,9 +15,9 @@ import {
   validateSecretAndHash,
   validateExpiration
 } from '@liquality/utils'
-import { YacoinNetwork } from '@liquality/yacoin-networks'
+import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 
-import { Transaction as TransactionYacoinJs, script as bScript, address as AddressYacoinJs, payments } from 'yacoinjs-lib'
+import { Transaction as TransactionYacoinJs, script as bScript, address as AddressYacoinJs, payments } from '@yac-swap/yacoinjs-lib'
 
 interface YacoinSwapProviderOptions {
   network: YacoinNetwork

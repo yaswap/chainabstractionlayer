@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/yacoin-networks",
+  "name": "@yac-swap/yacoin-networks",
   "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@liquality/types": "^1.13.7",
-    "yacoinjs-lib": "file:/home/chaunguyen/project/yacoin/yacoinjs-lib"
+    "@yac-swap/yacoinjs-lib": "^1.0.0"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
   "repository": {

@@ -3,13 +3,13 @@ import {
   normalizeTransactionObject,
   decodeRawTransaction,
   CoinSelectTarget
-} from '@liquality/yacoin-utils'
-import { YacoinNetwork } from '@liquality/yacoin-networks'
+} from '@yac-swap/yacoin-utils'
+import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 import { yacoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@liquality/types'
 import { asyncSetImmediate, addressToString } from '@liquality/utils'
 import { Provider } from '@liquality/provider'
 import { InsufficientBalanceError } from '@liquality/errors'
-import { BIP32Interface, payments, script } from 'yacoinjs-lib'
+import { BIP32Interface, payments, script } from '@yac-swap/yacoinjs-lib'
 import memoize from 'memoizee'
 
 const ADDRESS_GAP = 10
