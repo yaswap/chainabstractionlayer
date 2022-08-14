@@ -1,6 +1,6 @@
 import { LedgerProvider } from '@liquality/ledger-provider'
 import { Address, ethereum, SendOptions, Transaction, BigNumber, EIP1559Fee } from '@liquality/types'
-import { EthereumNetwork } from '@liquality/ethereum-networks'
+import { EthereumNetwork } from '@yac-swap/ethereum-networks'
 import { addressToString } from '@liquality/utils'
 import {
   ensure0x,
@@ -9,7 +9,7 @@ import {
   buildTransaction,
   normalizeTransactionObject,
   hexToNumber
-} from '@liquality/ethereum-utils'
+} from '@yac-swap/ethereum-utils'
 import { toRpcSig, rlp } from 'ethereumjs-util'
 
 import HwAppEthereum from '@ledgerhq/hw-app-eth'

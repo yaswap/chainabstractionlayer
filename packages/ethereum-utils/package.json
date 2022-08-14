@@ -1,6 +1,6 @@
 {
-  "name": "@liquality/ethereum-utils",
-  "version": "1.13.7",
+  "name": "@yac-swap/ethereum-utils",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",

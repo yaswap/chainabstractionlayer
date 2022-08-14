@@ -1,9 +1,9 @@
-import { EthereumRpcProvider } from '@liquality/ethereum-rpc-provider'
-import { EthereumJsWalletProvider } from '@liquality/ethereum-js-wallet-provider'
-import { EthereumSwapProvider } from '@liquality/ethereum-swap-provider'
-import { EthereumScraperSwapFindProvider } from '@liquality/ethereum-scraper-swap-find-provider'
-import { EthereumGasNowFeeProvider } from '@liquality/ethereum-gas-now-fee-provider'
-import { EthereumNetworks } from '@liquality/ethereum-networks'
+import { EthereumRpcProvider } from '@yac-swap/ethereum-rpc-provider'
+import { EthereumJsWalletProvider } from '@yac-swap/ethereum-js-wallet-provider'
+import { EthereumSwapProvider } from '@yac-swap/ethereum-swap-provider'
+import { EthereumScraperSwapFindProvider } from '@yac-swap/ethereum-scraper-swap-find-provider'
+import { EthereumGasNowFeeProvider } from '@yac-swap/ethereum-gas-now-fee-provider'
+import { EthereumNetworks } from '@yac-swap/ethereum-networks'
 
 export default [
   {

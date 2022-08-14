@@ -8,7 +8,7 @@ import {
   validateSecretHash,
   validateSecretAndHash
 } from '@liquality/utils'
-import { remove0x, ensure0x, validateAddress, validateExpiration } from '@liquality/ethereum-utils'
+import { remove0x, ensure0x, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
 import {
   SwapProvider,
   SwapParams,

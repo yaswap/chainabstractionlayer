@@ -31,16 +31,16 @@ Query different blockchains with account management using a single and simple in
 |[@liquality/crypto](./packages/crypto)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/crypto.svg)](https://npmjs.com/package/@liquality/crypto)|
 |[@liquality/debug](./packages/debug)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/debug.svg)](https://npmjs.com/package/@liquality/debug)|
 |[@liquality/errors](./packages/errors)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/errors.svg)](https://npmjs.com/package/@liquality/errors)|
-|[@liquality/ethereum-erc20-provider](./packages/ethereum-erc20-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-erc20-provider.svg)](https://npmjs.com/package/@liquality/ethereum-erc20-provider)|
-|[@liquality/ethereum-erc20-swap-provider](./packages/ethereum-erc20-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-erc20-swap-provider.svg)](https://npmjs.com/package/@liquality/ethereum-erc20-swap-provider)|
-|[@liquality/ethereum-ledger-provider](./packages/ethereum-ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-ledger-provider.svg)](https://npmjs.com/package/@liquality/ethereum-ledger-provider)|
-|[@liquality/ethereum-wallet-api-provider](./packages/ethereum-wallet-api-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-wallet-api-provider.svg)](https://npmjs.com/package/@liquality/ethereum-wallet-api-provider)|
-|[@liquality/ethereum-networks](./packages/ethereum-networks)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-networks.svg)](https://npmjs.com/package/@liquality/ethereum-networks)|
-|[@liquality/ethereum-rpc-provider](./packages/ethereum-rpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-rpc-provider.svg)](https://npmjs.com/package/@liquality/ethereum-rpc-provider)|
-|[@liquality/ethereum-js-wallet-provider](./packages/ethereum-js-wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-js-wallet-provider.svg)](https://npmjs.com/package/@liquality/ethereum-js-wallet-provider)|
-|[@liquality/ethereum-swap-provider](./packages/ethereum-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-swap-provider.svg)](https://npmjs.com/package/@liquality/ethereum-swap-provider)|
-|[@liquality/ethereum-scraper-swap-find-provider](./packages/ethereum-scraper-swap-find-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-scraper-swap-find-provider.svg)](https://npmjs.com/package/@liquality/ethereum-scraper-swap-find-provider)|
-|[@liquality/ethereum-utils](./packages/ethereum-utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ethereum-utils.svg)](https://npmjs.com/package/@liquality/ethereum-utils)|
+|[@yac-swap/ethereum-erc20-provider](./packages/ethereum-erc20-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-erc20-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-erc20-provider)|
+|[@yac-swap/ethereum-erc20-swap-provider](./packages/ethereum-erc20-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-erc20-swap-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-erc20-swap-provider)|
+|[@yac-swap/ethereum-ledger-provider](./packages/ethereum-ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-ledger-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-ledger-provider)|
+|[@yac-swap/ethereum-wallet-api-provider](./packages/ethereum-wallet-api-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-wallet-api-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-wallet-api-provider)|
+|[@yac-swap/ethereum-networks](./packages/ethereum-networks)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-networks.svg)](https://npmjs.com/package/@yac-swap/ethereum-networks)|
+|[@yac-swap/ethereum-rpc-provider](./packages/ethereum-rpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-rpc-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-rpc-provider)|
+|[@yac-swap/ethereum-js-wallet-provider](./packages/ethereum-js-wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-js-wallet-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-js-wallet-provider)|
+|[@yac-swap/ethereum-swap-provider](./packages/ethereum-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-swap-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-swap-provider)|
+|[@yac-swap/ethereum-scraper-swap-find-provider](./packages/ethereum-scraper-swap-find-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-scraper-swap-find-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-scraper-swap-find-provider)|
+|[@yac-swap/ethereum-utils](./packages/ethereum-utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-utils.svg)](https://npmjs.com/package/@yac-swap/ethereum-utils)|
 |[@liquality/jsonrpc-provider](./packages/jsonrpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/jsonrpc-provider.svg)](https://npmjs.com/package/@liquality/jsonrpc-provider)|
 |[@liquality/ledger-provider](./packages/ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ledger-provider.svg)](https://npmjs.com/package/@liquality/ledger-provider)|
 |[@liquality/provider](./packages/provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/provider.svg)](https://npmjs.com/package/@liquality/provider)|
@@ -54,13 +54,13 @@ Query different blockchains with account management using a single and simple in
 ```javascript
 import { Client } from '@liquality/client'
 import { BitcoinRpcProvider } from '@yac-swap/bitcoin-rpc-provider'
-import { EthereumRpcProvider } from '@liquality/ethereum-rpc-provider'
+import { EthereumRpcProvider } from '@yac-swap/ethereum-rpc-provider'
 
 import { BitcoinLedgerProvider } from '@yac-swap/bitcoin-ledger-provider'
-import { EthereumLedgerProvider } from '@liquality/ethereum-ledger-provider'
+import { EthereumLedgerProvider } from '@yac-swap/ethereum-ledger-provider'
 
 import { BitcoinNetworks } from '@yac-swap/bitcoin-networks'
-import { EthereumNetworks } from '@liquality/ethereum-networks'
+import { EthereumNetworks } from '@yac-swap/ethereum-networks'
 
 const bitcoin = new Client()
 const ethereum = new Client()

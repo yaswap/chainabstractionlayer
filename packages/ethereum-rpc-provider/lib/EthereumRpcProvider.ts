@@ -6,7 +6,7 @@ import {
   normalizeTransactionObject,
   remove0x,
   buildTransaction
-} from '@liquality/ethereum-utils'
+} from '@yac-swap/ethereum-utils'
 import {
   Address,
   Block,

@@ -33,13 +33,13 @@ or
 ```js
 import { Client } from '@liquality/client'
 import { BitcoinRpcProvider } from '@yac-swap/bitcoin-rpc-provider'
-import { EthereumRpcProvider } from '@liquality/ethereum-rpc-provider'
+import { EthereumRpcProvider } from '@yac-swap/ethereum-rpc-provider'
 
 import { BitcoinLedgerProvider } from '@yac-swap/bitcoin-ledger-provider'
-import { EthereumLedgerProvider } from '@liquality/ethereum-ledger-provider'
+import { EthereumLedgerProvider } from '@yac-swap/ethereum-ledger-provider'
 
 import { BitcoinNetworks } from '@yac-swap/bitcoin-networks'
-import { EthereumNetworks } from '@liquality/ethereum-networks'
+import { EthereumNetworks } from '@yac-swap/ethereum-networks'
 
 const bitcoin = new Client()
 const ethereum = new Client()

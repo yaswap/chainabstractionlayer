@@ -5,7 +5,7 @@ import {
   validateAddress,
   validateExpiration,
   remove0x
-} from '@liquality/ethereum-utils'
+} from '@yac-swap/ethereum-utils'
 import { addressToString, validateValue, validateSecretHash, validateSecretAndHash } from '@liquality/utils'
 import { PendingTxError } from '@liquality/errors'
 import { SwapProvider, SwapParams, Transaction, ethereum } from '@liquality/types'

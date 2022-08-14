@@ -1,5 +1,5 @@
 import { WalletProvider } from '@liquality/wallet-provider'
-import { EthereumNetwork } from '@liquality/ethereum-networks'
+import { EthereumNetwork } from '@yac-swap/ethereum-networks'
 import { Network, Address, SendOptions, ethereum, Transaction, BigNumber, EIP1559Fee } from '@liquality/types'
 import { addressToString } from '@liquality/utils'
 import {
@@ -9,7 +9,7 @@ import {
   hexToNumber,
   normalizeTransactionObject,
   GWEI
-} from '@liquality/ethereum-utils'
+} from '@yac-swap/ethereum-utils'
 
 import { mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'

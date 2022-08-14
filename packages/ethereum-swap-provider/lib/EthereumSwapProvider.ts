@@ -9,7 +9,7 @@ import {
   validateSecretHash,
   validateSecretAndHash
 } from '@liquality/utils'
-import { remove0x, hexToNumber, validateAddress, validateExpiration } from '@liquality/ethereum-utils'
+import { remove0x, hexToNumber, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
 import { PendingTxError, TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
 
 export default class EthereumSwapProvider extends Provider implements Partial<SwapProvider> {

@@ -1,11 +1,11 @@
-# `@liquality/ethereum-js-wallet-provider`
+# `@yac-swap/ethereum-js-wallet-provider`
 
 > TODO: description
 
 ## Usage
 
 ```
-const ethereumJsWalletProvider = require('@liquality/ethereum-js-wallet-provider');
+const ethereumJsWalletProvider = require('@yac-swap/ethereum-js-wallet-provider');
 
 // TODO: DEMONSTRATE API
 ```
