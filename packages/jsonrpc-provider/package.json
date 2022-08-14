@@ -16,7 +16,7 @@
   "scripts": {
     "build": "node fixBigNumberImport.js && webpack --config ../../webpack/webpack.config.js"
   },
-  "author": "Liquality <info@liquality.io>",
+  "author": "yac-swap",
   "license": "MIT",
   "engines": {
     "node": ">=14"
