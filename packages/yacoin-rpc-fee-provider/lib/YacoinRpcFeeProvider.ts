@@ -1,5 +1,5 @@
 import { Provider } from '@liquality/provider'
-import { FeeProvider, FeeDetail } from '@liquality/types'
+import { FeeProvider, FeeDetail } from '@yac-swap/types'
 
 type FeeOptions = {
   slowTargetBlocks?: number

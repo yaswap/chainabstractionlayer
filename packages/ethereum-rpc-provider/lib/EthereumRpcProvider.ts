@@ -17,7 +17,7 @@ import {
   BigNumber,
   EIP1559Fee,
   TxStatus
-} from '@liquality/types'
+} from '@yac-swap/types'
 import { sleep, addressToString } from '@liquality/utils'
 import { InvalidDestinationAddressError, TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
 import { padHexStart } from '@liquality/crypto'

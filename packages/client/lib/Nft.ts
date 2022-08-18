@@ -1,4 +1,4 @@
-import { NftProvider, Address, Transaction } from '@liquality/types'
+import { NftProvider, Address, Transaction } from '@yac-swap/types'
 
 export default class Nft implements NftProvider {
   client: any

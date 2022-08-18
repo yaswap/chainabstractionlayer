@@ -2,7 +2,7 @@ import { Provider } from '@liquality/provider'
 import { padHexStart } from '@liquality/crypto'
 import { addressToString } from '@liquality/utils'
 import { ensure0x, remove0x, numberToHex } from '@yac-swap/ethereum-utils'
-import { ChainProvider, SendOptions, BigNumber, Address, EIP1559Fee } from '@liquality/types'
+import { ChainProvider, SendOptions, BigNumber, Address, EIP1559Fee } from '@yac-swap/types'
 import { InsufficientBalanceError } from '@liquality/errors'
 
 const SOL_TRANSFER_FUNCTION = '0xa9059cbb' // transfer(address,uint256)

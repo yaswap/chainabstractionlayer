@@ -1,4 +1,4 @@
-import { ethereum } from '@liquality/types'
+import { ethereum } from '@yac-swap/types'
 
 export interface Transaction {
   from: ethereum.Address

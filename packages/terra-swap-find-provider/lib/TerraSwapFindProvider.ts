@@ -1,4 +1,4 @@
-import { Address, SwapParams, SwapProvider, terra, Transaction } from '@liquality/types'
+import { Address, SwapParams, SwapProvider, terra, Transaction } from '@yac-swap/types'
 import { addressToString, validateSecretAndHash } from '@liquality/utils'
 import { TerraNetwork } from '@liquality/terra-networks'
 import { normalizeTransaction, doesTransactionMatchInitiation, validateSwapParams } from '@liquality/terra-utils'

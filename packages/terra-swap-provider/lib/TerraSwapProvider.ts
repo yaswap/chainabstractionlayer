@@ -1,4 +1,4 @@
-import { SwapParams, SwapProvider, terra, Transaction } from '@liquality/types'
+import { SwapParams, SwapProvider, terra, Transaction } from '@yac-swap/types'
 import { Provider } from '@liquality/provider'
 import { TxNotFoundError, StandardError } from '@liquality/errors'
 import { validateSwapParams, doesTransactionMatchInitiation } from '@liquality/terra-utils'

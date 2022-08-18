@@ -29,7 +29,7 @@
     "@yac-swap/ethereum-networks": "^1.0.0",
     "@yac-swap/ethereum-utils": "^1.0.0",
     "@liquality/ledger-provider": "^1.13.7",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "@liquality/utils": "^1.13.7",
     "ethereumjs-util": "^7.0.10"
   },

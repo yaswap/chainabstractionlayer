@@ -1,4 +1,4 @@
-import { Network } from '@liquality/types'
+import { Network } from '@yac-swap/types'
 
 export interface TerraNetwork extends Network {
   networkId: string

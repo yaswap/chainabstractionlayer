@@ -29,7 +29,7 @@
     "@yac-swap/bitcoin-wallet-provider": "^1.0.0",
     "@liquality/crypto": "^1.13.7",
     "@liquality/ledger-provider": "^1.13.7",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "@liquality/utils": "^1.13.7",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.6",

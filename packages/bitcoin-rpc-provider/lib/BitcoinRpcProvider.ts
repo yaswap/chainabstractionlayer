@@ -3,7 +3,7 @@ import { addressToString } from '@liquality/utils'
 import { normalizeTransactionObject, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
 import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
-import { bitcoin, Transaction, Block, ChainProvider, SendOptions, Address, BigNumber } from '@liquality/types'
+import { bitcoin, Transaction, Block, ChainProvider, SendOptions, Address, BigNumber } from '@yac-swap/types'
 
 import { flatten } from 'lodash'
 

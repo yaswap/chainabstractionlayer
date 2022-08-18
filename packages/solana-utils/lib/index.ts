@@ -1,4 +1,4 @@
-import { Address, BigNumber, Block, solana, SwapParams, Transaction, TxStatus } from '@liquality/types'
+import { Address, BigNumber, Block, solana, SwapParams, Transaction, TxStatus } from '@yac-swap/types'
 import {
   addressToString,
   validateSecretAndHash,

@@ -1,5 +1,5 @@
 import { NodeProvider as NodeProvider } from '@yac-swap/node-provider'
-import { BigNumber, ChainProvider, Address, Block, Transaction, terra, FeeProvider } from '@liquality/types'
+import { BigNumber, ChainProvider, Address, Block, Transaction, terra, FeeProvider } from '@yac-swap/types'
 import { addressToString } from '@liquality/utils'
 import { TxNotFoundError } from '@liquality/errors'
 import { normalizeBlock, normalizeTransaction } from '@liquality/terra-utils'

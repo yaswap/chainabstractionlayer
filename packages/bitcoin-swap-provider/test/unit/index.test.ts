@@ -2,7 +2,7 @@
 
 import { BitcoinSwapProvider } from '../../lib'
 import { BitcoinNetworks } from '@yac-swap/bitcoin-networks'
-import { BigNumber } from '@liquality/types'
+import { BigNumber } from '@yac-swap/types'
 
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'

@@ -8,7 +8,7 @@ import {
   solana,
   FeeDetails,
   FeeProvider
-} from '@liquality/types'
+} from '@yac-swap/types'
 import { SolanaNetwork } from '@liquality/solana-networks'
 import { TxNotFoundError } from '@liquality/errors'
 import { normalizeBlock, normalizeTransaction } from '@liquality/solana-utils'

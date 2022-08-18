@@ -1,5 +1,5 @@
 import { NodeProvider } from '@yac-swap/node-provider'
-import { FeeProvider, FeeDetails } from '@liquality/types'
+import { FeeProvider, FeeDetails } from '@yac-swap/types'
 
 export default class BitcoinFeeApiProvider extends NodeProvider implements FeeProvider {
   constructor(endpoint = 'https://mempool.space/api/v1/fees/recommended') {

@@ -25,7 +25,7 @@
     "@babel/runtime": "^7.12.1",
     "@yac-swap/yacoin-networks": "^1.0.0",
     "@yac-swap/yacoin-wallet-provider": "^1.0.0",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "@liquality/utils": "^1.13.7",
     "@liquality/wallet-provider": "^1.13.7"
   },

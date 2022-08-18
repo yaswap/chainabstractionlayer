@@ -1,6 +1,6 @@
 import { Provider } from '@liquality/provider'
 import { padHexStart } from '@liquality/crypto'
-import { SwapProvider, SwapParams, BigNumber, Transaction, Block, ethereum, EIP1559Fee } from '@liquality/types'
+import { SwapProvider, SwapParams, BigNumber, Transaction, Block, ethereum, EIP1559Fee } from '@yac-swap/types'
 import {
   addressToString,
   caseInsensitiveEqual,

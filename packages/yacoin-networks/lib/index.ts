@@ -1,5 +1,5 @@
 import { networks, Network as YacoinJsLibNetwork } from '@yac-swap/yacoinjs-lib'
-import { Network } from '@liquality/types'
+import { Network } from '@yac-swap/types'
 
 export interface YacoinNetwork extends Network, YacoinJsLibNetwork {}
 

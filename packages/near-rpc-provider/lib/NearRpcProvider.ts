@@ -1,5 +1,5 @@
 import { NodeProvider } from '@yac-swap/node-provider'
-import { near, BigNumber, ChainProvider, FeeProvider, Address, Block, Transaction, FeeDetails } from '@liquality/types'
+import { near, BigNumber, ChainProvider, FeeProvider, Address, Block, Transaction, FeeDetails } from '@yac-swap/types'
 import { NearNetwork } from '@liquality/near-networks'
 import { addressToString } from '@liquality/utils'
 import { normalizeTransactionObject, providers, Account, fromNearTimestamp } from '@liquality/near-utils'

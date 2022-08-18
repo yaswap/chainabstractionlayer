@@ -18,7 +18,7 @@ import {
   Address,
   ethereum,
   EIP1559Fee
-} from '@liquality/types'
+} from '@yac-swap/types'
 import {
   PendingTxError,
   TxNotFoundError,

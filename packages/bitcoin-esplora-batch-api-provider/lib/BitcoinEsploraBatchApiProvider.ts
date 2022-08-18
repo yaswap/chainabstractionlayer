@@ -1,5 +1,5 @@
 import { NodeProvider } from '@yac-swap/node-provider'
-import { BigNumber, Address } from '@liquality/types'
+import { BigNumber, Address } from '@yac-swap/types'
 import { addressToString } from '@liquality/utils'
 import { BitcoinEsploraApiProvider, EsploraApiProviderOptions, esplora } from '@yac-swap/bitcoin-esplora-api-provider'
 import { flatten, uniq } from 'lodash'

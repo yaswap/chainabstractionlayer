@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { BigNumber } from '@liquality/types'
+import { BigNumber } from '@yac-swap/types'
 import { NearSwapProvider } from '../../lib'
 
 import chai from 'chai'

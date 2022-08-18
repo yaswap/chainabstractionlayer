@@ -41,7 +41,7 @@
     "@yac-swap/ethereum-rpc-provider": "^1.0.0",
     "@yac-swap/ethereum-scraper-swap-find-provider": "^1.0.0",
     "@yac-swap/ethereum-swap-provider": "^1.0.0",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "lodash": "^4.17.20"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

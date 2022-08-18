@@ -1,4 +1,4 @@
-import { Transaction, Address, bitcoin, BigNumber, SwapParams, SwapProvider } from '@liquality/types'
+import { Transaction, Address, bitcoin, BigNumber, SwapParams, SwapProvider } from '@yac-swap/types'
 import { Provider } from '@liquality/provider'
 import {
   calculateFee,

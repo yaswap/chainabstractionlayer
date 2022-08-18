@@ -1,4 +1,4 @@
-import { SwapProvider, SwapParams, near, BigNumber, Transaction } from '@liquality/types'
+import { SwapProvider, SwapParams, near, BigNumber, Transaction } from '@yac-swap/types'
 import { Provider } from '@liquality/provider'
 import { PendingTxError, TxNotFoundError } from '@liquality/errors'
 import {

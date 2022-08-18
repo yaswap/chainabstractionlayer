@@ -8,7 +8,7 @@ import {
 } from '@yac-swap/ethereum-utils'
 import { addressToString, validateValue, validateSecretHash, validateSecretAndHash } from '@liquality/utils'
 import { PendingTxError } from '@liquality/errors'
-import { SwapProvider, SwapParams, Transaction, ethereum } from '@liquality/types'
+import { SwapProvider, SwapParams, Transaction, ethereum } from '@yac-swap/types'
 import * as scraper from './types'
 
 export default class EthereumScraperSwapFindProvider extends NodeProvider implements Partial<SwapProvider> {

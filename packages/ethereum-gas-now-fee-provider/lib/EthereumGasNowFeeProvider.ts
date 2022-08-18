@@ -1,5 +1,5 @@
 import { NodeProvider } from '@yac-swap/node-provider'
-import { FeeProvider, FeeDetails, BigNumber } from '@liquality/types'
+import { FeeProvider, FeeDetails, BigNumber } from '@yac-swap/types'
 
 const GWEI = 1e9
 

@@ -1,4 +1,4 @@
-import { Network } from '@liquality/types'
+import { Network } from '@yac-swap/types'
 
 export interface SolanaNetwork extends Network {
   nodeUrl: string

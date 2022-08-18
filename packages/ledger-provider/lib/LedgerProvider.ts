@@ -1,7 +1,7 @@
 import { WalletProvider } from '@liquality/wallet-provider'
 import { WalletError } from '@liquality/errors'
 import { caseInsensitiveEqual } from '@liquality/utils'
-import { Network, Address } from '@liquality/types'
+import { Network, Address } from '@yac-swap/types'
 import HwTransport from '@ledgerhq/hw-transport'
 import { Debug } from '@liquality/debug'
 

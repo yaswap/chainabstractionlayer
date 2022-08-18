@@ -1,7 +1,7 @@
 import { EthereumScraperSwapFindProvider, scraper } from '@yac-swap/ethereum-scraper-swap-find-provider'
 import { ensure0x, remove0x, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
 import { PendingTxError, TxNotFoundError } from '@liquality/errors'
-import { SwapParams, Transaction, BigNumber } from '@liquality/types'
+import { SwapParams, Transaction, BigNumber } from '@yac-swap/types'
 import { caseInsensitiveEqual, validateValue, validateSecretHash } from '@liquality/utils'
 
 export default class EthereumErc20ScraperSwapFindProvider extends EthereumScraperSwapFindProvider {

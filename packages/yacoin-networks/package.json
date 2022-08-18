@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "@yac-swap/yacoinjs-lib": "^1.0.0"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

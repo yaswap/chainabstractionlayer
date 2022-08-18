@@ -2,7 +2,7 @@ import { NodeProvider } from '@yac-swap/node-provider'
 import { addressToString } from '@liquality/utils'
 import { decodeRawTransaction, normalizeTransactionObject } from '@yac-swap/yacoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
-import { ChainProvider, Address, yacoin, BigNumber } from '@liquality/types'
+import { ChainProvider, Address, yacoin, BigNumber } from '@yac-swap/types'
 import * as esplora from './types'
 import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 

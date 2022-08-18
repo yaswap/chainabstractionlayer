@@ -1,5 +1,5 @@
 import { Provider } from '@liquality/provider'
-import { FeeProvider, FeeDetails, BigNumber } from '@liquality/types'
+import { FeeProvider, FeeDetails, BigNumber } from '@yac-swap/types'
 import { toGwei } from '@yac-swap/ethereum-utils'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { suggestFees } from '@rainbow-me/fee-suggestions'

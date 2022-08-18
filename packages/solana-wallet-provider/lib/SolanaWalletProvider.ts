@@ -1,5 +1,5 @@
 import { WalletProvider } from '@liquality/wallet-provider'
-import { Address, Network, Transaction, solana } from '@liquality/types'
+import { Address, Network, Transaction, solana } from '@yac-swap/types'
 import { addressToString } from '@liquality/utils'
 import { SolanaNetwork } from '@liquality/solana-networks'
 import { base58 } from '@liquality/crypto'

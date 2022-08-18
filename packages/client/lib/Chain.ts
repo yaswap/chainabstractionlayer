@@ -9,7 +9,7 @@ import {
   BigNumber,
   Address,
   EIP1559Fee
-} from '@liquality/types'
+} from '@yac-swap/types'
 import { isBoolean, isNumber, isString, isObject } from 'lodash'
 
 export default class Chain implements ChainProvider, FeeProvider {

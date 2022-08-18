@@ -1,5 +1,5 @@
 import { networks, Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib'
-import { Network } from '@liquality/types'
+import { Network } from '@yac-swap/types'
 
 export interface BitcoinNetwork extends Network, BitcoinJsLibNetwork {}
 

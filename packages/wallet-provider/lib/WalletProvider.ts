@@ -1,5 +1,5 @@
 import { Provider } from '@liquality/provider'
-import { Network, WalletProvider as IWalletProvider, Address } from '@liquality/types'
+import { Network, WalletProvider as IWalletProvider, Address } from '@yac-swap/types'
 import { WalletError } from '@liquality/errors'
 
 import { isEqual } from 'lodash'

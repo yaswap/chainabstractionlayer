@@ -5,7 +5,7 @@ import {
   CoinSelectTarget
 } from '@yac-swap/yacoin-utils'
 import { YacoinNetwork } from '@yac-swap/yacoin-networks'
-import { yacoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@liquality/types'
+import { yacoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@yac-swap/types'
 import { asyncSetImmediate, addressToString } from '@liquality/utils'
 import { Provider } from '@liquality/provider'
 import { InsufficientBalanceError } from '@liquality/errors'

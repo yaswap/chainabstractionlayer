@@ -27,7 +27,7 @@
     "@yac-swap/bitcoin-utils": "^1.0.0",
     "@liquality/errors": "^1.13.7",
     "@liquality/jsonrpc-provider": "^1.13.7",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "@liquality/utils": "^1.13.7",
     "bignumber.js": "^9.0.0",
     "lodash": "^4.17.20"

@@ -1,5 +1,5 @@
 import { Block as BlockSchema, Transaction as TransactionSchema } from '@liquality/schema'
-import { Block, Transaction, IClient } from '@liquality/types'
+import { Block, Transaction, IClient } from '@yac-swap/types'
 import { Provider } from '@liquality/provider'
 import {
   DuplicateProviderError,

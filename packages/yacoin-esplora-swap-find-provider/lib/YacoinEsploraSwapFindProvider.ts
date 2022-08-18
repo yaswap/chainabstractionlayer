@@ -1,5 +1,5 @@
 import { NodeProvider } from '@yac-swap/node-provider'
-import { SwapParams, Transaction, yacoin } from '@liquality/types'
+import { SwapParams, Transaction, yacoin } from '@yac-swap/types'
 import { payments } from '@yac-swap/yacoinjs-lib'
 
 type TransactionMatchesFunction = (tx: Transaction<yacoin.Transaction>) => boolean

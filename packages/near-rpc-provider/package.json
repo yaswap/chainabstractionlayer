@@ -28,7 +28,7 @@
     "@liquality/near-networks": "^1.13.7",
     "@liquality/near-utils": "^1.13.7",
     "@yac-swap/node-provider": "^1.0.0",
-    "@liquality/types": "^1.13.7",
+    "@yac-swap/types": "^v1.0.0",
     "@liquality/utils": "^1.13.7",
     "bignumber.js": "^9.0.1",
     "lodash": "^4.17.20"

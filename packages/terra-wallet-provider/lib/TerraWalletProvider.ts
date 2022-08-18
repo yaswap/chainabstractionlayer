@@ -1,5 +1,5 @@
 import { WalletProvider } from '@liquality/wallet-provider'
-import { Address, BigNumber, Transaction, terra, SendOptions } from '@liquality/types'
+import { Address, BigNumber, Transaction, terra, SendOptions } from '@yac-swap/types'
 import { addressToString } from '@liquality/utils'
 import { TerraNetwork } from '@liquality/terra-networks'
 import {

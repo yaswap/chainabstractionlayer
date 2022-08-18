@@ -1,4 +1,4 @@
-import { BigNumber, SwapParams, SwapProvider, Transaction, TxStatus } from '@liquality/types'
+import { BigNumber, SwapParams, SwapProvider, Transaction, TxStatus } from '@yac-swap/types'
 import { Provider } from '@liquality/provider'
 import { Keypair, SystemProgram, PublicKey, TransactionInstruction } from '@solana/web3.js'
 import {

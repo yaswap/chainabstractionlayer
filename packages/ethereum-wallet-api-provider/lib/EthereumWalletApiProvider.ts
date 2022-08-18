@@ -3,7 +3,7 @@ import { EthereumNetworks, EthereumNetwork } from '@yac-swap/ethereum-networks'
 import { WalletError } from '@liquality/errors'
 import { ensure0x, buildTransaction, normalizeTransactionObject, remove0x } from '@yac-swap/ethereum-utils'
 import { addressToString } from '@liquality/utils'
-import { Address, SendOptions, BigNumber, ethereum } from '@liquality/types'
+import { Address, SendOptions, BigNumber, ethereum } from '@yac-swap/types'
 import { Debug } from '@liquality/debug'
 
 import { findKey } from 'lodash'

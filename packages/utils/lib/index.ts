@@ -1,7 +1,7 @@
 import 'setimmediate'
 import { InvalidSecretError, InvalidExpirationError } from '@liquality/errors'
 import { sha256 } from '@liquality/crypto'
-import { BigNumber, Address } from '@liquality/types'
+import { BigNumber, Address } from '@yac-swap/types'
 
 function addressToString(address: Address | string): string {
   if (typeof address === 'string') return address

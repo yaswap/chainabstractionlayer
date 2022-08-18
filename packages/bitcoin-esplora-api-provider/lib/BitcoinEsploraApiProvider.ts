@@ -2,7 +2,7 @@ import { NodeProvider } from '@yac-swap/node-provider'
 import { addressToString } from '@liquality/utils'
 import { decodeRawTransaction, normalizeTransactionObject } from '@yac-swap/bitcoin-utils'
 import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
-import { ChainProvider, Address, bitcoin, BigNumber } from '@liquality/types'
+import { ChainProvider, Address, bitcoin, BigNumber } from '@yac-swap/types'
 import * as esplora from './types'
 import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 

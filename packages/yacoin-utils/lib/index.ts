@@ -1,6 +1,6 @@
 import { base58, padHexStart } from '@liquality/crypto'
 import { YacoinNetworks, YacoinNetwork } from '@yac-swap/yacoin-networks'
-import { Address, Transaction, yacoin as bT, TxStatus } from '@liquality/types'
+import { Address, Transaction, yacoin as bT, TxStatus } from '@yac-swap/types'
 import { addressToString } from '@liquality/utils'
 import { InvalidAddressError } from '@liquality/errors'
 

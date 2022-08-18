@@ -1,7 +1,7 @@
 import { Provider } from '@liquality/provider'
 import { addressToString } from '@liquality/utils'
 import { ensure0x } from '@yac-swap/ethereum-utils'
-import { Address } from '@liquality/types'
+import { Address } from '@yac-swap/types'
 import { StandardError } from '@liquality/errors'
 
 import { Contract } from '@ethersproject/contracts'

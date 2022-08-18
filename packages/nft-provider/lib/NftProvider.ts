@@ -1,7 +1,7 @@
 import { NodeProvider } from '@yac-swap/node-provider'
 import { addressToString } from '@liquality/utils'
 import { ensure0x } from '@yac-swap/ethereum-utils'
-import { NftProvider as INftProvider, Address, IClient } from '@liquality/types'
+import { NftProvider as INftProvider, Address, IClient } from '@yac-swap/types'
 
 import { NftBaseProvider } from '@liquality/nft-base-provider'
 import { NftErc721Provider } from '@liquality/nft-erc721-provider'

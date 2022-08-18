@@ -1,4 +1,4 @@
-import { Block, SwapParams, Transaction, terra, TxStatus } from '@liquality/types'
+import { Block, SwapParams, Transaction, terra, TxStatus } from '@yac-swap/types'
 import { addressToString, validateExpiration, validateSecretHash, validateValue } from '@liquality/utils'
 import { InvalidAddressError } from '@liquality/errors'
 import { DateTime } from 'luxon'

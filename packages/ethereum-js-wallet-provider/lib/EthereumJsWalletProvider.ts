@@ -1,6 +1,6 @@
 import { WalletProvider } from '@liquality/wallet-provider'
 import { EthereumNetwork } from '@yac-swap/ethereum-networks'
-import { Network, Address, SendOptions, ethereum, Transaction, BigNumber, EIP1559Fee } from '@liquality/types'
+import { Network, Address, SendOptions, ethereum, Transaction, BigNumber, EIP1559Fee } from '@yac-swap/types'
 import { addressToString } from '@liquality/utils'
 import {
   remove0x,

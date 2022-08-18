@@ -1,4 +1,4 @@
-import { SwapParams, SwapProvider, Transaction } from '@liquality/types'
+import { SwapParams, SwapProvider, Transaction } from '@yac-swap/types'
 import { Provider } from '@liquality/provider'
 import { PendingTxError } from '@liquality/errors'
 import { addressToString } from '@liquality/utils'

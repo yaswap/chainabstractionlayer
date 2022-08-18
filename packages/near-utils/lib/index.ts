@@ -1,4 +1,4 @@
-import { near, SwapParams, Transaction, Address, TxStatus } from '@liquality/types'
+import { near, SwapParams, Transaction, Address, TxStatus } from '@yac-swap/types'
 import { validateValue, validateSecretHash, validateExpiration, addressToString } from '@liquality/utils'
 import { InvalidAddressError } from '@liquality/errors'
 import BN from 'bn.js'
