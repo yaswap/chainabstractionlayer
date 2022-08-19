@@ -1,6 +1,6 @@
 {
   "name": "@yac-swap/near-rpc-provider",
-  "version": "1.13.7",
+  "version": "4.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@yac-swap/errors": "^1.13.7",
-    "@yac-swap/ethereum-utils": "^1.0.0",
-    "@yac-swap/near-networks": "^1.13.7",
-    "@yac-swap/near-utils": "^1.13.7",
-    "@yac-swap/node-provider": "^1.0.0",
-    "@yac-swap/types": "^v1.0.0",
-    "@yac-swap/utils": "^1.13.7",
+    "@yac-swap/errors": "^4.0.0",
+    "@yac-swap/ethereum-utils": "^4.0.0",
+    "@yac-swap/near-networks": "^4.0.0",
+    "@yac-swap/near-utils": "^4.0.0",
+    "@yac-swap/node-provider": "^4.0.0",
+    "@yac-swap/types": "^4.0.0",
+    "@yac-swap/utils": "^4.0.0",
     "bignumber.js": "^9.0.1",
     "lodash": "^4.17.20"
   },

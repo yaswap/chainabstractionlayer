@@ -1,6 +1,6 @@
 {
   "name": "@yac-swap/node-provider",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@yac-swap/errors": "^1.13.7",
-    "@yac-swap/provider": "^1.13.7",
     "@types/axios": "^0.14.0",
     "@types/lodash": "^4.14.168",
+    "@yac-swap/errors": "^4.0.0",
+    "@yac-swap/provider": "^4.0.0",
     "axios": "^0.21.0",
     "lodash": "^4.17.20"
   },

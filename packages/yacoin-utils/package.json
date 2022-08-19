@@ -1,6 +1,6 @@
 {
   "name": "@yac-swap/yacoin-utils",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -23,14 +23,14 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@yac-swap/yacoin-networks": "^1.0.0",
-    "@yac-swap/crypto": "^1.13.7",
-    "@yac-swap/errors": "^1.13.7",
-    "@yac-swap/types": "^v1.0.0",
-    "@yac-swap/utils": "^1.13.7",
+    "@yac-swap/crypto": "^4.0.0",
+    "@yac-swap/errors": "^4.0.0",
+    "@yac-swap/types": "^4.0.0",
+    "@yac-swap/utils": "^4.0.0",
+    "@yac-swap/yacoin-networks": "^4.0.0",
+    "@yac-swap/yacoinjs-lib": "^1.0.0",
     "bignumber.js": "^9.0.0",
     "bip174": "^2.0.1",
-    "@yac-swap/yacoinjs-lib": "^1.0.0",
     "coinselect": "^3.1.11",
     "lodash": "^4.17.20"
   },
