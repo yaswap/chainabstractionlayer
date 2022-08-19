@@ -1,5 +1,5 @@
-import { Provider } from '@liquality/provider'
-import { padHexStart } from '@liquality/crypto'
+import { Provider } from '@yac-swap/provider'
+import { padHexStart } from '@yac-swap/crypto'
 import {
   addressToString,
   caseInsensitiveEqual,
@@ -7,7 +7,7 @@ import {
   validateSecret,
   validateSecretHash,
   validateSecretAndHash
-} from '@liquality/utils'
+} from '@yac-swap/utils'
 import { remove0x, ensure0x, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
 import {
   SwapProvider,
@@ -26,7 +26,7 @@ import {
   BlockNotFoundError,
   InvalidDestinationAddressError,
   InsufficientBalanceError
-} from '@liquality/errors'
+} from '@yac-swap/errors'
 
 const SOL_CLAIM_FUNCTION = '0xbd66528a' // claim(bytes32)
 const SOL_REFUND_FUNCTION = '0x590e1ae3' // refund()

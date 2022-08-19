@@ -1,8 +1,8 @@
-import { addressToString } from '@liquality/utils'
+import { addressToString } from '@yac-swap/utils'
 import { ensure0x } from '@yac-swap/ethereum-utils'
 import { NftProvider, Address, BigNumber } from '@yac-swap/types'
-import { NftBaseProvider } from '@liquality/nft-base-provider'
-import { StandardError } from '@liquality/errors'
+import { NftBaseProvider } from '@yac-swap/nft-base-provider'
+import { StandardError } from '@yac-swap/errors'
 
 import { isArray } from 'lodash'
 

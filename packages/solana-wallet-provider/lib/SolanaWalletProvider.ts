@@ -1,8 +1,8 @@
-import { WalletProvider } from '@liquality/wallet-provider'
+import { WalletProvider } from '@yac-swap/wallet-provider'
 import { Address, Network, Transaction, solana } from '@yac-swap/types'
-import { addressToString } from '@liquality/utils'
-import { SolanaNetwork } from '@liquality/solana-networks'
-import { base58 } from '@liquality/crypto'
+import { addressToString } from '@yac-swap/utils'
+import { SolanaNetwork } from '@yac-swap/solana-networks'
+import { base58 } from '@yac-swap/crypto'
 
 import nacl from 'tweetnacl'
 import { derivePath } from 'ed25519-hd-key'

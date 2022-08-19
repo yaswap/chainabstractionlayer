@@ -1,7 +1,7 @@
 import { near, SwapParams, SwapProvider, Transaction } from '@yac-swap/types'
 import { NodeProvider } from '@yac-swap/node-provider'
-import { PendingTxError } from '@liquality/errors'
-import { addressToString } from '@liquality/utils'
+import { PendingTxError } from '@yac-swap/errors'
+import { addressToString } from '@yac-swap/utils'
 import {
   fromBase64,
   toBase64,
@@ -9,7 +9,7 @@ import {
   parseReceipt,
   validateSwapParams,
   validateSecretAndHash
-} from '@liquality/near-utils'
+} from '@yac-swap/near-utils'
 
 const ONE_DAY_IN_NS = 24 * 60 * 60 * 1000 * 1000 * 1000
 

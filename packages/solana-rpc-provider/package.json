@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/solana-rpc-provider",
+  "name": "@yac-swap/solana-rpc-provider",
   "version": "1.13.7",
   "description": "RPC Provider implementation for Solana",
   "module": "dist/index.js",
@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/node-provider": "^1.0.0",
-    "@liquality/solana-networks": "^1.13.7",
-    "@liquality/solana-utils": "^1.13.7",
+    "@yac-swap/solana-networks": "^1.13.7",
+    "@yac-swap/solana-utils": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
+    "@yac-swap/utils": "^1.13.7",
     "@solana/web3.js": "^1.18.0",
     "axios": "^0.21.1"
   },

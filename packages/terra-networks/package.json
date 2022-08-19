@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/terra-networks",
+  "name": "@yac-swap/terra-networks",
   "version": "1.13.7",
   "description": "Network specific settings for Terra",
   "module": "dist/index.js",

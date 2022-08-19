@@ -1,5 +1,5 @@
 import { Transaction, Address, yacoin, BigNumber, SwapParams, SwapProvider } from '@yac-swap/types'
-import { Provider } from '@liquality/provider'
+import { Provider } from '@yac-swap/provider'
 import {
   calculateFee,
   decodeRawTransaction,
@@ -14,7 +14,7 @@ import {
   validateSecretHash,
   validateSecretAndHash,
   validateExpiration
-} from '@liquality/utils'
+} from '@yac-swap/utils'
 import { YacoinNetwork } from '@yac-swap/yacoin-networks'
 
 import { Transaction as TransactionYacoinJs, script as bScript, address as AddressYacoinJs, payments } from '@yac-swap/yacoinjs-lib'

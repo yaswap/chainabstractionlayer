@@ -6,8 +6,8 @@ import {
   validateExpiration,
   remove0x
 } from '@yac-swap/ethereum-utils'
-import { addressToString, validateValue, validateSecretHash, validateSecretAndHash } from '@liquality/utils'
-import { PendingTxError } from '@liquality/errors'
+import { addressToString, validateValue, validateSecretHash, validateSecretAndHash } from '@yac-swap/utils'
+import { PendingTxError } from '@yac-swap/errors'
 import { SwapProvider, SwapParams, Transaction, ethereum } from '@yac-swap/types'
 import * as scraper from './types'
 

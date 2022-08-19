@@ -1,4 +1,4 @@
-import { Provider } from '@liquality/provider'
+import { Provider } from '@yac-swap/provider'
 import { FeeProvider } from '@yac-swap/types'
 
 import BigNumber from 'bignumber.js'

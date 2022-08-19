@@ -1,5 +1,5 @@
-import { sha256 } from '@liquality/crypto'
-import { UnimplementedMethodError } from '@liquality/errors'
+import { sha256 } from '@yac-swap/crypto'
+import { UnimplementedMethodError } from '@yac-swap/errors'
 import { SwapParams, SwapProvider, Transaction, EIP1559Fee } from '@yac-swap/types'
 
 export default class Swap implements SwapProvider {

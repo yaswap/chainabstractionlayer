@@ -1,10 +1,10 @@
-import { WalletProvider } from '@liquality/wallet-provider'
+import { WalletProvider } from '@yac-swap/wallet-provider'
 import { EthereumNetworks, EthereumNetwork } from '@yac-swap/ethereum-networks'
-import { WalletError } from '@liquality/errors'
+import { WalletError } from '@yac-swap/errors'
 import { ensure0x, buildTransaction, normalizeTransactionObject, remove0x } from '@yac-swap/ethereum-utils'
-import { addressToString } from '@liquality/utils'
+import { addressToString } from '@yac-swap/utils'
 import { Address, SendOptions, BigNumber, ethereum } from '@yac-swap/types'
-import { Debug } from '@liquality/debug'
+import { Debug } from '@yac-swap/debug'
 
 import { findKey } from 'lodash'
 

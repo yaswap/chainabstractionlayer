@@ -1,9 +1,9 @@
 import { SwapParams, SwapProvider, terra, Transaction } from '@yac-swap/types'
-import { Provider } from '@liquality/provider'
-import { TxNotFoundError, StandardError } from '@liquality/errors'
-import { validateSwapParams, doesTransactionMatchInitiation } from '@liquality/terra-utils'
-import { validateSecretAndHash } from '@liquality/utils'
-import { TerraNetwork } from '@liquality/terra-networks'
+import { Provider } from '@yac-swap/provider'
+import { TxNotFoundError, StandardError } from '@yac-swap/errors'
+import { validateSwapParams, doesTransactionMatchInitiation } from '@yac-swap/terra-utils'
+import { validateSecretAndHash } from '@yac-swap/utils'
+import { TerraNetwork } from '@yac-swap/terra-networks'
 import { isTxError, MsgExecuteContract, MsgInstantiateContract } from '@terra-money/terra.js'
 
 export default class TerraSwapProvider extends Provider implements Partial<SwapProvider> {

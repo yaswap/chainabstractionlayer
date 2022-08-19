@@ -1,9 +1,9 @@
 import { near, SwapParams, Transaction, Address, TxStatus } from '@yac-swap/types'
-import { validateValue, validateSecretHash, validateExpiration, addressToString } from '@liquality/utils'
-import { InvalidAddressError } from '@liquality/errors'
+import { validateValue, validateSecretHash, validateExpiration, addressToString } from '@yac-swap/utils'
+import { InvalidAddressError } from '@yac-swap/errors'
 import BN from 'bn.js'
 
-export { validateSecret, validateSecretAndHash } from '@liquality/utils'
+export { validateSecret, validateSecretAndHash } from '@yac-swap/utils'
 export { transactions, Account, InMemorySigner, providers, KeyPair, keyStores } from 'near-api-js'
 export { BN }
 

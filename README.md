@@ -27,10 +27,10 @@ Query different blockchains with account management using a single and simple in
 |[@yac-swap/bitcoin-esplora-api-provider](./packages/bitcoin-esplora-api-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-esplora-api-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-esplora-api-provider)|
 |[@yac-swap/bitcoin-esplora-swap-find-provider](./packages/bitcoin-esplora-swap-find-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-esplora-swap-find-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-esplora-swap-find-provider)|
 |[@yac-swap/bitcoin-utils](./packages/bitcoin-utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/bitcoin-utils.svg)](https://npmjs.com/package/@yac-swap/bitcoin-utils)|
-|[@liquality/client](./packages/client)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/client.svg)](https://npmjs.com/package/@liquality/client)|
-|[@liquality/crypto](./packages/crypto)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/crypto.svg)](https://npmjs.com/package/@liquality/crypto)|
-|[@liquality/debug](./packages/debug)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/debug.svg)](https://npmjs.com/package/@liquality/debug)|
-|[@liquality/errors](./packages/errors)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/errors.svg)](https://npmjs.com/package/@liquality/errors)|
+|[@yac-swap/client](./packages/client)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/client.svg)](https://npmjs.com/package/@yac-swap/client)|
+|[@yac-swap/crypto](./packages/crypto)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/crypto.svg)](https://npmjs.com/package/@yac-swap/crypto)|
+|[@yac-swap/debug](./packages/debug)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/debug.svg)](https://npmjs.com/package/@yac-swap/debug)|
+|[@yac-swap/errors](./packages/errors)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/errors.svg)](https://npmjs.com/package/@yac-swap/errors)|
 |[@yac-swap/ethereum-erc20-provider](./packages/ethereum-erc20-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-erc20-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-erc20-provider)|
 |[@yac-swap/ethereum-erc20-swap-provider](./packages/ethereum-erc20-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-erc20-swap-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-erc20-swap-provider)|
 |[@yac-swap/ethereum-ledger-provider](./packages/ethereum-ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-ledger-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-ledger-provider)|
@@ -41,18 +41,18 @@ Query different blockchains with account management using a single and simple in
 |[@yac-swap/ethereum-swap-provider](./packages/ethereum-swap-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-swap-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-swap-provider)|
 |[@yac-swap/ethereum-scraper-swap-find-provider](./packages/ethereum-scraper-swap-find-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-scraper-swap-find-provider.svg)](https://npmjs.com/package/@yac-swap/ethereum-scraper-swap-find-provider)|
 |[@yac-swap/ethereum-utils](./packages/ethereum-utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ethereum-utils.svg)](https://npmjs.com/package/@yac-swap/ethereum-utils)|
-|[@liquality/jsonrpc-provider](./packages/jsonrpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/jsonrpc-provider.svg)](https://npmjs.com/package/@liquality/jsonrpc-provider)|
-|[@liquality/ledger-provider](./packages/ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/ledger-provider.svg)](https://npmjs.com/package/@liquality/ledger-provider)|
-|[@liquality/provider](./packages/provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/provider.svg)](https://npmjs.com/package/@liquality/provider)|
-|[@liquality/schema](./packages/schema)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/schema.svg)](https://npmjs.com/package/@liquality/schema)|
-|[@liquality/utils](./packages/utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/utils.svg)](https://npmjs.com/package/@liquality/utils)|
-|[@liquality/wallet-provider](./packages/wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@liquality/wallet-provider.svg)](https://npmjs.com/package/@liquality/wallet-provider)|
+|[@yac-swap/jsonrpc-provider](./packages/jsonrpc-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/jsonrpc-provider.svg)](https://npmjs.com/package/@yac-swap/jsonrpc-provider)|
+|[@yac-swap/ledger-provider](./packages/ledger-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/ledger-provider.svg)](https://npmjs.com/package/@yac-swap/ledger-provider)|
+|[@yac-swap/provider](./packages/provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/provider.svg)](https://npmjs.com/package/@yac-swap/provider)|
+|[@yac-swap/schema](./packages/schema)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/schema.svg)](https://npmjs.com/package/@yac-swap/schema)|
+|[@yac-swap/utils](./packages/utils)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/utils.svg)](https://npmjs.com/package/@yac-swap/utils)|
+|[@yac-swap/wallet-provider](./packages/wallet-provider)|[![ChainAbstractionLayer](https://img.shields.io/npm/v/@yac-swap/wallet-provider.svg)](https://npmjs.com/package/@yac-swap/wallet-provider)|
 
 
 ## Usage
 
 ```javascript
-import { Client } from '@liquality/client'
+import { Client } from '@yac-swap/client'
 import { BitcoinRpcProvider } from '@yac-swap/bitcoin-rpc-provider'
 import { EthereumRpcProvider } from '@yac-swap/ethereum-rpc-provider'
 

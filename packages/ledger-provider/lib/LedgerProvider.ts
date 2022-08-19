@@ -1,9 +1,9 @@
-import { WalletProvider } from '@liquality/wallet-provider'
-import { WalletError } from '@liquality/errors'
-import { caseInsensitiveEqual } from '@liquality/utils'
+import { WalletProvider } from '@yac-swap/wallet-provider'
+import { WalletError } from '@yac-swap/errors'
+import { caseInsensitiveEqual } from '@yac-swap/utils'
 import { Network, Address } from '@yac-swap/types'
 import HwTransport from '@ledgerhq/hw-transport'
-import { Debug } from '@liquality/debug'
+import { Debug } from '@yac-swap/debug'
 
 const debug = Debug('ledger')
 

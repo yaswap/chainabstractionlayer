@@ -9,9 +9,9 @@ import {
   FeeDetails,
   FeeProvider
 } from '@yac-swap/types'
-import { SolanaNetwork } from '@liquality/solana-networks'
-import { TxNotFoundError } from '@liquality/errors'
-import { normalizeBlock, normalizeTransaction } from '@liquality/solana-utils'
+import { SolanaNetwork } from '@yac-swap/solana-networks'
+import { TxNotFoundError } from '@yac-swap/errors'
+import { normalizeBlock, normalizeTransaction } from '@yac-swap/solana-utils'
 
 import {
   Connection,
@@ -25,7 +25,7 @@ import {
   Signer
 } from '@solana/web3.js'
 
-import { addressToString } from '@liquality/utils'
+import { addressToString } from '@yac-swap/utils'
 
 export default class SolanaRpcProvider extends NodeProvider implements FeeProvider, Partial<ChainProvider> {
   _network: SolanaNetwork

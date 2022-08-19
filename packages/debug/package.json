@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/debug",
+  "name": "@yac-swap/debug",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",

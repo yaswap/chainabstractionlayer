@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/terra-swap-find-provider",
+  "name": "@yac-swap/terra-swap-find-provider",
   "version": "1.13.7",
   "description": "Swap Find Provider implementation for Terra",
   "module": "dist/index.js",
@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/node-provider": "^1.0.0",
-    "@liquality/provider": "^1.13.7",
-    "@liquality/terra-networks": "^1.13.7",
-    "@liquality/terra-utils": "^1.13.7",
+    "@yac-swap/provider": "^1.13.7",
+    "@yac-swap/terra-networks": "^1.13.7",
+    "@yac-swap/terra-utils": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7"
+    "@yac-swap/utils": "^1.13.7"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
   "repository": {

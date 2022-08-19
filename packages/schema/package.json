@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/schema",
+  "name": "@yac-swap/schema",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",

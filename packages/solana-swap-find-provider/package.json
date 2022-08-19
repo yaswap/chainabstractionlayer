@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/solana-swap-find-provider",
+  "name": "@yac-swap/solana-swap-find-provider",
   "version": "1.13.7",
   "description": "Swap Find Provider implementation for Solana",
   "module": "dist/index.js",
@@ -23,14 +23,14 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/crypto": "^1.13.7",
-    "@liquality/errors": "^1.13.7",
-    "@liquality/provider": "^1.13.7",
-    "@liquality/solana-networks": "^1.13.7",
-    "@liquality/solana-swap-provider": "^1.13.7",
-    "@liquality/solana-utils": "^1.13.7",
+    "@yac-swap/crypto": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
+    "@yac-swap/provider": "^1.13.7",
+    "@yac-swap/solana-networks": "^1.13.7",
+    "@yac-swap/solana-swap-provider": "^1.13.7",
+    "@yac-swap/solana-utils": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
+    "@yac-swap/utils": "^1.13.7",
     "@solana/web3.js": "^1.18.0",
     "lodash": "^4.17.21"
   },

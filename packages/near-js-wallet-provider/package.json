@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/near-js-wallet-provider",
+  "name": "@yac-swap/near-js-wallet-provider",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/near-networks": "^1.13.7",
-    "@liquality/near-utils": "^1.13.7",
+    "@yac-swap/near-networks": "^1.13.7",
+    "@yac-swap/near-utils": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
-    "@liquality/wallet-provider": "^1.13.7",
+    "@yac-swap/utils": "^1.13.7",
+    "@yac-swap/wallet-provider": "^1.13.7",
     "near-seed-phrase": "^0.1.1"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

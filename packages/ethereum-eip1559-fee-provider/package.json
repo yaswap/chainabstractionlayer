@@ -25,7 +25,7 @@
     "@babel/runtime": "^7.12.1",
     "@ethersproject/providers": "^5.5.1",
     "@yac-swap/ethereum-utils": "^1.0.0",
-    "@liquality/provider": "^1.13.7",
+    "@yac-swap/provider": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
     "@rainbow-me/fee-suggestions": "^1.7.0"
   },

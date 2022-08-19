@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/jsonrpc-provider",
+  "name": "@yac-swap/jsonrpc-provider",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/debug": "^1.13.7",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/debug": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/node-provider": "^1.0.0",
     "@types/lodash": "^4.14.168",
     "json-bigint": "^1.0.0",

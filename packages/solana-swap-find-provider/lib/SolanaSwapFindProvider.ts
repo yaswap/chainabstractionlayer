@@ -1,9 +1,9 @@
 import { SwapParams, SwapProvider, Transaction } from '@yac-swap/types'
-import { Provider } from '@liquality/provider'
-import { PendingTxError } from '@liquality/errors'
-import { addressToString } from '@liquality/utils'
-import { doesTransactionMatchInitiation, validateSwapParams, validateSecret } from '@liquality/solana-utils'
-import { SolanaNetwork } from '@liquality/solana-networks'
+import { Provider } from '@yac-swap/provider'
+import { PendingTxError } from '@yac-swap/errors'
+import { addressToString } from '@yac-swap/utils'
+import { doesTransactionMatchInitiation, validateSwapParams, validateSecret } from '@yac-swap/solana-utils'
+import { SolanaNetwork } from '@yac-swap/solana-networks'
 
 export default class SolanaSwapFindProvider extends Provider implements Partial<SwapProvider> {
   private _network: SolanaNetwork

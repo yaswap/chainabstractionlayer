@@ -25,10 +25,10 @@
     "@babel/runtime": "^7.12.1",
     "@yac-swap/bitcoin-networks": "^1.0.0",
     "@yac-swap/bitcoin-utils": "^1.0.0",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/node-provider": "^1.0.0",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
+    "@yac-swap/utils": "^1.13.7",
     "bignumber.js": "^9.0.0",
     "lodash": "^4.17.20"
   },

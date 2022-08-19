@@ -1,4 +1,4 @@
-import { InvalidProviderResponseError, UnimplementedMethodError } from '@liquality/errors'
+import { InvalidProviderResponseError, UnimplementedMethodError } from '@yac-swap/errors'
 import { Address, WalletProvider } from '@yac-swap/types'
 import { isArray } from 'lodash'
 

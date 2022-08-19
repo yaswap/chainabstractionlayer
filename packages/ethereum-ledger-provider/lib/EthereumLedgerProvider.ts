@@ -1,7 +1,7 @@
-import { LedgerProvider } from '@liquality/ledger-provider'
+import { LedgerProvider } from '@yac-swap/ledger-provider'
 import { Address, ethereum, SendOptions, Transaction, BigNumber, EIP1559Fee } from '@yac-swap/types'
 import { EthereumNetwork } from '@yac-swap/ethereum-networks'
-import { addressToString } from '@liquality/utils'
+import { addressToString } from '@yac-swap/utils'
 import {
   ensure0x,
   remove0x,

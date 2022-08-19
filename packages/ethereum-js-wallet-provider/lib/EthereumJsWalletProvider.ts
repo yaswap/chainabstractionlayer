@@ -1,7 +1,7 @@
-import { WalletProvider } from '@liquality/wallet-provider'
+import { WalletProvider } from '@yac-swap/wallet-provider'
 import { EthereumNetwork } from '@yac-swap/ethereum-networks'
 import { Network, Address, SendOptions, ethereum, Transaction, BigNumber, EIP1559Fee } from '@yac-swap/types'
-import { addressToString } from '@liquality/utils'
+import { addressToString } from '@yac-swap/utils'
 import {
   remove0x,
   buildTransaction,

@@ -1,8 +1,8 @@
-import { WalletProvider } from '@liquality/wallet-provider'
-import { addressToString } from '@liquality/utils'
-import { NearNetwork } from '@liquality/near-networks'
+import { WalletProvider } from '@yac-swap/wallet-provider'
+import { addressToString } from '@yac-swap/utils'
+import { NearNetwork } from '@yac-swap/near-networks'
 import { Address, Network, ChainProvider, near } from '@yac-swap/types'
-import { normalizeTransactionObject, keyStores, KeyPair, InMemorySigner, transactions, BN } from '@liquality/near-utils'
+import { normalizeTransactionObject, keyStores, KeyPair, InMemorySigner, transactions, BN } from '@yac-swap/near-utils'
 import { parseSeedPhrase } from 'near-seed-phrase'
 
 interface NearJsWalletProviderOptions {

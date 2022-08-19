@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/near-swap-provider",
+  "name": "@yac-swap/near-swap-provider",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/errors": "^1.13.7",
-    "@liquality/near-utils": "^1.13.7",
-    "@liquality/provider": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
+    "@yac-swap/near-utils": "^1.13.7",
+    "@yac-swap/provider": "^1.13.7",
     "@yac-swap/types": "^v1.0.0"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

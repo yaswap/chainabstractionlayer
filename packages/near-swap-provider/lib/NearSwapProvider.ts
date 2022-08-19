@@ -1,6 +1,6 @@
 import { SwapProvider, SwapParams, near, BigNumber, Transaction } from '@yac-swap/types'
-import { Provider } from '@liquality/provider'
-import { PendingTxError, TxNotFoundError } from '@liquality/errors'
+import { Provider } from '@yac-swap/provider'
+import { PendingTxError, TxNotFoundError } from '@yac-swap/errors'
 import {
   toNearTimestampFormat,
   parseReceipt,
@@ -9,7 +9,7 @@ import {
   validateSwapParams,
   validateSecret,
   validateSecretAndHash
-} from '@liquality/near-utils'
+} from '@yac-swap/near-utils'
 
 import Bytecode from './bytecode'
 

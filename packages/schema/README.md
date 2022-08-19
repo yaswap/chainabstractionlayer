@@ -1,10 +1,10 @@
-# `@liquality/schema` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
+# `@yac-swap/schema` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
 
 [![Build Status](https://travis-ci.com/liquality/chainabstractionlayer.svg?branch=master)](https://travis-ci.com/liquality/chainabstractionlayer)
 [![Coverage Status](https://coveralls.io/repos/github/liquality/chainabstractionlayer/badge.svg?branch=master)](https://coveralls.io/github/liquality/chainabstractionlayer?branch=master)
 [![Standard Code Style](https://img.shields.io/badge/codestyle-standard-brightgreen.svg)](https://github.com/standard/standard)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](../../LICENSE.md)
-[![@liquality/schema](https://img.shields.io/npm/dt/@liquality/schema.svg)](https://npmjs.com/package/@liquality/schema)
+[![@yac-swap/schema](https://img.shields.io/npm/dt/@yac-swap/schema.svg)](https://npmjs.com/package/@yac-swap/schema)
 [![Gitter](https://img.shields.io/gitter/room/liquality/Lobby.svg)](https://gitter.im/liquality/Lobby?source=orgpage)
 [![Telegram](https://img.shields.io/badge/chat-on%20telegram-blue.svg)](https://t.me/Liquality) [![Greenkeeper badge](https://badges.greenkeeper.io/liquality/chainabstractionlayer.svg)](https://greenkeeper.io/)
 
@@ -17,14 +17,14 @@ Query different blockchains with account management using a single and simple in
 ## Installation
 
 ```bash
-npm i @liquality/schema
+npm i @yac-swap/schema
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@liquality/schema@0.2.3/dist/schema.min.js"></script>
-<!-- sourceMap at https://cdn.jsdelivr.net/npm/@liquality/schema@0.2.3/dist/schema.min.js.map -->
+<script src="https://cdn.jsdelivr.net/npm/@yac-swap/schema@0.2.3/dist/schema.min.js"></script>
+<!-- sourceMap at https://cdn.jsdelivr.net/npm/@yac-swap/schema@0.2.3/dist/schema.min.js.map -->
 <!-- available as window.Schema -->
 ```
 

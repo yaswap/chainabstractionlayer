@@ -1,7 +1,7 @@
-import { WalletProvider } from '@liquality/wallet-provider'
+import { WalletProvider } from '@yac-swap/wallet-provider'
 import { Address, BigNumber, Transaction, terra, SendOptions } from '@yac-swap/types'
-import { addressToString } from '@liquality/utils'
-import { TerraNetwork } from '@liquality/terra-networks'
+import { addressToString } from '@yac-swap/utils'
+import { TerraNetwork } from '@yac-swap/terra-networks'
 import {
   Coins,
   LCDClient,

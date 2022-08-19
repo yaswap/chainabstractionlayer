@@ -1,5 +1,5 @@
 import { Transaction, Address, bitcoin, BigNumber, SwapParams, SwapProvider } from '@yac-swap/types'
-import { Provider } from '@liquality/provider'
+import { Provider } from '@yac-swap/provider'
 import {
   calculateFee,
   decodeRawTransaction,
@@ -15,7 +15,7 @@ import {
   validateSecretHash,
   validateSecretAndHash,
   validateExpiration
-} from '@liquality/utils'
+} from '@yac-swap/utils'
 import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 
 import { Psbt, script as bScript, payments } from 'bitcoinjs-lib'

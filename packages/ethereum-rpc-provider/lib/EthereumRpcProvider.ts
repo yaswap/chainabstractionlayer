@@ -1,4 +1,4 @@
-import { JsonRpcProvider } from '@liquality/jsonrpc-provider'
+import { JsonRpcProvider } from '@yac-swap/jsonrpc-provider'
 import {
   numberToHex,
   hexToNumber,
@@ -18,9 +18,9 @@ import {
   EIP1559Fee,
   TxStatus
 } from '@yac-swap/types'
-import { sleep, addressToString } from '@liquality/utils'
-import { InvalidDestinationAddressError, TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
-import { padHexStart } from '@liquality/crypto'
+import { sleep, addressToString } from '@yac-swap/utils'
+import { InvalidDestinationAddressError, TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
+import { padHexStart } from '@yac-swap/crypto'
 
 const GAS_LIMIT_MULTIPLIER = 1.5
 

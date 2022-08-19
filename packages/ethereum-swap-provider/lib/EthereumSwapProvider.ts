@@ -1,5 +1,5 @@
-import { Provider } from '@liquality/provider'
-import { padHexStart } from '@liquality/crypto'
+import { Provider } from '@yac-swap/provider'
+import { padHexStart } from '@yac-swap/crypto'
 import { SwapProvider, SwapParams, BigNumber, Transaction, Block, ethereum, EIP1559Fee } from '@yac-swap/types'
 import {
   addressToString,
@@ -8,9 +8,9 @@ import {
   validateSecret,
   validateSecretHash,
   validateSecretAndHash
-} from '@liquality/utils'
+} from '@yac-swap/utils'
 import { remove0x, hexToNumber, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
-import { PendingTxError, TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
+import { PendingTxError, TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
 
 export default class EthereumSwapProvider extends Provider implements Partial<SwapProvider> {
   createSwapScript(swapParams: SwapParams) {

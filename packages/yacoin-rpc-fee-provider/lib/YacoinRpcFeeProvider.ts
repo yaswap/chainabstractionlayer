@@ -1,4 +1,4 @@
-import { Provider } from '@liquality/provider'
+import { Provider } from '@yac-swap/provider'
 import { FeeProvider, FeeDetail } from '@yac-swap/types'
 
 type FeeOptions = {

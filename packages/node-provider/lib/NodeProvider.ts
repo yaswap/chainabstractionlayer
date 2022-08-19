@@ -1,5 +1,5 @@
-import { Provider } from '@liquality/provider'
-import { NodeError } from '@liquality/errors'
+import { Provider } from '@yac-swap/provider'
+import { NodeError } from '@yac-swap/errors'
 
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { get } from 'lodash'

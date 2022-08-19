@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/utils",
+  "name": "@yac-swap/utils",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/crypto": "^1.13.7",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/crypto": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
     "setimmediate": "^1.0.5"
   },

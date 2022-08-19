@@ -1,7 +1,7 @@
-import { JsonRpcProvider } from '@liquality/jsonrpc-provider'
-import { addressToString } from '@liquality/utils'
+import { JsonRpcProvider } from '@yac-swap/jsonrpc-provider'
+import { addressToString } from '@yac-swap/utils'
 import { normalizeTransactionObject, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
-import { TxNotFoundError, BlockNotFoundError } from '@liquality/errors'
+import { TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
 import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { bitcoin, Transaction, Block, ChainProvider, SendOptions, Address, BigNumber } from '@yac-swap/types'
 

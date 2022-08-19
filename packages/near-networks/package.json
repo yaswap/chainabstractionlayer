@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/near-networks",
+  "name": "@yac-swap/near-networks",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",

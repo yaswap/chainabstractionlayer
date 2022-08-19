@@ -1,7 +1,7 @@
-import { LedgerProvider } from '@liquality/ledger-provider'
+import { LedgerProvider } from '@yac-swap/ledger-provider'
 import { BitcoinWalletProvider } from '@yac-swap/bitcoin-wallet-provider'
 
-import { padHexStart } from '@liquality/crypto'
+import { padHexStart } from '@yac-swap/crypto'
 import { compressPubKey, getAddressNetwork, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
 import { BitcoinNetworks, BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { bitcoin, BigNumber } from '@yac-swap/types'

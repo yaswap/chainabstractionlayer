@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@liquality/debug": "^1.13.7",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/debug": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/ethereum-networks": "^1.0.0",
     "@yac-swap/ethereum-utils": "^1.0.0",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
-    "@liquality/wallet-provider": "^1.13.7",
+    "@yac-swap/utils": "^1.13.7",
+    "@yac-swap/wallet-provider": "^1.13.7",
     "lodash": "^4.17.20"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

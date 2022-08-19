@@ -1,8 +1,8 @@
 import { Address, SwapParams, SwapProvider, terra, Transaction } from '@yac-swap/types'
-import { addressToString, validateSecretAndHash } from '@liquality/utils'
-import { TerraNetwork } from '@liquality/terra-networks'
-import { normalizeTransaction, doesTransactionMatchInitiation, validateSwapParams } from '@liquality/terra-utils'
-import { TxNotFoundError } from '@liquality/errors'
+import { addressToString, validateSecretAndHash } from '@yac-swap/utils'
+import { TerraNetwork } from '@yac-swap/terra-networks'
+import { normalizeTransaction, doesTransactionMatchInitiation, validateSwapParams } from '@yac-swap/terra-utils'
+import { TxNotFoundError } from '@yac-swap/errors'
 import { NodeProvider } from '@yac-swap/node-provider'
 
 export default class TerraSwapFindProvider extends NodeProvider implements Partial<SwapProvider> {

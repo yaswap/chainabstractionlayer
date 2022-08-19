@@ -1,4 +1,4 @@
-const { Client, providers } = require('@liquality/bundle')
+const { Client, providers } = require('@yac-swap/bundle')
 const config = require('./config')
 
 const bitcoinNetworks = providers.bitcoin.networks

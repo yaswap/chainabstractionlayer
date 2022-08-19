@@ -1,6 +1,6 @@
 import 'setimmediate'
-import { InvalidSecretError, InvalidExpirationError } from '@liquality/errors'
-import { sha256 } from '@liquality/crypto'
+import { InvalidSecretError, InvalidExpirationError } from '@yac-swap/errors'
+import { sha256 } from '@yac-swap/crypto'
 import { BigNumber, Address } from '@yac-swap/types'
 
 function addressToString(address: Address | string): string {

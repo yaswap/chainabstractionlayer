@@ -1,9 +1,9 @@
 import { NodeProvider as NodeProvider } from '@yac-swap/node-provider'
 import { BigNumber, ChainProvider, Address, Block, Transaction, terra, FeeProvider } from '@yac-swap/types'
-import { addressToString } from '@liquality/utils'
-import { TxNotFoundError } from '@liquality/errors'
-import { normalizeBlock, normalizeTransaction } from '@liquality/terra-utils'
-import { TerraNetwork } from '@liquality/terra-networks'
+import { addressToString } from '@yac-swap/utils'
+import { TxNotFoundError } from '@yac-swap/errors'
+import { normalizeBlock, normalizeTransaction } from '@yac-swap/terra-utils'
+import { TerraNetwork } from '@yac-swap/terra-networks'
 import { LCDClient } from '@terra-money/terra.js'
 
 export default class TerraRpcProvider extends NodeProvider implements FeeProvider, Partial<ChainProvider> {

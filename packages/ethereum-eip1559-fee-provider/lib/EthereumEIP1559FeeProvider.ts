@@ -1,4 +1,4 @@
-import { Provider } from '@liquality/provider'
+import { Provider } from '@yac-swap/provider'
 import { FeeProvider, FeeDetails, BigNumber } from '@yac-swap/types'
 import { toGwei } from '@yac-swap/ethereum-utils'
 import { JsonRpcProvider } from '@ethersproject/providers'

@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/nft-provider",
+  "name": "@yac-swap/nft-provider",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -24,12 +24,12 @@
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@yac-swap/ethereum-utils": "^1.0.0",
-    "@liquality/nft-base-provider": "^1.13.7",
-    "@liquality/nft-erc1155-provider": "^1.13.7",
-    "@liquality/nft-erc721-provider": "^1.13.7",
+    "@yac-swap/nft-base-provider": "^1.13.7",
+    "@yac-swap/nft-erc1155-provider": "^1.13.7",
+    "@yac-swap/nft-erc721-provider": "^1.13.7",
     "@yac-swap/node-provider": "^1.0.0",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7"
+    "@yac-swap/utils": "^1.13.7"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
   "repository": {

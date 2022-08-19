@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/solana-utils",
+  "name": "@yac-swap/solana-utils",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -22,10 +22,10 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@liquality/crypto": "^1.13.7",
-    "@liquality/errors": "^1.13.7",
+    "@yac-swap/crypto": "^1.13.7",
+    "@yac-swap/errors": "^1.13.7",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
+    "@yac-swap/utils": "^1.13.7",
     "@solana/web3.js": "^1.20.0",
     "borsh": "^0.4.0",
     "lodash": "^4.17.21"

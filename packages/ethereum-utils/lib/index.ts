@@ -1,7 +1,7 @@
 import { ethereum, Transaction, BigNumber, Address } from '@yac-swap/types'
-import { padHexStart } from '@liquality/crypto'
-import { addressToString, validateExpiration as _validateExpiration } from '@liquality/utils'
-import { InvalidAddressError, InvalidExpirationError } from '@liquality/errors'
+import { padHexStart } from '@yac-swap/crypto'
+import { addressToString, validateExpiration as _validateExpiration } from '@yac-swap/utils'
+import { InvalidAddressError, InvalidExpirationError } from '@yac-swap/errors'
 
 import eip55 from 'eip55'
 

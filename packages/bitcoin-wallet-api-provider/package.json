@@ -26,8 +26,8 @@
     "@yac-swap/bitcoin-networks": "^1.0.0",
     "@yac-swap/bitcoin-wallet-provider": "^1.0.0",
     "@yac-swap/types": "^v1.0.0",
-    "@liquality/utils": "^1.13.7",
-    "@liquality/wallet-provider": "^1.13.7"
+    "@yac-swap/utils": "^1.13.7",
+    "@yac-swap/wallet-provider": "^1.13.7"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
   "repository": {

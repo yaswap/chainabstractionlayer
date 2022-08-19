@@ -1,5 +1,5 @@
 {
-  "name": "@liquality/client-factory",
+  "name": "@yac-swap/client-factory",
   "version": "1.13.7",
   "description": "",
   "module": "dist/index.js",
@@ -30,7 +30,7 @@
     "@yac-swap/bitcoin-networks": "^1.0.0",
     "@yac-swap/bitcoin-rpc-fee-provider": "^1.0.0",
     "@yac-swap/bitcoin-swap-provider": "^1.0.0",
-    "@liquality/client": "^1.13.7",
+    "@yac-swap/client": "^1.13.7",
     "@yac-swap/ethereum-erc20-provider": "^1.0.0",
     "@yac-swap/ethereum-erc20-scraper-swap-find-provider": "^1.0.0",
     "@yac-swap/ethereum-erc20-swap-provider": "^1.0.0",

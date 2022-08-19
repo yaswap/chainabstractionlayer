@@ -1,5 +1,5 @@
 import { BitcoinWalletProvider } from '@yac-swap/bitcoin-wallet-provider'
-import { WalletProvider } from '@liquality/wallet-provider'
+import { WalletProvider } from '@yac-swap/wallet-provider'
 import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
 import { Address, bitcoin, SendOptions } from '@yac-swap/types'
 import { PsbtInputTarget } from '@yac-swap/types/dist/lib/bitcoin'

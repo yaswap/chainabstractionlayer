@@ -30,7 +30,7 @@ debug.formatArgs = function (args: any[]) {
   }
 
   if (!(console as any).history) {
-    ;(console as any).history = [`@liquality/debug v${version}`]
+    ;(console as any).history = [`@yac-swap/debug v${version}`]
   }
 
   ;(console as any).history.push(log)

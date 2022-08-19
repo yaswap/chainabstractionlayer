@@ -1,4 +1,4 @@
-import { InvalidProviderResponseError } from '@liquality/errors'
+import { InvalidProviderResponseError } from '@yac-swap/errors'
 import {
   SendOptions,
   Block,
