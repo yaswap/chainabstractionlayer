@@ -1,9 +1,9 @@
-import { SwapParams, SwapProvider, Transaction } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
-import { PendingTxError } from '@yac-swap/errors'
-import { addressToString } from '@yac-swap/utils'
-import { doesTransactionMatchInitiation, validateSwapParams, validateSecret } from '@yac-swap/solana-utils'
-import { SolanaNetwork } from '@yac-swap/solana-networks'
+import { SwapParams, SwapProvider, Transaction } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
+import { PendingTxError } from '@yaswap/errors'
+import { addressToString } from '@yaswap/utils'
+import { doesTransactionMatchInitiation, validateSwapParams, validateSecret } from '@yaswap/solana-utils'
+import { SolanaNetwork } from '@yaswap/solana-networks'
 
 export default class SolanaSwapFindProvider extends Provider implements Partial<SwapProvider> {
   private _network: SolanaNetwork

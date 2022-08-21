@@ -1,9 +1,9 @@
-import { near, SwapParams, Transaction, Address, TxStatus } from '@yac-swap/types'
-import { validateValue, validateSecretHash, validateExpiration, addressToString } from '@yac-swap/utils'
-import { InvalidAddressError } from '@yac-swap/errors'
+import { near, SwapParams, Transaction, Address, TxStatus } from '@yaswap/types'
+import { validateValue, validateSecretHash, validateExpiration, addressToString } from '@yaswap/utils'
+import { InvalidAddressError } from '@yaswap/errors'
 import BN from 'bn.js'
 
-export { validateSecret, validateSecretAndHash } from '@yac-swap/utils'
+export { validateSecret, validateSecretAndHash } from '@yaswap/utils'
 export { transactions, Account, InMemorySigner, providers, KeyPair, keyStores } from 'near-api-js'
 export { BN }
 

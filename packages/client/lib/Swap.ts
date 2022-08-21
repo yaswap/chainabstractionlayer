@@ -1,6 +1,6 @@
-import { sha256 } from '@yac-swap/crypto'
-import { UnimplementedMethodError } from '@yac-swap/errors'
-import { SwapParams, SwapProvider, Transaction, EIP1559Fee } from '@yac-swap/types'
+import { sha256 } from '@yaswap/crypto'
+import { UnimplementedMethodError } from '@yaswap/errors'
+import { SwapParams, SwapProvider, Transaction, EIP1559Fee } from '@yaswap/types'
 
 export default class Swap implements SwapProvider {
   client: any

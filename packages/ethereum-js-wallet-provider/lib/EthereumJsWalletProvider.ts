@@ -1,7 +1,7 @@
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { EthereumNetwork } from '@yac-swap/ethereum-networks'
-import { Network, Address, SendOptions, ethereum, Transaction, BigNumber, EIP1559Fee } from '@yac-swap/types'
-import { addressToString } from '@yac-swap/utils'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { EthereumNetwork } from '@yaswap/ethereum-networks'
+import { Network, Address, SendOptions, ethereum, Transaction, BigNumber, EIP1559Fee } from '@yaswap/types'
+import { addressToString } from '@yaswap/utils'
 import {
   remove0x,
   buildTransaction,
@@ -9,7 +9,7 @@ import {
   hexToNumber,
   normalizeTransactionObject,
   GWEI
-} from '@yac-swap/ethereum-utils'
+} from '@yaswap/ethereum-utils'
 
 import { mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'

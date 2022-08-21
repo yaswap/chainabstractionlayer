@@ -1,7 +1,7 @@
-import { near, SwapParams, SwapProvider, Transaction } from '@yac-swap/types'
-import { NodeProvider } from '@yac-swap/node-provider'
-import { PendingTxError } from '@yac-swap/errors'
-import { addressToString } from '@yac-swap/utils'
+import { near, SwapParams, SwapProvider, Transaction } from '@yaswap/types'
+import { NodeProvider } from '@yaswap/node-provider'
+import { PendingTxError } from '@yaswap/errors'
+import { addressToString } from '@yaswap/utils'
 import {
   fromBase64,
   toBase64,
@@ -9,7 +9,7 @@ import {
   parseReceipt,
   validateSwapParams,
   validateSecretAndHash
-} from '@yac-swap/near-utils'
+} from '@yaswap/near-utils'
 
 const ONE_DAY_IN_NS = 24 * 60 * 60 * 1000 * 1000 * 1000
 

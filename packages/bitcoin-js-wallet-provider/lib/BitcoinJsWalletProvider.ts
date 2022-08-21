@@ -1,7 +1,7 @@
-import { BitcoinWalletProvider } from '@yac-swap/bitcoin-wallet-provider'
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
-import { bitcoin } from '@yac-swap/types'
+import { BitcoinWalletProvider } from '@yaswap/bitcoin-wallet-provider'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { BitcoinNetwork } from '@yaswap/bitcoin-networks'
+import { bitcoin } from '@yaswap/types'
 
 import { Psbt, ECPair, ECPairInterface, Transaction as BitcoinJsTransaction, script } from 'bitcoinjs-lib'
 import { signAsync as signBitcoinMessage } from 'bitcoinjs-message'

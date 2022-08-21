@@ -1,13 +1,13 @@
-import { Address, BigNumber, Block, solana, SwapParams, Transaction, TxStatus } from '@yac-swap/types'
+import { Address, BigNumber, Block, solana, SwapParams, Transaction, TxStatus } from '@yaswap/types'
 import {
   addressToString,
   validateSecretAndHash,
   validateValue,
   validateExpiration,
   validateSecretHash
-} from '@yac-swap/utils'
-import { InvalidAddressError } from '@yac-swap/errors'
-import { base58 } from '@yac-swap/crypto'
+} from '@yaswap/utils'
+import { InvalidAddressError } from '@yaswap/errors'
+import { base58 } from '@yaswap/crypto'
 import { ParsedConfirmedTransaction } from '@solana/web3.js'
 import { serialize, deserialize as deserializer } from 'borsh'
 import filter from 'lodash/filter'

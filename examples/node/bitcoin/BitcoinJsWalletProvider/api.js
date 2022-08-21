@@ -1,4 +1,4 @@
-const { Client, providers } = require('@yac-swap/bundle')
+const { Client, providers } = require('@yaswap/bundle')
 const config = require('./config')
 
 const bitcoinNetworks = providers.bitcoin.networks

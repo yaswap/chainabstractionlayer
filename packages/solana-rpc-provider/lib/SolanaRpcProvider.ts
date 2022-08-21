@@ -1,4 +1,4 @@
-import { NodeProvider as NodeProvider } from '@yac-swap/node-provider'
+import { NodeProvider as NodeProvider } from '@yaswap/node-provider'
 import {
   BigNumber,
   ChainProvider,
@@ -8,10 +8,10 @@ import {
   solana,
   FeeDetails,
   FeeProvider
-} from '@yac-swap/types'
-import { SolanaNetwork } from '@yac-swap/solana-networks'
-import { TxNotFoundError } from '@yac-swap/errors'
-import { normalizeBlock, normalizeTransaction } from '@yac-swap/solana-utils'
+} from '@yaswap/types'
+import { SolanaNetwork } from '@yaswap/solana-networks'
+import { TxNotFoundError } from '@yaswap/errors'
+import { normalizeBlock, normalizeTransaction } from '@yaswap/solana-utils'
 
 import {
   Connection,
@@ -25,7 +25,7 @@ import {
   Signer
 } from '@solana/web3.js'
 
-import { addressToString } from '@yac-swap/utils'
+import { addressToString } from '@yaswap/utils'
 
 export default class SolanaRpcProvider extends NodeProvider implements FeeProvider, Partial<ChainProvider> {
   _network: SolanaNetwork

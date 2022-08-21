@@ -1,7 +1,7 @@
-import { YacoinWalletProvider } from '@yac-swap/yacoin-wallet-provider'
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { YacoinNetwork } from '@yac-swap/yacoin-networks'
-import { Address, yacoin, SendOptions } from '@yac-swap/types'
+import { YacoinWalletProvider } from '@yaswap/yacoin-wallet-provider'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { YacoinNetwork } from '@yaswap/yacoin-networks'
+import { Address, yacoin, SendOptions } from '@yaswap/types'
 
 declare global {
   interface Window {

@@ -1,7 +1,7 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { BigNumber, Address } from '@yac-swap/types'
-import { addressToString } from '@yac-swap/utils'
-import { BitcoinEsploraApiProvider, EsploraApiProviderOptions, esplora } from '@yac-swap/bitcoin-esplora-api-provider'
+import { NodeProvider } from '@yaswap/node-provider'
+import { BigNumber, Address } from '@yaswap/types'
+import { addressToString } from '@yaswap/utils'
+import { BitcoinEsploraApiProvider, EsploraApiProviderOptions, esplora } from '@yaswap/bitcoin-esplora-api-provider'
 import { flatten, uniq } from 'lodash'
 
 type BatchUTXOs = { address: string; utxo: esplora.UTXO[] }[]

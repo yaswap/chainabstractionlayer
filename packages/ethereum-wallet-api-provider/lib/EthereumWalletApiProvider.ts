@@ -1,10 +1,10 @@
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { EthereumNetworks, EthereumNetwork } from '@yac-swap/ethereum-networks'
-import { WalletError } from '@yac-swap/errors'
-import { ensure0x, buildTransaction, normalizeTransactionObject, remove0x } from '@yac-swap/ethereum-utils'
-import { addressToString } from '@yac-swap/utils'
-import { Address, SendOptions, BigNumber, ethereum } from '@yac-swap/types'
-import { Debug } from '@yac-swap/debug'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { EthereumNetworks, EthereumNetwork } from '@yaswap/ethereum-networks'
+import { WalletError } from '@yaswap/errors'
+import { ensure0x, buildTransaction, normalizeTransactionObject, remove0x } from '@yaswap/ethereum-utils'
+import { addressToString } from '@yaswap/utils'
+import { Address, SendOptions, BigNumber, ethereum } from '@yaswap/types'
+import { Debug } from '@yaswap/debug'
 
 import { findKey } from 'lodash'
 

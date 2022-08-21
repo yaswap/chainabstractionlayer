@@ -3,12 +3,12 @@ import {
   normalizeTransactionObject,
   decodeRawTransaction,
   CoinSelectTarget
-} from '@yac-swap/bitcoin-utils'
-import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
-import { bitcoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@yac-swap/types'
-import { asyncSetImmediate, addressToString } from '@yac-swap/utils'
-import { Provider } from '@yac-swap/provider'
-import { InsufficientBalanceError } from '@yac-swap/errors'
+} from '@yaswap/bitcoin-utils'
+import { BitcoinNetwork } from '@yaswap/bitcoin-networks'
+import { bitcoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@yaswap/types'
+import { asyncSetImmediate, addressToString } from '@yaswap/utils'
+import { Provider } from '@yaswap/provider'
+import { InsufficientBalanceError } from '@yaswap/errors'
 import { BIP32Interface, payments, script } from 'bitcoinjs-lib'
 import memoize from 'memoizee'
 

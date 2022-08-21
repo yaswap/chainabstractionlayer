@@ -1,5 +1,5 @@
-import { Provider } from '@yac-swap/provider'
-import { NodeError } from '@yac-swap/errors'
+import { Provider } from '@yaswap/provider'
+import { NodeError } from '@yaswap/errors'
 
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { get } from 'lodash'

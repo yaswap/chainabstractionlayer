@@ -1,8 +1,8 @@
-import { addressToString } from '@yac-swap/utils'
-import { ensure0x } from '@yac-swap/ethereum-utils'
-import { NftProvider, Address, BigNumber } from '@yac-swap/types'
-import { NftBaseProvider } from '@yac-swap/nft-base-provider'
-import { StandardError } from '@yac-swap/errors'
+import { addressToString } from '@yaswap/utils'
+import { ensure0x } from '@yaswap/ethereum-utils'
+import { NftProvider, Address, BigNumber } from '@yaswap/types'
+import { NftBaseProvider } from '@yaswap/nft-base-provider'
+import { StandardError } from '@yaswap/errors'
 
 import { isArray } from 'lodash'
 

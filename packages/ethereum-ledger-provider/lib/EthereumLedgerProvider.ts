@@ -1,7 +1,7 @@
-import { LedgerProvider } from '@yac-swap/ledger-provider'
-import { Address, ethereum, SendOptions, Transaction, BigNumber, EIP1559Fee } from '@yac-swap/types'
-import { EthereumNetwork } from '@yac-swap/ethereum-networks'
-import { addressToString } from '@yac-swap/utils'
+import { LedgerProvider } from '@yaswap/ledger-provider'
+import { Address, ethereum, SendOptions, Transaction, BigNumber, EIP1559Fee } from '@yaswap/types'
+import { EthereumNetwork } from '@yaswap/ethereum-networks'
+import { addressToString } from '@yaswap/utils'
 import {
   ensure0x,
   remove0x,
@@ -9,7 +9,7 @@ import {
   buildTransaction,
   normalizeTransactionObject,
   hexToNumber
-} from '@yac-swap/ethereum-utils'
+} from '@yaswap/ethereum-utils'
 import { toRpcSig, rlp } from 'ethereumjs-util'
 
 import HwAppEthereum from '@ledgerhq/hw-app-eth'

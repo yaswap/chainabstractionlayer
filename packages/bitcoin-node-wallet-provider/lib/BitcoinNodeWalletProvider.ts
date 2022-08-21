@@ -1,11 +1,11 @@
 import { Psbt, ECPair, script, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib'
 import { uniq, flatten, isString } from 'lodash'
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { JsonRpcProvider } from '@yac-swap/jsonrpc-provider'
-import { bitcoin, SendOptions, BigNumber, Transaction, Address } from '@yac-swap/types'
-import { BitcoinNetworks, BitcoinNetwork } from '@yac-swap/bitcoin-networks'
-import { normalizeTransactionObject, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
-import { sha256 } from '@yac-swap/crypto'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { JsonRpcProvider } from '@yaswap/jsonrpc-provider'
+import { bitcoin, SendOptions, BigNumber, Transaction, Address } from '@yaswap/types'
+import { BitcoinNetworks, BitcoinNetwork } from '@yaswap/bitcoin-networks'
+import { normalizeTransactionObject, decodeRawTransaction } from '@yaswap/bitcoin-utils'
+import { sha256 } from '@yaswap/crypto'
 
 const BIP70_CHAIN_TO_NETWORK: { [index: string]: BitcoinNetwork } = {
   main: BitcoinNetworks.bitcoin,

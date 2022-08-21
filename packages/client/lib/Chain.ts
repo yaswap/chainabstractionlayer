@@ -1,4 +1,4 @@
-import { InvalidProviderResponseError } from '@yac-swap/errors'
+import { InvalidProviderResponseError } from '@yaswap/errors'
 import {
   SendOptions,
   Block,
@@ -9,7 +9,7 @@ import {
   BigNumber,
   Address,
   EIP1559Fee
-} from '@yac-swap/types'
+} from '@yaswap/types'
 import { isBoolean, isNumber, isString, isObject } from 'lodash'
 
 export default class Chain implements ChainProvider, FeeProvider {

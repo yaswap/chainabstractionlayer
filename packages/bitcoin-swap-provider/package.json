@@ -1,6 +1,6 @@
 {
-  "name": "@yac-swap/bitcoin-swap-provider",
-  "version": "4.0.0",
+  "name": "@yaswap/bitcoin-swap-provider",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "webpack --config ../../webpack/webpack.config.js"
   },
-  "author": "yac-swap",
+  "author": "yaswap",
   "license": "MIT",
   "engines": {
     "node": ">=14"
@@ -24,12 +24,12 @@
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@types/node": "^14.14.36",
-    "@yac-swap/bitcoin-networks": "^4.0.0",
-    "@yac-swap/bitcoin-utils": "^4.0.0",
-    "@yac-swap/errors": "^4.0.0",
-    "@yac-swap/provider": "^4.0.0",
-    "@yac-swap/types": "^4.0.0",
-    "@yac-swap/utils": "^4.0.0",
+    "@yaswap/bitcoin-networks": "^1.0.0",
+    "@yaswap/bitcoin-utils": "^1.0.0",
+    "@yaswap/errors": "^1.0.0",
+    "@yaswap/provider": "^1.0.0",
+    "@yaswap/types": "^1.0.0",
+    "@yaswap/utils": "^1.0.0",
     "bignumber.js": "^9.0.0",
     "bitcoinjs-lib": "^5.2.0"
   },

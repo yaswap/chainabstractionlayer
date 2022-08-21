@@ -3,13 +3,13 @@ import {
   normalizeTransactionObject,
   decodeRawTransaction,
   CoinSelectTarget
-} from '@yac-swap/yacoin-utils'
-import { YacoinNetwork } from '@yac-swap/yacoin-networks'
-import { yacoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@yac-swap/types'
-import { asyncSetImmediate, addressToString } from '@yac-swap/utils'
-import { Provider } from '@yac-swap/provider'
-import { InsufficientBalanceError } from '@yac-swap/errors'
-import { BIP32Interface, payments, script } from '@yac-swap/yacoinjs-lib'
+} from '@yaswap/yacoin-utils'
+import { YacoinNetwork } from '@yaswap/yacoin-networks'
+import { yacoin, Transaction, Address, BigNumber, SendOptions, ChainProvider, WalletProvider } from '@yaswap/types'
+import { asyncSetImmediate, addressToString } from '@yaswap/utils'
+import { Provider } from '@yaswap/provider'
+import { InsufficientBalanceError } from '@yaswap/errors'
+import { BIP32Interface, payments, script } from '@yaswap/yacoinjs-lib'
 import memoize from 'memoizee'
 
 const ADDRESS_GAP = 10

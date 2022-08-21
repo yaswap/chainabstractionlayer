@@ -1,6 +1,6 @@
-import { Provider } from '@yac-swap/provider'
-import { FeeProvider, FeeDetails, BigNumber } from '@yac-swap/types'
-import { toGwei } from '@yac-swap/ethereum-utils'
+import { Provider } from '@yaswap/provider'
+import { FeeProvider, FeeDetails, BigNumber } from '@yaswap/types'
+import { toGwei } from '@yaswap/ethereum-utils'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { suggestFees } from '@rainbow-me/fee-suggestions'
 

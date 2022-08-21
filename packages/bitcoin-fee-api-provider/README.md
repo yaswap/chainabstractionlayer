@@ -1,10 +1,10 @@
-# `@yac-swap/bitcoin-fee-api-provider` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
+# `@yaswap/bitcoin-fee-api-provider` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
 
 [![Build Status](https://travis-ci.com/liquality/chainabstractionlayer.svg?branch=master)](https://travis-ci.com/liquality/chainabstractionlayer)
 [![Coverage Status](https://coveralls.io/repos/github/liquality/chainabstractionlayer/badge.svg?branch=master)](https://coveralls.io/github/liquality/chainabstractionlayer?branch=master)
 [![Standard Code Style](https://img.shields.io/badge/codestyle-standard-brightgreen.svg)](https://github.com/standard/standard)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](../../LICENSE.md)
-[![@yac-swap/bitcoin-fee-api-provider](https://img.shields.io/npm/dt/@yac-swap/bitcoin-fee-api-provider.svg)](https://npmjs.com/package/@yac-swap/bitcoin-fee-api-provider)
+[![@yaswap/bitcoin-fee-api-provider](https://img.shields.io/npm/dt/@yaswap/bitcoin-fee-api-provider.svg)](https://npmjs.com/package/@yaswap/bitcoin-fee-api-provider)
 [![Gitter](https://img.shields.io/gitter/room/liquality/Lobby.svg)](https://gitter.im/liquality/Lobby?source=orgpage)
 [![Telegram](https://img.shields.io/badge/chat-on%20telegram-blue.svg)](https://t.me/Liquality) [![Greenkeeper badge](https://badges.greenkeeper.io/liquality/chainabstractionlayer.svg)](https://greenkeeper.io/)
 
@@ -17,14 +17,14 @@ Query different blockchains with account management using a single and simple in
 ## Installation
 
 ```bash
-npm i @yac-swap/bitcoin-fee-api-provider
+npm i @yaswap/bitcoin-fee-api-provider
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@yac-swap/bitcoin-fee-api-provider@0.2.3/dist/bitcoin-fee-api-provider.min.js"></script>
-<!-- sourceMap at https://cdn.jsdelivr.net/npm/@yac-swap/bitcoin-fee-api-provider@0.2.3/dist/bitcoin-fee-api-provider.min.js.map -->
+<script src="https://cdn.jsdelivr.net/npm/@yaswap/bitcoin-fee-api-provider@0.2.3/dist/bitcoin-fee-api-provider.min.js"></script>
+<!-- sourceMap at https://cdn.jsdelivr.net/npm/@yaswap/bitcoin-fee-api-provider@0.2.3/dist/bitcoin-fee-api-provider.min.js.map -->
 <!-- available as window.BitcoiFeeApiProvider -->
 ```
 

@@ -1,4 +1,4 @@
-import { IClient } from '@yac-swap/types'
+import { IClient } from '@yaswap/types'
 
 export default abstract class Provider {
   client: IClient

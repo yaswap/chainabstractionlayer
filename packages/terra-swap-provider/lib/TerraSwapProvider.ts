@@ -1,9 +1,9 @@
-import { SwapParams, SwapProvider, terra, Transaction } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
-import { TxNotFoundError, StandardError } from '@yac-swap/errors'
-import { validateSwapParams, doesTransactionMatchInitiation } from '@yac-swap/terra-utils'
-import { validateSecretAndHash } from '@yac-swap/utils'
-import { TerraNetwork } from '@yac-swap/terra-networks'
+import { SwapParams, SwapProvider, terra, Transaction } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
+import { TxNotFoundError, StandardError } from '@yaswap/errors'
+import { validateSwapParams, doesTransactionMatchInitiation } from '@yaswap/terra-utils'
+import { validateSecretAndHash } from '@yaswap/utils'
+import { TerraNetwork } from '@yaswap/terra-networks'
 import { isTxError, MsgExecuteContract, MsgInstantiateContract } from '@terra-money/terra.js'
 
 export default class TerraSwapProvider extends Provider implements Partial<SwapProvider> {

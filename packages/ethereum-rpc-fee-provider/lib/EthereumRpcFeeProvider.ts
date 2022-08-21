@@ -1,5 +1,5 @@
-import { Provider } from '@yac-swap/provider'
-import { FeeProvider } from '@yac-swap/types'
+import { Provider } from '@yaswap/provider'
+import { FeeProvider } from '@yaswap/types'
 
 import BigNumber from 'bignumber.js'
 

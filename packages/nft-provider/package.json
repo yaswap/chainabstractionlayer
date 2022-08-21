@@ -1,6 +1,6 @@
 {
-  "name": "@yac-swap/nft-provider",
-  "version": "4.0.0",
+  "name": "@yaswap/nft-provider",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -16,20 +16,20 @@
   "scripts": {
     "build": "webpack --config ../../webpack/webpack.config.js"
   },
-  "author": "yac-swap",
+  "author": "yaswap",
   "license": "MIT",
   "engines": {
     "node": ">=14"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@yac-swap/ethereum-utils": "^4.0.0",
-    "@yac-swap/nft-base-provider": "^4.0.0",
-    "@yac-swap/nft-erc1155-provider": "^4.0.0",
-    "@yac-swap/nft-erc721-provider": "^4.0.0",
-    "@yac-swap/node-provider": "^4.0.0",
-    "@yac-swap/types": "^4.0.0",
-    "@yac-swap/utils": "^4.0.0"
+    "@yaswap/ethereum-utils": "^1.0.0",
+    "@yaswap/nft-base-provider": "^1.0.0",
+    "@yaswap/nft-erc1155-provider": "^1.0.0",
+    "@yaswap/nft-erc721-provider": "^1.0.0",
+    "@yaswap/node-provider": "^1.0.0",
+    "@yaswap/types": "^1.0.0",
+    "@yaswap/utils": "^1.0.0"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
   "repository": {

@@ -1,5 +1,5 @@
-import { Transaction, Address, bitcoin, BigNumber, SwapParams, SwapProvider } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
+import { Transaction, Address, bitcoin, BigNumber, SwapParams, SwapProvider } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
 import {
   calculateFee,
   decodeRawTransaction,
@@ -7,7 +7,7 @@ import {
   witnessStackToScriptWitness,
   getPubKeyHash,
   validateAddress
-} from '@yac-swap/bitcoin-utils'
+} from '@yaswap/bitcoin-utils'
 import {
   addressToString,
   validateValue,
@@ -15,8 +15,8 @@ import {
   validateSecretHash,
   validateSecretAndHash,
   validateExpiration
-} from '@yac-swap/utils'
-import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
+} from '@yaswap/utils'
+import { BitcoinNetwork } from '@yaswap/bitcoin-networks'
 
 import { Psbt, script as bScript, payments } from 'bitcoinjs-lib'
 

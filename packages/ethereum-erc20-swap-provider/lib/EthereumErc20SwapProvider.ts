@@ -1,5 +1,5 @@
-import { Provider } from '@yac-swap/provider'
-import { padHexStart } from '@yac-swap/crypto'
+import { Provider } from '@yaswap/provider'
+import { padHexStart } from '@yaswap/crypto'
 import {
   addressToString,
   caseInsensitiveEqual,
@@ -7,8 +7,8 @@ import {
   validateSecret,
   validateSecretHash,
   validateSecretAndHash
-} from '@yac-swap/utils'
-import { remove0x, ensure0x, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
+} from '@yaswap/utils'
+import { remove0x, ensure0x, validateAddress, validateExpiration } from '@yaswap/ethereum-utils'
 import {
   SwapProvider,
   SwapParams,
@@ -18,7 +18,7 @@ import {
   Address,
   ethereum,
   EIP1559Fee
-} from '@yac-swap/types'
+} from '@yaswap/types'
 import {
   PendingTxError,
   TxNotFoundError,
@@ -26,7 +26,7 @@ import {
   BlockNotFoundError,
   InvalidDestinationAddressError,
   InsufficientBalanceError
-} from '@yac-swap/errors'
+} from '@yaswap/errors'
 
 const SOL_CLAIM_FUNCTION = '0xbd66528a' // claim(bytes32)
 const SOL_REFUND_FUNCTION = '0x590e1ae3' // refund()

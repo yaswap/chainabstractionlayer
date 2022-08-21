@@ -1,5 +1,5 @@
-import { Provider } from '@yac-swap/provider'
-import { FeeProvider, FeeDetail } from '@yac-swap/types'
+import { Provider } from '@yaswap/provider'
+import { FeeProvider, FeeDetail } from '@yaswap/types'
 
 type FeeOptions = {
   slowTargetBlocks?: number

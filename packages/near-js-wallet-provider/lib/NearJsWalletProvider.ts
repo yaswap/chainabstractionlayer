@@ -1,8 +1,8 @@
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { addressToString } from '@yac-swap/utils'
-import { NearNetwork } from '@yac-swap/near-networks'
-import { Address, Network, ChainProvider, near } from '@yac-swap/types'
-import { normalizeTransactionObject, keyStores, KeyPair, InMemorySigner, transactions, BN } from '@yac-swap/near-utils'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { addressToString } from '@yaswap/utils'
+import { NearNetwork } from '@yaswap/near-networks'
+import { Address, Network, ChainProvider, near } from '@yaswap/types'
+import { normalizeTransactionObject, keyStores, KeyPair, InMemorySigner, transactions, BN } from '@yaswap/near-utils'
 import { parseSeedPhrase } from 'near-seed-phrase'
 
 interface NearJsWalletProviderOptions {

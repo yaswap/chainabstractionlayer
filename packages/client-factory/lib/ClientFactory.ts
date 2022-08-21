@@ -1,5 +1,5 @@
 import { isArray, isFunction } from 'lodash'
-import { Client } from '@yac-swap/client'
+import { Client } from '@yaswap/client'
 
 import * as presets from './presets'
 

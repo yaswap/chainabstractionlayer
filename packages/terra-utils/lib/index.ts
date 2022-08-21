@@ -1,6 +1,6 @@
-import { Block, SwapParams, Transaction, terra, TxStatus } from '@yac-swap/types'
-import { addressToString, validateExpiration, validateSecretHash, validateValue } from '@yac-swap/utils'
-import { InvalidAddressError } from '@yac-swap/errors'
+import { Block, SwapParams, Transaction, terra, TxStatus } from '@yaswap/types'
+import { addressToString, validateExpiration, validateSecretHash, validateValue } from '@yaswap/utils'
+import { InvalidAddressError } from '@yaswap/errors'
 import { DateTime } from 'luxon'
 
 export const normalizeBlock = (data: any): Block => ({

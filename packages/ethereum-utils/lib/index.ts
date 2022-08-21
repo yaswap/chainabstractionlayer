@@ -1,7 +1,7 @@
-import { ethereum, Transaction, BigNumber, Address } from '@yac-swap/types'
-import { padHexStart } from '@yac-swap/crypto'
-import { addressToString, validateExpiration as _validateExpiration } from '@yac-swap/utils'
-import { InvalidAddressError, InvalidExpirationError } from '@yac-swap/errors'
+import { ethereum, Transaction, BigNumber, Address } from '@yaswap/types'
+import { padHexStart } from '@yaswap/crypto'
+import { addressToString, validateExpiration as _validateExpiration } from '@yaswap/utils'
+import { InvalidAddressError, InvalidExpirationError } from '@yaswap/errors'
 
 import eip55 from 'eip55'
 

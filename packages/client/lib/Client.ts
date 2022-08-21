@@ -1,6 +1,6 @@
-import { Block as BlockSchema, Transaction as TransactionSchema } from '@yac-swap/schema'
-import { Block, Transaction, IClient } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
+import { Block as BlockSchema, Transaction as TransactionSchema } from '@yaswap/schema'
+import { Block, Transaction, IClient } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
 import {
   DuplicateProviderError,
   InvalidProviderError,
@@ -8,7 +8,7 @@ import {
   UnimplementedMethodError,
   UnsupportedMethodError,
   InvalidProviderResponseError
-} from '@yac-swap/errors'
+} from '@yaswap/errors'
 
 import { find, findLast, findLastIndex, isFunction } from 'lodash'
 import debug from 'debug'

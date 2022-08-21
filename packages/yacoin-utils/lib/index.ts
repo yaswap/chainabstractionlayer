@@ -1,13 +1,13 @@
-import { base58, padHexStart } from '@yac-swap/crypto'
-import { YacoinNetworks, YacoinNetwork } from '@yac-swap/yacoin-networks'
-import { Address, Transaction, yacoin as bT, TxStatus } from '@yac-swap/types'
-import { addressToString } from '@yac-swap/utils'
-import { InvalidAddressError } from '@yac-swap/errors'
+import { base58, padHexStart } from '@yaswap/crypto'
+import { YacoinNetworks, YacoinNetwork } from '@yaswap/yacoin-networks'
+import { Address, Transaction, yacoin as bT, TxStatus } from '@yaswap/types'
+import { addressToString } from '@yaswap/utils'
+import { InvalidAddressError } from '@yaswap/errors'
 
 import { findKey } from 'lodash'
 import BigNumber from 'bignumber.js'
-import * as yacoin from '@yac-swap/yacoinjs-lib'
-import * as classify from '@yac-swap/yacoinjs-lib/src/classify'
+import * as yacoin from '@yaswap/yacoinjs-lib'
+import * as classify from '@yaswap/yacoinjs-lib/src/classify'
 import coinselect from 'coinselect'
 import coinselectAccumulative from 'coinselect/accumulative'
 
@@ -71,7 +71,7 @@ function compressPubKey(pubKey: string) {
  * @return {Network}
  */
 function getAddressNetwork(address: string) {
-  // TODO: can this be simplified using just @yac-swap/yacoinjs-lib??
+  // TODO: can this be simplified using just @yaswap/yacoinjs-lib??
   let networkKey
 
   const prefix = base58.decode(address).toString('hex').substring(0, 2)

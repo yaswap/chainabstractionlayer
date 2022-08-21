@@ -1,6 +1,6 @@
-import { SwapProvider, SwapParams, near, BigNumber, Transaction } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
-import { PendingTxError, TxNotFoundError } from '@yac-swap/errors'
+import { SwapProvider, SwapParams, near, BigNumber, Transaction } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
+import { PendingTxError, TxNotFoundError } from '@yaswap/errors'
 import {
   toNearTimestampFormat,
   parseReceipt,
@@ -9,7 +9,7 @@ import {
   validateSwapParams,
   validateSecret,
   validateSecretAndHash
-} from '@yac-swap/near-utils'
+} from '@yaswap/near-utils'
 
 import Bytecode from './bytecode'
 

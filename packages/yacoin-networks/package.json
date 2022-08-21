@@ -1,6 +1,6 @@
 {
-  "name": "@yac-swap/yacoin-networks",
-  "version": "4.0.0",
+  "name": "@yaswap/yacoin-networks",
+  "version": "1.0.0",
   "description": "",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -16,15 +16,15 @@
   "scripts": {
     "build": "webpack --config ../../webpack/webpack.config.js"
   },
-  "author": "yac-swap",
+  "author": "yaswap",
   "license": "MIT",
   "engines": {
     "node": ">=14"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
-    "@yac-swap/types": "^4.0.0",
-    "@yac-swap/yacoinjs-lib": "^1.0.0"
+    "@yaswap/types": "^1.0.0",
+    "@yaswap/yacoinjs-lib": "^v1.1.0"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",
   "repository": {

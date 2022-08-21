@@ -1,9 +1,9 @@
-import { BitcoinEsploraBatchApiProvider } from '@yac-swap/bitcoin-esplora-batch-api-provider'
-import { BitcoinJsWalletProvider } from '@yac-swap/bitcoin-js-wallet-provider'
-import { BitcoinSwapProvider } from '@yac-swap/bitcoin-swap-provider'
-import { BitcoinEsploraSwapFindProvider } from '@yac-swap/bitcoin-esplora-swap-find-provider'
-import { BitcoinRpcFeeProvider } from '@yac-swap/bitcoin-rpc-fee-provider'
-import { BitcoinNetworks } from '@yac-swap/bitcoin-networks'
+import { BitcoinEsploraBatchApiProvider } from '@yaswap/bitcoin-esplora-batch-api-provider'
+import { BitcoinJsWalletProvider } from '@yaswap/bitcoin-js-wallet-provider'
+import { BitcoinSwapProvider } from '@yaswap/bitcoin-swap-provider'
+import { BitcoinEsploraSwapFindProvider } from '@yaswap/bitcoin-esplora-swap-find-provider'
+import { BitcoinRpcFeeProvider } from '@yaswap/bitcoin-rpc-fee-provider'
+import { BitcoinNetworks } from '@yaswap/bitcoin-networks'
 
 export default [
   {

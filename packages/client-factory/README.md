@@ -1,10 +1,10 @@
-# `@yac-swap/client-factory` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
+# `@yaswap/client-factory` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
 
 [![Build Status](https://travis-ci.com/liquality/chainabstractionlayer.svg?branch=master)](https://travis-ci.com/liquality/chainabstractionlayer)
 [![Coverage Status](https://coveralls.io/repos/github/liquality/chainabstractionlayer/badge.svg?branch=master)](https://coveralls.io/github/liquality/chainabstractionlayer?branch=master)
 [![Standard Code Style](https://img.shields.io/badge/codestyle-standard-brightgreen.svg)](https://github.com/standard/standard)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](../../LICENSE.md)
-[![@yac-swap/client-factory](https://img.shields.io/npm/dt/@yac-swap/client-factory.svg)](https://npmjs.com/package/@yac-swap/client-factory)
+[![@yaswap/client-factory](https://img.shields.io/npm/dt/@yaswap/client-factory.svg)](https://npmjs.com/package/@yaswap/client-factory)
 [![Gitter](https://img.shields.io/gitter/room/liquality/Lobby.svg)](https://gitter.im/liquality/Lobby?source=orgpage)
 [![Telegram](https://img.shields.io/badge/chat-on%20telegram-blue.svg)](https://t.me/Liquality) [![Greenkeeper badge](https://badges.greenkeeper.io/liquality/chainabstractionlayer.svg)](https://greenkeeper.io/)
 
@@ -17,21 +17,21 @@ Query different blockchains with account management using a single and simple in
 ## Installation
 
 ```bash
-npm i @yac-swap/client-factory
+npm i @yaswap/client-factory
 ```
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@yac-swap/client-factory@0.2.3/dist/client.min.js"></script>
-<!-- sourceMap at https://cdn.jsdelivr.net/npm/@yac-swap/client-factory@0.2.3/dist/client.min.js.map -->
+<script src="https://cdn.jsdelivr.net/npm/@yaswap/client-factory@0.2.3/dist/client.min.js"></script>
+<!-- sourceMap at https://cdn.jsdelivr.net/npm/@yaswap/client-factory@0.2.3/dist/client.min.js.map -->
 <!-- available as window.Client -->
 ```
 
 ## Usage
 
 ```js
-import { ClientFactory } from '@yac-swap/client-factory'
+import { ClientFactory } from '@yaswap/client-factory'
 
 const bitcoin = ClientFactory.create('mainnet', 'btc', { mnemonic: 'xxx' })
 const ethereum = ClientFactory.create('mainnet', 'eth', { mnemonic: 'xxx' })

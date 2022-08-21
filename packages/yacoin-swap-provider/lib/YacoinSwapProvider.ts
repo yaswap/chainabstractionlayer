@@ -1,12 +1,12 @@
-import { Transaction, Address, yacoin, BigNumber, SwapParams, SwapProvider } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
+import { Transaction, Address, yacoin, BigNumber, SwapParams, SwapProvider } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
 import {
   calculateFee,
   decodeRawTransaction,
   normalizeTransactionObject,
   getPubKeyHash,
   validateAddress
-} from '@yac-swap/yacoin-utils'
+} from '@yaswap/yacoin-utils'
 import {
   addressToString,
   validateValue,
@@ -14,10 +14,10 @@ import {
   validateSecretHash,
   validateSecretAndHash,
   validateExpiration
-} from '@yac-swap/utils'
-import { YacoinNetwork } from '@yac-swap/yacoin-networks'
+} from '@yaswap/utils'
+import { YacoinNetwork } from '@yaswap/yacoin-networks'
 
-import { Transaction as TransactionYacoinJs, script as bScript, address as AddressYacoinJs, payments } from '@yac-swap/yacoinjs-lib'
+import { Transaction as TransactionYacoinJs, script as bScript, address as AddressYacoinJs, payments } from '@yaswap/yacoinjs-lib'
 
 interface YacoinSwapProviderOptions {
   network: YacoinNetwork

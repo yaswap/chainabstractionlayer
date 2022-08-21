@@ -1,4 +1,4 @@
-import { Network } from '@yac-swap/types'
+import { Network } from '@yaswap/types'
 
 export interface TerraNetwork extends Network {
   networkId: string

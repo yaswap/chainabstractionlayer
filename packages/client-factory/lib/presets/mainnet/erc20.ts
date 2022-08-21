@@ -1,10 +1,10 @@
-import { EthereumRpcProvider } from '@yac-swap/ethereum-rpc-provider'
-import { EthereumJsWalletProvider } from '@yac-swap/ethereum-js-wallet-provider'
-import { EthereumGasNowFeeProvider } from '@yac-swap/ethereum-gas-now-fee-provider'
-import { EthereumErc20Provider } from '@yac-swap/ethereum-erc20-provider'
-import { EthereumErc20SwapProvider } from '@yac-swap/ethereum-erc20-swap-provider'
-import { EthereumErc20ScraperSwapFindProvider } from '@yac-swap/ethereum-erc20-scraper-swap-find-provider'
-import { EthereumNetworks } from '@yac-swap/ethereum-networks'
+import { EthereumRpcProvider } from '@yaswap/ethereum-rpc-provider'
+import { EthereumJsWalletProvider } from '@yaswap/ethereum-js-wallet-provider'
+import { EthereumGasNowFeeProvider } from '@yaswap/ethereum-gas-now-fee-provider'
+import { EthereumErc20Provider } from '@yaswap/ethereum-erc20-provider'
+import { EthereumErc20SwapProvider } from '@yaswap/ethereum-erc20-swap-provider'
+import { EthereumErc20ScraperSwapFindProvider } from '@yaswap/ethereum-erc20-scraper-swap-find-provider'
+import { EthereumNetworks } from '@yaswap/ethereum-networks'
 
 export default [
   {

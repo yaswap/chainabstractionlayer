@@ -1,5 +1,5 @@
-import { InvalidProviderResponseError, UnimplementedMethodError } from '@yac-swap/errors'
-import { Address, WalletProvider } from '@yac-swap/types'
+import { InvalidProviderResponseError, UnimplementedMethodError } from '@yaswap/errors'
+import { Address, WalletProvider } from '@yaswap/types'
 import { isArray } from 'lodash'
 
 export default class Wallet implements WalletProvider {

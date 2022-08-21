@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@yac-swap/bundle": "^0.3.5"
+    "@yaswap/bundle": "^0.3.5"
   }
 }

@@ -1,14 +1,14 @@
-import { NodeProvider } from '@yac-swap/node-provider'
+import { NodeProvider } from '@yaswap/node-provider'
 import {
   numberToHex,
   normalizeTransactionObject,
   validateAddress,
   validateExpiration,
   remove0x
-} from '@yac-swap/ethereum-utils'
-import { addressToString, validateValue, validateSecretHash, validateSecretAndHash } from '@yac-swap/utils'
-import { PendingTxError } from '@yac-swap/errors'
-import { SwapProvider, SwapParams, Transaction, ethereum } from '@yac-swap/types'
+} from '@yaswap/ethereum-utils'
+import { addressToString, validateValue, validateSecretHash, validateSecretAndHash } from '@yaswap/utils'
+import { PendingTxError } from '@yaswap/errors'
+import { SwapProvider, SwapParams, Transaction, ethereum } from '@yaswap/types'
 import * as scraper from './types'
 
 export default class EthereumScraperSwapFindProvider extends NodeProvider implements Partial<SwapProvider> {

@@ -1,5 +1,5 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { SwapParams, Transaction, bitcoin } from '@yac-swap/types'
+import { NodeProvider } from '@yaswap/node-provider'
+import { SwapParams, Transaction, bitcoin } from '@yaswap/types'
 import { payments } from 'bitcoinjs-lib'
 
 type TransactionMatchesFunction = (tx: Transaction<bitcoin.Transaction>) => boolean

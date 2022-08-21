@@ -1,5 +1,5 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { FeeProvider, FeeDetails } from '@yac-swap/types'
+import { NodeProvider } from '@yaswap/node-provider'
+import { FeeProvider, FeeDetails } from '@yaswap/types'
 
 export default class YacoinFeeApiProvider extends NodeProvider implements FeeProvider {
   constructor(endpoint = 'https://mempool.space/api/v1/fees/recommended') {

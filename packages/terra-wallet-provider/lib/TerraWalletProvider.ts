@@ -1,7 +1,7 @@
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { Address, BigNumber, Transaction, terra, SendOptions } from '@yac-swap/types'
-import { addressToString } from '@yac-swap/utils'
-import { TerraNetwork } from '@yac-swap/terra-networks'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { Address, BigNumber, Transaction, terra, SendOptions } from '@yaswap/types'
+import { addressToString } from '@yaswap/utils'
+import { TerraNetwork } from '@yaswap/terra-networks'
 import {
   Coins,
   LCDClient,

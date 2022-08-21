@@ -1,5 +1,5 @@
-import { BigNumber, SwapParams, SwapProvider, Transaction, TxStatus } from '@yac-swap/types'
-import { Provider } from '@yac-swap/provider'
+import { BigNumber, SwapParams, SwapProvider, Transaction, TxStatus } from '@yaswap/types'
+import { Provider } from '@yaswap/provider'
 import { Keypair, SystemProgram, PublicKey, TransactionInstruction } from '@solana/web3.js'
 import {
   doesTransactionMatchInitiation,
@@ -7,9 +7,9 @@ import {
   createInitBuffer,
   createRefundBuffer,
   validateSwapParams
-} from '@yac-swap/solana-utils'
-import { WalletError, TxNotFoundError, InvalidAddressError, StandardError } from '@yac-swap/errors'
-import { SolanaNetwork } from '@yac-swap/solana-networks'
+} from '@yaswap/solana-utils'
+import { WalletError, TxNotFoundError, InvalidAddressError, StandardError } from '@yaswap/errors'
+import { SolanaNetwork } from '@yaswap/solana-networks'
 
 export default class SolanaSwapProvider extends Provider implements Partial<SwapProvider> {
   private _network: SolanaNetwork

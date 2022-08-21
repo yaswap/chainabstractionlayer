@@ -1,10 +1,10 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { addressToString } from '@yac-swap/utils'
-import { decodeRawTransaction, normalizeTransactionObject } from '@yac-swap/yacoin-utils'
-import { TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
-import { ChainProvider, Address, yacoin, BigNumber } from '@yac-swap/types'
+import { NodeProvider } from '@yaswap/node-provider'
+import { addressToString } from '@yaswap/utils'
+import { decodeRawTransaction, normalizeTransactionObject } from '@yaswap/yacoin-utils'
+import { TxNotFoundError, BlockNotFoundError } from '@yaswap/errors'
+import { ChainProvider, Address, yacoin, BigNumber } from '@yaswap/types'
 import * as esplora from './types'
-import { YacoinNetwork } from '@yac-swap/yacoin-networks'
+import { YacoinNetwork } from '@yaswap/yacoin-networks'
 
 import { flatten } from 'lodash'
 

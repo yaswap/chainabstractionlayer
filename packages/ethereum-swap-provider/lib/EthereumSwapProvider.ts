@@ -1,6 +1,6 @@
-import { Provider } from '@yac-swap/provider'
-import { padHexStart } from '@yac-swap/crypto'
-import { SwapProvider, SwapParams, BigNumber, Transaction, Block, ethereum, EIP1559Fee } from '@yac-swap/types'
+import { Provider } from '@yaswap/provider'
+import { padHexStart } from '@yaswap/crypto'
+import { SwapProvider, SwapParams, BigNumber, Transaction, Block, ethereum, EIP1559Fee } from '@yaswap/types'
 import {
   addressToString,
   caseInsensitiveEqual,
@@ -8,9 +8,9 @@ import {
   validateSecret,
   validateSecretHash,
   validateSecretAndHash
-} from '@yac-swap/utils'
-import { remove0x, hexToNumber, validateAddress, validateExpiration } from '@yac-swap/ethereum-utils'
-import { PendingTxError, TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
+} from '@yaswap/utils'
+import { remove0x, hexToNumber, validateAddress, validateExpiration } from '@yaswap/ethereum-utils'
+import { PendingTxError, TxNotFoundError, BlockNotFoundError } from '@yaswap/errors'
 
 export default class EthereumSwapProvider extends Provider implements Partial<SwapProvider> {
   createSwapScript(swapParams: SwapParams) {

@@ -1,6 +1,6 @@
 {
-  "name": "@yac-swap/solana-rpc-provider",
-  "version": "4.0.0",
+  "name": "@yaswap/solana-rpc-provider",
+  "version": "1.0.0",
   "description": "RPC Provider implementation for Solana",
   "module": "dist/index.js",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "webpack --config ../../webpack/webpack.config.js"
   },
-  "author": "yac-swap",
+  "author": "yaswap",
   "license": "MIT",
   "engines": {
     "node": ">=14"
@@ -24,12 +24,12 @@
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@solana/web3.js": "^1.18.0",
-    "@yac-swap/errors": "^4.0.0",
-    "@yac-swap/node-provider": "^4.0.0",
-    "@yac-swap/solana-networks": "^4.0.0",
-    "@yac-swap/solana-utils": "^4.0.0",
-    "@yac-swap/types": "^4.0.0",
-    "@yac-swap/utils": "^4.0.0",
+    "@yaswap/errors": "^1.0.0",
+    "@yaswap/node-provider": "^1.0.0",
+    "@yaswap/solana-networks": "^1.0.0",
+    "@yaswap/solana-utils": "^1.0.0",
+    "@yaswap/types": "^1.0.0",
+    "@yaswap/utils": "^1.0.0",
     "axios": "^0.21.1"
   },
   "homepage": "https://github.com/liquality/chainabstractionlayer#readme",

@@ -1,8 +1,8 @@
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { Address, Network, Transaction, solana } from '@yac-swap/types'
-import { addressToString } from '@yac-swap/utils'
-import { SolanaNetwork } from '@yac-swap/solana-networks'
-import { base58 } from '@yac-swap/crypto'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { Address, Network, Transaction, solana } from '@yaswap/types'
+import { addressToString } from '@yaswap/utils'
+import { SolanaNetwork } from '@yaswap/solana-networks'
+import { base58 } from '@yaswap/crypto'
 
 import nacl from 'tweetnacl'
 import { derivePath } from 'ed25519-hd-key'

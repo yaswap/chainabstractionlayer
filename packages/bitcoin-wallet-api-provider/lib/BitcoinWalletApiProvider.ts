@@ -1,8 +1,8 @@
-import { BitcoinWalletProvider } from '@yac-swap/bitcoin-wallet-provider'
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
-import { Address, bitcoin, SendOptions } from '@yac-swap/types'
-import { PsbtInputTarget } from '@yac-swap/types/dist/lib/bitcoin'
+import { BitcoinWalletProvider } from '@yaswap/bitcoin-wallet-provider'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { BitcoinNetwork } from '@yaswap/bitcoin-networks'
+import { Address, bitcoin, SendOptions } from '@yaswap/types'
+import { PsbtInputTarget } from '@yaswap/types/dist/lib/bitcoin'
 
 declare global {
   interface Window {

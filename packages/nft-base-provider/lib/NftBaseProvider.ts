@@ -1,8 +1,8 @@
-import { Provider } from '@yac-swap/provider'
-import { addressToString } from '@yac-swap/utils'
-import { ensure0x } from '@yac-swap/ethereum-utils'
-import { Address } from '@yac-swap/types'
-import { StandardError } from '@yac-swap/errors'
+import { Provider } from '@yaswap/provider'
+import { addressToString } from '@yaswap/utils'
+import { ensure0x } from '@yaswap/ethereum-utils'
+import { Address } from '@yaswap/types'
+import { StandardError } from '@yaswap/errors'
 
 import { Contract } from '@ethersproject/contracts'
 

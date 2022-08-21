@@ -1,9 +1,9 @@
-import { EthereumRpcProvider } from '@yac-swap/ethereum-rpc-provider'
-import { EthereumJsWalletProvider } from '@yac-swap/ethereum-js-wallet-provider'
-import { EthereumSwapProvider } from '@yac-swap/ethereum-swap-provider'
-import { EthereumScraperSwapFindProvider } from '@yac-swap/ethereum-scraper-swap-find-provider'
-import { EthereumGasNowFeeProvider } from '@yac-swap/ethereum-gas-now-fee-provider'
-import { EthereumNetworks } from '@yac-swap/ethereum-networks'
+import { EthereumRpcProvider } from '@yaswap/ethereum-rpc-provider'
+import { EthereumJsWalletProvider } from '@yaswap/ethereum-js-wallet-provider'
+import { EthereumSwapProvider } from '@yaswap/ethereum-swap-provider'
+import { EthereumScraperSwapFindProvider } from '@yaswap/ethereum-scraper-swap-find-provider'
+import { EthereumGasNowFeeProvider } from '@yaswap/ethereum-gas-now-fee-provider'
+import { EthereumNetworks } from '@yaswap/ethereum-networks'
 
 export default [
   {

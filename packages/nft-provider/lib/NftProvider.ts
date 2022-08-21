@@ -1,11 +1,11 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { addressToString } from '@yac-swap/utils'
-import { ensure0x } from '@yac-swap/ethereum-utils'
-import { NftProvider as INftProvider, Address, IClient } from '@yac-swap/types'
+import { NodeProvider } from '@yaswap/node-provider'
+import { addressToString } from '@yaswap/utils'
+import { ensure0x } from '@yaswap/ethereum-utils'
+import { NftProvider as INftProvider, Address, IClient } from '@yaswap/types'
 
-import { NftBaseProvider } from '@yac-swap/nft-base-provider'
-import { NftErc721Provider } from '@yac-swap/nft-erc721-provider'
-import { NftErc1155Provider } from '@yac-swap/nft-erc1155-provider'
+import { NftBaseProvider } from '@yaswap/nft-base-provider'
+import { NftErc721Provider } from '@yaswap/nft-erc721-provider'
+import { NftErc1155Provider } from '@yaswap/nft-erc1155-provider'
 
 type AssetMap = Record<string, Partial<INftProvider> & NftBaseProvider>
 

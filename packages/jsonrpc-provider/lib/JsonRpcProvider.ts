@@ -1,6 +1,6 @@
-import { NodeProvider, AxiosRequestConfig, AxiosResponse } from '@yac-swap/node-provider'
-import { Debug } from '@yac-swap/debug'
-import { NodeError } from '@yac-swap/errors'
+import { NodeProvider, AxiosRequestConfig, AxiosResponse } from '@yaswap/node-provider'
+import { Debug } from '@yaswap/debug'
+import { NodeError } from '@yaswap/errors'
 
 import JSONBigInt from 'json-bigint'
 import { has } from 'lodash'

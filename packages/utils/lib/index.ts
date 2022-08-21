@@ -1,7 +1,7 @@
 import 'setimmediate'
-import { InvalidSecretError, InvalidExpirationError } from '@yac-swap/errors'
-import { sha256 } from '@yac-swap/crypto'
-import { BigNumber, Address } from '@yac-swap/types'
+import { InvalidSecretError, InvalidExpirationError } from '@yaswap/errors'
+import { sha256 } from '@yaswap/crypto'
+import { BigNumber, Address } from '@yaswap/types'
 
 function addressToString(address: Address | string): string {
   if (typeof address === 'string') return address

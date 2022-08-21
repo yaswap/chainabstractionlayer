@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import { BigNumber } from '@yac-swap/types'
+import { BigNumber } from '@yaswap/types'
 import { EthereumSwapProvider } from '../../lib'
 
 import chai from 'chai'

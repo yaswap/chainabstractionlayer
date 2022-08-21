@@ -1,9 +1,9 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { near, BigNumber, ChainProvider, FeeProvider, Address, Block, Transaction, FeeDetails } from '@yac-swap/types'
-import { NearNetwork } from '@yac-swap/near-networks'
-import { addressToString } from '@yac-swap/utils'
-import { normalizeTransactionObject, providers, Account, fromNearTimestamp } from '@yac-swap/near-utils'
-import { NodeError } from '@yac-swap/errors'
+import { NodeProvider } from '@yaswap/node-provider'
+import { near, BigNumber, ChainProvider, FeeProvider, Address, Block, Transaction, FeeDetails } from '@yaswap/types'
+import { NearNetwork } from '@yaswap/near-networks'
+import { addressToString } from '@yaswap/utils'
+import { normalizeTransactionObject, providers, Account, fromNearTimestamp } from '@yaswap/near-utils'
+import { NodeError } from '@yaswap/errors'
 
 import { get, isArray } from 'lodash'
 

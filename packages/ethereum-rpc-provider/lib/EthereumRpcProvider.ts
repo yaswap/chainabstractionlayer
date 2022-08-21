@@ -1,4 +1,4 @@
-import { JsonRpcProvider } from '@yac-swap/jsonrpc-provider'
+import { JsonRpcProvider } from '@yaswap/jsonrpc-provider'
 import {
   numberToHex,
   hexToNumber,
@@ -6,7 +6,7 @@ import {
   normalizeTransactionObject,
   remove0x,
   buildTransaction
-} from '@yac-swap/ethereum-utils'
+} from '@yaswap/ethereum-utils'
 import {
   Address,
   Block,
@@ -17,10 +17,10 @@ import {
   BigNumber,
   EIP1559Fee,
   TxStatus
-} from '@yac-swap/types'
-import { sleep, addressToString } from '@yac-swap/utils'
-import { InvalidDestinationAddressError, TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
-import { padHexStart } from '@yac-swap/crypto'
+} from '@yaswap/types'
+import { sleep, addressToString } from '@yaswap/utils'
+import { InvalidDestinationAddressError, TxNotFoundError, BlockNotFoundError } from '@yaswap/errors'
+import { padHexStart } from '@yaswap/crypto'
 
 const GAS_LIMIT_MULTIPLIER = 1.5
 

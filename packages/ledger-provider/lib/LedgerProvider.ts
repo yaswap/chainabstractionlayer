@@ -1,9 +1,9 @@
-import { WalletProvider } from '@yac-swap/wallet-provider'
-import { WalletError } from '@yac-swap/errors'
-import { caseInsensitiveEqual } from '@yac-swap/utils'
-import { Network, Address } from '@yac-swap/types'
+import { WalletProvider } from '@yaswap/wallet-provider'
+import { WalletError } from '@yaswap/errors'
+import { caseInsensitiveEqual } from '@yaswap/utils'
+import { Network, Address } from '@yaswap/types'
 import HwTransport from '@ledgerhq/hw-transport'
-import { Debug } from '@yac-swap/debug'
+import { Debug } from '@yaswap/debug'
 
 const debug = Debug('ledger')
 

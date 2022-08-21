@@ -1,9 +1,9 @@
-import { JsonRpcProvider } from '@yac-swap/jsonrpc-provider'
-import { addressToString } from '@yac-swap/utils'
-import { normalizeTransactionObject, decodeRawTransaction } from '@yac-swap/bitcoin-utils'
-import { TxNotFoundError, BlockNotFoundError } from '@yac-swap/errors'
-import { BitcoinNetwork } from '@yac-swap/bitcoin-networks'
-import { bitcoin, Transaction, Block, ChainProvider, SendOptions, Address, BigNumber } from '@yac-swap/types'
+import { JsonRpcProvider } from '@yaswap/jsonrpc-provider'
+import { addressToString } from '@yaswap/utils'
+import { normalizeTransactionObject, decodeRawTransaction } from '@yaswap/bitcoin-utils'
+import { TxNotFoundError, BlockNotFoundError } from '@yaswap/errors'
+import { BitcoinNetwork } from '@yaswap/bitcoin-networks'
+import { bitcoin, Transaction, Block, ChainProvider, SendOptions, Address, BigNumber } from '@yaswap/types'
 
 import { flatten } from 'lodash'
 

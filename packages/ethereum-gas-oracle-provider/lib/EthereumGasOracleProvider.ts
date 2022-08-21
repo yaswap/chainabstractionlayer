@@ -1,5 +1,5 @@
-import { NodeProvider } from '@yac-swap/node-provider'
-import { FeeProvider, FeeDetails, BigNumber } from '@yac-swap/types'
+import { NodeProvider } from '@yaswap/node-provider'
+import { FeeProvider, FeeDetails, BigNumber } from '@yaswap/types'
 
 export default class EthereumGasOracleProvider extends NodeProvider implements FeeProvider {
   constructor({ baseURL = 'https://api.etherscan.io', apikey = '' } = {}) {
