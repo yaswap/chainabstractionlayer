@@ -1,4 +1,4 @@
-# Chain Abstraction Layer <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
+# Chain Abstraction Layer <img align="right" src="https://raw.githubusercontent.com/yaswap/chainabstractionlayer/master/yaswap-logo.png" height="80px" />
 
 
 ![Test Status](https://github.com/liquality/chainabstractionlayer/workflows/test/badge.svg)

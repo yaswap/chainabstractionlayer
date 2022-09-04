@@ -1,4 +1,4 @@
-# `@yaswap/ethereum-swap-provider` <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
+# `@yaswap/ethereum-swap-provider` <img align="right" src="https://raw.githubusercontent.com/yaswap/chainabstractionlayer/master/yaswap-logo.png" height="80px" />
 
 [![Build Status](https://travis-ci.com/liquality/chainabstractionlayer.svg?branch=master)](https://travis-ci.com/liquality/chainabstractionlayer)
 [![Coverage Status](https://coveralls.io/repos/github/liquality/chainabstractionlayer/badge.svg?branch=master)](https://coveralls.io/github/liquality/chainabstractionlayer?branch=master)
