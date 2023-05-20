@@ -12,10 +12,12 @@ export interface SignTypedMessageType<V extends SignTypedDataVersion = SignTyped
 }
 
 export interface EvmSwapOptions {
-    contractAddress: string;
-    numberOfBlocksPerRequest?: number;
-    totalNumberOfBlocks?: number;
-    gasLimitMargin?: number;
+    // contractAddress: string;
+    // numberOfBlocksPerRequest?: number;
+    // totalNumberOfBlocks?: number;
+    // gasLimitMargin?: number;
+    contractAddress?: string; // used for ERC20 contract address
+    scraperUrl?: string;
 }
 
 export type FeeOptions = {
@@ -63,3 +65,67 @@ export interface MulticallData {
     name: string;
     params: ReadonlyArray<Fragment | JsonFragment | string>;
 }
+
+/**
+ * @pattern ^0x[a-fA-F0-9]*$
+ */
+export type Hex = string
+/**
+ * @pattern ^0x[a-fA-F0-9]{64}$
+ */
+export type Hex256 = string
+/**
+ * @pattern ^0x[a-fA-F0-9]{40}$
+ */
+export type Hex160 = string
+export type Address = Hex160
+// 0x0 (FAILURE) or 0x1 (SUCCESS)
+export type TransactionReceiptStatus = '0x0' | '0x1'
+export interface EvmPartialTransaction {
+    hash?: Hex256
+    nonce?: Hex
+  
+    from: Address
+    to?: Address | null
+    value: Hex
+    gas?: Hex
+    gasPrice?: Hex
+    input?: Hex
+  
+    // these are included by both geth and parity but not required
+    v?: Hex
+    r?: Hex
+    s?: Hex
+  
+    // only mined transactions
+    blockHash?: Hex256
+    blockNumber?: Hex
+    transactionIndex?: Hex
+  }
+  
+  export interface EvmTransaction extends EvmPartialTransaction {
+    hash: Hex256
+    nonce: Hex
+  
+    to: Address | null
+    gas: Hex
+    gasPrice: Hex
+    input: Hex
+  }
+
+  export interface ScraperTransaction {
+    from: Address
+    to: Address | null
+    hash: Hex256
+    value: Hex
+    gas?: Hex
+    gasPrice?: Hex
+    input?: Hex
+    secret?: Hex
+    blockHash: Hex256
+    blockNumber: Hex
+    status: TransactionReceiptStatus
+    contractAddress: Address
+    timestamp: Hex
+    confirmations: number
+  }

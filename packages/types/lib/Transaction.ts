@@ -35,6 +35,8 @@ export interface Transaction<TransactionType = any> {
     _raw: TransactionType;
     // The transaction logs/events
     logs?: any;
+    // Contract address (for EVM)
+    contractAddress?: string;
 }
 
 export enum TxStatus {

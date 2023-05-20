@@ -1,11 +1,12 @@
 import { AssetTypes, BigNumber, BigNumberish, Block, EIP1559Fee, FeeType, SwapParams, Transaction, TxStatus } from '@chainify/types';
-import { ensure0x } from '@chainify/utils';
+import { ensure0x, remove0x } from '@chainify/utils';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import { AddressZero } from '@ethersproject/constants';
 import { TransactionReceipt, TransactionRequest } from '@ethersproject/providers';
 import { sha256 } from '@ethersproject/solidity';
 import { TransactionTypes } from '@ethersproject/transactions';
 import { ILiqualityHTLC } from './typechain';
+import { Hex, EvmPartialTransaction, EvmTransaction } from './types';
 import {
     EthereumTransactionRequest,
     EthersBlock,
@@ -13,6 +14,8 @@ import {
     EthersPopulatedTransaction,
     EthersTransactionResponse,
 } from './types';
+
+const GWEI = 1e9
 
 export function toEthereumTxRequest(tx: EthersPopulatedTransaction, fee: FeeType): EthereumTransactionRequest {
     return {
@@ -80,6 +83,7 @@ export function parseTxResponse(response: EthersTransactionResponse, receipt?: T
     if (receipt?.confirmations > 0) {
         result.status = Number(receipt.status) > 0 ? TxStatus.Success : TxStatus.Failed;
         result.logs = receipt.logs;
+        result.contractAddress = receipt.contractAddress
     } else {
         result.status = TxStatus.Pending;
     }
@@ -146,7 +150,7 @@ export function calculateFee(base: BigNumber | number | string, multiplier: numb
     return new BigNumber(base).times(multiplier).toNumber();
 }
 
-function toEthersBigNumber(a: BigNumberish): EthersBigNumber {
+export function toEthersBigNumber(a: BigNumberish): EthersBigNumber {
     if (a?.toString()) {
         return EthersBigNumber.from(a.toString(10));
     }
@@ -156,3 +160,50 @@ export function calculateGasMargin(value: BigNumberish, margin = 1000) {
     const offset = new BigNumber(value.toString()).multipliedBy(margin).div('10000');
     return toEthersBigNumber(offset.plus(value.toString()).toFixed(0));
 }
+
+/**
+ * Converts an ethereum hex string to number
+ * @param hex
+ */
+export function hexToNumber(hex: Hex): number {
+    return parseInt(remove0x(hex), 16)
+}
+
+export function numberToHex(number: BigNumber | number): string {
+    return ensure0x(new BigNumber(number).toString(16))
+}
+
+export function normalizeTransactionObject<TxType extends EvmPartialTransaction = EvmTransaction>(
+    tx: TxType,
+    currentHeight?: number
+  ): Transaction<TxType> {
+    if (!(typeof tx === 'object' && tx !== null)) {
+      throw new Error(`Invalid transaction object: "${tx}"`)
+    }
+  
+    const normalizedTx: Transaction<TxType> = {
+      hash: remove0x(tx.hash),
+      value: hexToNumber(tx.value),
+      _raw: tx
+    }
+  
+    if (tx.blockNumber) {
+      normalizedTx.blockNumber = hexToNumber(tx.blockNumber)
+      normalizedTx.blockHash = remove0x(tx.blockHash)
+      if (currentHeight) {
+        // Prevent < 0 confirmations in case of sync problems
+        const confirmations = Math.max(currentHeight - normalizedTx.blockNumber + 1, 0)
+        normalizedTx.confirmations = confirmations
+      }
+    }
+  
+    if (tx.gas && tx.gasPrice) {
+      const gas = new BigNumber(tx.gas)
+      const gasPrice = new BigNumber(tx.gasPrice)
+  
+      normalizedTx.fee = gas.times(gasPrice).toNumber()
+      normalizedTx.feePrice = gasPrice.div(GWEI).toNumber()
+    }
+  
+    return normalizedTx
+  }
