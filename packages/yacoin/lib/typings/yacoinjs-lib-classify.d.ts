@@ -1,1 +1,1 @@
-declare module 'bitcoinjs-lib/src/classify';
+declare module '@yaswap/yacoinjs-lib/src/classify';

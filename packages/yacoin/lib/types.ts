@@ -1,21 +1,21 @@
 import { Network } from '@chainify/types';
-import { Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib';
+import { Network as YacoinJsLibNetwork } from '@yaswap/yacoinjs-lib';
 
-export * as BitcoinEsploraTypes from './chain/esplora/types';
-export * as BitcoinJsonRpcTypes from './chain/jsonRpc/types';
+export * as YacoinEsploraTypes from './chain/esplora/types';
+export * as YacoinJsonRpcTypes from './chain/jsonRpc/types';
 export * from './swap/types';
 
-export interface BitcoinNetwork extends Network, BitcoinJsLibNetwork {}
+export interface YacoinNetwork extends Network, YacoinJsLibNetwork {}
 
-export interface BitcoinNodeWalletOptions {
+export interface YacoinNodeWalletOptions {
     addressType?: AddressType;
-    network?: BitcoinNetwork;
+    network?: YacoinNetwork;
 }
-export interface BitcoinWalletProviderOptions extends BitcoinNodeWalletOptions {
+export interface YacoinWalletProviderOptions extends YacoinNodeWalletOptions {
     baseDerivationPath: string;
 }
 
-export interface BitcoinHDWalletProviderOptions extends BitcoinWalletProviderOptions {
+export interface YacoinHDWalletProviderOptions extends YacoinWalletProviderOptions {
     mnemonic: string;
 }
 
@@ -46,7 +46,6 @@ export interface Input {
         asm: string;
         hex: string;
     };
-    txinwitness: string[];
     sequence: number;
     coinbase?: string;
 }
@@ -55,10 +54,11 @@ export interface Transaction {
     txid: string;
     hash: string;
     version: number;
+    time: number
     locktime: number;
     size: number;
-    vsize: number;
-    weight: number;
+    vsize: number; // DEPRECATED
+    weight: number; // DEPRECATED
     vin: Input[];
     vout: Output[];
     confirmations?: number;
@@ -74,15 +74,11 @@ export interface UTXO {
 }
 
 export enum AddressType {
-    LEGACY = 'legacy',
-    P2SH_SEGWIT = 'p2sh-segwit',
-    BECH32 = 'bech32',
+    LEGACY = 'legacy'
 }
 
 export enum SwapMode {
-    P2SH = 'p2sh',
-    P2SH_SEGWIT = 'p2shSegwit',
-    P2WSH = 'p2wsh',
+    P2SH = 'p2sh'
 }
 
 export type AddressTxCounts = { [index: string]: number };

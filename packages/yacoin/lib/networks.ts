@@ -1,31 +1,31 @@
-import { networks } from 'bitcoinjs-lib';
-import { BitcoinNetwork } from './types';
+import { networks } from '@yaswap/yacoinjs-lib';
+import { YacoinNetwork } from './types';
 
-const bitcoin: BitcoinNetwork = {
-    name: 'bitcoin',
-    ...networks.bitcoin,
+const yacoin: YacoinNetwork = {
+    name: 'yacoin',
+    ...networks.yacoin,
     coinType: '0',
     isTestnet: false,
 };
 
-const bitcoin_testnet: BitcoinNetwork = {
-    name: 'bitcoin_testnet',
+const yacoin_testnet: YacoinNetwork = {
+    name: 'yacoin_testnet',
     ...networks.testnet,
-    coinType: '1',
+    coinType: '0',
     isTestnet: true,
 };
 
-const bitcoin_regtest: BitcoinNetwork = {
-    name: 'bitcoin_regtest',
+const yacoin_regtest: YacoinNetwork = {
+    name: 'yacoin_regtest',
     ...networks.regtest,
     coinType: '1',
     isTestnet: true,
 };
 
-const BitcoinNetworks = {
-    bitcoin,
-    bitcoin_testnet,
-    bitcoin_regtest,
+const YacoinNetworks = {
+    yacoin,
+    yacoin_testnet,
+    yacoin_regtest,
 };
 
-export { BitcoinNetworks };
+export { YacoinNetworks };

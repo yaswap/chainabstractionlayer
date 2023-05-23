@@ -1,4 +1,4 @@
-import { BitcoinNetwork, Transaction } from '../../types';
+import { YacoinNetwork, Transaction } from '../../types';
 
 export interface UTXO {
     txid: string;
@@ -9,7 +9,6 @@ export interface UTXO {
     amount: number;
     confirmations: number;
     redeemScript: string;
-    witnessScript: string;
     spendable: boolean;
     solvable: boolean;
     desc: string;
@@ -75,8 +74,8 @@ export interface Block {
 export interface ProviderOptions {
     // RPC URI
     uri: string;
-    // Bitcoin network
-    network: BitcoinNetwork;
+    // Yacoin network
+    network: YacoinNetwork;
     // Authentication username
     username?: string;
     // Authentication password
