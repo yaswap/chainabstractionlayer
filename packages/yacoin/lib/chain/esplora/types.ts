@@ -1,4 +1,4 @@
-import { BitcoinNetwork } from '../../types';
+import { YacoinNetwork } from '../../types';
 
 export type FeeEstimates = { [index: string]: number };
 
@@ -17,22 +17,13 @@ export type UTXO = {
 };
 
 export type Address = {
-    address: string;
-    chain_stats: {
-        funded_txo_count: number;
-        funded_txo_sum: number;
-        spent_txo_count: number;
-        spent_txo_sum: number;
-        tx_count: number;
-    };
-    mempool_stats: {
-        funded_txo_count: number;
-        funded_txo_sum: number;
-        spent_txo_count: number;
-        spent_txo_sum: number;
-        tx_count: number;
-    };
-};
+    address: string
+    funded_txo_count: number
+    funded_txo_sum: number
+    spent_txo_count: number
+    spent_txo_sum: number
+    tx_count: number
+}
 
 export type Vout = {
     scriptpubkey: string;
@@ -53,16 +44,12 @@ export type Vin = {
 };
 
 export type Transaction = {
-    txid: string;
-    version: number;
-    locktime: number;
-    vin: Vin[];
-    vout: Vout[];
-    size: number;
-    weight: number;
-    fee: number;
-    status: TxStatus;
-};
+    hex: string
+    block_hash: string
+    confirmations: number
+    block_height: number
+    fee: number
+}
 
 export type Block = {
     id: string;
@@ -84,7 +71,7 @@ export type BatchUTXOs = { address: string; utxo: UTXO[] }[];
 
 export interface EsploraApiProviderOptions {
     url: string;
-    network: BitcoinNetwork;
+    network: YacoinNetwork;
     numberOfBlockConfirmation?: number;
     defaultFeePerByte?: number;
 }

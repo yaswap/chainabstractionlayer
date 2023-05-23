@@ -1,8 +1,8 @@
 import { AddressType, Transaction } from '@chainify/types';
 import { AddressTxCounts, UTXO } from '../types';
 
-export abstract class BitcoinBaseChainProvider {
-    public abstract formatTransaction(tx: any, currentHeight: number): Promise<Transaction>;
+export abstract class YacoinBaseChainProvider {
+    public abstract formatTransaction(tx: any): Promise<Transaction>;
 
     public abstract getRawTransactionByHash(transactionHash: string): Promise<string>;
 

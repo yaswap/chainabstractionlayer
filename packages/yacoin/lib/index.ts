@@ -2,8 +2,6 @@ export { YacoinBaseChainProvider } from './chain/YacoinBaseChainProvider';
 export { YacoinEsploraApiProvider } from './chain/esplora/YacoinEsploraApiProvider';
 export { YacoinEsploraBaseProvider } from './chain/esplora/YacoinEsploraBaseProvider';
 export { YacoinEsploraBatchBaseProvider } from './chain/esplora/YacoinEsploraBatchBaseProvider';
-export { YacoinJsonRpcBaseProvider } from './chain/jsonRpc/YacoinJsonRpcBaseProvider';
-export { YacoinJsonRpcProvider } from './chain/jsonRpc/YacoinJsonRpcProvider';
 export { YacoinFeeApiProvider } from './fee/YacoinFeeApiProvider';
 export { YacoinNetworks } from './networks';
 export { YacoinSwapBaseProvider } from './swap/YacoinSwapBaseProvider';

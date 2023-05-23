@@ -3,10 +3,10 @@ import { AddressType } from '@chainify/types';
 import { flatten } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
-import { BitcoinBaseChainProvider } from '../BitcoinBaseChainProvider';
+import { YacoinBaseChainProvider } from '../YacoinBaseChainProvider';
 import * as EsploraTypes from './types';
 
-export class BitcoinEsploraBaseProvider extends BitcoinBaseChainProvider {
+export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
     public httpClient: HttpClient;
     protected _options: EsploraTypes.EsploraApiProviderOptions;
 
@@ -15,17 +15,20 @@ export class BitcoinEsploraBaseProvider extends BitcoinBaseChainProvider {
         this.httpClient = new HttpClient({ baseURL: options.url });
         this._options = {
             numberOfBlockConfirmation: 1,
-            defaultFeePerByte: 3,
+            defaultFeePerByte: 11,
             ...options,
         };
     }
 
-    public async formatTransaction(tx: EsploraTypes.Transaction, currentHeight: number) {
-        const hex = await this.getTransactionHex(tx.txid);
-        const confirmations = tx.status.confirmed ? currentHeight - tx.status.block_height + 1 : 0;
-        const decodedTx = decodeRawTransaction(hex, this._options.network);
-        decodedTx.confirmations = confirmations;
-        return normalizeTransactionObject(decodedTx, tx.fee, { hash: tx.status.block_hash, number: tx.status.block_height });
+    public async formatTransaction(tx: EsploraTypes.Transaction) {
+        // const hex = await this.getTransactionHex(tx.txid);
+        // const confirmations = tx.status.confirmed ? currentHeight - tx.status.block_height + 1 : 0;
+        // const decodedTx = decodeRawTransaction(hex, this._options.network);
+        // decodedTx.confirmations = confirmations;
+        // return normalizeTransactionObject(decodedTx, tx.fee, { hash: tx.status.block_hash, number: tx.status.block_height });
+        const decodedTx = decodeRawTransaction(tx.hex, this._options.network)
+        decodedTx.confirmations = tx.confirmations
+        return normalizeTransactionObject(decodedTx, tx.fee, { hash: tx.block_hash, number: tx.block_height })
     }
 
     public async getRawTransactionByHash(transactionHash: string) {
@@ -37,24 +40,37 @@ export class BitcoinEsploraBaseProvider extends BitcoinBaseChainProvider {
     }
 
     public async getFeePerByte(numberOfBlocks = this._options.numberOfBlockConfirmation) {
-        try {
-            const feeEstimates: EsploraTypes.FeeEstimates = await this.httpClient.nodeGet('/fee-estimates');
-            const blockOptions = Object.keys(feeEstimates).map((block) => parseInt(block));
-            const closestBlockOption = blockOptions.reduce((prev, curr) => {
-                return Math.abs(prev - numberOfBlocks) < Math.abs(curr - numberOfBlocks) ? prev : curr;
-            });
-            const rate = Math.round(feeEstimates[closestBlockOption]);
-            return rate;
-        } catch (e) {
-            return this._options.defaultFeePerByte;
-        }
+        // try {
+        //     const feeEstimates: EsploraTypes.FeeEstimates = await this.httpClient.nodeGet('/fee-estimates');
+        //     const blockOptions = Object.keys(feeEstimates).map((block) => parseInt(block));
+        //     const closestBlockOption = blockOptions.reduce((prev, curr) => {
+        //         return Math.abs(prev - numberOfBlocks) < Math.abs(curr - numberOfBlocks) ? prev : curr;
+        //     });
+        //     const rate = Math.round(feeEstimates[closestBlockOption]);
+        //     return rate;
+        // } catch (e) {
+        //     return this._options.defaultFeePerByte;
+        // }
+        return this._options.defaultFeePerByte;
     }
 
     public async getUnspentTransactions(_addresses: AddressType[]): Promise<UTXO[]> {
         const addresses = _addresses.map((a) => a.toString());
-        const utxoSets = await Promise.all(addresses.map((addr) => this._getUnspentTransactions(addr), this));
-        const utxos = flatten(utxoSets);
-        return utxos;
+        // const utxoSets = await Promise.all(addresses.map((addr) => this._getUnspentTransactions(addr), this));
+        // const utxos = flatten(utxoSets);
+        // return utxos;
+
+        // Remove duplicate addresses
+        var uniqueAddresses: string[] = [];
+        addresses.forEach(element => {
+            if (!uniqueAddresses.includes(element)) {
+              uniqueAddresses.push(element);
+            }
+        });
+    
+        const utxoSets = await Promise.all(uniqueAddresses.map((addr) => this._getUnspentTransactions(addr)))
+        const utxos = flatten(utxoSets)
+        return utxos
     }
 
     public async getAddressTransactionCounts(_addresses: AddressType[]) {
@@ -70,7 +86,7 @@ export class BitcoinEsploraBaseProvider extends BitcoinBaseChainProvider {
     }
 
     public async getMinRelayFee() {
-        return 1;
+        return 10 // min fee = 0.01 YAC/kb = 0.00001 YAC /byte = 10 satoshis / byte
     }
 
     private async _getUnspentTransactions(address: string): Promise<UTXO[]> {
@@ -85,6 +101,6 @@ export class BitcoinEsploraBaseProvider extends BitcoinBaseChainProvider {
 
     private async _getAddressTransactionCount(address: string) {
         const data: EsploraTypes.Address = await this.httpClient.nodeGet(`/address/${address}`);
-        return data.chain_stats.tx_count + data.mempool_stats.tx_count;
+        return data.tx_count
     }
 }

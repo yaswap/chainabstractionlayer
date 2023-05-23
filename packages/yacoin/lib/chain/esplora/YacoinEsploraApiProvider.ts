@@ -2,23 +2,26 @@ import { Chain, Fee, HttpClient } from '@chainify/client';
 import { BlockNotFoundError, TxNotFoundError } from '@chainify/errors';
 import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@chainify/types';
 import { flatten } from 'lodash';
-import { BitcoinEsploraBaseProvider } from './BitcoinEsploraBaseProvider';
-import { BitcoinEsploraBatchBaseProvider } from './BitcoinEsploraBatchBaseProvider';
+import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';
+// TODO: add support for batch requests
+// import { YacoinEsploraBatchBaseProvider } from './YacoinEsploraBatchBaseProvider';
 import * as EsploraTypes from './types';
 
-export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider> {
+export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
     private _httpClient: HttpClient;
     private _feeOptions: EsploraTypes.FeeOptions;
 
     constructor(
         options: EsploraTypes.EsploraBatchApiProviderOptions,
-        provider?: BitcoinEsploraBaseProvider,
+        provider?: YacoinEsploraBaseProvider,
         feeProvider?: Fee,
         feeOptions?: EsploraTypes.FeeOptions
     ) {
-        const _provider = provider || new BitcoinEsploraBatchBaseProvider(options);
+        // const _provider = provider || new YacoinEsploraBatchBaseProvider(options);
+        const _provider = provider || new YacoinEsploraBaseProvider(options);
         super(options.network, _provider, feeProvider);
         this._httpClient = this.provider.httpClient;
+        // WARNING: ATTENTION THIS FEE
         this._feeOptions = { slowTargetBlocks: 6, averageTargetBlocks: 3, fastTargetBlocks: 1, ...feeOptions };
     }
 
@@ -26,7 +29,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
         let data;
 
         try {
-            data = await this._httpClient.nodeGet(`/block/${blockHash}`);
+            data = await this._httpClient.nodeGet(`/getblock?hash=${blockHash}`);
         } catch (e) {
             if (e.name === 'NodeError' && e.message.includes('Block not found')) {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,15 +40,15 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
             throw e;
         }
 
-        const { id: hash, height: number, timestamp, mediantime, size, previousblockhash: parentHash, difficulty, nonce } = data;
+        const { hash, height: number, time, size, previousblockhash: parentHash, difficulty, nonce } = data;
 
         return {
             hash,
             number,
-            timestamp: mediantime || timestamp,
+            timestamp: time,
             size,
             parentHash,
-            difficulty,
+            difficulty: Number.parseFloat(difficulty),
             nonce,
             _raw: data,
         };
@@ -59,7 +62,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
     }
 
     public async getBlockHeight(): Promise<number> {
-        const data = await this._httpClient.nodeGet('/blocks/tip/height');
+        const data = await this._httpClient.nodeGet('/getblockcount');
         return parseInt(data);
     }
 
@@ -101,7 +104,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
     }
 
     private async _getBlockHash(blockNumber: number): Promise<string> {
-        return this._httpClient.nodeGet(`/block-height/${blockNumber}`);
+        return this._httpClient.nodeGet(`/getblockhash?index=${blockNumber}`);
     }
 
     private async getTransaction(transactionHash: string) {
@@ -119,8 +122,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
             throw e;
         }
 
-        const currentHeight = await this.getBlockHeight();
-        return this.provider.formatTransaction(data, currentHeight);
+        return this.provider.formatTransaction(data);
     }
 
     private async _getFee(targetBlocks: number): Promise<FeeDetail> {

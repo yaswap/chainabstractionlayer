@@ -2,10 +2,10 @@ import { HttpClient } from '@chainify/client';
 import { AddressType, BigNumber } from '@chainify/types';
 import { flatten, uniq } from 'lodash';
 import { UTXO } from '../../types';
-import { BitcoinEsploraBaseProvider } from './BitcoinEsploraBaseProvider';
+import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';
 import * as EsploraTypes from './types';
 
-export class BitcoinEsploraBatchBaseProvider extends BitcoinEsploraBaseProvider {
+export class YacoinEsploraBatchBaseProvider extends YacoinEsploraBaseProvider {
     private _batchHttpClient: HttpClient;
 
     constructor(options: EsploraTypes.EsploraBatchApiProviderOptions) {
@@ -39,7 +39,7 @@ export class BitcoinEsploraBatchBaseProvider extends BitcoinEsploraBaseProvider 
         });
 
         return data.reduce((acc: { [index: string]: number }, obj) => {
-            acc[obj.address] = obj.chain_stats.tx_count + obj.mempool_stats.tx_count;
+            acc[obj.address] = obj.tx_count;
             return acc;
         }, {});
     }

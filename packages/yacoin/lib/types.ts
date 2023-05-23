@@ -2,7 +2,6 @@ import { Network } from '@chainify/types';
 import { Network as YacoinJsLibNetwork } from '@yaswap/yacoinjs-lib';
 
 export * as YacoinEsploraTypes from './chain/esplora/types';
-export * as YacoinJsonRpcTypes from './chain/jsonRpc/types';
 export * from './swap/types';
 
 export interface YacoinNetwork extends Network, YacoinJsLibNetwork {}
