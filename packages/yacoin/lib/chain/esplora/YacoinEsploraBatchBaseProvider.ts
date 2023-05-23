@@ -24,7 +24,7 @@ export class YacoinEsploraBatchBaseProvider extends YacoinEsploraBaseProvider {
                 ...obj,
                 address,
                 satoshis: obj.value,
-                amount: new BigNumber(obj.value).dividedBy(1e8).toNumber(),
+                amount: new BigNumber(obj.value).dividedBy(1e6).toNumber(),
                 blockHeight: obj.status.block_height,
             }));
         });

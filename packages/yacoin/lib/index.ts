@@ -11,4 +11,3 @@ export * as YacoinTypes from './types';
 export * as YacoinUtils from './utils';
 export { YacoinBaseWalletProvider } from './wallet/YacoinBaseWallet';
 export { YacoinHDWalletProvider } from './wallet/YacoinHDWallet';
-export { YacoinNodeWalletProvider } from './wallet/YacoinNodeWallet';

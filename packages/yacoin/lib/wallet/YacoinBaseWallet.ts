@@ -3,24 +3,26 @@ import { InsufficientBalanceError } from '@chainify/errors';
 import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '@chainify/types';
 import { asyncSetImmediate } from '@chainify/utils';
 import { BIP32Interface } from 'bip32';
-import { payments, script } from 'bitcoinjs-lib';
+import { payments, script } from '@yaswap/yacoinjs-lib';
 import memoize from 'memoizee';
-import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
+import { YacoinBaseChainProvider } from '../chain/YacoinBaseChainProvider';
 import {
     AddressTxCounts,
-    AddressType as BtcAddressType,
-    BitcoinNetwork,
-    BitcoinWalletProviderOptions,
+    AddressType as YaAddressType,
+    YacoinNetwork,
+    YacoinWalletProviderOptions,
     Input,
     OutputTarget,
     P2SHInput,
     PsbtInputTarget,
-    Transaction as BtcTransaction,
+    Transaction as YaTransaction,
     UTXO,
 } from '../types';
 import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
 
-const ADDRESS_GAP = 20;
+const ADDRESS_GAP = 10
+const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
+const NUMBER_ADDRESS_LIMIT = 200
 
 export enum AddressSearchType {
     EXTERNAL,
@@ -30,15 +32,15 @@ export enum AddressSearchType {
 
 type DerivationCache = { [index: string]: Address };
 
-export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvider = any, S = any> extends Wallet<T, S> {
+export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider = any, S = any> extends Wallet<T, S> {
     protected _baseDerivationPath: string;
-    protected _network: BitcoinNetwork;
-    protected _addressType: BtcAddressType;
+    protected _network: YacoinNetwork;
+    protected _addressType: YaAddressType;
     protected _derivationCache: DerivationCache;
 
-    constructor(options: BitcoinWalletProviderOptions, chainProvider?: Chain<T>) {
-        const { baseDerivationPath, addressType = BtcAddressType.BECH32 } = options;
-        const addressTypes = Object.values(BtcAddressType);
+    constructor(options: YacoinWalletProviderOptions, chainProvider?: Chain<T>) {
+        const { baseDerivationPath, addressType = YaAddressType.LEGACY } = options;
+        const addressTypes = Object.values(YaAddressType);
         if (!addressTypes.includes(addressType)) {
             throw new Error(`addressType must be one of ${addressTypes.join(',')}`);
         }
@@ -46,13 +48,13 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         super(chainProvider);
 
         this._baseDerivationPath = baseDerivationPath;
-        this._network = chainProvider ? (chainProvider.getNetwork() as BitcoinNetwork) : options.network;
+        this._network = chainProvider ? (chainProvider.getNetwork() as YacoinNetwork) : options.network;
         this._addressType = addressType;
         this._derivationCache = {};
     }
 
     protected onChainProviderUpdate(chainProvider: Chain<T>) {
-        this._network = chainProvider.getNetwork() as BitcoinNetwork;
+        this._network = chainProvider.getNetwork() as YacoinNetwork;
     }
 
     protected abstract baseDerivationNode(): Promise<BIP32Interface>;
@@ -63,6 +65,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
     ): Promise<{ hex: string; fee: number }>;
     protected abstract buildSweepTransaction(externalChangeAddress: string, feePerByte?: number): Promise<{ hex: string; fee: number }>;
     public abstract signPSBT(data: string, inputs: PsbtInputTarget[]): Promise<string>;
+    public abstract signTx(transaction: string, hash: string, derivationPath: string, txfee: number): Promise<string>
     public abstract signBatchP2SHTransaction(
         inputs: P2SHInput[],
         addresses: string,
@@ -75,13 +78,13 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         return this._derivationCache;
     }
 
-    public async getUnusedAddress(change = false, numAddressPerCall = 100) {
+    public async getUnusedAddress(change = false, numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
         const addressType = change ? AddressSearchType.CHANGE : AddressSearchType.EXTERNAL;
         const key = change ? 'change' : 'external';
         return this._getUsedUnusedAddresses(numAddressPerCall, addressType).then(({ unusedAddress }) => unusedAddress[key]);
     }
 
-    public async getUsedAddresses(numAddressPerCall = 100) {
+    public async getUsedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
         return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
             ({ usedAddresses }) => usedAddresses
         );
@@ -118,13 +121,13 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
 
     public async sendSweepTransaction(externalChangeAddress: AddressType, _asset: Asset, feePerByte: number) {
         const { hex, fee } = await this.buildSweepTransaction(externalChangeAddress.toString(), feePerByte);
-        await this.chainProvider.sendRawTransaction(hex);
+        await this.chainProvider.sendRawTransaction(`data=${hex}`);
         return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
     }
 
-    public async updateTransactionFee(tx: Transaction<BtcTransaction> | string, newFeePerByte: number) {
+    public async updateTransactionFee(tx: Transaction<YaTransaction> | string, newFeePerByte: number) {
         const txHash = typeof tx === 'string' ? tx : tx.hash;
-        const transaction: BtcTransaction = (await this.chainProvider.getTransactionByHash(txHash))._raw;
+        const transaction: YaTransaction = (await this.chainProvider.getTransactionByHash(txHash))._raw;
         const fixedInputs = [transaction.vin[0]]; // TODO: should this pick more than 1 input? RBF doesn't mandate it
 
         const lookupAddresses = transaction.vout.map((vout) => vout.scriptPubKey.addresses[0]);
@@ -139,10 +142,10 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         // TODO more checks?
         const transactions = outputs.map((output) => ({
             address: output.scriptPubKey.addresses[0],
-            value: new BigNumber(output.value).times(1e8).toNumber(),
+            value: new BigNumber(output.value).times(1e6).toNumber(),
         }));
         const { hex, fee } = await this.buildTransaction(transactions, newFeePerByte, fixedInputs);
-        await this.chainProvider.sendRawTransaction(hex);
+        await this.chainProvider.sendRawTransaction(`data=${hex}`);
         return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
     }
 
@@ -160,13 +163,19 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
 
     protected async _sendTransaction(transactions: OutputTarget[], feePerByte?: number) {
         const { hex, fee } = await this.buildTransaction(transactions, feePerByte);
-        await this.chainProvider.sendRawTransaction(hex);
-        return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
+        const result = await this.chainProvider.sendRawTransaction(`data=${hex}`);
+        if (result == 'There was an error. Check your console.')
+        {
+          throw new Error(
+            "Cannot send transaction, there might some reasons:\n 1) It might be the fee is not enough, please try increasing the fee.\n 2) The wallet haven't updated latest balance info, please wait 10 seconds and try again."
+          )
+        }
+        return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee)
     }
 
     protected async findAddress(addresses: string[], change = false) {
         // A maximum number of addresses to lookup after which it is deemed that the wallet does not contain this address
-        const maxAddresses = 5000;
+        const maxAddresses = NUMBER_ADDRESS_LIMIT;
         const addressesPerCall = 50;
         let index = 0;
         while (index < maxAddresses) {
@@ -212,74 +221,96 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         return addressObject;
     }
 
-    protected async _getUsedUnusedAddresses(numAddressPerCall = 100, addressType: AddressSearchType) {
-        const usedAddresses = [];
-        const addressCountMap = { change: 0, external: 0 };
-        const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null };
-
-        let addrList: Address[];
-        let addressIndex = 0;
-        let changeAddresses: Address[] = [];
-        let externalAddresses: Address[] = [];
-
+    protected async _getUsedUnusedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL, addressType: AddressSearchType) {
+        const usedAddresses = []
+        const addressCountMap = { change: 0, external: 0 }
+        const numAddressAlreadyGet = { change: 0, external: 0 }
+        const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null }
+  
+        let addrList: Address[]
+        let uniqueAddresses: string[] = []
+        let addressIndex = 0
+        let changeAddresses: Address[] = []
+        let externalAddresses: Address[] = []
+  
         /* eslint-disable no-unmodified-loop-condition */
         while (
-            (addressType === AddressSearchType.EXTERNAL_OR_CHANGE &&
-                (addressCountMap.change < ADDRESS_GAP || addressCountMap.external < ADDRESS_GAP)) ||
-            (addressType === AddressSearchType.EXTERNAL && addressCountMap.external < ADDRESS_GAP) ||
-            (addressType === AddressSearchType.CHANGE && addressCountMap.change < ADDRESS_GAP)
+          (addressType === AddressSearchType.EXTERNAL_OR_CHANGE &&
+            ((addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT) ||
+              (addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT)) ||
+          (addressType === AddressSearchType.EXTERNAL &&
+            addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT) ||
+          (addressType === AddressSearchType.CHANGE &&
+            addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT))
         ) {
-            /* eslint-enable no-unmodified-loop-condition */
-            addrList = [];
-
-            if (
-                (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.CHANGE) &&
-                addressCountMap.change < ADDRESS_GAP
-            ) {
-                // Scanning for change addr
-                changeAddresses = await this.getAddresses(addressIndex, numAddressPerCall, true);
-                addrList = addrList.concat(changeAddresses);
+          /* eslint-enable no-unmodified-loop-condition */
+          addrList = []
+  
+          if (
+            (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.CHANGE) &&
+            addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT
+          ) {
+            // Scanning for change addr
+            changeAddresses = await this.getAddresses(addressIndex, numAddressPerCall, true)
+            addrList = addrList.concat(changeAddresses)
+            numAddressAlreadyGet['change'] += numAddressPerCall
+          } else {
+            changeAddresses = []
+          }
+  
+          if (
+            (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.EXTERNAL) &&
+            addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT
+          ) {
+            // Scanning for non change addr
+            externalAddresses = await this.getAddresses(addressIndex, numAddressPerCall, false)
+            addrList = addrList.concat(externalAddresses)
+            numAddressAlreadyGet['external'] += numAddressPerCall
+          }
+  
+          const transactionCounts: AddressTxCounts = await this.chainProvider.getProvider().getAddressTransactionCounts(addrList);
+  
+          for (const address of addrList) {
+              // Remove duplicate addresses
+              if (!uniqueAddresses.includes(address.address)) {
+                uniqueAddresses.push(address.address);
+              } else {
+                continue
+              }
+  
+            const isUsed = transactionCounts[address.toString()] > 0;
+            const isChangeAddress = changeAddresses.find((a) => address.toString() === a.toString());
+            const key = isChangeAddress ? 'change' : 'external'
+  
+            if (isUsed) {
+              usedAddresses.push(address)
+              addressCountMap[key] = 0
+              unusedAddressMap[key] = null
             } else {
-                changeAddresses = [];
+              addressCountMap[key]++
+  
+              if (!unusedAddressMap[key]) {
+                unusedAddressMap[key] = address
+              }
             }
-
-            if (
-                (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.EXTERNAL) &&
-                addressCountMap.external < ADDRESS_GAP
-            ) {
-                // Scanning for non change addr
-                externalAddresses = await this.getAddresses(addressIndex, numAddressPerCall, false);
-                addrList = addrList.concat(externalAddresses);
-            }
-
-            const transactionCounts: AddressTxCounts = await this.chainProvider.getProvider().getAddressTransactionCounts(addrList);
-
-            for (const address of addrList) {
-                const isUsed = transactionCounts[address.toString()] > 0;
-                const isChangeAddress = changeAddresses.find((a) => address.toString() === a.toString());
-                const key = isChangeAddress ? 'change' : 'external';
-
-                if (isUsed) {
-                    usedAddresses.push(address);
-                    addressCountMap[key] = 0;
-                    unusedAddressMap[key] = null;
-                } else {
-                    addressCountMap[key]++;
-
-                    if (!unusedAddressMap[key]) {
-                        unusedAddressMap[key] = address;
-                    }
-                }
-            }
-
-            addressIndex += numAddressPerCall;
+          }
+  
+          addressIndex += numAddressPerCall
         }
-
+  
+        if (!unusedAddressMap['change']) {
+          unusedAddressMap['change'] = changeAddresses[0]
+        }
+  
+        if (!unusedAddressMap['external']) {
+          unusedAddressMap['external'] = externalAddresses[0]
+        }
+  
         return {
-            usedAddresses,
-            unusedAddress: unusedAddressMap,
-        };
-    }
+          usedAddresses,
+          unusedAddress: unusedAddressMap
+        }
+      }
 
     protected async withCachedUtxos(func: () => any) {
         const originalProvider = this.chainProvider.getProvider();
@@ -309,7 +340,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
                 targets.filter((t) => !t.value),
                 opts.fee as number,
                 [],
-                100,
+                NUMBER_ADDRESS_PER_CALL,
                 true
             );
             return fee;
@@ -320,7 +351,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         _targets: OutputTarget[],
         feePerByte?: number,
         fixedInputs: Input[] = [],
-        numAddressPerCall = 100,
+        numAddressPerCall = NUMBER_ADDRESS_PER_CALL,
         sweep = false
     ) {
         let addressIndex = 0;
@@ -356,7 +387,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
                 for (const input of fixedInputs) {
                     const txHex = await this.chainProvider.getProvider().getRawTransactionByHash(input.txid);
                     const tx = decodeRawTransaction(txHex, this._network);
-                    const value = new BigNumber(tx.vout[input.vout].value).times(1e8).toNumber();
+                    const value = new BigNumber(tx.vout[input.vout].value).times(1e6).toNumber();
                     const address = tx.vout[input.vout].scriptPubKey.addresses[0];
                     const walletAddress = await this.getWalletAddress(address);
                     const utxo = { ...input, value, address, derivationPath: walletAddress.derivationPath };
@@ -468,15 +499,8 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
     }
 
     protected getPaymentVariantFromPublicKey(publicKey: Buffer) {
-        if (this._addressType === BtcAddressType.LEGACY) {
-            return payments.p2pkh({ pubkey: publicKey, network: this._network });
-        } else if (this._addressType === BtcAddressType.P2SH_SEGWIT) {
-            return payments.p2sh({
-                redeem: payments.p2wpkh({ pubkey: publicKey, network: this._network }),
-                network: this._network,
-            });
-        } else if (this._addressType === BtcAddressType.BECH32) {
-            return payments.p2wpkh({ pubkey: publicKey, network: this._network });
-        }
+        if (this._addressType === YaAddressType.LEGACY) {
+            return payments.p2pkh({ pubkey: publicKey, network: this._network })
+        } else throw new Error('Unknown script type')
     }
 }
