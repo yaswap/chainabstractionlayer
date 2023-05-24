@@ -7,6 +7,7 @@ export abstract class YacoinBaseChainProvider {
     public abstract getRawTransactionByHash(transactionHash: string): Promise<string>;
 
     public abstract getTransactionHex(transactionHash: string): Promise<string>;
+    public abstract getTransaction(transactionHash: string): Promise<Transaction>;
 
     public abstract getFeePerByte(numberOfBlocks?: number): Promise<number>;
 

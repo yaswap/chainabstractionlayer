@@ -6,7 +6,6 @@ export { YacoinFeeApiProvider } from './fee/YacoinFeeApiProvider';
 export { YacoinNetworks } from './networks';
 export { YacoinSwapBaseProvider } from './swap/YacoinSwapBaseProvider';
 export { YacoinSwapEsploraProvider } from './swap/YacoinSwapEsploraProvider';
-export { YacoinSwapRpcProvider } from './swap/YacoinSwapRpcProvider';
 export * as YacoinTypes from './types';
 export * as YacoinUtils from './utils';
 export { YacoinBaseWalletProvider } from './wallet/YacoinBaseWallet';

@@ -107,7 +107,7 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
         return this._httpClient.nodeGet(`/getblockhash?index=${blockNumber}`);
     }
 
-    private async getTransaction(transactionHash: string) {
+    public async getTransaction(transactionHash: string) {
         let data: EsploraTypes.Transaction;
 
         try {

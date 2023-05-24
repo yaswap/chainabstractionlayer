@@ -1,27 +1,26 @@
 import { Swap } from '@chainify/client';
 import { Address, BigNumber, SwapParams, Transaction } from '@chainify/types';
 import { validateExpiration, validateSecret, validateSecretAndHash, validateSecretHash, validateValue } from '@chainify/utils';
-import { payments, Psbt, script as bScript } from 'bitcoinjs-lib';
-import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
-import { BitcoinNetwork, Input, SwapMode, Transaction as BitcoinTransaction } from '../types';
+import { Transaction as TransactionYacoinJs, payments, script as bScript, address as AddressYacoinJs } from '@yaswap/yacoinjs-lib';
+import { YacoinBaseChainProvider } from '../chain/YacoinBaseChainProvider';
+import { YacoinNetwork, Input, SwapMode, Transaction as YacoinTransaction } from '../types';
 import {
     calculateFee,
     decodeRawTransaction,
     getPubKeyHash,
     normalizeTransactionObject,
     validateAddress,
-    witnessStackToScriptWitness,
 } from '../utils';
-import { IBitcoinWallet } from '../wallet/IBitcoinWallet';
-import { BitcoinSwapProviderOptions, TransactionMatchesFunction } from './types';
+import { IYacoinWallet } from '../wallet/IYacoinWallet';
+import { YacoinSwapProviderOptions, TransactionMatchesFunction } from './types';
 
-export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvider, null, IBitcoinWallet<BitcoinBaseChainProvider>> {
-    protected _network: BitcoinNetwork;
+export abstract class YacoinSwapBaseProvider extends Swap<YacoinBaseChainProvider, null, IYacoinWallet<YacoinBaseChainProvider>> {
+    protected _network: YacoinNetwork;
     protected _mode: SwapMode;
 
-    constructor(options: BitcoinSwapProviderOptions, walletProvider?: IBitcoinWallet<BitcoinBaseChainProvider>) {
+    constructor(options: YacoinSwapProviderOptions, walletProvider?: IYacoinWallet<YacoinBaseChainProvider>) {
         super(walletProvider);
-        const { network, mode = SwapMode.P2WSH } = options;
+        const { network, mode = SwapMode.P2SH } = options;
         const swapModes = Object.values(SwapMode);
         if (!swapModes.includes(mode)) {
             throw new Error(`Mode must be one of ${swapModes.join(',')}`);
@@ -44,7 +43,7 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
         const swapOutput = this.getSwapOutput(swapParams);
         const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address;
 
-        console.log("TACA [chainify] BitcoinSwapBaseProvider.ts ===> initiateSwap() calling sendTransaction");
+        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap() calling sendTransaction");
 
         return this.walletProvider.sendTransaction({
             to: address,
@@ -69,13 +68,13 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
 
     public findInitiateSwapTransaction(swapParams: SwapParams, blockNumber?: number): Promise<Transaction<any>> {
         this.validateSwapParams(swapParams);
-        return this.findSwapTransaction(swapParams, blockNumber, (tx: Transaction<BitcoinTransaction>) =>
+        return this.findSwapTransaction(swapParams, blockNumber, (tx: Transaction<YacoinTransaction>) =>
             this.doesTransactionMatchInitiation(swapParams, tx)
         );
     }
 
     public async getSwapSecret(claimTxHash: string, initTxHash: string): Promise<string> {
-        const claimSwapTransaction: Transaction<BitcoinTransaction> = await this.walletProvider
+        const claimSwapTransaction: Transaction<YacoinTransaction> = await this.walletProvider
             .getChainProvider()
             .getTransactionByHash(claimTxHash);
 
@@ -93,10 +92,10 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
     public async findClaimSwapTransaction(swapParams: SwapParams, initTxHash: string, blockNumber?: number): Promise<Transaction<any>> {
         this.validateSwapParams(swapParams);
 
-        const claimSwapTransaction: Transaction<BitcoinTransaction> = await this.findSwapTransaction(
+        const claimSwapTransaction: Transaction<YacoinTransaction> = await this.findSwapTransaction(
             swapParams,
             blockNumber,
-            (tx: Transaction<BitcoinTransaction>) => this.doesTransactionMatchRedeem(initTxHash, tx, false)
+            (tx: Transaction<YacoinTransaction>) => this.doesTransactionMatchRedeem(initTxHash, tx, false)
         );
 
         if (claimSwapTransaction) {
@@ -118,13 +117,13 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
     ): Promise<Transaction<any>> {
         this.validateSwapParams(swapParams);
 
-        const refundSwapTransaction = await this.findSwapTransaction(swapParams, blockNumber, (tx: Transaction<BitcoinTransaction>) =>
+        const refundSwapTransaction = await this.findSwapTransaction(swapParams, blockNumber, (tx: Transaction<YacoinTransaction>) =>
             this.doesTransactionMatchRedeem(initiationTxHash, tx, true)
         );
         return refundSwapTransaction;
     }
 
-    protected onWalletProviderUpdate(_wallet: IBitcoinWallet<BitcoinBaseChainProvider, any>): void {
+    protected onWalletProviderUpdate(_wallet: IYacoinWallet<YacoinBaseChainProvider, any>): void {
         // do nothing
     }
 
@@ -174,22 +173,12 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
     }
 
     protected getSwapPaymentVariants(swapOutput: Buffer) {
-        const p2wsh = payments.p2wsh({
-            redeem: { output: swapOutput, network: this._network },
-            network: this._network,
-        });
-        const p2shSegwit = payments.p2sh({
-            redeem: p2wsh,
-            network: this._network,
-        });
         const p2sh = payments.p2sh({
             redeem: { output: swapOutput, network: this._network },
             network: this._network,
         });
 
         return {
-            [SwapMode.P2WSH]: p2wsh,
-            [SwapMode.P2SH_SEGWIT]: p2shSegwit,
             [SwapMode.P2SH]: p2sh,
         };
     }
@@ -219,114 +208,185 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
         secret: string,
         _feePerByte: number
     ) {
-        const network = this._network;
-        const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput);
+        // const network = this._network;
+        // const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput);
+
+        // const initiationTxRaw = await this.walletProvider.getChainProvider().getProvider().getRawTransactionByHash(initiationTxHash);
+        // const initiationTx = decodeRawTransaction(initiationTxRaw, this._network);
+
+        // let swapVout;
+        // let paymentVariantName: string;
+        // let paymentVariant: payments.Payment;
+        // for (const vout of initiationTx.vout) {
+        //     const paymentVariantEntry = Object.entries(swapPaymentVariants).find(
+        //         ([, payment]) => payment.output.toString('hex') === vout.scriptPubKey.hex
+        //     );
+        //     const voutValue = new BigNumber(vout.value).times(1e8);
+        //     if (paymentVariantEntry && voutValue.eq(new BigNumber(value))) {
+        //         paymentVariantName = paymentVariantEntry[0];
+        //         paymentVariant = paymentVariantEntry[1];
+        //         swapVout = vout;
+        //     }
+        // }
+
+        // if (!swapVout) {
+        //     throw new Error('Valid swap output not found');
+        // }
+
+        // const feePerByte = _feePerByte || (await this.walletProvider.getChainProvider().getProvider().getFeePerByte());
+
+        // // TODO: Implement proper fee calculation that counts bytes in inputs and outputs
+        // const txfee = calculateFee(1, 1, feePerByte);
+        // const swapValue = new BigNumber(swapVout.value).times(1e8).toNumber();
+
+        // if (swapValue - txfee < 0) {
+        //     throw new Error('Transaction amount does not cover fee.');
+        // }
+
+        // const psbt = new Psbt({ network });
+
+        // if (!isClaim) {
+        //     psbt.setLocktime(expiration);
+        // }
+
+        // const isSegwit = paymentVariantName === SwapMode.P2WSH || paymentVariantName === SwapMode.P2SH_SEGWIT;
+
+        // const input: any = {
+        //     hash: initiationTxHash,
+        //     index: swapVout.n,
+        //     sequence: 0,
+        // };
+
+        // if (isSegwit) {
+        //     input.witnessUtxo = {
+        //         script: paymentVariant.output,
+        //         value: swapValue,
+        //     };
+        //     input.witnessScript = swapPaymentVariants.p2wsh.redeem.output; // Strip the push bytes (0020) off the script
+        // } else {
+        //     input.nonWitnessUtxo = Buffer.from(initiationTxRaw, 'hex');
+        //     input.redeemScript = paymentVariant.redeem.output;
+        // }
+
+        // const output = {
+        //     address: address,
+        //     value: swapValue - txfee,
+        // };
+
+        // psbt.addInput(input);
+        // psbt.addOutput(output);
+
+        // const walletAddress: Address = await this.walletProvider.getWalletAddress(address);
+        // const signedPSBTHex: string = await this.walletProvider.signPSBT(psbt.toBase64(), [
+        //     { index: 0, derivationPath: walletAddress.derivationPath },
+        // ]);
+        // const signedPSBT = Psbt.fromBase64(signedPSBTHex, { network });
+
+        // const sig = signedPSBT.data.inputs[0].partialSig[0].signature;
+
+        // const swapInput = this.getSwapInput(sig, Buffer.from(walletAddress.publicKey, 'hex'), isClaim, secret);
+        // const paymentParams = { redeem: { output: swapOutput, input: swapInput, network }, network };
+        // const paymentWithInput = isSegwit ? payments.p2wsh(paymentParams) : payments.p2sh(paymentParams);
+
+        // const getFinalScripts = () => {
+        //     let finalScriptSig;
+        //     let finalScriptWitness;
+
+        //     // create witness stack
+        //     if (isSegwit) {
+        //         finalScriptWitness = witnessStackToScriptWitness(paymentWithInput.witness);
+        //     }
+
+        //     if (paymentVariantName === SwapMode.P2SH_SEGWIT) {
+        //         // Adds the necessary push OP (PUSH34 (00 + witness script hash))
+        //         const inputScript = bScript.compile([swapPaymentVariants.p2shSegwit.redeem.output]);
+        //         finalScriptSig = inputScript;
+        //     } else if (paymentVariantName === SwapMode.P2SH) {
+        //         finalScriptSig = paymentWithInput.input;
+        //     }
+
+        //     return {
+        //         finalScriptSig,
+        //         finalScriptWitness,
+        //     };
+        // };
+
+        // psbt.finalizeInput(0, getFinalScripts);
+
+        // const hex = psbt.extractTransaction().toHex();
+        // await this.walletProvider.getChainProvider().sendRawTransaction(hex);
+        // return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee);
+
+        const network = this._network
+        const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput)
 
         const initiationTxRaw = await this.walletProvider.getChainProvider().getProvider().getRawTransactionByHash(initiationTxHash);
-        const initiationTx = decodeRawTransaction(initiationTxRaw, this._network);
-
-        let swapVout;
-        let paymentVariantName: string;
-        let paymentVariant: payments.Payment;
+        const initiationTx = decodeRawTransaction(initiationTxRaw, this._network)
+    
+        let swapVout
+        let paymentVariant: payments.Payment
         for (const vout of initiationTx.vout) {
-            const paymentVariantEntry = Object.entries(swapPaymentVariants).find(
-                ([, payment]) => payment.output.toString('hex') === vout.scriptPubKey.hex
-            );
-            const voutValue = new BigNumber(vout.value).times(1e8);
-            if (paymentVariantEntry && voutValue.eq(new BigNumber(value))) {
-                paymentVariantName = paymentVariantEntry[0];
-                paymentVariant = paymentVariantEntry[1];
-                swapVout = vout;
-            }
+          const paymentVariantEntry = Object.entries(swapPaymentVariants).find(
+            ([, payment]) => payment.output.toString('hex') === vout.scriptPubKey.hex
+          )
+          const voutValue = new BigNumber(vout.value).times(1e6)
+          if (paymentVariantEntry && voutValue.eq(new BigNumber(value))) {
+            paymentVariant = paymentVariantEntry[1]
+            swapVout = vout
+          }
         }
-
+    
         if (!swapVout) {
-            throw new Error('Valid swap output not found');
+          throw new Error('Valid swap output not found')
         }
-
+    
         const feePerByte = _feePerByte || (await this.walletProvider.getChainProvider().getProvider().getFeePerByte());
-
+    
         // TODO: Implement proper fee calculation that counts bytes in inputs and outputs
-        const txfee = calculateFee(1, 1, feePerByte);
-        const swapValue = new BigNumber(swapVout.value).times(1e8).toNumber();
-
+        const txfee = calculateFee(1, 1, feePerByte)
+        const swapValue = new BigNumber(swapVout.value).times(1e6).toNumber()
+    
         if (swapValue - txfee < 0) {
-            throw new Error('Transaction amount does not cover fee.');
+          throw new Error('Transaction amount does not cover fee.')
         }
-
-        const psbt = new Psbt({ network });
-
+    
+        // BEGIN CHANGE
+        const hashType = TransactionYacoinJs.SIGHASH_ALL
+        const redeemScript = paymentVariant.redeem.output
+    
+        var tx = new TransactionYacoinJs()
+    
         if (!isClaim) {
-            psbt.setLocktime(expiration);
+          tx.locktime = expiration
         }
-
-        const isSegwit = paymentVariantName === SwapMode.P2WSH || paymentVariantName === SwapMode.P2SH_SEGWIT;
-
-        const input: any = {
-            hash: initiationTxHash,
-            index: swapVout.n,
-            sequence: 0,
-        };
-
-        if (isSegwit) {
-            input.witnessUtxo = {
-                script: paymentVariant.output,
-                value: swapValue,
-            };
-            input.witnessScript = swapPaymentVariants.p2wsh.redeem.output; // Strip the push bytes (0020) off the script
-        } else {
-            input.nonWitnessUtxo = Buffer.from(initiationTxRaw, 'hex');
-            input.redeemScript = paymentVariant.redeem.output;
-        }
-
-        const output = {
-            address: address,
-            value: swapValue - txfee,
-        };
-
-        psbt.addInput(input);
-        psbt.addOutput(output);
-
+        tx.addInput(Buffer.from(initiationTxHash, 'hex').reverse(), swapVout.n, 0)
+        tx.addOutput(AddressYacoinJs.toOutputScript(address, network), swapValue - txfee)
+        let signatureHash = tx.hashForSignature(0, redeemScript, hashType)
+    
+        // Sign transaction
         const walletAddress: Address = await this.walletProvider.getWalletAddress(address);
-        const signedPSBTHex: string = await this.walletProvider.signPSBT(psbt.toBase64(), [
-            { index: 0, derivationPath: walletAddress.derivationPath },
-        ]);
-        const signedPSBT = Psbt.fromBase64(signedPSBTHex, { network });
-
-        const sig = signedPSBT.data.inputs[0].partialSig[0].signature;
-
-        const swapInput = this.getSwapInput(sig, Buffer.from(walletAddress.publicKey, 'hex'), isClaim, secret);
-        const paymentParams = { redeem: { output: swapOutput, input: swapInput, network }, network };
-        const paymentWithInput = isSegwit ? payments.p2wsh(paymentParams) : payments.p2sh(paymentParams);
-
-        const getFinalScripts = () => {
-            let finalScriptSig;
-            let finalScriptWitness;
-
-            // create witness stack
-            if (isSegwit) {
-                finalScriptWitness = witnessStackToScriptWitness(paymentWithInput.witness);
-            }
-
-            if (paymentVariantName === SwapMode.P2SH_SEGWIT) {
-                // Adds the necessary push OP (PUSH34 (00 + witness script hash))
-                const inputScript = bScript.compile([swapPaymentVariants.p2shSegwit.redeem.output]);
-                finalScriptSig = inputScript;
-            } else if (paymentVariantName === SwapMode.P2SH) {
-                finalScriptSig = paymentWithInput.input;
-            }
-
-            return {
-                finalScriptSig,
-                finalScriptWitness,
-            };
-        };
-
-        psbt.finalizeInput(0, getFinalScripts);
-
-        const hex = psbt.extractTransaction().toHex();
-        await this.walletProvider.getChainProvider().sendRawTransaction(hex);
-        return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee);
+        const signedSignatureHash = await this.walletProvider.signTx(tx.toHex(), signatureHash.toString('hex'), walletAddress.derivationPath, txfee)
+        const swapInput = this.getSwapInput(
+          bScript.signature.encode(Buffer.from(signedSignatureHash, 'hex'), hashType),
+          Buffer.from(walletAddress.publicKey, 'hex'),
+          isClaim,
+          secret
+        )
+    
+        const redeemScriptSig = payments.p2sh({
+          network: network,
+          redeem: {
+            network: network,
+            output: redeemScript,
+            input: swapInput
+          }
+        }).input
+        tx.setInputScript(0, redeemScriptSig)
+        // END CHANGE
+    
+        const hex = tx.toHex()
+        await this.walletProvider.getChainProvider().sendRawTransaction(`data=${hex}`);
+        return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee)
     }
 
     protected extractSwapParams(outputScript: string) {
@@ -345,12 +405,12 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
      * Only to be used for situations where transaction is trusted. e.g to bump fee
      * DO NOT USE THIS TO VERIFY THE REDEEM
      */
-    private async UNSAFE_isSwapRedeemTransaction(transaction: Transaction<BitcoinTransaction>) {
+    private async UNSAFE_isSwapRedeemTransaction(transaction: Transaction<YacoinTransaction>) {
         // eslint-disable-line
         if (transaction._raw.vin.length === 1 && transaction._raw.vout.length === 1) {
             const swapInput = transaction._raw.vin[0];
             const inputScript = this.getInputScript(swapInput);
-            const initiationTransaction: Transaction<BitcoinTransaction> = await this.walletProvider
+            const initiationTransaction: Transaction<YacoinTransaction> = await this.walletProvider
                 .getChainProvider()
                 .getTransactionByHash(transaction._raw.vin[0].txid);
             const scriptType = initiationTransaction._raw.vout[transaction._raw.vin[0].vout].scriptPubKey.type;
@@ -363,18 +423,18 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
         return true;
     }
 
-    public async updateTransactionFee(tx: Transaction<BitcoinTransaction> | string, newFeePerByte: number) {
+    public async updateTransactionFee(tx: Transaction<YacoinTransaction> | string, newFeePerByte: number) {
         const txHash = typeof tx === 'string' ? tx : tx.hash;
-        const transaction: Transaction<BitcoinTransaction> = await this.walletProvider.getChainProvider().getTransactionByHash(txHash);
+        const transaction: Transaction<YacoinTransaction> = await this.walletProvider.getChainProvider().getTransactionByHash(txHash);
         if (await this.UNSAFE_isSwapRedeemTransaction(transaction)) {
             const swapInput = transaction._raw.vin[0];
             const inputScript = this.getInputScript(swapInput);
             const initiationTxHash = swapInput.txid;
-            const initiationTx: Transaction<BitcoinTransaction> = await this.walletProvider
+            const initiationTx: Transaction<YacoinTransaction> = await this.walletProvider
                 .getChainProvider()
                 .getTransactionByHash(initiationTxHash);
             const swapOutput = initiationTx._raw.vout[swapInput.vout];
-            const value = new BigNumber(swapOutput.value).times(1e8);
+            const value = new BigNumber(swapOutput.value).times(1e6);
             const address = transaction._raw.vout[0].scriptPubKey.addresses[0];
             const isClaim = inputScript.length === 5;
             const secret = isClaim ? inputScript[2] : undefined;
@@ -395,33 +455,37 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
     }
 
     protected getInputScript(vin: Input) {
-        const inputScript = vin.txinwitness
-            ? vin.txinwitness
-            : bScript.decompile(Buffer.from(vin.scriptSig.hex, 'hex')).map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b));
-        return inputScript as string[];
+        // const inputScript = vin.txinwitness
+        //     ? vin.txinwitness
+        //     : bScript.decompile(Buffer.from(vin.scriptSig.hex, 'hex')).map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b));
+        // return inputScript as string[];
+        const inputScript = bScript
+        .decompile(Buffer.from(vin.scriptSig.hex, 'hex'))
+        .map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b))
+        return inputScript as string[]
     }
 
-    protected doesTransactionMatchRedeem(initiationTxHash: string, tx: Transaction<BitcoinTransaction>, isRefund: boolean) {
+    protected doesTransactionMatchRedeem(initiationTxHash: string, tx: Transaction<YacoinTransaction>, isRefund: boolean) {
         const swapInput = tx._raw.vin.find((vin) => vin.txid === initiationTxHash);
         if (!swapInput) return false;
         const inputScript = this.getInputScript(swapInput);
         if (!inputScript) return false;
         if (isRefund) {
-            if (inputScript.length !== 4) return false;
+            if (inputScript.length !== 4) return false; // 4 because there is 4 parameters: signature, pubkey, false, original redeemscript
         } else {
-            if (inputScript.length !== 5) return false;
+            if (inputScript.length !== 5) return false; // 5 because there is 5 parameters: signature, pubkey, secretHash, true, original redeemscript
         }
         return true;
     }
 
-    protected doesTransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<BitcoinTransaction>) {
+    protected doesTransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<YacoinTransaction>) {
         const swapOutput = this.getSwapOutput(swapParams);
         const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput);
         const vout = transaction._raw.vout.find((vout) =>
             Object.values(swapPaymentVariants).find(
                 (payment) =>
                     payment.output.toString('hex') === vout.scriptPubKey.hex &&
-                    new BigNumber(vout.value).times(1e8).eq(new BigNumber(swapParams.value))
+                    new BigNumber(vout.value).times(1e6).eq(new BigNumber(swapParams.value))
             )
         );
         return Boolean(vout);
@@ -431,5 +495,5 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
         swapParams: SwapParams,
         blockNumber: number,
         predicate: TransactionMatchesFunction
-    ): Promise<Transaction<BitcoinTransaction>>;
+    ): Promise<Transaction<YacoinTransaction>>;
 }
