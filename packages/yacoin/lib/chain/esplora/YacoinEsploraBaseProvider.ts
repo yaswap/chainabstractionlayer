@@ -1,5 +1,6 @@
 import { HttpClient } from '@chainify/client';
 import { AddressType } from '@chainify/types';
+import { TxNotFoundError } from '@chainify/errors';
 import { flatten } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
@@ -37,6 +38,24 @@ export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
 
     public async getTransactionHex(transactionHash: string): Promise<string> {
         return this.httpClient.nodeGet(`/tx/${transactionHash}/hex`);
+    }
+
+    public async getTransaction(transactionHash: string) {
+        let data: EsploraTypes.Transaction;
+
+        try {
+            data = await this.httpClient.nodeGet(`/tx/${transactionHash}`);
+        } catch (e) {
+            if (e.name === 'NodeError' && e.message.includes('Transaction not found')) {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { name, message, ...attrs } = e;
+                throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs);
+            }
+
+            throw e;
+        }
+
+        return this.formatTransaction(data);
     }
 
     public async getFeePerByte(numberOfBlocks = this._options.numberOfBlockConfirmation) {

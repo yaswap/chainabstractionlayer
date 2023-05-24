@@ -1,5 +1,5 @@
 import { Chain, Fee, HttpClient } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError } from '@chainify/errors';
+import { BlockNotFoundError } from '@chainify/errors';
 import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@chainify/types';
 import { flatten } from 'lodash';
 import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';
@@ -67,7 +67,7 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
     }
 
     public async getTransactionByHash(txHash: string): Promise<Transaction<any>> {
-        return this.getTransaction(txHash);
+        return this.provider.getTransaction(txHash);
     }
 
     public async getBalance(_addresses: AddressType[]): Promise<BigNumber[]> {
@@ -105,24 +105,6 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
 
     private async _getBlockHash(blockNumber: number): Promise<string> {
         return this._httpClient.nodeGet(`/getblockhash?index=${blockNumber}`);
-    }
-
-    public async getTransaction(transactionHash: string) {
-        let data: EsploraTypes.Transaction;
-
-        try {
-            data = await this._httpClient.nodeGet(`/tx/${transactionHash}`);
-        } catch (e) {
-            if (e.name === 'NodeError' && e.message.includes('Transaction not found')) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { name, message, ...attrs } = e;
-                throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs);
-            }
-
-            throw e;
-        }
-
-        return this.provider.formatTransaction(data);
     }
 
     private async _getFee(targetBlocks: number): Promise<FeeDetail> {

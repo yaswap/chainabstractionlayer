@@ -1,6 +1,5 @@
 import { InvalidAddressError } from '@chainify/errors';
 import { AddressType, BigNumber, Transaction, TxStatus } from '@chainify/types';
-import * as varuint from 'bip174/src/lib/converter/varint';
 import * as yacoin from '@yaswap/yacoinjs-lib';
 import * as classify from '@yaswap/yacoinjs-lib/src/classify';
 import coinselect from 'coinselect';
