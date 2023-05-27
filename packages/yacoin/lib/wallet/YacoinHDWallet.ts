@@ -46,7 +46,7 @@ export class YacoinHDWalletProvider extends YacoinBaseWalletProvider implements 
         const address = await this.getWalletAddress(from);
         const keyPair = await this.keyPair(address.derivationPath);
         const signature = await signYacoinMessage(message, keyPair.privateKey, keyPair.compressed);
-        return signature.toString('base64');
+        return signature.toString('hex');
     }
 
     public async exportPrivateKey() {
