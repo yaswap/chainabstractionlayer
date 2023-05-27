@@ -1,4 +1,5 @@
 import { HttpClient } from '@chainify/client';
+import { PendingTxError } from '@chainify/errors';
 import { SwapParams, Transaction } from '@chainify/types';
 import { Transaction as YacoinTransaction } from '../types';
 import { YacoinBaseWalletProvider } from '../wallet/YacoinBaseWallet';
@@ -27,14 +28,19 @@ export class YacoinSwapEsploraProvider extends YacoinSwapBaseProvider {
         // Investigate whether retrieving more transactions is required.
         const addressInfo = await this._httpClient.nodeGet(`/ext/getaddress/${address}`);
 
-        for (const transaction of addressInfo.last_txs) {
-            const formattedTransaction: Transaction<YacoinTransaction> = await this.walletProvider
-                .getChainProvider()
-                .getProvider()
-                .getTransaction(transaction.addresses);
-            if (predicate(formattedTransaction)) {
-                return formattedTransaction;
+        try {
+            for (const transaction of addressInfo.last_txs) {
+                const formattedTransaction: Transaction<YacoinTransaction> = await this.walletProvider
+                    .getChainProvider()
+                    .getProvider()
+                    .getTransaction(transaction.addresses);
+                if (predicate(formattedTransaction)) {
+                    return formattedTransaction;
+                }
             }
+        } catch (error) {
+            if (['TypeError'].includes(error.name)) throw new PendingTxError(`Transaction not confirmed`);
         }
+
     }
 }
