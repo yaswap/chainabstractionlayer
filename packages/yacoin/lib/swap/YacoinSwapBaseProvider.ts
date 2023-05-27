@@ -40,9 +40,12 @@ export abstract class YacoinSwapBaseProvider extends Swap<YacoinBaseChainProvide
     public async initiateSwap(swapParams: SwapParams, feePerByte: number) {
         this.validateSwapParams(swapParams);
 
+        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap()");
         const swapOutput = this.getSwapOutput(swapParams);
-        const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address;
+        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap(), swapOutput = ", swapOutput);
 
+        const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address;
+        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap(), address = ", address);
         console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap() calling sendTransaction");
 
         return this.walletProvider.sendTransaction({
