@@ -12,8 +12,6 @@ export function ensure0x(hash: string) {
  */
 export function remove0x(hash: string) {
     if (hash) {
-        console.log('TACA ===> [chainify] remove0x, typeof hash = ', typeof hash)
-        console.log('TACA ===> [chainify] remove0x, hash = ', hash)
         if (typeof hash !== 'string') {
             hash = String(hash)
         }
