@@ -152,6 +152,7 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
     }
 
     public async initiateSwap(swapParams: SwapParams, fee: FeeType): Promise<Transaction<EthersTransactionResponse>> {
+        console.log('TACA ===> [chainify] EvmBaseSwapProvider.ts, initiateSwap, swapParams = ', swapParams)
         this.validateSwapParams(swapParams);
         // ORIGINAL
         // const parsedSwapParams = parseSwapParams(swapParams);
