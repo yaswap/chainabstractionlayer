@@ -16,7 +16,7 @@ export interface EvmSwapOptions {
     // numberOfBlocksPerRequest?: number;
     // totalNumberOfBlocks?: number;
     // gasLimitMargin?: number;
-    contractAddress?: string; // used for ERC20 contract address
+    contractAddress?: string; // Used to deploy a specialized contract address used for atomic swap
     scraperUrl?: string;
 }
 

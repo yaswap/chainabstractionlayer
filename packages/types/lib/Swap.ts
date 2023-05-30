@@ -29,6 +29,8 @@ export interface SwapParams {
 export interface SwapProvider {
     findInitiateSwapTransaction(swapParams: SwapParams, blockNumber?: number): Promise<Transaction>;
 
+    findFundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber?: number): Promise<Transaction | null>; // ONLY FOR ERC20
+
     findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber?: number): Promise<Transaction>;
 
     findRefundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber?: number): Promise<Transaction>;
@@ -38,6 +40,8 @@ export interface SwapProvider {
     getSwapSecret(claimTxHash: string, initTxHash?: string): Promise<string>;
 
     initiateSwap(swapParams: SwapParams, fee: FeeType): Promise<Transaction>;
+
+    fundSwap(swapParams: SwapParams, initiationTxHash: string, fee?: FeeType): Promise<Transaction | null>; // ONLY FOR ERC20
 
     verifyInitiateSwapTransaction(swapParams: SwapParams, initiationTxHash: string | Transaction): Promise<boolean>;
 

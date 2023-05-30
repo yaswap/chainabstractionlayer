@@ -1,5 +1,5 @@
-import { InvalidSwapParamsError, PendingTxError, TxFailedError, TxNotFoundError } from '@chainify/errors';
-import { FeeType, SwapParams, SwapProvider, Transaction, TxStatus } from '@chainify/types';
+import { InvalidSwapParamsError, PendingTxError, TxFailedError, TxNotFoundError, InvalidDestinationAddressError } from '@chainify/errors';
+import { Asset,AssetTypes, BigNumber, FeeType, SwapParams, SwapProvider, Transaction, TxStatus } from '@chainify/types';
 import { sha256, validateExpiration, validateSecretHash, validateValue } from '@chainify/utils';
 import Wallet from './Wallet';
 
@@ -17,6 +17,11 @@ export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = W
 
     public getWallet(): WalletProvider {
         return this.walletProvider;
+    }
+
+    public async doesBalanceMatchValue(contractAddress: string, asset: Asset, value: BigNumber) {
+        const balance = await this.walletProvider.getChainProvider().getBalance([contractAddress], [asset])
+        return balance[0].isEqualTo(value)
     }
 
     public async verifyInitiateSwapTransaction(swapParams: SwapParams, initTx: string | Transaction): Promise<boolean> {
@@ -41,6 +46,21 @@ export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = W
             throw new InvalidSwapParamsError(`Swap params does not match the transaction`);
         }
 
+        console.log('TACA ===> [chainify] Swap.ts, verifyInitiateSwapTransaction successfully')
+        // We need to check ERC20 token balance of atomic swap contract address
+        if (swapParams.asset.type === AssetTypes.erc20) {
+            const contractHasZeroBalance = await this.doesBalanceMatchValue(
+                transaction.contractAddress, // This is atomic swap contract address
+                swapParams.asset,
+                new BigNumber(swapParams.value)
+            )
+            if (!contractHasZeroBalance) {
+                throw new InvalidDestinationAddressError(`Contract is empty: ${transaction.contractAddress}`)
+            }
+            console.log('TACA ===> [chainify] Swap.ts, verifyInitiateSwapTransaction, contract balance not zero')
+        }
+
+
         return true;
     }
 
@@ -63,6 +83,8 @@ export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = W
 
     public abstract initiateSwap(swapParams: SwapParams, fee?: FeeType): Promise<Transaction>;
     public abstract findInitiateSwapTransaction(swapParams: SwapParams, _blockNumber?: number): Promise<Transaction>;
+    public abstract fundSwap(swapParams: SwapParams, initiationTxHash: string, fee?: FeeType): Promise<Transaction | null>;
+    public abstract findFundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber?: number): Promise<Transaction | null>;
 
     public abstract claimSwap(swapParams: SwapParams, initTx: string, secret: string, fee?: FeeType): Promise<Transaction>;
     public abstract findClaimSwapTransaction(swapParams: SwapParams, initTxHash: string, blockNumber?: number): Promise<Transaction>;

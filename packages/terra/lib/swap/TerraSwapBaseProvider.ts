@@ -39,6 +39,14 @@ export abstract class TerraSwapBaseProvider extends Swap<LCDClient, MnemonicKey,
         return this.walletProvider.sendTransaction({ msgs: initMsg, fee, feeAsset: swapParams.asset });
     }
 
+    public async fundSwap(): Promise<null> {
+        return null
+    }
+
+    public async findFundSwapTransaction(): Promise<null> {
+        return null
+    }
+
     public async claimSwap(
         swapParams: SwapParams,
         initiationTxHash: string,

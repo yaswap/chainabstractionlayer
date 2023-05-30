@@ -206,4 +206,11 @@ export function normalizeTransactionObject<TxType extends EvmPartialTransaction 
     }
   
     return normalizedTx
-  }
+}
+
+export function caseInsensitiveEqual(left: string, right: string) {
+    left = left && left.toLowerCase()
+    right = right && right.toLowerCase()
+  
+    return left === right
+}

@@ -25,6 +25,14 @@ export class NearSwapProvider extends Swap<providers.JsonRpcProvider, InMemorySi
         } as NearTxRequest);
     }
 
+    public async fundSwap(): Promise<null> {
+        return null
+    }
+
+    public async findFundSwapTransaction(): Promise<null> {
+        return null
+    }
+
     public async findInitiateSwapTransaction(swapParams: SwapParams, _blockNumber?: number): Promise<Transaction<NearTxLog>> {
         return await this.findAddressTransaction(swapParams.refundAddress.toString(), (tx: Transaction<NearTxLog>) =>
             this.doesTransactionMatchInitiation(swapParams, tx)

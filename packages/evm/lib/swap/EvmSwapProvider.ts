@@ -1,12 +1,13 @@
 import { HttpClient } from '@chainify/client';
-import { SwapParams, Transaction } from '@chainify/types';
-import { Math, remove0x } from '@chainify/utils';
+import { TxStatus, SwapParams, Transaction, BigNumber } from '@chainify/types';
+import { Math, remove0x, ensure0x } from '@chainify/utils';
+import { TxNotFoundError, PendingTxError } from '@chainify/errors';
 import { BaseProvider, Log } from '@ethersproject/providers';
 import { ClaimEvent, RefundEvent } from '../typechain/LiqualityHTLC';
 import { EvmSwapOptions, ScraperTransaction } from '../types';
 import { EvmBaseWalletProvider } from '../wallet/EvmBaseWalletProvider';
 import { EvmBaseSwapProvider } from './EvmBaseSwapProvider';
-import { numberToHex, normalizeTransactionObject } from '../utils';
+import { caseInsensitiveEqual, numberToHex, normalizeTransactionObject } from '../utils';
 
 export class EvmSwapProvider extends EvmBaseSwapProvider {
     private _httpClient: HttpClient;
@@ -67,35 +68,35 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
         toBlock?: number,
         limit = 250,
         sort = 'desc'
-      ) {
-        for (let page = 1; ; page++) {
-          const data = await this._httpClient.nodeGet(`/txs/${address}`, {
-            limit,
-            page,
-            sort,
-            fromBlock,
-            toBlock
+    ) {
+      for (let page = 1; ; page++) {
+        const data = await this._httpClient.nodeGet(`/txs/${address}`, {
+          limit,
+          page,
+          sort,
+          fromBlock,
+          toBlock
+        })
+  
+        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findAddressTransaction")
+        const transactions: any[] = data.data.txs
+        if (transactions.length === 0) return
+  
+        const normalizedTransactions = transactions
+          .filter((tx) => {
+              console.log("TACA ===> [chainify] EvmSwapProvider.ts, findAddressTransaction, CHECKING tx = ", tx)
+              return tx.status === true
           })
-    
-          console.log("TACA ===> [chainify] EvmSwapProvider.ts, findInitiateSwapTransaction")
-          const transactions: any[] = data.data.txs
-          if (transactions.length === 0) return
-    
-          const normalizedTransactions = transactions
-            .filter((tx) => {
-                console.log("TACA ===> [chainify] EvmSwapProvider.ts, findInitiateSwapTransaction, CHECKING tx = ", tx)
-                return tx.status === true
-            })
-            .map(this.normalizeTransactionResponse)
-          const tx = normalizedTransactions.find(predicate)
-          if (tx) {
-            console.log("TACA ===> [chainify] EvmSwapProvider.ts, findInitiateSwapTransaction, FOUND tx = ", tx)
-            return this.ensureFeeInfo(tx)
-          }
-    
-          if (transactions.length < limit) return
+          .map(this.normalizeTransactionResponse)
+        const tx = normalizedTransactions.find(predicate)
+        if (tx) {
+          console.log("TACA ===> [chainify] EvmSwapProvider.ts, findAddressTransaction, FOUND tx = ", tx)
+          return this.ensureFeeInfo(tx)
         }
+  
+        if (transactions.length < limit) return
       }
+    }
 
     async findInitiateSwapTransaction(swapParams: SwapParams): Promise<Transaction<ScraperTransaction>> {
         // const currentBlock = await this.walletProvider.getChainProvider().getBlockHeight();
@@ -115,10 +116,76 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
         //         return { ...tx, _raw: initiate };
         //     }
         // }, currentBlock);
-        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findInitiateSwapTransaction")
+        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findInitiateSwapTransaction, native asset")
         this.validateSwapParams(swapParams)
         return this.findAddressTransaction(swapParams.refundAddress.toString(), (tx) =>
-                                        this.doesTransactionMatchInitiation(swapParams, tx))
+                                      this.doesTransactionMatchInitiation(swapParams, tx))
+    }
+
+    public async findErc20Events(
+      erc20ContractAddress: string,
+      address: string,
+      predicate: (tx: Transaction<ScraperTransaction>) => boolean,
+      fromBlock?: number,
+      toBlock?: number,
+      limit = 250,
+      sort = 'desc'
+  ) {
+    erc20ContractAddress = ensure0x(erc20ContractAddress)
+    address = ensure0x(address)
+    for (let page = 1; ; page++) {
+      const data = await this._httpClient.nodeGet(`/events/erc20Transfer/${erc20ContractAddress}`, {
+        address,
+        limit,
+        page,
+        sort,
+        fromBlock,
+        toBlock
+      })
+
+      console.log("TACA ===> [chainify] EvmSwapProvider.ts, findErc20Events")
+      const transactions: any[] = data.data.txs
+      if (transactions.length === 0) return
+
+      const normalizedTransactions = transactions
+        .filter((tx) => {
+            console.log("TACA ===> [chainify] EvmSwapProvider.ts, findErc20Events, CHECKING tx = ", tx)
+            return tx.status === true
+        })
+        .map(this.normalizeTransactionResponse)
+      const tx = normalizedTransactions.find(predicate)
+      if (tx) {
+        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findErc20Events, FOUND tx = ", tx)
+        return this.ensureFeeInfo(tx)
+      }
+
+      if (transactions.length < limit) return
+    }
+  }
+    
+    async findFundSwapTransaction(swapParams: SwapParams, initiationTxHash: string): Promise<Transaction> {
+      this.validateSwapParams(swapParams)
+
+      const initiationTransaction = await this.walletProvider.getChainProvider().getTransactionByHash(initiationTxHash);
+      if (!initiationTransaction) throw new TxNotFoundError(`Transaction not found: ${initiationTxHash}`)
+      if (initiationTransaction.status === TxStatus.Pending) {
+          throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
+      }
+  
+      const contractAddress = initiationTransaction.contractAddress
+      const erc20TokenContractAddress = swapParams.asset.contractAddress
+  
+      const tx = await this.findErc20Events(
+        erc20TokenContractAddress,
+        contractAddress,
+        (tx) =>
+          caseInsensitiveEqual(remove0x(tx._raw.to), remove0x(contractAddress)) &&
+          new BigNumber(tx.value).isEqualTo(swapParams.value)
+      )
+  
+      if (!tx) throw new TxNotFoundError(`Funding transaction is not available: ${initiationTxHash}`)
+  
+      return tx
     }
 
     async findClaimSwapTransaction(swapParams: SwapParams, initTxHash: string): Promise<Transaction<ClaimEvent>> {

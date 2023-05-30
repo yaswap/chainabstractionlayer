@@ -55,6 +55,14 @@ export abstract class YacoinSwapBaseProvider extends Swap<YacoinBaseChainProvide
         });
     }
 
+    public async fundSwap(): Promise<null> {
+        return null
+    }
+
+    public async findFundSwapTransaction(): Promise<null> {
+        return null
+    }
+
     public async claimSwap(swapParams: SwapParams, initiationTxHash: string, secret: string, feePerByte: number) {
         this.validateSwapParams(swapParams);
         validateSecret(secret);
