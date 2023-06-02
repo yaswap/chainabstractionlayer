@@ -9,6 +9,7 @@ import { LiqualityHTLC } from '../typechain';
 import { ClaimEvent, RefundEvent } from '../typechain/LiqualityHTLC';
 import { EthersTransactionResponse, EvmSwapOptions, ScraperTransaction } from '../types';
 import { toEthersBigNumber, toEthereumTxRequest, hexToNumber } from '../utils';
+import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import { EvmBaseWalletProvider } from '../wallet/EvmBaseWalletProvider';
 
 // FOR ERC20 claim events
@@ -199,10 +200,13 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
         // );
 
         let bytecode: string;
+        let value: EthersBigNumber;
         if (swapParams.asset.type === AssetTypes.erc20) {
             bytecode = this.createERC20SwapScript(swapParams)
+            value = toEthersBigNumber(0)
         } else {
             bytecode = this.createNativeSwapScript(swapParams)
+            value = toEthersBigNumber(swapParams.value)
         }
 
         // return this.walletProvider.sendTransaction({
@@ -212,7 +216,7 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
         // });
 
         return await this.walletProvider.sendTransaction(
-            toEthereumTxRequest({ to: null, value: toEthersBigNumber(0), data: bytecode }, fee)
+            toEthereumTxRequest({ to: null, value, data: bytecode }, fee)
         );
     }
 
