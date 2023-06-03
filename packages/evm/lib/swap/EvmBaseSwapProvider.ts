@@ -23,18 +23,6 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
 
     constructor(swapOptions?: EvmSwapOptions, walletProvider?: EvmBaseWalletProvider<BaseProvider>) {
         super(walletProvider);
-
-        // this.swapOptions = {
-        //     ...swapOptions,
-        //     contractAddress: swapOptions?.contractAddress || '0x133713376F69C1A67d7f3594583349DFB53d8166',
-        //     numberOfBlocksPerRequest: swapOptions?.numberOfBlocksPerRequest || 2000,
-        //     totalNumberOfBlocks: swapOptions?.totalNumberOfBlocks || 100_000,
-        //     gasLimitMargin: swapOptions?.gasLimitMargin || 1000, // 10%
-        // };
-
-        // if (walletProvider) {
-        //     this.contract = LiqualityHTLC__factory.connect(this.swapOptions.contractAddress, this.walletProvider.getSigner());
-        // }
     }
 
     public createERC20SwapScript(swapParams: SwapParams) {
@@ -188,16 +176,7 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
     }
 
     public async initiateSwap(swapParams: SwapParams, fee: FeeType): Promise<Transaction<EthersTransactionResponse>> {
-        console.log('TACA ===> [chainify] EvmBaseSwapProvider.ts, initiateSwap, swapParams = ', swapParams)
         this.validateSwapParams(swapParams);
-        // ORIGINAL
-        // const parsedSwapParams = parseSwapParams(swapParams);
-        // const value = swapParams.asset.type === AssetTypes.native ? parsedSwapParams.amount : 0;
-        // const tx = await this.contract.populateTransaction.initiate(parsedSwapParams, { value });
-        // const estimatedGasLimit = await this.contract.estimateGas.initiate(parsedSwapParams, { value });
-        // return await this.walletProvider.sendTransaction(
-        //     toEthereumTxRequest({ ...tx, gasLimit: calculateGasMargin(estimatedGasLimit) }, fee)
-        // );
 
         let bytecode: string;
         let value: EthersBigNumber;
@@ -208,12 +187,6 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
             bytecode = this.createNativeSwapScript(swapParams)
             value = toEthersBigNumber(swapParams.value)
         }
-
-        // return this.walletProvider.sendTransaction({
-        //     to: address,
-        //     value: swapParams.value,
-        //     fee: feePerByte,
-        // });
 
         return await this.walletProvider.sendTransaction(
             toEthereumTxRequest({ to: null, value, data: bytecode }, fee)
@@ -283,8 +256,6 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
             default:
                 throw new TxFailedError(`Transaction failed: ${initTxHash}`);
         }
-        // TODO
-        // await this.getMethod('assertContractExists')(initiationTransactionReceipt.contractAddress)
 
         let secret0x: string;
         // HANDLE ERC20 token
@@ -293,8 +264,6 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
         } else {
             secret0x = ensure0x(secret);
         }
-
-        console.log('TACA ===> [chainify] EvmBaseSwapProvider.ts, claimSwap, secret0x = ', secret0x)
 
         return await this.walletProvider.sendTransaction(
             toEthereumTxRequest({ to: transaction.contractAddress, value: toEthersBigNumber(0), data: secret0x }, fee)
@@ -315,23 +284,6 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
                 throw new TxFailedError(`Transaction failed: ${initTxHash}`);
         }
 
-        // if (transaction?.logs) {
-        //     for (const log of transaction.logs as Log[]) {
-        //         const initiate = this.tryParseLog(log);
-
-        //         if (initiate?.args?.id) {
-        //             const tx = await this.contract.populateTransaction.refund(initiate.args.id);
-        //             const estimatedGasLimit = await this.contract.estimateGas.refund(initiate.args.id);
-        //             const txResponse = await this.walletProvider.sendTransaction(
-        //                 toEthereumTxRequest(
-        //                     { ...tx, gasLimit: calculateGasMargin(estimatedGasLimit) },
-        //                     fee
-        //                 )
-        //             );
-        //             return txResponse;
-        //         }
-        //     }
-        // }
         // HANDLE ERC20 token
         return await this.walletProvider.sendTransaction(
             toEthereumTxRequest({
@@ -368,45 +320,12 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
     }
 
     protected onWalletProviderUpdate(wallet: EvmBaseWalletProvider<BaseProvider, Signer>): void {
-        // this.contract = LiqualityHTLC__factory.connect(this.swapOptions.contractAddress, wallet.getSigner());
         // do nothing
     }
 
-    // protected doesTransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<InitiateEvent>): boolean {
-    //     let htlcArgs = transaction?._raw?.args;
-
-    //     if (!htlcArgs) {
-    //         if (transaction?.logs) {
-    //             for (const log of transaction.logs as Log[]) {
-    //                 const initiate = this.tryParseLog(log);
-    //                 if (initiate) {
-    //                     htlcArgs = initiate.args as any;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     if (htlcArgs) {
-    //         return (
-    //             Math.eq(htlcArgs.htlc.amount, swapParams.value) &&
-    //             Math.eq(htlcArgs.htlc.expiration, swapParams.expiration) &&
-    //             compare(htlcArgs.htlc.recipientAddress, ensure0x(swapParams.recipientAddress.toString())) &&
-    //             compare(htlcArgs.htlc.refundAddress, ensure0x(swapParams.refundAddress.toString())) &&
-    //             compare(
-    //                 htlcArgs.htlc.tokenAddress,
-    //                 swapParams.asset.type === AssetTypes.native ? AddressZero : swapParams.asset.contractAddress
-    //             ) &&
-    //             compare(ensure0x(htlcArgs.htlc.secretHash), ensure0x(swapParams.secretHash))
-    //         );
-    //     }
-    // }
-
     protected doesERC20TransactionMatchInitiation(swapParams: SwapParams, transaction: Transaction<any>) {
-        console.log("TACA ===> EvmBaseSwapProvider.ts, doesERC20TransactionMatchInitiation, swapParams = ", swapParams)
         const data = this.createERC20SwapScript(swapParams)
         const inputData = transaction._raw.input || transaction._raw.data
-        console.log("TACA ===> EvmBaseSwapProvider.ts, doesERC20TransactionMatchInitiation, transaction = ", transaction)
-        console.log("TACA ===> EvmBaseSwapProvider.ts, doesERC20TransactionMatchInitiation, data = ", data)
         return transaction._raw.to === null && inputData === ensure0x(data)
     }
 
@@ -415,19 +334,14 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
         if (swapParams.asset.type === AssetTypes.erc20) {
             return this.doesERC20TransactionMatchInitiation(swapParams, transaction)
         } else {
-            console.log("TACA ===> EvmBaseSwapProvider.ts, doesTransactionMatchInitiation, swapParams = ", swapParams)
-            console.log("TACA ===> EvmBaseSwapProvider.ts, doesTransactionMatchInitiation, transaction = ", transaction)
             const data = this.createNativeSwapScript(swapParams)
 
             let input = transaction._raw.input
             let value = hexToNumber(transaction._raw.value)
             // Convert from EthersTransactionResponse to ScraperTransaction
             if (!transaction._raw.input && transaction._raw.data) {
-                console.log("TACA ===> EvmBaseSwapProvider.ts, doesTransactionMatchInitiation, typeof transaction._raw.data = ", typeof transaction._raw.data)
                 input = transaction.data
                 value = transaction.value
-                console.log("TACA ===> EvmBaseSwapProvider.ts, doesTransactionMatchInitiation, typeof input = ", typeof input)
-                console.log("TACA ===> EvmBaseSwapProvider.ts, doesTransactionMatchInitiation, input = ", input)
             }
     
             return (

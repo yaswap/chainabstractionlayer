@@ -46,7 +46,6 @@ export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = W
             throw new InvalidSwapParamsError(`Swap params does not match the transaction`);
         }
 
-        console.log('TACA ===> [chainify] Swap.ts, verifyInitiateSwapTransaction successfully')
         // We need to check ERC20 token balance of atomic swap contract address
         if (swapParams.asset.type === AssetTypes.erc20) {
             const contractHasZeroBalance = await this.doesBalanceMatchValue(
@@ -57,7 +56,6 @@ export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = W
             if (!contractHasZeroBalance) {
                 throw new InvalidDestinationAddressError(`Contract is empty: ${transaction.contractAddress}`)
             }
-            console.log('TACA ===> [chainify] Swap.ts, verifyInitiateSwapTransaction, contract balance not zero')
         }
 
 
@@ -71,13 +69,9 @@ export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = W
     }
 
     public async generateSecret(message: string): Promise<string> {
-        console.log("TACA ===> [chainify] Swap.ts, generateSecret ===> message = ", message)
         const address = await this.walletProvider.getAddress();
-        console.log("TACA ===> [chainify] Swap.ts, generateSecret ===> address = ", address)
         const signedMessage = await this.walletProvider.signMessage(message, address);
-        console.log("TACA ===> [chainify] Swap.ts, generateSecret ===> signedMessage = ", signedMessage)
         const secret = sha256(signedMessage);
-        console.log("TACA ===> [chainify] Swap.ts, generateSecret ===> secret = ", secret)
         return secret;
     }
 

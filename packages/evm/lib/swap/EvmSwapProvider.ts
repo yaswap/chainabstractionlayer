@@ -78,19 +78,16 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
           toBlock
         })
   
-        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findAddressTransaction")
         const transactions: any[] = data.data.txs
         if (transactions.length === 0) return
   
         const normalizedTransactions = transactions
           .filter((tx) => {
-              console.log("TACA ===> [chainify] EvmSwapProvider.ts, findAddressTransaction, CHECKING tx = ", tx)
               return tx.status === true
           })
           .map(this.normalizeTransactionResponse)
         const tx = normalizedTransactions.find(predicate)
         if (tx) {
-          console.log("TACA ===> [chainify] EvmSwapProvider.ts, findAddressTransaction, FOUND tx = ", tx)
           return this.ensureFeeInfo(tx)
         }
   
@@ -99,24 +96,6 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
     }
 
     async findInitiateSwapTransaction(swapParams: SwapParams): Promise<Transaction<ScraperTransaction>> {
-        // const currentBlock = await this.walletProvider.getChainProvider().getBlockHeight();
-
-        // return await this.searchLogs(async (from: number, to: number) => {
-        //     const filter = await this.contract.queryFilter(this.contract.filters.Initiate(), from, to);
-
-        //     const initiate = filter.find((event) => {
-        //         // no need to call verifyInitiateSwapTransaction because if the transaction is failed, then the event won't be logged
-        //         // the event will only be logged if the tx is successful & confirmed
-        //         const isTrue = this.doesTransactionMatchInitiation(swapParams, { _raw: event } as Transaction<InitiateEvent>);
-        //         return isTrue;
-        //     });
-
-        //     if (initiate) {
-        //         const tx = await this.walletProvider.getChainProvider().getTransactionByHash(initiate.transactionHash);
-        //         return { ...tx, _raw: initiate };
-        //     }
-        // }, currentBlock);
-        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findInitiateSwapTransaction, native asset")
         this.validateSwapParams(swapParams)
         return this.findAddressTransaction(swapParams.refundAddress.toString(), (tx) =>
                                       this.doesTransactionMatchInitiation(swapParams, tx))
@@ -143,19 +122,16 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
         toBlock
       })
 
-      console.log("TACA ===> [chainify] EvmSwapProvider.ts, findErc20Events")
       const transactions: any[] = data.data.txs
       if (transactions.length === 0) return
 
       const normalizedTransactions = transactions
         .filter((tx) => {
-            console.log("TACA ===> [chainify] EvmSwapProvider.ts, findErc20Events, CHECKING tx = ", tx)
             return tx.status === true
         })
         .map(this.normalizeTransactionResponse)
       const tx = normalizedTransactions.find(predicate)
       if (tx) {
-        console.log("TACA ===> [chainify] EvmSwapProvider.ts, findErc20Events, FOUND tx = ", tx)
         return this.ensureFeeInfo(tx)
       }
 

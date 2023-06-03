@@ -40,13 +40,8 @@ export abstract class YacoinSwapBaseProvider extends Swap<YacoinBaseChainProvide
     public async initiateSwap(swapParams: SwapParams, feePerByte: number) {
         this.validateSwapParams(swapParams);
 
-        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap()");
         const swapOutput = this.getSwapOutput(swapParams);
-        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap(), swapOutput = ", swapOutput);
-
         const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address;
-        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap(), address = ", address);
-        console.log("TACA [chainify] YacoinSwapBaseProvider.ts ===> initiateSwap() calling sendTransaction");
 
         return this.walletProvider.sendTransaction({
             to: address,
@@ -219,115 +214,6 @@ export abstract class YacoinSwapBaseProvider extends Swap<YacoinBaseChainProvide
         secret: string,
         _feePerByte: number
     ) {
-        // const network = this._network;
-        // const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput);
-
-        // const initiationTxRaw = await this.walletProvider.getChainProvider().getProvider().getRawTransactionByHash(initiationTxHash);
-        // const initiationTx = decodeRawTransaction(initiationTxRaw, this._network);
-
-        // let swapVout;
-        // let paymentVariantName: string;
-        // let paymentVariant: payments.Payment;
-        // for (const vout of initiationTx.vout) {
-        //     const paymentVariantEntry = Object.entries(swapPaymentVariants).find(
-        //         ([, payment]) => payment.output.toString('hex') === vout.scriptPubKey.hex
-        //     );
-        //     const voutValue = new BigNumber(vout.value).times(1e8);
-        //     if (paymentVariantEntry && voutValue.eq(new BigNumber(value))) {
-        //         paymentVariantName = paymentVariantEntry[0];
-        //         paymentVariant = paymentVariantEntry[1];
-        //         swapVout = vout;
-        //     }
-        // }
-
-        // if (!swapVout) {
-        //     throw new Error('Valid swap output not found');
-        // }
-
-        // const feePerByte = _feePerByte || (await this.walletProvider.getChainProvider().getProvider().getFeePerByte());
-
-        // // TODO: Implement proper fee calculation that counts bytes in inputs and outputs
-        // const txfee = calculateFee(1, 1, feePerByte);
-        // const swapValue = new BigNumber(swapVout.value).times(1e8).toNumber();
-
-        // if (swapValue - txfee < 0) {
-        //     throw new Error('Transaction amount does not cover fee.');
-        // }
-
-        // const psbt = new Psbt({ network });
-
-        // if (!isClaim) {
-        //     psbt.setLocktime(expiration);
-        // }
-
-        // const isSegwit = paymentVariantName === SwapMode.P2WSH || paymentVariantName === SwapMode.P2SH_SEGWIT;
-
-        // const input: any = {
-        //     hash: initiationTxHash,
-        //     index: swapVout.n,
-        //     sequence: 0,
-        // };
-
-        // if (isSegwit) {
-        //     input.witnessUtxo = {
-        //         script: paymentVariant.output,
-        //         value: swapValue,
-        //     };
-        //     input.witnessScript = swapPaymentVariants.p2wsh.redeem.output; // Strip the push bytes (0020) off the script
-        // } else {
-        //     input.nonWitnessUtxo = Buffer.from(initiationTxRaw, 'hex');
-        //     input.redeemScript = paymentVariant.redeem.output;
-        // }
-
-        // const output = {
-        //     address: address,
-        //     value: swapValue - txfee,
-        // };
-
-        // psbt.addInput(input);
-        // psbt.addOutput(output);
-
-        // const walletAddress: Address = await this.walletProvider.getWalletAddress(address);
-        // const signedPSBTHex: string = await this.walletProvider.signPSBT(psbt.toBase64(), [
-        //     { index: 0, derivationPath: walletAddress.derivationPath },
-        // ]);
-        // const signedPSBT = Psbt.fromBase64(signedPSBTHex, { network });
-
-        // const sig = signedPSBT.data.inputs[0].partialSig[0].signature;
-
-        // const swapInput = this.getSwapInput(sig, Buffer.from(walletAddress.publicKey, 'hex'), isClaim, secret);
-        // const paymentParams = { redeem: { output: swapOutput, input: swapInput, network }, network };
-        // const paymentWithInput = isSegwit ? payments.p2wsh(paymentParams) : payments.p2sh(paymentParams);
-
-        // const getFinalScripts = () => {
-        //     let finalScriptSig;
-        //     let finalScriptWitness;
-
-        //     // create witness stack
-        //     if (isSegwit) {
-        //         finalScriptWitness = witnessStackToScriptWitness(paymentWithInput.witness);
-        //     }
-
-        //     if (paymentVariantName === SwapMode.P2SH_SEGWIT) {
-        //         // Adds the necessary push OP (PUSH34 (00 + witness script hash))
-        //         const inputScript = bScript.compile([swapPaymentVariants.p2shSegwit.redeem.output]);
-        //         finalScriptSig = inputScript;
-        //     } else if (paymentVariantName === SwapMode.P2SH) {
-        //         finalScriptSig = paymentWithInput.input;
-        //     }
-
-        //     return {
-        //         finalScriptSig,
-        //         finalScriptWitness,
-        //     };
-        // };
-
-        // psbt.finalizeInput(0, getFinalScripts);
-
-        // const hex = psbt.extractTransaction().toHex();
-        // await this.walletProvider.getChainProvider().sendRawTransaction(hex);
-        // return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee);
-
         const network = this._network
         const swapPaymentVariants = this.getSwapPaymentVariants(swapOutput)
 
@@ -466,10 +352,6 @@ export abstract class YacoinSwapBaseProvider extends Swap<YacoinBaseChainProvide
     }
 
     protected getInputScript(vin: Input) {
-        // const inputScript = vin.txinwitness
-        //     ? vin.txinwitness
-        //     : bScript.decompile(Buffer.from(vin.scriptSig.hex, 'hex')).map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b));
-        // return inputScript as string[];
         const inputScript = bScript
         .decompile(Buffer.from(vin.scriptSig.hex, 'hex'))
         .map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b))

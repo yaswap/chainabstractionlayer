@@ -44,8 +44,6 @@ export abstract class BitcoinSwapBaseProvider extends Swap<BitcoinBaseChainProvi
         const swapOutput = this.getSwapOutput(swapParams);
         const address = this.getSwapPaymentVariants(swapOutput)[this._mode].address;
 
-        console.log("TACA [chainify] BitcoinSwapBaseProvider.ts ===> initiateSwap() calling sendTransaction");
-
         return this.walletProvider.sendTransaction({
             to: address,
             value: swapParams.value,
