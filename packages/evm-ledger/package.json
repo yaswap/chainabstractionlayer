@@ -2,7 +2,7 @@
     "name": "@yac-swap/evm-ledger",
     "version": "2.4.2",
     "description": "",
-    "author": "Liquality <info@liquality.io>",
+    "author": "yac-swap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",

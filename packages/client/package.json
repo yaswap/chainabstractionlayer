@@ -2,7 +2,7 @@
     "name": "@yac-swap/client",
     "version": "2.2.1",
     "description": "",
-    "author": "Liquality <info@liquality.io>",
+    "author": "yac-swap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",

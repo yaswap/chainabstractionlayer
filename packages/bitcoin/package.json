@@ -2,7 +2,7 @@
     "name": "@yac-swap/bitcoin",
     "version": "2.3.0",
     "description": "",
-    "author": "Liquality <info@liquality.io>",
+    "author": "yac-swap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",
