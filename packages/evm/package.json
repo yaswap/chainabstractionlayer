@@ -15,11 +15,6 @@
         "clean": "rm -rf node_modules .turbo dist ./lib/typechain cache artifacts"
     },
     "dependencies": {
-        "@yac-swap/client": "workspace:*",
-        "@yac-swap/errors": "workspace:*",
-        "@yac-swap/logger": "workspace:*",
-        "@yac-swap/types": "workspace:*",
-        "@yac-swap/utils": "workspace:*",
         "@eth-optimism/sdk": "1.1.5",
         "@ethersproject/abi": "5.7.0",
         "@ethersproject/abstract-provider": "5.7.0",
@@ -32,6 +27,11 @@
         "@ethersproject/wallet": "5.7.0",
         "@liquality/fee-suggestions": "2.0.2",
         "@metamask/eth-sig-util": "4.0.1",
+        "@yac-swap/client": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/logger": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "ethers": "5.7.0"
     },
     "devDependencies": {

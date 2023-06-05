@@ -15,9 +15,9 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
+        "@ethersproject/sha2": "5.7.0",
         "@yac-swap/errors": "workspace:*",
         "@yac-swap/types": "workspace:*",
-        "@ethersproject/sha2": "5.7.0",
         "bech32": "^2.0.0",
         "bs58": "5.0.0",
         "crypto-hashing": "^1.0.0",

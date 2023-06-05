@@ -15,13 +15,13 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
+        "@terra-money/terra.js": "3.1.6",
+        "@types/luxon": "^2.0.9",
         "@yac-swap/client": "workspace:*",
         "@yac-swap/errors": "workspace:*",
         "@yac-swap/logger": "workspace:*",
         "@yac-swap/types": "workspace:*",
         "@yac-swap/utils": "workspace:*",
-        "@terra-money/terra.js": "3.1.6",
-        "@types/luxon": "^2.0.9",
         "lodash": "4.17.21",
         "luxon": "^2.3.1"
     }

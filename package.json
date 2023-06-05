@@ -1,5 +1,5 @@
 {
-    "name": "chainify",
+    "name": "yac-swap",
     "version": "1.0.10",
     "devDependencies": {
         "@changesets/changelog-github": "^0.4.2",
