@@ -1,6 +1,6 @@
-import { HttpClient } from '@chainify/client';
-import { PendingTxError } from '@chainify/errors';
-import { SwapParams, Transaction } from '@chainify/types';
+import { HttpClient } from '@yac-swap/client';
+import { PendingTxError } from '@yac-swap/errors';
+import { SwapParams, Transaction } from '@yac-swap/types';
 import { Transaction as YacoinTransaction } from '../types';
 import { YacoinBaseWalletProvider } from '../wallet/YacoinBaseWallet';
 import { YacoinSwapBaseProvider } from './YacoinSwapBaseProvider';

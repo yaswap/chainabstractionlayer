@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/evm",
+    "name": "@yac-swap/evm",
     "version": "2.4.0",
     "description": "",
     "author": "Liquality <info@liquality.io>",
@@ -11,15 +11,15 @@
         "dist/**"
     ],
     "scripts": {
-        "build": "cp -R ../../node_modules/@chainify/evm-contracts/artifacts . && hardhat --config ./hardhat.config.ts typechain && tsc",
+        "build": "cp -R ../../node_modules/@yac-swap/evm-contracts/artifacts . && hardhat --config ./hardhat.config.ts typechain && tsc",
         "clean": "rm -rf node_modules .turbo dist ./lib/typechain cache artifacts"
     },
     "dependencies": {
-        "@chainify/client": "workspace:*",
-        "@chainify/errors": "workspace:*",
-        "@chainify/logger": "workspace:*",
-        "@chainify/types": "workspace:*",
-        "@chainify/utils": "workspace:*",
+        "@yac-swap/client": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/logger": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "@eth-optimism/sdk": "1.1.5",
         "@ethersproject/abi": "5.7.0",
         "@ethersproject/abstract-provider": "5.7.0",

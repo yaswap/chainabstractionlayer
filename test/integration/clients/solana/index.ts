@@ -1,5 +1,5 @@
-import { Client } from '@chainify/client';
-import { SolanaChainProvider, SolanaWalletProvider } from '@chainify/solana';
+import { Client } from '@yac-swap/client';
+import { SolanaChainProvider, SolanaWalletProvider } from '@yac-swap/solana';
 import { shouldBehaveLikeChainProvider } from '../../chain/chain.test';
 import { Chains } from '../../common';
 import { shouldBehaveLikeWalletProvider } from '../../wallet/wallet.test';

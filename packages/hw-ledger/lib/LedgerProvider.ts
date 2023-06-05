@@ -1,7 +1,7 @@
-import { WalletError } from '@chainify/errors';
-import { Logger } from '@chainify/logger';
-import { Address, Network } from '@chainify/types';
-import { compare } from '@chainify/utils';
+import { WalletError } from '@yac-swap/errors';
+import { Logger } from '@yac-swap/logger';
+import { Address, Network } from '@yac-swap/types';
+import { compare } from '@yac-swap/utils';
 import HwAppBitcoin from '@ledgerhq/hw-app-btc';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';

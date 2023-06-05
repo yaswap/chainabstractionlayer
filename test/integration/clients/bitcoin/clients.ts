@@ -1,6 +1,6 @@
-import * as BTC from '@chainify/bitcoin';
-import { BitcoinLedgerProvider } from '@chainify/bitcoin-ledger';
-import { Client } from '@chainify/client';
+import * as BTC from '@yac-swap/bitcoin';
+import { BitcoinLedgerProvider } from '@yac-swap/bitcoin-ledger';
+import { Client } from '@yac-swap/client';
 import { NodeTransportCreator } from '../../environment/NodeTransportCreator';
 import { BtcHdWalletConfig, BtcLedgerConfig, BtcNodeConfig } from './config';
 

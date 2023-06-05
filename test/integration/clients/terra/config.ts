@@ -1,4 +1,4 @@
-import { Asset, AssetTypes, BigNumber, ChainId, Network } from '@chainify/types';
+import { Asset, AssetTypes, BigNumber, ChainId, Network } from '@yac-swap/types';
 import { IConfig } from '../../types';
 
 export const TerraConfig = (network: Network): IConfig => {

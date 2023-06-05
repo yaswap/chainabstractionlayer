@@ -1,4 +1,4 @@
-# @chainify/logger
+# @yac-swap/logger
 
 ## 2.2.0
 
@@ -343,4 +343,4 @@
 
 ### Patch Changes
 
--   change namespace from @liquality to @chainify
+-   change namespace from @liquality to @yac-swap

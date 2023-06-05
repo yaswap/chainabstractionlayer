@@ -1,5 +1,5 @@
-import { BitcoinTypes } from '@chainify/bitcoin';
-import { CreateOptions } from '@chainify/hw-ledger';
+import { BitcoinTypes } from '@yac-swap/bitcoin';
+import { CreateOptions } from '@yac-swap/hw-ledger';
 
 export interface BitcoinLedgerProviderOptions extends CreateOptions {
     baseDerivationPath: string;

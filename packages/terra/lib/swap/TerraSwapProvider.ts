@@ -1,7 +1,7 @@
-import { HttpClient } from '@chainify/client';
-import { TxNotFoundError } from '@chainify/errors';
-import { SwapParams, Transaction, TxStatus } from '@chainify/types';
-import { validateSecret, validateSecretAndHash } from '@chainify/utils';
+import { HttpClient } from '@yac-swap/client';
+import { TxNotFoundError } from '@yac-swap/errors';
+import { SwapParams, Transaction, TxStatus } from '@yac-swap/types';
+import { validateSecret, validateSecretAndHash } from '@yac-swap/utils';
 import { isTxError } from '@terra-money/terra.js';
 import { TerraWalletProvider } from '..';
 import { denomToAssetCode } from '../constants';

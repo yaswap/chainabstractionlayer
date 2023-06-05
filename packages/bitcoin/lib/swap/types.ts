@@ -1,4 +1,4 @@
-import { Transaction } from '@chainify/types';
+import { Transaction } from '@yac-swap/types';
 import { payments } from 'bitcoinjs-lib';
 import { BitcoinNetwork, SwapMode, Transaction as BitcoinTransaction } from '../types';
 

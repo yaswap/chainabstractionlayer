@@ -1,5 +1,5 @@
-import { BitcoinTypes } from '@chainify/bitcoin';
-import { AssetTypes, BigNumber, ChainId, Network } from '@chainify/types';
+import { BitcoinTypes } from '@yac-swap/bitcoin';
+import { AssetTypes, BigNumber, ChainId, Network } from '@yac-swap/types';
 import { fromSeed } from 'bip32';
 import { mnemonicToSeedSync } from 'bip39';
 import { payments } from 'bitcoinjs-lib';

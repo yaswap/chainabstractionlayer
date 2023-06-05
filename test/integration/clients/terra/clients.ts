@@ -1,6 +1,6 @@
-import { Client } from '@chainify/client';
-import * as Terra from '@chainify/terra';
-import { WalletOptions } from '@chainify/types';
+import { Client } from '@yac-swap/client';
+import * as Terra from '@yac-swap/terra';
+import { WalletOptions } from '@yac-swap/types';
 import { TerraConfig } from './config';
 
 function getTerraClient(network: Terra.TerraTypes.TerraNetwork) {

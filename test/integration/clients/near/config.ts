@@ -1,5 +1,5 @@
-import * as Near from '@chainify/near';
-import { AssetTypes, BigNumber, ChainId } from '@chainify/types';
+import * as Near from '@yac-swap/near';
+import { AssetTypes, BigNumber, ChainId } from '@yac-swap/types';
 import { IConfig } from '../../types';
 
 export const NearConfig = (network: Near.NearTypes.NearNetwork): IConfig => {

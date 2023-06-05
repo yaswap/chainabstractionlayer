@@ -1,5 +1,5 @@
-import { CreateLedgerApp } from '@chainify/hw-ledger';
-import { Network } from '@chainify/types';
+import { CreateLedgerApp } from '@yac-swap/hw-ledger';
+import { Network } from '@yac-swap/types';
 import HwAppBitcoin from '@ledgerhq/hw-app-btc';
 import Transport from '@ledgerhq/hw-transport';
 

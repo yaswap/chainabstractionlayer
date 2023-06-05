@@ -1,11 +1,11 @@
-import { BitcoinNetworks } from '@chainify/bitcoin';
-import { Client } from '@chainify/client';
-import { EvmNetworks } from '@chainify/evm';
-import { NearNetworks } from '@chainify/near';
-import { SolanaNetworks } from '@chainify/solana';
-import { TerraNetworks } from '@chainify/terra';
-import { Address, AddressType, AssetTypes, BigNumber, FeeType, SwapParams, Transaction } from '@chainify/types';
-import { retry, sha256, sleep } from '@chainify/utils';
+import { BitcoinNetworks } from '@yac-swap/bitcoin';
+import { Client } from '@yac-swap/client';
+import { EvmNetworks } from '@yac-swap/evm';
+import { NearNetworks } from '@yac-swap/near';
+import { SolanaNetworks } from '@yac-swap/solana';
+import { TerraNetworks } from '@yac-swap/terra';
+import { Address, AddressType, AssetTypes, BigNumber, FeeType, SwapParams, Transaction } from '@yac-swap/types';
+import { retry, sha256, sleep } from '@yac-swap/utils';
 import { expect } from 'chai';
 import {
     BitcoinHDWalletClient,

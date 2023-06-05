@@ -1,5 +1,5 @@
-import { Client } from '@chainify/client';
-import * as Near from '@chainify/near';
+import { Client } from '@yac-swap/client';
+import * as Near from '@yac-swap/near';
 import { NearConfig } from './config';
 
 function getNearClient(network: Near.NearTypes.NearNetwork) {

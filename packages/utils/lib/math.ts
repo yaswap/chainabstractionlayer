@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from '@chainify/types';
+import { BigNumber, BigNumberish } from '@yac-swap/types';
 
 export function add(a: BigNumberish, b: BigNumberish) {
     return new BigNumber(a.toString()).plus(b.toString());

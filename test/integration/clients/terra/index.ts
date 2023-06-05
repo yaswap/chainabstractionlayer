@@ -1,6 +1,6 @@
-import { Client } from '@chainify/client';
-import { TerraChainProvider, TerraWalletProvider } from '@chainify/terra';
-import { AssetTypes } from '@chainify/types';
+import { Client } from '@yac-swap/client';
+import { TerraChainProvider, TerraWalletProvider } from '@yac-swap/terra';
+import { AssetTypes } from '@yac-swap/types';
 import { shouldBehaveLikeChainProvider } from '../../chain/chain.test';
 import { Chains } from '../../common';
 import { shouldBehaveLikeSwapProvider } from '../../swap/swap.test';

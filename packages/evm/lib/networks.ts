@@ -1,4 +1,4 @@
-import { Network } from '@chainify/types';
+import { Network } from '@yac-swap/types';
 
 const ethereum_mainnet: Network = {
     name: 'ethereum_mainnet',

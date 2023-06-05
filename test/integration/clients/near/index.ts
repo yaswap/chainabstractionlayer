@@ -1,5 +1,5 @@
-import { Client } from '@chainify/client';
-import { NearTypes, NearWalletProvider } from '@chainify/near';
+import { Client } from '@yac-swap/client';
+import { NearTypes, NearWalletProvider } from '@yac-swap/near';
 import { shouldBehaveLikeChainProvider } from '../../chain/chain.test';
 import { Chains } from '../../common';
 import { shouldBehaveLikeSwapProvider } from '../../swap/swap.test';

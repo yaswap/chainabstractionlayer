@@ -1,5 +1,5 @@
-import { Client } from '@chainify/client';
-import { Typechain } from '@chainify/evm';
+import { Client } from '@yac-swap/client';
+import { Typechain } from '@yac-swap/evm';
 import { constants, ethers } from 'ethers';
 
 /**

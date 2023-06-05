@@ -1,6 +1,6 @@
-import { Chain, Fee, JsonRpcProvider } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError } from '@chainify/errors';
-import { AddressType, Asset, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@chainify/types';
+import { Chain, Fee, JsonRpcProvider } from '@yac-swap/client';
+import { BlockNotFoundError, TxNotFoundError } from '@yac-swap/errors';
+import { AddressType, Asset, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yac-swap/types';
 import { flatten } from 'lodash';
 import { Transaction as BitcoinTransaction } from '../../types';
 import { normalizeTransactionObject } from '../../utils';

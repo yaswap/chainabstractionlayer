@@ -1,4 +1,4 @@
-import { Asset, BigNumber, FeeDetails, FeeProvider } from '@chainify/types';
+import { Asset, BigNumber, FeeDetails, FeeProvider } from '@yac-swap/types';
 
 export default abstract class Fee implements FeeProvider {
     public gasUnits: BigNumber;

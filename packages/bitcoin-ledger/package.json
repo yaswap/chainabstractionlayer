@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/bitcoin-ledger",
+    "name": "@yac-swap/bitcoin-ledger",
     "version": "2.4.1",
     "description": "",
     "author": "Liquality <info@liquality.io>",
@@ -15,12 +15,12 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@chainify/bitcoin": "workspace:*",
-        "@chainify/client": "workspace:*",
-        "@chainify/errors": "workspace:*",
-        "@chainify/hw-ledger": "workspace:*",
-        "@chainify/types": "workspace:*",
-        "@chainify/utils": "workspace:*",
+        "@yac-swap/bitcoin": "workspace:*",
+        "@yac-swap/client": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/hw-ledger": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "@ledgerhq/hw-app-btc": "9.1.2",
         "bip32": "2.0.6",
         "bitcoinjs-lib": "5.2.0"

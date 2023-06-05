@@ -1,6 +1,6 @@
-import { NodeError } from '@chainify/errors';
-import { FeeDetails } from '@chainify/types';
-import { Math } from '@chainify/utils';
+import { NodeError } from '@yac-swap/errors';
+import { FeeDetails } from '@yac-swap/types';
+import { Math } from '@yac-swap/utils';
 
 export class EthereumFeeParser {
     public parse(response: EthereumResponse): FeeDetails {

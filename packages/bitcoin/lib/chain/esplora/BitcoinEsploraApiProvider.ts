@@ -1,6 +1,6 @@
-import { Chain, Fee, HttpClient } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError } from '@chainify/errors';
-import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@chainify/types';
+import { Chain, Fee, HttpClient } from '@yac-swap/client';
+import { BlockNotFoundError, TxNotFoundError } from '@yac-swap/errors';
+import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yac-swap/types';
 import { flatten } from 'lodash';
 import { BitcoinEsploraBaseProvider } from './BitcoinEsploraBaseProvider';
 import { BitcoinEsploraBatchBaseProvider } from './BitcoinEsploraBatchBaseProvider';

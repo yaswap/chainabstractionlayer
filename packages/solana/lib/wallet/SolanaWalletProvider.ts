@@ -1,6 +1,6 @@
-import { Wallet } from '@chainify/client';
-import { UnimplementedMethodError } from '@chainify/errors';
-import { Logger } from '@chainify/logger';
+import { Wallet } from '@yac-swap/client';
+import { UnimplementedMethodError } from '@yac-swap/errors';
+import { Logger } from '@yac-swap/logger';
 import {
     Address,
     AddressType,
@@ -13,8 +13,8 @@ import {
     TransactionRequest,
     TxStatus,
     WalletOptions,
-} from '@chainify/types';
-import { base58, retry } from '@chainify/utils';
+} from '@yac-swap/types';
+import { base58, retry } from '@yac-swap/utils';
 import {
     createAccount,
     createTransferInstruction,

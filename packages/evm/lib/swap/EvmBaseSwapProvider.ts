@@ -1,8 +1,8 @@
-import { Swap } from '@chainify/client';
-import { TxNotFoundError, TxFailedError, PendingTxError, UnimplementedMethodError, InvalidDestinationAddressError } from '@chainify/errors';
-import { AssetTypes, FeeType, SwapParams, Transaction, TxStatus, BigNumber } from '@chainify/types';
-import { padHexStart } from '@chainify/utils';
-import { ensure0x, remove0x, validateSecret, validateSecretAndHash } from '@chainify/utils';
+import { Swap } from '@yac-swap/client';
+import { TxNotFoundError, TxFailedError, PendingTxError, UnimplementedMethodError, InvalidDestinationAddressError } from '@yac-swap/errors';
+import { AssetTypes, FeeType, SwapParams, Transaction, TxStatus, BigNumber } from '@yac-swap/types';
+import { padHexStart } from '@yac-swap/utils';
+import { ensure0x, remove0x, validateSecret, validateSecretAndHash } from '@yac-swap/utils';
 import { Signer } from '@ethersproject/abstract-signer';
 import { BaseProvider, Log } from '@ethersproject/providers';
 import { LiqualityHTLC } from '../typechain';

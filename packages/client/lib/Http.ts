@@ -1,5 +1,5 @@
-import { NodeError } from '@chainify/errors';
-import { Logger } from '@chainify/logger';
+import { NodeError } from '@yac-swap/errors';
+import { Logger } from '@yac-swap/logger';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const logger = new Logger('HttpClient');

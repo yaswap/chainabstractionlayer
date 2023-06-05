@@ -1,7 +1,7 @@
-import { Wallet } from '@chainify/client';
-import { UnimplementedMethodError } from '@chainify/errors';
-import { Address, Asset, AssetTypes, BigNumber, FeeType, Transaction, TransactionRequest } from '@chainify/types';
-import { retry } from '@chainify/utils';
+import { Wallet } from '@yac-swap/client';
+import { UnimplementedMethodError } from '@yac-swap/errors';
+import { Address, Asset, AssetTypes, BigNumber, FeeType, Transaction, TransactionRequest } from '@yac-swap/types';
+import { retry } from '@yac-swap/utils';
 import {
     Coin,
     Coins,

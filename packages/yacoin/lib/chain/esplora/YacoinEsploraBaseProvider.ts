@@ -1,6 +1,6 @@
-import { HttpClient } from '@chainify/client';
-import { AddressType } from '@chainify/types';
-import { TxNotFoundError } from '@chainify/errors';
+import { HttpClient } from '@yac-swap/client';
+import { AddressType } from '@yac-swap/types';
+import { TxNotFoundError } from '@yac-swap/errors';
 import { flatten } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';

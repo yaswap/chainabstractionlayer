@@ -1,6 +1,6 @@
-import { InvalidSwapParamsError, PendingTxError, TxFailedError, TxNotFoundError, InvalidDestinationAddressError } from '@chainify/errors';
-import { Asset,AssetTypes, BigNumber, FeeType, SwapParams, SwapProvider, Transaction, TxStatus } from '@chainify/types';
-import { sha256, validateExpiration, validateSecretHash, validateValue } from '@chainify/utils';
+import { InvalidSwapParamsError, PendingTxError, TxFailedError, TxNotFoundError, InvalidDestinationAddressError } from '@yac-swap/errors';
+import { Asset,AssetTypes, BigNumber, FeeType, SwapParams, SwapProvider, Transaction, TxStatus } from '@yac-swap/types';
+import { sha256, validateExpiration, validateSecretHash, validateValue } from '@yac-swap/utils';
 import Wallet from './Wallet';
 
 export default abstract class Swap<T, S, WalletProvider extends Wallet<T, S> = Wallet<T, S>> implements SwapProvider {

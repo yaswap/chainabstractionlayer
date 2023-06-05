@@ -1,5 +1,5 @@
-import { Block, Transaction, TxStatus } from '@chainify/types';
-import { Math } from '@chainify/utils';
+import { Block, Transaction, TxStatus } from '@yac-swap/types';
+import { Math } from '@yac-swap/utils';
 import { BlockResponse, ParsedInstruction, ParsedTransactionWithMeta, RpcResponseAndContext, SignatureStatus } from '@solana/web3.js';
 
 export function parseBlockResponse(data: BlockResponse): Block {

@@ -1,6 +1,6 @@
-import { Swap } from '@chainify/client';
-import { Address, BigNumber, SwapParams, Transaction } from '@chainify/types';
-import { validateExpiration, validateSecret, validateSecretAndHash, validateSecretHash, validateValue } from '@chainify/utils';
+import { Swap } from '@yac-swap/client';
+import { Address, BigNumber, SwapParams, Transaction } from '@yac-swap/types';
+import { validateExpiration, validateSecret, validateSecretAndHash, validateSecretHash, validateValue } from '@yac-swap/utils';
 import { Transaction as TransactionYacoinJs, payments, script as bScript, address as AddressYacoinJs } from '@yaswap/yacoinjs-lib';
 import { YacoinBaseChainProvider } from '../chain/YacoinBaseChainProvider';
 import { YacoinNetwork, Input, SwapMode, Transaction as YacoinTransaction } from '../types';

@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable no-unused-expressions */
-import { BitcoinBaseWalletProvider } from '@chainify/bitcoin';
+import { BitcoinBaseWalletProvider } from '@yac-swap/bitcoin';
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { fundAddress } from '../../../common';

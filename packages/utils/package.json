@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/utils",
+    "name": "@yac-swap/utils",
     "version": "2.3.0",
     "description": "",
     "author": "Liquality <info@liquality.io>",
@@ -15,8 +15,8 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@chainify/errors": "workspace:*",
-        "@chainify/types": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/types": "workspace:*",
         "@ethersproject/sha2": "5.7.0",
         "bech32": "^2.0.0",
         "bs58": "5.0.0",

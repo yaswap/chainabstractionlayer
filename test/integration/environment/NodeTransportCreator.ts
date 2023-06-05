@@ -1,4 +1,4 @@
-import { TransportCreator } from '@chainify/hw-ledger';
+import { TransportCreator } from '@yac-swap/hw-ledger';
 import Transport from '@ledgerhq/hw-transport';
 import LedgerHwTransportNode from '@ledgerhq/hw-transport-node-hid';
 

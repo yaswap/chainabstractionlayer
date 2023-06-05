@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/near",
+    "name": "@yac-swap/near",
     "version": "2.3.0",
     "description": "",
     "author": "Liquality <info@liquality.io>",
@@ -15,10 +15,10 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@chainify/client": "workspace:*",
-        "@chainify/errors": "workspace:*",
-        "@chainify/types": "workspace:*",
-        "@chainify/utils": "workspace:*",
+        "@yac-swap/client": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "bn.js": "^5.2.0",
         "near-api-js": "^0.44.2",
         "near-seed-phrase": "^0.2.0"

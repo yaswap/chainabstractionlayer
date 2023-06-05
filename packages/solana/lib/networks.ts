@@ -1,4 +1,4 @@
-import { Network } from '@chainify/types';
+import { Network } from '@yac-swap/types';
 
 const solana_mainnet: Network = {
     name: 'Solana Mainnet',

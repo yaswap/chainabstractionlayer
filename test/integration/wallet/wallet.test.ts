@@ -1,5 +1,5 @@
-import { UnimplementedMethodError } from '@chainify/errors';
-import { AssetTypes, BigNumber, TxStatus } from '@chainify/types';
+import { UnimplementedMethodError } from '@yac-swap/errors';
+import { AssetTypes, BigNumber, TxStatus } from '@yac-swap/types';
 import { expect } from 'chai';
 import { mineBlock } from '../common';
 import { Chain } from '../types';

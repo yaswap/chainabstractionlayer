@@ -1,4 +1,4 @@
-import { AddressType, Transaction } from '@chainify/types';
+import { AddressType, Transaction } from '@yac-swap/types';
 import { AddressTxCounts, UTXO } from '../types';
 
 export abstract class YacoinBaseChainProvider {

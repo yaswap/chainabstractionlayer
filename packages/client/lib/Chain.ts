@@ -1,4 +1,4 @@
-import { UnsupportedMethodError } from '@chainify/errors';
+import { UnsupportedMethodError } from '@yac-swap/errors';
 import {
     AddressType,
     Asset,
@@ -10,7 +10,7 @@ import {
     Nullable,
     TokenDetails,
     Transaction,
-} from '@chainify/types';
+} from '@yac-swap/types';
 import { Fee } from '.';
 
 /**

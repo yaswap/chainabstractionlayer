@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/yacoin",
+    "name": "@yac-swap/yacoin",
     "version": "1.0.0",
     "description": "",
     "author": "Yaswap",
@@ -15,10 +15,10 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@chainify/client": "workspace:*",
-        "@chainify/errors": "workspace:*",
-        "@chainify/types": "workspace:*",
-        "@chainify/utils": "workspace:*",
+        "@yac-swap/client": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "@types/bip32": "^2.0.0",
         "@types/bip39": "^3.0.0",
         "@types/bitcoinjs-lib": "^5.0.0",

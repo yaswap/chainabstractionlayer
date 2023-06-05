@@ -1,5 +1,5 @@
-import { Fee } from '@chainify/client';
-import { BigNumber, FeeDetails } from '@chainify/types';
+import { Fee } from '@yac-swap/client';
+import { BigNumber, FeeDetails } from '@yac-swap/types';
 import { Network, StaticJsonRpcProvider } from '@ethersproject/providers';
 import { suggestFees } from '@liquality/fee-suggestions';
 import { toGwei } from '../utils';

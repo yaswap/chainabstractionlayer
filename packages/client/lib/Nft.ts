@@ -1,5 +1,5 @@
-import { UnsupportedMethodError } from '@chainify/errors';
-import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '@chainify/types';
+import { UnsupportedMethodError } from '@yac-swap/errors';
+import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '@yac-swap/types';
 import Wallet from './Wallet';
 
 export default abstract class Nft<T, S> {

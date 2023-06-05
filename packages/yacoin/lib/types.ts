@@ -1,4 +1,4 @@
-import { Network } from '@chainify/types';
+import { Network } from '@yac-swap/types';
 import { Network as YacoinJsLibNetwork } from '@yaswap/yacoinjs-lib';
 
 export * as YacoinEsploraTypes from './chain/esplora/types';

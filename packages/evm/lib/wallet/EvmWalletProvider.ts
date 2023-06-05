@@ -1,6 +1,6 @@
-import { Chain } from '@chainify/client';
-import { Address, NamingProvider, Network, WalletOptions } from '@chainify/types';
-import { compare, remove0x } from '@chainify/utils';
+import { Chain } from '@yac-swap/client';
+import { Address, NamingProvider, Network, WalletOptions } from '@yac-swap/types';
+import { compare, remove0x } from '@yac-swap/utils';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import { Wallet as EthersWallet } from '@ethersproject/wallet';
 import { signTypedData, SignTypedDataVersion } from '@metamask/eth-sig-util';

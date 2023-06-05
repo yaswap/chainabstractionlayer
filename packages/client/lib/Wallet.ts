@@ -1,4 +1,4 @@
-import { UnsupportedMethodError } from '@chainify/errors';
+import { UnsupportedMethodError } from '@yac-swap/errors';
 import {
     Address,
     AddressType,
@@ -10,7 +10,7 @@ import {
     Transaction,
     TransactionRequest,
     WalletProvider,
-} from '@chainify/types';
+} from '@yac-swap/types';
 import Chain from './Chain';
 
 export default abstract class Wallet<T, S> implements WalletProvider {

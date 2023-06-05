@@ -1,6 +1,6 @@
-import { Client } from '@chainify/client';
-import * as Solana from '@chainify/solana';
-import { Network, WalletOptions } from '@chainify/types';
+import { Client } from '@yac-swap/client';
+import * as Solana from '@yac-swap/solana';
+import { Network, WalletOptions } from '@yac-swap/types';
 import { SolanaConfig } from './config';
 
 function getSolanaClient(network: Network) {

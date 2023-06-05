@@ -1,4 +1,4 @@
-import { AssetTypes, BigNumber, ChainId, Network } from '@chainify/types';
+import { AssetTypes, BigNumber, ChainId, Network } from '@yac-swap/types';
 import { Wallet } from 'ethers';
 import { IConfig } from '../../types';
 

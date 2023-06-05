@@ -1,7 +1,7 @@
-import { Chain } from '@chainify/client';
-import { BlockNotFoundError, TxNotFoundError } from '@chainify/errors';
-import { Logger } from '@chainify/logger';
-import { AddressType, Asset, BigNumber, Block, FeeDetails, Transaction } from '@chainify/types';
+import { Chain } from '@yac-swap/client';
+import { BlockNotFoundError, TxNotFoundError } from '@yac-swap/errors';
+import { Logger } from '@yac-swap/logger';
+import { AddressType, Asset, BigNumber, Block, FeeDetails, Transaction } from '@yac-swap/types';
 import { providers } from 'near-api-js';
 import { BlockResult, NearAccount, NearChunk, NearNetwork, NearTransaction, NearTxLog, NearTxResponse } from '../types';
 import { parseBlockResponse, parseNearBlockTx, parseTxResponse } from '../utils';

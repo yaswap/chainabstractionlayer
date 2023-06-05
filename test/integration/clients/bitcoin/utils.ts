@@ -1,4 +1,4 @@
-import { Address } from '@chainify/types';
+import { Address } from '@yac-swap/types';
 import { Chain } from '../../types';
 
 export async function importBitcoinAddresses(chain: Chain) {

@@ -1,8 +1,8 @@
-import { Chain } from '@chainify/client';
-import { UnimplementedMethodError } from '@chainify/errors';
-import { EvmBaseWalletProvider } from '@chainify/evm';
-import { LedgerProvider } from '@chainify/hw-ledger';
-import { Address, Network } from '@chainify/types';
+import { Chain } from '@yac-swap/client';
+import { UnimplementedMethodError } from '@yac-swap/errors';
+import { EvmBaseWalletProvider } from '@yac-swap/evm';
+import { LedgerProvider } from '@yac-swap/hw-ledger';
+import { Address, Network } from '@yac-swap/types';
 import { getAddress } from '@ethersproject/address';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';

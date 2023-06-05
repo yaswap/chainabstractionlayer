@@ -1,5 +1,5 @@
-import { Client } from '@chainify/client';
-import { Asset, BigNumber, Network } from '@chainify/types';
+import { Client } from '@yac-swap/client';
+import { Asset, BigNumber, Network } from '@yac-swap/types';
 
 export interface IConfig {
     network: Network;

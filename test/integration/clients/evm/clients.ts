@@ -1,7 +1,7 @@
-import { Client } from '@chainify/client';
-import * as EVM from '@chainify/evm';
-import { EvmLedgerProvider } from '@chainify/evm-ledger';
-import { Network, WalletOptions } from '@chainify/types';
+import { Client } from '@yac-swap/client';
+import * as EVM from '@yac-swap/evm';
+import { EvmLedgerProvider } from '@yac-swap/evm-ledger';
+import { Network, WalletOptions } from '@yac-swap/types';
 import { providers } from 'ethers';
 import { NodeTransportCreator } from '../../environment/NodeTransportCreator';
 import { EVMConfig } from './config';

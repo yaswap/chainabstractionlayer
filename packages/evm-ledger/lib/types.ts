@@ -1,5 +1,5 @@
-import { CreateOptions } from '@chainify/hw-ledger';
-import { Address } from '@chainify/types';
+import { CreateOptions } from '@yac-swap/hw-ledger';
+import { Address } from '@yac-swap/types';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 
 export type GetAppType = () => Promise<HwAppEthereum>;

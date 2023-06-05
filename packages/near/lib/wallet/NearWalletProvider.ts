@@ -1,6 +1,6 @@
-import { Chain, HttpClient, Wallet } from '@chainify/client';
-import { UnsupportedMethodError } from '@chainify/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction } from '@chainify/types';
+import { Chain, HttpClient, Wallet } from '@yac-swap/client';
+import { UnsupportedMethodError } from '@yac-swap/errors';
+import { Address, AddressType, Asset, BigNumber, Transaction } from '@yac-swap/types';
 import {
     BN,
     InMemorySigner,

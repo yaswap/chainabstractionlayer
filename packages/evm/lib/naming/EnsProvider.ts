@@ -1,4 +1,4 @@
-import { AddressType, NamingProvider } from '@chainify/types';
+import { AddressType, NamingProvider } from '@yac-swap/types';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 
 export class EnsProvider implements NamingProvider {

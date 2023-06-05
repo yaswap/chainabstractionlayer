@@ -1,6 +1,6 @@
-import { Fee } from '@chainify/client';
-import { EvmUtils } from '@chainify/evm';
-import { FeeDetails } from '@chainify/types';
+import { Fee } from '@yac-swap/client';
+import { EvmUtils } from '@yac-swap/evm';
+import { FeeDetails } from '@yac-swap/types';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 
 export class EIP1559MockFeeProvider extends Fee {

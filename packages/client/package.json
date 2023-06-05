@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/client",
+    "name": "@yac-swap/client",
     "version": "2.2.1",
     "description": "",
     "author": "Liquality <info@liquality.io>",
@@ -15,10 +15,10 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@chainify/errors": "workspace:*",
-        "@chainify/logger": "workspace:*",
-        "@chainify/types": "workspace:*",
-        "@chainify/utils": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/logger": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "axios": "^0.25.0"
     }
 }

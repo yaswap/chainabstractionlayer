@@ -1,5 +1,5 @@
-import { Block, SwapParams, Transaction, TxStatus } from '@chainify/types';
-import { Math, remove0x } from '@chainify/utils';
+import { Block, SwapParams, Transaction, TxStatus } from '@yac-swap/types';
+import { Math, remove0x } from '@yac-swap/utils';
 import { BlockResult } from 'near-api-js/lib/providers/provider';
 import ProgramBytecode from './swap/bytecode';
 import { BN, NearScraperData, NearTransaction, NearTxLog, NearTxResponse, transactions } from './types';

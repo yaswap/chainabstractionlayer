@@ -1,5 +1,5 @@
 {
-    "name": "@chainify/solana",
+    "name": "@yac-swap/solana",
     "version": "2.4.1",
     "description": "",
     "author": "Liquality <info@liquality.io>",
@@ -15,11 +15,11 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@chainify/client": "workspace:*",
-        "@chainify/errors": "workspace:*",
-        "@chainify/logger": "workspace:*",
-        "@chainify/types": "workspace:*",
-        "@chainify/utils": "workspace:*",
+        "@yac-swap/client": "workspace:*",
+        "@yac-swap/errors": "workspace:*",
+        "@yac-swap/logger": "workspace:*",
+        "@yac-swap/types": "workspace:*",
+        "@yac-swap/utils": "workspace:*",
         "@solana/spl-token": "0.2.0",
         "@solana/spl-token-registry": "0.2.4574",
         "@solana/web3.js": "1.50.1",

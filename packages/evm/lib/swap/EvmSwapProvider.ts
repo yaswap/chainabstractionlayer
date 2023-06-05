@@ -1,7 +1,7 @@
-import { HttpClient } from '@chainify/client';
-import { TxStatus, SwapParams, Transaction, BigNumber } from '@chainify/types';
-import { Math, remove0x, ensure0x } from '@chainify/utils';
-import { TxNotFoundError, PendingTxError } from '@chainify/errors';
+import { HttpClient } from '@yac-swap/client';
+import { TxStatus, SwapParams, Transaction, BigNumber } from '@yac-swap/types';
+import { Math, remove0x, ensure0x } from '@yac-swap/utils';
+import { TxNotFoundError, PendingTxError } from '@yac-swap/errors';
 import { BaseProvider, Log } from '@ethersproject/providers';
 import { ClaimEvent, RefundEvent } from '../typechain/LiqualityHTLC';
 import { EvmSwapOptions, ScraperTransaction } from '../types';

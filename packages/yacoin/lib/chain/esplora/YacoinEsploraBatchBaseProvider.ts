@@ -1,5 +1,5 @@
-import { HttpClient } from '@chainify/client';
-import { AddressType, BigNumber } from '@chainify/types';
+import { HttpClient } from '@yac-swap/client';
+import { AddressType, BigNumber } from '@yac-swap/types';
 import { flatten, uniq } from 'lodash';
 import { UTXO } from '../../types';
 import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';

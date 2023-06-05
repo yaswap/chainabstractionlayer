@@ -1,7 +1,7 @@
-import { Chain, Fee, HttpClient } from '@chainify/client';
-import { NodeError, TxNotFoundError, UnsupportedMethodError } from '@chainify/errors';
-import { Logger } from '@chainify/logger';
-import { AddressType, Asset, AssetTypes, BigNumber, Block, FeeDetails, TokenDetails, Transaction } from '@chainify/types';
+import { Chain, Fee, HttpClient } from '@yac-swap/client';
+import { NodeError, TxNotFoundError, UnsupportedMethodError } from '@yac-swap/errors';
+import { Logger } from '@yac-swap/logger';
+import { AddressType, Asset, AssetTypes, BigNumber, Block, FeeDetails, TokenDetails, Transaction } from '@yac-swap/types';
 import { BlockInfo, LCDClient } from '@terra-money/terra.js';
 import { assetCodeToDenom } from '../constants';
 import { TerraNetwork, TerraTxInfo } from '../types';

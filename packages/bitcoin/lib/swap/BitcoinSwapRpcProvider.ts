@@ -1,4 +1,4 @@
-import { SwapParams, Transaction } from '@chainify/types';
+import { SwapParams, Transaction } from '@yac-swap/types';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
 import { Transaction as BitcoinTransaction } from '../types';
 import { IBitcoinWallet } from '../wallet/IBitcoinWallet';

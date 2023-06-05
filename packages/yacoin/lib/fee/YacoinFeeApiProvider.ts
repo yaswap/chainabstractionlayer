@@ -1,6 +1,6 @@
-// import { Fee, HttpClient } from '@chainify/client';
-import { Fee } from '@chainify/client';
-import { FeeDetails, FeeProvider } from '@chainify/types';
+// import { Fee, HttpClient } from '@yac-swap/client';
+import { Fee } from '@yac-swap/client';
+import { FeeDetails, FeeProvider } from '@yac-swap/types';
 
 export class YacoinFeeApiProvider extends Fee implements FeeProvider {
     // private _httpClient: HttpClient;
