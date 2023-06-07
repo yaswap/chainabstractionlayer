@@ -62,8 +62,13 @@ export default class Swap implements SwapProvider {
   /** @inheritdoc */
   async initiateSwap(swapParams: SwapParams, fee: EIP1559Fee | number): Promise<Transaction> {
     const transaction = await this.client.getMethod('initiateSwap')(swapParams, fee)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */
@@ -92,15 +97,25 @@ export default class Swap implements SwapProvider {
     }
 
     const transaction = await this.client.getMethod('claimSwap')(swapParams, initiationTxHash, secret, fee)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */
   async refundSwap(swapParams: SwapParams, initiationTxHash: string, fee: EIP1559Fee | number): Promise<Transaction> {
     const transaction = await this.client.getMethod('refundSwap')(swapParams, initiationTxHash, fee)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */

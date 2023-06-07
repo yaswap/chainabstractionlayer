@@ -77,7 +77,13 @@ export default class Chain implements ChainProvider, FeeProvider {
 
     const transaction = await this.client.getMethod('getTransactionByHash')(txHash)
     if (transaction) {
-      this.client.assertValidTransaction(transaction)
+      try {
+        this.client.assertValidTransaction(transaction)
+        return transaction
+      } catch (err) {
+        this.client.assertValidTransaction(transaction.tx)
+        return transaction.tx
+      }
     }
 
     return transaction
@@ -97,8 +103,13 @@ export default class Chain implements ChainProvider, FeeProvider {
   /** @inheritdoc */
   async sendTransaction(options: SendOptions): Promise<Transaction> {
     const transaction = await this.client.getMethod('sendTransaction')(options)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */
@@ -117,8 +128,13 @@ export default class Chain implements ChainProvider, FeeProvider {
     }
 
     const transaction = await this.client.getMethod('updateTransactionFee')(tx, newFee)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */

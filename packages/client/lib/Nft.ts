@@ -22,15 +22,25 @@ export default class Nft implements NftProvider {
     data?: string
   ): Promise<Transaction> {
     const transaction = await this.client.getMethod('transfer')(contract, receiver, tokenIDs, values, data)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */
   async approve(contract: Address | string, operator: Address | string, tokenID: number): Promise<Transaction> {
     const transaction = await this.client.getMethod('approve')(contract, operator, tokenID)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */
@@ -42,8 +52,13 @@ export default class Nft implements NftProvider {
   /** @inheritdoc */
   async approveAll(contract: Address | string, operator: Address | string, state?: boolean): Promise<Transaction> {
     const transaction = await this.client.getMethod('approveAll')(contract, operator, state)
-    this.client.assertValidTransaction(transaction)
-    return transaction
+    try {
+      this.client.assertValidTransaction(transaction)
+      return transaction
+    } catch (err) {
+      this.client.assertValidTransaction(transaction.tx)
+      return transaction.tx
+    }
   }
 
   /** @inheritdoc */
