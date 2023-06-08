@@ -3374,35 +3374,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yac-swap/bitcoin-ledger@workspace:packages/bitcoin-ledger":
+"@yaswap/bitcoin-ledger@workspace:packages/bitcoin-ledger":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/bitcoin-ledger@workspace:packages/bitcoin-ledger"
+  resolution: "@yaswap/bitcoin-ledger@workspace:packages/bitcoin-ledger"
   dependencies:
     "@ledgerhq/hw-app-btc": 9.1.2
-    "@yac-swap/bitcoin": "workspace:*"
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/hw-ledger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/bitcoin": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/hw-ledger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     bip32: 2.0.6
     bitcoinjs-lib: 5.2.0
   languageName: unknown
   linkType: soft
 
-"@yac-swap/bitcoin@workspace:*, @yac-swap/bitcoin@workspace:packages/bitcoin":
+"@yaswap/bitcoin@workspace:*, @yaswap/bitcoin@workspace:packages/bitcoin":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/bitcoin@workspace:packages/bitcoin"
+  resolution: "@yaswap/bitcoin@workspace:packages/bitcoin"
   dependencies:
     "@types/bip32": ^2.0.0
     "@types/bip39": ^3.0.0
     "@types/bitcoinjs-lib": ^5.0.0
     "@types/lodash": ^4.14.178
     "@types/memoizee": ^0.4.7
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
@@ -3414,30 +3414,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yac-swap/client@workspace:*, @yac-swap/client@workspace:packages/client":
+"@yaswap/client@workspace:*, @yaswap/client@workspace:packages/client":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/client@workspace:packages/client"
+  resolution: "@yaswap/client@workspace:packages/client"
   dependencies:
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/logger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/logger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     axios: ^0.25.0
   languageName: unknown
   linkType: soft
 
-"@yac-swap/errors@workspace:*, @yac-swap/errors@workspace:packages/errors":
+"@yaswap/errors@workspace:*, @yaswap/errors@workspace:packages/errors":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/errors@workspace:packages/errors"
+  resolution: "@yaswap/errors@workspace:packages/errors"
   dependencies:
     "@types/standard-error": ^1.1.0
     standard-error: ^1.1.0
   languageName: unknown
   linkType: soft
 
-"@yac-swap/evm-contracts@workspace:packages/evm-contracts":
+"@yaswap/evm-contracts@workspace:packages/evm-contracts":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/evm-contracts@workspace:packages/evm-contracts"
+  resolution: "@yaswap/evm-contracts@workspace:packages/evm-contracts"
   dependencies:
     "@codechecks/client": ^0.1.12
     "@commitlint/cli": ^16.1.0
@@ -3490,9 +3490,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yac-swap/evm-ledger@workspace:packages/evm-ledger":
+"@yaswap/evm-ledger@workspace:packages/evm-ledger":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/evm-ledger@workspace:packages/evm-ledger"
+  resolution: "@yaswap/evm-ledger@workspace:packages/evm-ledger"
   dependencies:
     "@ethersproject/abstract-provider": 5.7.0
     "@ethersproject/abstract-signer": 5.7.0
@@ -3504,18 +3504,18 @@ __metadata:
     "@ethersproject/strings": 5.7.0
     "@ethersproject/transactions": 5.7.0
     "@ledgerhq/hw-app-eth": 6.30.5
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/evm": "workspace:*"
-    "@yac-swap/hw-ledger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/evm": "workspace:*"
+    "@yaswap/hw-ledger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@yac-swap/evm@workspace:*, @yac-swap/evm@workspace:packages/evm":
+"@yaswap/evm@workspace:*, @yaswap/evm@workspace:packages/evm":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/evm@workspace:packages/evm"
+  resolution: "@yaswap/evm@workspace:packages/evm"
   dependencies:
     "@eth-optimism/sdk": 1.1.5
     "@ethersproject/abi": 5.7.0
@@ -3532,86 +3532,86 @@ __metadata:
     "@nomiclabs/hardhat-ethers": ^2.0.4
     "@nomiclabs/hardhat-waffle": ^2.0.2
     "@typechain/hardhat": ^4.0.0
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/logger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/logger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     ethers: 5.7.0
     hardhat: ^2.8.3
   languageName: unknown
   linkType: soft
 
-"@yac-swap/hw-ledger@workspace:*, @yac-swap/hw-ledger@workspace:packages/hw-ledger":
+"@yaswap/hw-ledger@workspace:*, @yaswap/hw-ledger@workspace:packages/hw-ledger":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/hw-ledger@workspace:packages/hw-ledger"
+  resolution: "@yaswap/hw-ledger@workspace:packages/hw-ledger"
   dependencies:
     "@ledgerhq/hw-transport": 6.27.10
     "@ledgerhq/hw-transport-webhid": 6.27.10
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/logger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/logger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@yac-swap/logger@workspace:*, @yac-swap/logger@workspace:packages/logger":
+"@yaswap/logger@workspace:*, @yaswap/logger@workspace:packages/logger":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/logger@workspace:packages/logger"
+  resolution: "@yaswap/logger@workspace:packages/logger"
   languageName: unknown
   linkType: soft
 
-"@yac-swap/near@workspace:packages/near":
+"@yaswap/near@workspace:packages/near":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/near@workspace:packages/near"
+  resolution: "@yaswap/near@workspace:packages/near"
   dependencies:
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     bn.js: ^5.2.0
     near-api-js: ^0.44.2
     near-seed-phrase: ^0.2.0
   languageName: unknown
   linkType: soft
 
-"@yac-swap/solana@workspace:packages/solana":
+"@yaswap/solana@workspace:packages/solana":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/solana@workspace:packages/solana"
+  resolution: "@yaswap/solana@workspace:packages/solana"
   dependencies:
     "@solana/spl-token": 0.2.0
     "@solana/spl-token-registry": 0.2.4574
     "@solana/web3.js": 1.50.1
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/logger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/logger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     bip39: ^3.0.4
     ed25519-hd-key: ^1.2.0
     tweetnacl: ^1.0.3
   languageName: unknown
   linkType: soft
 
-"@yac-swap/terra@workspace:packages/terra":
+"@yaswap/terra@workspace:packages/terra":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/terra@workspace:packages/terra"
+  resolution: "@yaswap/terra@workspace:packages/terra"
   dependencies:
     "@terra-money/terra.js": 3.1.6
     "@types/luxon": ^2.0.9
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/logger": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/logger": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     lodash: 4.17.21
     luxon: ^2.3.1
   languageName: unknown
   linkType: soft
 
-"@yac-swap/types@workspace:*, @yac-swap/types@workspace:packages/types":
+"@yaswap/types@workspace:*, @yaswap/types@workspace:packages/types":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/types@workspace:packages/types"
+  resolution: "@yaswap/types@workspace:packages/types"
   dependencies:
     "@ethersproject/bignumber": 5.7.0
     "@liquality/cryptoassets": 1.6.0
@@ -3619,14 +3619,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yac-swap/utils@workspace:*, @yac-swap/utils@workspace:packages/utils":
+"@yaswap/utils@workspace:*, @yaswap/utils@workspace:packages/utils":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/utils@workspace:packages/utils"
+  resolution: "@yaswap/utils@workspace:packages/utils"
   dependencies:
     "@ethersproject/sha2": 5.7.0
     "@types/setimmediate": ^1.0.2
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/types": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/types": "workspace:*"
     bech32: ^2.0.0
     bs58: 5.0.0
     crypto-hashing: ^1.0.0
@@ -3634,19 +3634,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yac-swap/yacoin@workspace:packages/yacoin":
+"@yaswap/yacoin@workspace:packages/yacoin":
   version: 0.0.0-use.local
-  resolution: "@yac-swap/yacoin@workspace:packages/yacoin"
+  resolution: "@yaswap/yacoin@workspace:packages/yacoin"
   dependencies:
     "@types/bip32": ^2.0.0
     "@types/bip39": ^3.0.0
     "@types/bitcoinjs-lib": ^5.0.0
     "@types/lodash": ^4.14.178
     "@types/memoizee": ^0.4.7
-    "@yac-swap/client": "workspace:*"
-    "@yac-swap/errors": "workspace:*"
-    "@yac-swap/types": "workspace:*"
-    "@yac-swap/utils": "workspace:*"
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
     "@yaswap/yacoinjs-lib": ^v1.1.0
     bip174: ^2.0.1
     bip32: 2.0.6
@@ -20221,9 +20221,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yac-swap@workspace:.":
+"yaswap@workspace:.":
   version: 0.0.0-use.local
-  resolution: "yac-swap@workspace:."
+  resolution: "yaswap@workspace:."
   dependencies:
     "@changesets/changelog-github": ^0.4.2
     "@changesets/cli": ^2.20.0

@@ -1,4 +1,4 @@
-# @yac-swap/client
+# @yaswap/client
 
 ## 2.0.0
 

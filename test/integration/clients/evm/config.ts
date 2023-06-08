@@ -1,4 +1,4 @@
-import { AssetTypes, BigNumber, ChainId, Network } from '@yac-swap/types';
+import { AssetTypes, BigNumber, ChainId, Network } from '@yaswap/types';
 import { Wallet } from 'ethers';
 import { IConfig } from '../../types';
 

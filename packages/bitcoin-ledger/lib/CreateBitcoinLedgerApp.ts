@@ -1,5 +1,5 @@
-import { CreateLedgerApp } from '@yac-swap/hw-ledger';
-import { Network } from '@yac-swap/types';
+import { CreateLedgerApp } from '@yaswap/hw-ledger';
+import { Network } from '@yaswap/types';
 import HwAppBitcoin from '@ledgerhq/hw-app-btc';
 import Transport from '@ledgerhq/hw-transport';
 

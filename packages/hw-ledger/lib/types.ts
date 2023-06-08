@@ -1,4 +1,4 @@
-import { Address, Network } from '@yac-swap/types';
+import { Address, Network } from '@yaswap/types';
 import HwAppBitcoin from '@ledgerhq/hw-app-btc';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';

@@ -1,7 +1,7 @@
-import { Wallet } from '@yac-swap/client';
-import { UnimplementedMethodError } from '@yac-swap/errors';
-import { Address, Asset, AssetTypes, BigNumber, FeeType, Transaction, TransactionRequest } from '@yac-swap/types';
-import { retry } from '@yac-swap/utils';
+import { Wallet } from '@yaswap/client';
+import { UnimplementedMethodError } from '@yaswap/errors';
+import { Address, Asset, AssetTypes, BigNumber, FeeType, Transaction, TransactionRequest } from '@yaswap/types';
+import { retry } from '@yaswap/utils';
 import {
     Coin,
     Coins,

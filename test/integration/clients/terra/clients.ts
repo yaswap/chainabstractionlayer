@@ -1,6 +1,6 @@
-import { Client } from '@yac-swap/client';
-import * as Terra from '@yac-swap/terra';
-import { WalletOptions } from '@yac-swap/types';
+import { Client } from '@yaswap/client';
+import * as Terra from '@yaswap/terra';
+import { WalletOptions } from '@yaswap/types';
 import { TerraConfig } from './config';
 
 function getTerraClient(network: Terra.TerraTypes.TerraNetwork) {

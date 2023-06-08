@@ -1,4 +1,4 @@
-import { Transaction } from '@yac-swap/types';
+import { Transaction } from '@yaswap/types';
 import { payments } from '@yaswap/yacoinjs-lib';
 import { YacoinNetwork, SwapMode, Transaction as YacoinTransaction } from '../types';
 

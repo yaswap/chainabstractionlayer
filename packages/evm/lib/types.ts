@@ -1,4 +1,4 @@
-import { AddressType, FeeType, TransactionRequest } from '@yac-swap/types';
+import { AddressType, FeeType, TransactionRequest } from '@yaswap/types';
 import { Fragment, JsonFragment } from '@ethersproject/abi';
 import { BlockWithTransactions as EthersBlockWithTransactions } from '@ethersproject/abstract-provider';
 import { PopulatedTransaction as EthersPopulatedTransaction } from '@ethersproject/contracts';

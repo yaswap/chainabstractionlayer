@@ -1,7 +1,7 @@
-import { HttpClient } from '@yac-swap/client';
-import { TxNotFoundError } from '@yac-swap/errors';
-import { SwapParams, Transaction, TxStatus } from '@yac-swap/types';
-import { validateSecret, validateSecretAndHash } from '@yac-swap/utils';
+import { HttpClient } from '@yaswap/client';
+import { TxNotFoundError } from '@yaswap/errors';
+import { SwapParams, Transaction, TxStatus } from '@yaswap/types';
+import { validateSecret, validateSecretAndHash } from '@yaswap/utils';
 import { isTxError } from '@terra-money/terra.js';
 import { TerraWalletProvider } from '..';
 import { denomToAssetCode } from '../constants';

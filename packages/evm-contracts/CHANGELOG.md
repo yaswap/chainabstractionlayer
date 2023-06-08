@@ -1,4 +1,4 @@
-# @yac-swap/evm-contracts
+# @yaswap/evm-contracts
 
 ## 2.0.0
 

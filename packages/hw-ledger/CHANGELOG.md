@@ -1,4 +1,4 @@
-# @yac-swap/hw-ledger
+# @yaswap/hw-ledger
 
 ## 2.0.0
 

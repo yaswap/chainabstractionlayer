@@ -1,5 +1,5 @@
-import { BitcoinTypes } from '@yac-swap/bitcoin';
-import { CreateOptions } from '@yac-swap/hw-ledger';
+import { BitcoinTypes } from '@yaswap/bitcoin';
+import { CreateOptions } from '@yaswap/hw-ledger';
 
 export interface BitcoinLedgerProviderOptions extends CreateOptions {
     baseDerivationPath: string;

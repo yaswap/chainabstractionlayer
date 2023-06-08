@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from '@yac-swap/logger';
+import { Logger, LogLevel } from '@yaswap/logger';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { shouldBehaveLikeBitcoinClient } from './clients/bitcoin';

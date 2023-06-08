@@ -1,5 +1,5 @@
-import { JsonRpcProvider } from '@yac-swap/client';
-import { AddressType, BigNumber, Transaction } from '@yac-swap/types';
+import { JsonRpcProvider } from '@yaswap/client';
+import { AddressType, BigNumber, Transaction } from '@yaswap/types';
 import { AddressTxCounts, UTXO as BitcoinUTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { BitcoinBaseChainProvider } from '../BitcoinBaseChainProvider';

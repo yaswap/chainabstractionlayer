@@ -1,4 +1,4 @@
-import { Network } from '@yac-swap/types';
+import { Network } from '@yaswap/types';
 import { Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as BitcoinEsploraTypes from './chain/esplora/types';

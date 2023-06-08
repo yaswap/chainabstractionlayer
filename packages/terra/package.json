@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/terra",
+    "name": "@yaswap/terra",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",
@@ -17,11 +17,11 @@
     "dependencies": {
         "@terra-money/terra.js": "3.1.6",
         "@types/luxon": "^2.0.9",
-        "@yac-swap/client": "workspace:*",
-        "@yac-swap/errors": "workspace:*",
-        "@yac-swap/logger": "workspace:*",
-        "@yac-swap/types": "workspace:*",
-        "@yac-swap/utils": "workspace:*",
+        "@yaswap/client": "workspace:*",
+        "@yaswap/errors": "workspace:*",
+        "@yaswap/logger": "workspace:*",
+        "@yaswap/types": "workspace:*",
+        "@yaswap/utils": "workspace:*",
         "lodash": "4.17.21",
         "luxon": "^2.3.1"
     }

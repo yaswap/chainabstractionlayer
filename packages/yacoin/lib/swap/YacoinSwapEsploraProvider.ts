@@ -1,6 +1,6 @@
-import { HttpClient } from '@yac-swap/client';
-import { PendingTxError } from '@yac-swap/errors';
-import { SwapParams, Transaction } from '@yac-swap/types';
+import { HttpClient } from '@yaswap/client';
+import { PendingTxError } from '@yaswap/errors';
+import { SwapParams, Transaction } from '@yaswap/types';
 import { Transaction as YacoinTransaction } from '../types';
 import { YacoinBaseWalletProvider } from '../wallet/YacoinBaseWallet';
 import { YacoinSwapBaseProvider } from './YacoinSwapBaseProvider';

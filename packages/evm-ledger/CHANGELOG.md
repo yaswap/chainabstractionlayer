@@ -1,4 +1,4 @@
-# @yac-swap/evm-ledger
+# @yaswap/evm-ledger
 
 ## 2.0.0
 

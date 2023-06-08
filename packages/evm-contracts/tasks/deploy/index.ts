@@ -1,6 +1,6 @@
 // // @ts-nocheck
 // // @ts-ignore
-// import { LiqualityHTLC__factory, Multicall__factory } from '@yac-swap/evm/lib/typechain';
+// import { LiqualityHTLC__factory, Multicall__factory } from '@yaswap/evm/lib/typechain';
 // import { task } from 'hardhat/config';
 // import { TaskArguments } from 'hardhat/types';
 // import { create2_deployer_abi, create2_deployer_bytecode } from '../utils';

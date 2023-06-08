@@ -1,6 +1,6 @@
-import * as BTC from '@yac-swap/bitcoin';
-import { BitcoinLedgerProvider } from '@yac-swap/bitcoin-ledger';
-import { Client } from '@yac-swap/client';
+import * as BTC from '@yaswap/bitcoin';
+import { BitcoinLedgerProvider } from '@yaswap/bitcoin-ledger';
+import { Client } from '@yaswap/client';
 import { NodeTransportCreator } from '../../environment/NodeTransportCreator';
 import { BtcHdWalletConfig, BtcLedgerConfig, BtcNodeConfig } from './config';
 

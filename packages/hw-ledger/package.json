@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/hw-ledger",
+    "name": "@yaswap/hw-ledger",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",
@@ -17,9 +17,9 @@
     "dependencies": {
         "@ledgerhq/hw-transport": "6.27.10",
         "@ledgerhq/hw-transport-webhid": "6.27.10",
-        "@yac-swap/errors": "workspace:*",
-        "@yac-swap/logger": "workspace:*",
-        "@yac-swap/types": "workspace:*",
-        "@yac-swap/utils": "workspace:*"
+        "@yaswap/errors": "workspace:*",
+        "@yaswap/logger": "workspace:*",
+        "@yaswap/types": "workspace:*",
+        "@yaswap/utils": "workspace:*"
     }
 }

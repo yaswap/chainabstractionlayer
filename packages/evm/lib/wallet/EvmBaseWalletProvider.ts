@@ -1,7 +1,7 @@
-import { Chain, Wallet } from '@yac-swap/client';
-import { NodeError, ReplaceFeeInsufficientError } from '@yac-swap/errors';
-import { AddressType, Asset, AssetTypes, BigNumber, FeeType, NamingProvider, Network, Transaction } from '@yac-swap/types';
-import { ensure0x, remove0x } from '@yac-swap/utils';
+import { Chain, Wallet } from '@yaswap/client';
+import { NodeError, ReplaceFeeInsufficientError } from '@yaswap/errors';
+import { AddressType, Asset, AssetTypes, BigNumber, FeeType, NamingProvider, Network, Transaction } from '@yaswap/types';
+import { ensure0x, remove0x } from '@yaswap/utils';
 import { Signer } from '@ethersproject/abstract-signer';
 import { BaseProvider, TransactionRequest as EthersTxRequest } from '@ethersproject/providers';
 import { ERC20__factory } from '../typechain';

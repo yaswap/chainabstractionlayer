@@ -1,4 +1,4 @@
-import { Transaction } from '@yac-swap/types';
+import { Transaction } from '@yaswap/types';
 import { payments } from 'bitcoinjs-lib';
 import { BitcoinNetwork, SwapMode, Transaction as BitcoinTransaction } from '../types';
 

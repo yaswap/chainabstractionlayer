@@ -1,4 +1,4 @@
-import { Logger } from '@yac-swap/logger';
+import { Logger } from '@yaswap/logger';
 import { AxiosRequestConfig } from 'axios';
 import HttpClient from './Http';
 

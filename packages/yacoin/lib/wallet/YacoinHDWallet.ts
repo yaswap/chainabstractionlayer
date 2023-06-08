@@ -1,5 +1,5 @@
-import { Chain } from '@yac-swap/client';
-import { AddressType, Asset, BigNumber } from '@yac-swap/types';
+import { Chain } from '@yaswap/client';
+import { AddressType, Asset, BigNumber } from '@yaswap/types';
 import { BIP32Interface, fromSeed } from 'bip32';
 import { mnemonicToSeed } from 'bip39';
 import { ECPair, ECPairInterface, Psbt, script, TransactionBuilder, Transaction as YacoinJsTransaction } from '@yaswap/yacoinjs-lib';

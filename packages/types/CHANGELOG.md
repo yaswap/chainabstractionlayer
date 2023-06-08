@@ -1,4 +1,4 @@
-# @yac-swap/types
+# @yaswap/types
 
 ## 2.0.0
 

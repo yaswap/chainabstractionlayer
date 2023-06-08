@@ -1,6 +1,6 @@
-import { Swap } from '@yac-swap/client';
-import { Address, BigNumber, SwapParams, Transaction } from '@yac-swap/types';
-import { validateExpiration, validateSecret, validateSecretAndHash, validateSecretHash, validateValue } from '@yac-swap/utils';
+import { Swap } from '@yaswap/client';
+import { Address, BigNumber, SwapParams, Transaction } from '@yaswap/types';
+import { validateExpiration, validateSecret, validateSecretAndHash, validateSecretHash, validateValue } from '@yaswap/utils';
 import { payments, Psbt, script as bScript } from 'bitcoinjs-lib';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
 import { BitcoinNetwork, Input, SwapMode, Transaction as BitcoinTransaction } from '../types';

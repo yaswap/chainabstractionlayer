@@ -1,4 +1,4 @@
-import { AddressType, Network, TransactionRequest, WalletOptions } from '@yac-swap/types';
+import { AddressType, Network, TransactionRequest, WalletOptions } from '@yaswap/types';
 import BN from 'bn.js';
 import { Account, Connection } from 'near-api-js';
 import { FinalExecutionOutcome } from 'near-api-js/lib/providers';

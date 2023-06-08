@@ -1,7 +1,7 @@
-import { Client } from '@yac-swap/client';
-import * as EVM from '@yac-swap/evm';
-import { EvmLedgerProvider } from '@yac-swap/evm-ledger';
-import { Network, WalletOptions } from '@yac-swap/types';
+import { Client } from '@yaswap/client';
+import * as EVM from '@yaswap/evm';
+import { EvmLedgerProvider } from '@yaswap/evm-ledger';
+import { Network, WalletOptions } from '@yaswap/types';
 import { providers } from 'ethers';
 import { NodeTransportCreator } from '../../environment/NodeTransportCreator';
 import { EVMConfig } from './config';

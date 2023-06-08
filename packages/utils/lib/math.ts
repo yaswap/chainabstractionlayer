@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from '@yac-swap/types';
+import { BigNumber, BigNumberish } from '@yaswap/types';
 
 export function add(a: BigNumberish, b: BigNumberish) {
     return new BigNumber(a.toString()).plus(b.toString());

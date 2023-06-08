@@ -1,5 +1,5 @@
-import { HttpClient } from '@yac-swap/client';
-import { AddressType } from '@yac-swap/types';
+import { HttpClient } from '@yaswap/client';
+import { AddressType } from '@yaswap/types';
 import { flatten } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';

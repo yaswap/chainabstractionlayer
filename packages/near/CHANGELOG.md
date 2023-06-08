@@ -1,4 +1,4 @@
-# @yac-swap/near
+# @yaswap/near
 
 ## 2.0.0
 

@@ -1,4 +1,4 @@
-# @yac-swap/logger
+# @yaswap/logger
 
 ## 2.2.0
 
@@ -343,4 +343,4 @@
 
 ### Patch Changes
 
--   change namespace from @liquality to @yac-swap
+-   change namespace from @liquality to @yaswap

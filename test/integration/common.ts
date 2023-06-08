@@ -1,11 +1,11 @@
-import { BitcoinNetworks } from '@yac-swap/bitcoin';
-import { Client } from '@yac-swap/client';
-import { EvmNetworks } from '@yac-swap/evm';
-import { NearNetworks } from '@yac-swap/near';
-import { SolanaNetworks } from '@yac-swap/solana';
-import { TerraNetworks } from '@yac-swap/terra';
-import { Address, AddressType, AssetTypes, BigNumber, FeeType, SwapParams, Transaction } from '@yac-swap/types';
-import { retry, sha256, sleep } from '@yac-swap/utils';
+import { BitcoinNetworks } from '@yaswap/bitcoin';
+import { Client } from '@yaswap/client';
+import { EvmNetworks } from '@yaswap/evm';
+import { NearNetworks } from '@yaswap/near';
+import { SolanaNetworks } from '@yaswap/solana';
+import { TerraNetworks } from '@yaswap/terra';
+import { Address, AddressType, AssetTypes, BigNumber, FeeType, SwapParams, Transaction } from '@yaswap/types';
+import { retry, sha256, sleep } from '@yaswap/utils';
 import { expect } from 'chai';
 import {
     BitcoinHDWalletClient,

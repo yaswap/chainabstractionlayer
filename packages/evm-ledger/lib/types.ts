@@ -1,5 +1,5 @@
-import { CreateOptions } from '@yac-swap/hw-ledger';
-import { Address } from '@yac-swap/types';
+import { CreateOptions } from '@yaswap/hw-ledger';
+import { Address } from '@yaswap/types';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 
 export type GetAppType = () => Promise<HwAppEthereum>;

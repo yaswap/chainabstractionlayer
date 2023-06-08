@@ -1,4 +1,4 @@
-# @yac-swap/utils
+# @yaswap/utils
 
 ## 2.0.0
 

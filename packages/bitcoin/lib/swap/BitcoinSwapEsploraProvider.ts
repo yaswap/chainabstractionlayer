@@ -1,5 +1,5 @@
-import { HttpClient } from '@yac-swap/client';
-import { SwapParams, Transaction } from '@yac-swap/types';
+import { HttpClient } from '@yaswap/client';
+import { SwapParams, Transaction } from '@yaswap/types';
 import { Transaction as BitcoinTransaction } from '../types';
 import { BitcoinBaseWalletProvider } from '../wallet/BitcoinBaseWallet';
 import { BitcoinSwapBaseProvider } from './BitcoinSwapBaseProvider';

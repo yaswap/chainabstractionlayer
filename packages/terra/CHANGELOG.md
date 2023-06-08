@@ -1,4 +1,4 @@
-# @yac-swap/terra
+# @yaswap/terra
 
 ## 2.0.0
 

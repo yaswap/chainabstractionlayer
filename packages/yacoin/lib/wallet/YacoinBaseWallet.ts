@@ -1,7 +1,7 @@
-import { Chain, Wallet } from '@yac-swap/client';
-import { InsufficientBalanceError } from '@yac-swap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '@yac-swap/types';
-import { asyncSetImmediate } from '@yac-swap/utils';
+import { Chain, Wallet } from '@yaswap/client';
+import { InsufficientBalanceError } from '@yaswap/errors';
+import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '@yaswap/types';
+import { asyncSetImmediate } from '@yaswap/utils';
 import { BIP32Interface } from 'bip32';
 import { payments, script } from '@yaswap/yacoinjs-lib';
 import memoize from 'memoizee';

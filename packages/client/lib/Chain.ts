@@ -1,4 +1,4 @@
-import { UnsupportedMethodError } from '@yac-swap/errors';
+import { UnsupportedMethodError } from '@yaswap/errors';
 import {
     AddressType,
     Asset,
@@ -10,7 +10,7 @@ import {
     Nullable,
     TokenDetails,
     Transaction,
-} from '@yac-swap/types';
+} from '@yaswap/types';
 import { Fee } from '.';
 
 /**

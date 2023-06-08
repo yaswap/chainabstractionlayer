@@ -1,6 +1,6 @@
-import { Client } from '@yac-swap/client';
-import * as Solana from '@yac-swap/solana';
-import { Network, WalletOptions } from '@yac-swap/types';
+import { Client } from '@yaswap/client';
+import * as Solana from '@yaswap/solana';
+import { Network, WalletOptions } from '@yaswap/types';
 import { SolanaConfig } from './config';
 
 function getSolanaClient(network: Network) {

@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/evm-ledger",
+    "name": "@yaswap/evm-ledger",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",
@@ -25,11 +25,11 @@
         "@ethersproject/strings": "5.7.0",
         "@ethersproject/transactions": "5.7.0",
         "@ledgerhq/hw-app-eth": "6.30.5",
-        "@yac-swap/client": "workspace:*",
-        "@yac-swap/errors": "workspace:*",
-        "@yac-swap/evm": "workspace:*",
-        "@yac-swap/hw-ledger": "workspace:*",
-        "@yac-swap/types": "workspace:*",
-        "@yac-swap/utils": "workspace:*"
+        "@yaswap/client": "workspace:*",
+        "@yaswap/errors": "workspace:*",
+        "@yaswap/evm": "workspace:*",
+        "@yaswap/hw-ledger": "workspace:*",
+        "@yaswap/types": "workspace:*",
+        "@yaswap/utils": "workspace:*"
     }
 }

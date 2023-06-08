@@ -1,4 +1,4 @@
-# @yac-swap/bitcoin
+# @yaswap/bitcoin
 
 ## 2.0.0
 

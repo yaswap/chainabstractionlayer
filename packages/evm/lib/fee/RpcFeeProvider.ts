@@ -1,5 +1,5 @@
-import { Fee } from '@yac-swap/client';
-import { BigNumber, FeeDetails } from '@yac-swap/types';
+import { Fee } from '@yaswap/client';
+import { BigNumber, FeeDetails } from '@yaswap/types';
 import { Network, StaticJsonRpcProvider } from '@ethersproject/providers';
 import { FeeOptions } from '../types';
 import { calculateFee } from '../utils';

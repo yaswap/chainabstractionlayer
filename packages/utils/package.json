@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/utils",
+    "name": "@yaswap/utils",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",
@@ -16,8 +16,8 @@
     },
     "dependencies": {
         "@ethersproject/sha2": "5.7.0",
-        "@yac-swap/errors": "workspace:*",
-        "@yac-swap/types": "workspace:*",
+        "@yaswap/errors": "workspace:*",
+        "@yaswap/types": "workspace:*",
         "bech32": "^2.0.0",
         "bs58": "5.0.0",
         "crypto-hashing": "^1.0.0",

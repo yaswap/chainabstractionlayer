@@ -1,6 +1,6 @@
-import { Nft, Wallet } from '@yac-swap/client';
-import { UnsupportedMethodError } from '@yac-swap/errors';
-import { AddressType, AssetTypes, BigNumber, ChainId, NFTAsset, Transaction } from '@yac-swap/types';
+import { Nft, Wallet } from '@yaswap/client';
+import { UnsupportedMethodError } from '@yaswap/errors';
+import { AddressType, AssetTypes, BigNumber, ChainId, NFTAsset, Transaction } from '@yaswap/types';
 import { BaseProvider } from '@ethersproject/providers';
 import { SolanaWalletProvider } from '../wallet/SolanaWalletProvider';
 

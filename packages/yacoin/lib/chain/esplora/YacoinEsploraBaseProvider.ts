@@ -1,6 +1,6 @@
-import { HttpClient } from '@yac-swap/client';
-import { AddressType } from '@yac-swap/types';
-import { TxNotFoundError } from '@yac-swap/errors';
+import { HttpClient } from '@yaswap/client';
+import { AddressType } from '@yaswap/types';
+import { TxNotFoundError } from '@yaswap/errors';
 import { flatten } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';

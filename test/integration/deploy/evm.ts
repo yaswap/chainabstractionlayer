@@ -1,5 +1,5 @@
-import { Client } from '@yac-swap/client';
-import { Typechain } from '@yac-swap/evm';
+import { Client } from '@yaswap/client';
+import { Typechain } from '@yaswap/evm';
 import { constants, ethers } from 'ethers';
 
 /**

@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/types",
+    "name": "@yaswap/types",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",

@@ -1,5 +1,5 @@
-import { Client } from '@yac-swap/client';
-import * as Near from '@yac-swap/near';
+import { Client } from '@yaswap/client';
+import * as Near from '@yaswap/near';
 import { NearConfig } from './config';
 
 function getNearClient(network: Near.NearTypes.NearNetwork) {

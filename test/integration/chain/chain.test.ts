@@ -1,5 +1,5 @@
-import { UnsupportedMethodError } from '@yac-swap/errors';
-import { Math, sleep } from '@yac-swap/utils';
+import { UnsupportedMethodError } from '@yaswap/errors';
+import { Math, sleep } from '@yaswap/utils';
 import { expect } from 'chai';
 import { Chain } from '../types';
 

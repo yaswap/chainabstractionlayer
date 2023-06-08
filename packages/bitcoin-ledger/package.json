@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/bitcoin-ledger",
+    "name": "@yaswap/bitcoin-ledger",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",
@@ -16,12 +16,12 @@
     },
     "dependencies": {
         "@ledgerhq/hw-app-btc": "9.1.2",
-        "@yac-swap/bitcoin": "workspace:*",
-        "@yac-swap/client": "workspace:*",
-        "@yac-swap/errors": "workspace:*",
-        "@yac-swap/hw-ledger": "workspace:*",
-        "@yac-swap/types": "workspace:*",
-        "@yac-swap/utils": "workspace:*",
+        "@yaswap/bitcoin": "workspace:*",
+        "@yaswap/client": "workspace:*",
+        "@yaswap/errors": "workspace:*",
+        "@yaswap/hw-ledger": "workspace:*",
+        "@yaswap/types": "workspace:*",
+        "@yaswap/utils": "workspace:*",
         "bip32": "2.0.6",
         "bitcoinjs-lib": "5.2.0"
     }

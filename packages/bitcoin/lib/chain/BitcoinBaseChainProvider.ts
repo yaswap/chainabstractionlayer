@@ -1,4 +1,4 @@
-import { AddressType, Transaction } from '@yac-swap/types';
+import { AddressType, Transaction } from '@yaswap/types';
 import { AddressTxCounts, UTXO } from '../types';
 
 export abstract class BitcoinBaseChainProvider {

@@ -1,5 +1,5 @@
-import { RpcFeeProvider } from '@yac-swap/evm';
-import { FeeType } from '@yac-swap/types';
+import { RpcFeeProvider } from '@yaswap/evm';
+import { FeeType } from '@yaswap/types';
 import { assert } from 'chai';
 import { after } from 'mocha';
 import { Chain } from '../../types';

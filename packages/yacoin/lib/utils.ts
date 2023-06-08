@@ -1,5 +1,5 @@
-import { InvalidAddressError } from '@yac-swap/errors';
-import { AddressType, BigNumber, Transaction, TxStatus } from '@yac-swap/types';
+import { InvalidAddressError } from '@yaswap/errors';
+import { AddressType, BigNumber, Transaction, TxStatus } from '@yaswap/types';
 import * as yacoin from '@yaswap/yacoinjs-lib';
 import * as classify from '@yaswap/yacoinjs-lib/src/classify';
 import coinselect from 'coinselect';

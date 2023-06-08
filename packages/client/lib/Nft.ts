@@ -1,5 +1,5 @@
-import { UnsupportedMethodError } from '@yac-swap/errors';
-import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '@yac-swap/types';
+import { UnsupportedMethodError } from '@yaswap/errors';
+import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '@yaswap/types';
 import Wallet from './Wallet';
 
 export default abstract class Nft<T, S> {

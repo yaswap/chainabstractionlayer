@@ -1,4 +1,4 @@
-# @yac-swap/bitcoin-ledger
+# @yaswap/bitcoin-ledger
 
 ## 2.0.0
 

@@ -1,6 +1,6 @@
-import { Client } from '@yac-swap/client';
-import { TerraChainProvider, TerraWalletProvider } from '@yac-swap/terra';
-import { AssetTypes } from '@yac-swap/types';
+import { Client } from '@yaswap/client';
+import { TerraChainProvider, TerraWalletProvider } from '@yaswap/terra';
+import { AssetTypes } from '@yaswap/types';
 import { shouldBehaveLikeChainProvider } from '../../chain/chain.test';
 import { Chains } from '../../common';
 import { shouldBehaveLikeSwapProvider } from '../../swap/swap.test';

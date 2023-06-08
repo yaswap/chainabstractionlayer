@@ -1,4 +1,4 @@
-import { AddressType, NamingProvider } from '@yac-swap/types';
+import { AddressType, NamingProvider } from '@yaswap/types';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 
 export class EnsProvider implements NamingProvider {

@@ -1,5 +1,5 @@
-import { Client } from '@yac-swap/client';
-import { Asset, BigNumber, Network } from '@yac-swap/types';
+import { Client } from '@yaswap/client';
+import { Asset, BigNumber, Network } from '@yaswap/types';
 
 export interface IConfig {
     network: Network;

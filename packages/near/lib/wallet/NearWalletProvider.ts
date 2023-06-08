@@ -1,6 +1,6 @@
-import { Chain, HttpClient, Wallet } from '@yac-swap/client';
-import { UnsupportedMethodError } from '@yac-swap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction } from '@yac-swap/types';
+import { Chain, HttpClient, Wallet } from '@yaswap/client';
+import { UnsupportedMethodError } from '@yaswap/errors';
+import { Address, AddressType, Asset, BigNumber, Transaction } from '@yaswap/types';
 import {
     BN,
     InMemorySigner,

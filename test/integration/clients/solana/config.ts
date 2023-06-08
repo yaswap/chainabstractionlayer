@@ -1,4 +1,4 @@
-import { Asset, AssetTypes, BigNumber, ChainId, Network } from '@yac-swap/types';
+import { Asset, AssetTypes, BigNumber, ChainId, Network } from '@yaswap/types';
 import { IConfig } from '../../types';
 
 export const SolanaConfig = (network: Network): IConfig => {

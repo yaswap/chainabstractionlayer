@@ -1,4 +1,4 @@
-# Chainify <img align="right" src="https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png" height="80px" />
+# Chainify <img align="right" src="https://raw.githubusercontent.com/yaswap/chainabstractionlayer/master/yaswap-logo.png" height="80px" />
 
 <pre>
    ________          _       _ ____     
@@ -18,20 +18,20 @@ The build system is using [Turborepo](https://turborepo.org/)
 ### Packages
 | Package                                               |                                                                    Version                                                                   |
 | :---------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------: |
-| [@yac-swap/bitcoin](./packages/bitcoin)               |        [![Chainify](https://img.shields.io/npm/v/@yac-swap/bitcoin?style=for-the-badge)](https://npmjs.com/package/@yac-swap/bitcoin)        |
-| [@yac-swap/bitcoin-ledger](./packages/bitcoin-ledger) | [![Chainify](https://img.shields.io/npm/v/@yac-swap/bitcoin-ledger?style=for-the-badge)](https://npmjs.com/package/@yac-swap/bitcoin-ledger) |
-| [@yac-swap/client](./packages/client)                 |         [![Chainify](https://img.shields.io/npm/v/@yac-swap/client?style=for-the-badge)](https://npmjs.com/package/@yac-swap/client)         |
-| [@yac-swap/errors](./packages/errors)                 |         [![Chainify](https://img.shields.io/npm/v/@yac-swap/errors?style=for-the-badge)](https://npmjs.com/package/@yac-swap/errors)         |
-| [@yac-swap/evm](./packages/evm)                       |            [![Chainify](https://img.shields.io/npm/v/@yac-swap/evm?style=for-the-badge)](https://npmjs.com/package/@yac-swap/evm)            |
-| [@yac-swap/evm-contracts](./packages/evm-contracts)   |  [![Chainify](https://img.shields.io/npm/v/@yac-swap/evm-contracts?style=for-the-badge)](https://npmjs.com/package/@yac-swap/evm-contracts)  |
-| [@yac-swap/evm-ledger](./packages/evm-ledger)         |     [![Chainify](https://img.shields.io/npm/v/@yac-swap/evm-ledger?style=for-the-badge)](https://npmjs.com/package/@yac-swap/evm-ledger)     |
-| [@yac-swap/hw-ledger](./packages/hw-ledger)           |      [![Chainify](https://img.shields.io/npm/v/@yac-swap/hw-ledger?style=for-the-badge)](https://npmjs.com/package/@yac-swap/hw-ledger)      |
-| [@yac-swap/logger](./packages/logger)                 |         [![Chainify](https://img.shields.io/npm/v/@yac-swap/logger?style=for-the-badge)](https://npmjs.com/package/@yac-swap/logger)         |
-| [@yac-swap/near](./packages/near)                     |           [![Chainify](https://img.shields.io/npm/v/@yac-swap/near?style=for-the-badge)](https://npmjs.com/package/@yac-swap/near)           |
-| [@yac-swap/solana](./packages/solana)                 |         [![Chainify](https://img.shields.io/npm/v/@yac-swap/solana?style=for-the-badge)](https://npmjs.com/package/@yac-swap/solana)         |
-| [@yac-swap/terra](./packages/terra)                   |          [![Chainify](https://img.shields.io/npm/v/@yac-swap/terra?style=for-the-badge)](https://npmjs.com/package/@yac-swap/terra)          |
-| [@yac-swap/types](./packages/types)                   |          [![Chainify](https://img.shields.io/npm/v/@yac-swap/types?style=for-the-badge)](https://npmjs.com/package/@yac-swap/types)          |
-| [@yac-swap/utils](./packages/utils)                   |          [![Chainify](https://img.shields.io/npm/v/@yac-swap/utils?style=for-the-badge)](https://npmjs.com/package/@yac-swap/utils)          |
+| [@yaswap/bitcoin](./packages/bitcoin)               |        [![Chainify](https://img.shields.io/npm/v/@yaswap/bitcoin?style=for-the-badge)](https://npmjs.com/package/@yaswap/bitcoin)        |
+| [@yaswap/bitcoin-ledger](./packages/bitcoin-ledger) | [![Chainify](https://img.shields.io/npm/v/@yaswap/bitcoin-ledger?style=for-the-badge)](https://npmjs.com/package/@yaswap/bitcoin-ledger) |
+| [@yaswap/client](./packages/client)                 |         [![Chainify](https://img.shields.io/npm/v/@yaswap/client?style=for-the-badge)](https://npmjs.com/package/@yaswap/client)         |
+| [@yaswap/errors](./packages/errors)                 |         [![Chainify](https://img.shields.io/npm/v/@yaswap/errors?style=for-the-badge)](https://npmjs.com/package/@yaswap/errors)         |
+| [@yaswap/evm](./packages/evm)                       |            [![Chainify](https://img.shields.io/npm/v/@yaswap/evm?style=for-the-badge)](https://npmjs.com/package/@yaswap/evm)            |
+| [@yaswap/evm-contracts](./packages/evm-contracts)   |  [![Chainify](https://img.shields.io/npm/v/@yaswap/evm-contracts?style=for-the-badge)](https://npmjs.com/package/@yaswap/evm-contracts)  |
+| [@yaswap/evm-ledger](./packages/evm-ledger)         |     [![Chainify](https://img.shields.io/npm/v/@yaswap/evm-ledger?style=for-the-badge)](https://npmjs.com/package/@yaswap/evm-ledger)     |
+| [@yaswap/hw-ledger](./packages/hw-ledger)           |      [![Chainify](https://img.shields.io/npm/v/@yaswap/hw-ledger?style=for-the-badge)](https://npmjs.com/package/@yaswap/hw-ledger)      |
+| [@yaswap/logger](./packages/logger)                 |         [![Chainify](https://img.shields.io/npm/v/@yaswap/logger?style=for-the-badge)](https://npmjs.com/package/@yaswap/logger)         |
+| [@yaswap/near](./packages/near)                     |           [![Chainify](https://img.shields.io/npm/v/@yaswap/near?style=for-the-badge)](https://npmjs.com/package/@yaswap/near)           |
+| [@yaswap/solana](./packages/solana)                 |         [![Chainify](https://img.shields.io/npm/v/@yaswap/solana?style=for-the-badge)](https://npmjs.com/package/@yaswap/solana)         |
+| [@yaswap/terra](./packages/terra)                   |          [![Chainify](https://img.shields.io/npm/v/@yaswap/terra?style=for-the-badge)](https://npmjs.com/package/@yaswap/terra)          |
+| [@yaswap/types](./packages/types)                   |          [![Chainify](https://img.shields.io/npm/v/@yaswap/types?style=for-the-badge)](https://npmjs.com/package/@yaswap/types)          |
+| [@yaswap/utils](./packages/utils)                   |          [![Chainify](https://img.shields.io/npm/v/@yaswap/utils?style=for-the-badge)](https://npmjs.com/package/@yaswap/utils)          |
 
 ### Install dependencies
 ```bash

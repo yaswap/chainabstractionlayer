@@ -1,7 +1,7 @@
-import { HttpClient } from '@yac-swap/client';
-import { TxStatus, SwapParams, Transaction, BigNumber } from '@yac-swap/types';
-import { Math, remove0x, ensure0x } from '@yac-swap/utils';
-import { TxNotFoundError, PendingTxError } from '@yac-swap/errors';
+import { HttpClient } from '@yaswap/client';
+import { TxStatus, SwapParams, Transaction, BigNumber } from '@yaswap/types';
+import { Math, remove0x, ensure0x } from '@yaswap/utils';
+import { TxNotFoundError, PendingTxError } from '@yaswap/errors';
 import { BaseProvider, Log } from '@ethersproject/providers';
 import { ClaimEvent, RefundEvent } from '../typechain/LiqualityHTLC';
 import { EvmSwapOptions, ScraperTransaction } from '../types';

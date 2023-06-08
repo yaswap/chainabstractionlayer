@@ -1,4 +1,4 @@
-import { Network } from '@yac-swap/types';
+import { Network } from '@yaswap/types';
 
 const ethereum_mainnet: Network = {
     name: 'ethereum_mainnet',

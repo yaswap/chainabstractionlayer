@@ -1,8 +1,8 @@
-import { Chain } from '@yac-swap/client';
-import { UnimplementedMethodError } from '@yac-swap/errors';
-import { EvmBaseWalletProvider } from '@yac-swap/evm';
-import { LedgerProvider } from '@yac-swap/hw-ledger';
-import { Address, Network } from '@yac-swap/types';
+import { Chain } from '@yaswap/client';
+import { UnimplementedMethodError } from '@yaswap/errors';
+import { EvmBaseWalletProvider } from '@yaswap/evm';
+import { LedgerProvider } from '@yaswap/hw-ledger';
+import { Address, Network } from '@yaswap/types';
 import { getAddress } from '@ethersproject/address';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';

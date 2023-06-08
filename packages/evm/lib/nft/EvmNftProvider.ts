@@ -1,6 +1,6 @@
-import { Nft } from '@yac-swap/client';
-import { UnsupportedMethodError } from '@yac-swap/errors';
-import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '@yac-swap/types';
+import { Nft } from '@yaswap/client';
+import { UnsupportedMethodError } from '@yaswap/errors';
+import { AddressType, BigNumber, FeeType, NFTAsset, Transaction } from '@yaswap/types';
 import { Signer } from '@ethersproject/abstract-signer';
 import { AddressZero } from '@ethersproject/constants';
 import { BaseProvider } from '@ethersproject/providers';

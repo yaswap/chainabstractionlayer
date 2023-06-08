@@ -1,4 +1,4 @@
-import { Address } from '@yac-swap/types';
+import { Address } from '@yaswap/types';
 import { Provider, TransactionRequest } from '@ethersproject/abstract-provider';
 import { Signer } from '@ethersproject/abstract-signer';
 import { getAddress } from '@ethersproject/address';

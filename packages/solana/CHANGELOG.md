@@ -1,4 +1,4 @@
-# @yac-swap/solana
+# @yaswap/solana
 
 ## 2.0.0
 

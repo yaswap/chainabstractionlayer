@@ -1,6 +1,6 @@
-import { Chain, Fee, HttpClient } from '@yac-swap/client';
-import { BlockNotFoundError } from '@yac-swap/errors';
-import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yac-swap/types';
+import { Chain, Fee, HttpClient } from '@yaswap/client';
+import { BlockNotFoundError } from '@yaswap/errors';
+import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yaswap/types';
 import { flatten } from 'lodash';
 import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';
 // TODO: add support for batch requests

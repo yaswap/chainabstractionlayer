@@ -1,4 +1,4 @@
-import { Client } from '@yac-swap/client';
+import { Client } from '@yaswap/client';
 import { deployEvmContracts } from './evm';
 
 export async function deploy(client: Client) {

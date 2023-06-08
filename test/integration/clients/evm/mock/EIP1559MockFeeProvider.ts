@@ -1,6 +1,6 @@
-import { Fee } from '@yac-swap/client';
-import { EvmUtils } from '@yac-swap/evm';
-import { FeeDetails } from '@yac-swap/types';
+import { Fee } from '@yaswap/client';
+import { EvmUtils } from '@yaswap/evm';
+import { FeeDetails } from '@yaswap/types';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 
 export class EIP1559MockFeeProvider extends Fee {

@@ -1,5 +1,5 @@
-import { InvalidExpirationError, InvalidSecretError, InvalidValueError } from '@yac-swap/errors';
-import { BigNumberish } from '@yac-swap/types';
+import { InvalidExpirationError, InvalidSecretError, InvalidValueError } from '@yaswap/errors';
+import { BigNumberish } from '@yaswap/types';
 import { sha256 } from './crypto';
 import { remove0x } from './hex';
 import { lte } from './math';

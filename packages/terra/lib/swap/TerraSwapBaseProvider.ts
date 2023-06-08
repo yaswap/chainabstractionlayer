@@ -1,7 +1,7 @@
-import { Swap } from '@yac-swap/client';
-import { UnsupportedMethodError } from '@yac-swap/errors';
-import { FeeType, SwapParams, Transaction } from '@yac-swap/types';
-import { compare, Math, validateSecret, validateSecretAndHash } from '@yac-swap/utils';
+import { Swap } from '@yaswap/client';
+import { UnsupportedMethodError } from '@yaswap/errors';
+import { FeeType, SwapParams, Transaction } from '@yaswap/types';
+import { compare, Math, validateSecret, validateSecretAndHash } from '@yaswap/utils';
 import { LCDClient, MnemonicKey, MsgExecuteContract, MsgInstantiateContract } from '@terra-money/terra.js';
 import { TerraWalletProvider } from '..';
 import { assetCodeToDenom } from '../constants';

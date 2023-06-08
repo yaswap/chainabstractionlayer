@@ -1,5 +1,5 @@
-import { HttpClient } from '@yac-swap/client';
-import { AssetTypes, NFTAsset } from '@yac-swap/types';
+import { HttpClient } from '@yaswap/client';
+import { AssetTypes, NFTAsset } from '@yaswap/types';
 import { BaseProvider } from '@ethersproject/providers';
 import { NftProviderConfig, NftTypes } from '../types';
 import { EvmBaseWalletProvider } from '../wallet/EvmBaseWalletProvider';

@@ -1,8 +1,8 @@
 {
-    "name": "@yac-swap/errors",
+    "name": "@yaswap/errors",
     "version": "2.0.0",
     "description": "",
-    "author": "yac-swap",
+    "author": "yaswap",
     "homepage": "",
     "license": "ISC",
     "main": "./dist/lib/index.js",

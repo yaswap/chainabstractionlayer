@@ -1,7 +1,7 @@
-import { WalletError } from '@yac-swap/errors';
-import { Logger } from '@yac-swap/logger';
-import { Address, Network } from '@yac-swap/types';
-import { compare } from '@yac-swap/utils';
+import { WalletError } from '@yaswap/errors';
+import { Logger } from '@yaswap/logger';
+import { Address, Network } from '@yaswap/types';
+import { compare } from '@yaswap/utils';
 import HwAppBitcoin from '@ledgerhq/hw-app-btc';
 import HwAppEthereum from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';

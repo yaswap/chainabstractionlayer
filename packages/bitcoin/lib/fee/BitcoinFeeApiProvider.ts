@@ -1,5 +1,5 @@
-import { Fee, HttpClient } from '@yac-swap/client';
-import { FeeDetails, FeeProvider } from '@yac-swap/types';
+import { Fee, HttpClient } from '@yaswap/client';
+import { FeeDetails, FeeProvider } from '@yaswap/types';
 
 export class BitcoinFeeApiProvider extends Fee implements FeeProvider {
     private _httpClient: HttpClient;

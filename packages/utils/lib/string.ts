@@ -1,4 +1,4 @@
-import { BigNumberish } from '@yac-swap/types';
+import { BigNumberish } from '@yaswap/types';
 
 export function compare(a: BigNumberish, b: BigNumberish) {
     return a?.toString().toLowerCase() === b?.toString().toLowerCase();

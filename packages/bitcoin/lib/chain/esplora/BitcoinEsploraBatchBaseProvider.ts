@@ -1,5 +1,5 @@
-import { HttpClient } from '@yac-swap/client';
-import { AddressType, BigNumber } from '@yac-swap/types';
+import { HttpClient } from '@yaswap/client';
+import { AddressType, BigNumber } from '@yaswap/types';
 import { flatten, uniq } from 'lodash';
 import { UTXO } from '../../types';
 import { BitcoinEsploraBaseProvider } from './BitcoinEsploraBaseProvider';

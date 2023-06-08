@@ -1,4 +1,4 @@
-# @yac-swap/evm
+# @yaswap/evm
 
 ## 2.0.0
 

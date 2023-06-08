@@ -1,5 +1,5 @@
-import { Chain, Wallet } from '@yac-swap/client';
-import { Address, FeeType, Transaction, TransactionRequest } from '@yac-swap/types';
+import { Chain, Wallet } from '@yaswap/client';
+import { Address, FeeType, Transaction, TransactionRequest } from '@yaswap/types';
 import { PsbtInputTarget } from '../types';
 
 export interface IYacoinWallet<T, S = any> extends Wallet<T, S> {

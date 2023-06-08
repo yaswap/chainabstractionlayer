@@ -1,7 +1,7 @@
-import { HttpClient, Swap, Wallet } from '@yac-swap/client';
-import { TxNotFoundError, UnimplementedMethodError } from '@yac-swap/errors';
-import { FeeType, SwapParams, Transaction } from '@yac-swap/types';
-import { compare, Math, remove0x, validateSecret, validateSecretAndHash } from '@yac-swap/utils';
+import { HttpClient, Swap, Wallet } from '@yaswap/client';
+import { TxNotFoundError, UnimplementedMethodError } from '@yaswap/errors';
+import { FeeType, SwapParams, Transaction } from '@yaswap/types';
+import { compare, Math, remove0x, validateSecret, validateSecretAndHash } from '@yaswap/utils';
 import { InMemorySigner, NearScraperData, NearTxLog, NearTxRequest, providers } from '../types';
 import { getClaimActions, getHtlcActions, getRefundActions, parseScraperTransaction } from '../utils';
 

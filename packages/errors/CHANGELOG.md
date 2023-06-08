@@ -1,4 +1,4 @@
-# @yac-swap/errors
+# @yaswap/errors
 
 ## 2.0.0
 

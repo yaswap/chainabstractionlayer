@@ -1,6 +1,6 @@
-import { Wallet } from '@yac-swap/client';
-import { UnimplementedMethodError } from '@yac-swap/errors';
-import { Logger } from '@yac-swap/logger';
+import { Wallet } from '@yaswap/client';
+import { UnimplementedMethodError } from '@yaswap/errors';
+import { Logger } from '@yaswap/logger';
 import {
     Address,
     AddressType,
@@ -13,8 +13,8 @@ import {
     TransactionRequest,
     TxStatus,
     WalletOptions,
-} from '@yac-swap/types';
-import { base58, retry } from '@yac-swap/utils';
+} from '@yaswap/types';
+import { base58, retry } from '@yaswap/utils';
 import {
     createAccount,
     createTransferInstruction,

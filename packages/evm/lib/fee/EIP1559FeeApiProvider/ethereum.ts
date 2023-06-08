@@ -1,6 +1,6 @@
-import { NodeError } from '@yac-swap/errors';
-import { FeeDetails } from '@yac-swap/types';
-import { Math } from '@yac-swap/utils';
+import { NodeError } from '@yaswap/errors';
+import { FeeDetails } from '@yaswap/types';
+import { Math } from '@yaswap/utils';
 
 export class EthereumFeeParser {
     public parse(response: EthereumResponse): FeeDetails {

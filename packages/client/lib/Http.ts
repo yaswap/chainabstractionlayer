@@ -1,5 +1,5 @@
-import { NodeError } from '@yac-swap/errors';
-import { Logger } from '@yac-swap/logger';
+import { NodeError } from '@yaswap/errors';
+import { Logger } from '@yaswap/logger';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const logger = new Logger('HttpClient');
