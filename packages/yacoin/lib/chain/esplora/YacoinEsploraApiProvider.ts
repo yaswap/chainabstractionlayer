@@ -3,8 +3,7 @@ import { BlockNotFoundError } from '@yaswap/errors';
 import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yaswap/types';
 import { flatten } from 'lodash';
 import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';
-// TODO: add support for batch requests
-// import { YacoinEsploraBatchBaseProvider } from './YacoinEsploraBatchBaseProvider';
+import { YacoinEsploraBatchBaseProvider } from './YacoinEsploraBatchBaseProvider';
 import * as EsploraTypes from './types';
 
 export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
@@ -17,8 +16,7 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
         feeProvider?: Fee,
         feeOptions?: EsploraTypes.FeeOptions
     ) {
-        // const _provider = provider || new YacoinEsploraBatchBaseProvider(options);
-        const _provider = provider || new YacoinEsploraBaseProvider(options);
+        const _provider = provider || new YacoinEsploraBatchBaseProvider(options);
         super(options.network, _provider, feeProvider);
         this._httpClient = this.provider.httpClient;
         // WARNING: ATTENTION THIS FEE

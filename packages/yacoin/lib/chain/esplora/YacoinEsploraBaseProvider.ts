@@ -86,8 +86,8 @@ export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
               uniqueAddresses.push(element);
             }
         });
-    
         const utxoSets = await Promise.all(uniqueAddresses.map((addr) => this._getUnspentTransactions(addr)))
+
         const utxos = flatten(utxoSets)
         return utxos
     }
@@ -100,6 +100,7 @@ export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
                 return { [addr]: txCount };
             })
         );
+
         const transactionCounts = Object.assign({}, ...transactionCountsArray);
         return transactionCounts;
     }
