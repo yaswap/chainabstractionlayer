@@ -23,6 +23,7 @@ export class InfuraNftProvider extends EvmNftProvider {
     async fetch(): Promise<NFTAsset[]> {
         const [userAddress, network] = await Promise.all([this.walletProvider.getAddress(), this.walletProvider.getConnectedNetwork()]);
         const chainId = Number(network.chainId);
+        console.log('TACA ===> chainId = ', chainId);
         const response = await this._httpClient.nodeGet(`/networks/${chainId}/accounts/${userAddress.toString()}/assets/nfts`);
 
         return (
