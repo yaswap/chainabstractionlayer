@@ -23,3 +23,13 @@ export interface TokenDetails {
     name: string;
     symbol: string;
 }
+
+export interface TokenBalance { // for Yacoin only
+    name: string;
+    balance: number;
+    totalSupply: number;
+    units: number;
+    reissuable: boolean;
+    blockHash: string;
+    ipfsHash: string;
+}

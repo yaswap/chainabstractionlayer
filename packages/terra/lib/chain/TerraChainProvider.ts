@@ -97,6 +97,10 @@ export class TerraChainProvider extends Chain<LCDClient, TerraNetwork> {
         return promiseBalances;
     }
 
+    public async getTokenBalance(_addresses: AddressType[]): Promise<null> {
+        return null
+    }
+
     public async getFees(feeAsset?: Asset): Promise<FeeDetails> {
         if (this.feeProvider) {
             return this.feeProvider.getFees(feeAsset);

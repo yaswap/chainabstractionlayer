@@ -111,6 +111,10 @@ export class SolanaChainProvider extends Chain<Connection, Network> {
         return balances;
     }
 
+    public async getTokenBalance(_addresses: AddressType[]): Promise<null> {
+        return null
+    }
+
     /**
      * Fee price is fixed in Solana and it's equal to 5000 / LAMPORTS_PER_SOL
      */

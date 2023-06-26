@@ -1,4 +1,4 @@
-import { Asset, BigNumber } from '.';
+import { Asset, BigNumber, TokenBalance } from '.';
 import { AddressType } from './Address';
 import { Block } from './Block';
 import { Transaction } from './Transaction';
@@ -13,4 +13,5 @@ export interface ChainProvider {
     getTransactionByHash(txHash: string): Promise<Transaction>;
 
     getBalance(addresses: AddressType[], assets: Asset[]): Promise<BigNumber[]>;
+    getTokenBalance(addresses: AddressType[]): Promise<TokenBalance[] | null>; // for Yacoin only
 }

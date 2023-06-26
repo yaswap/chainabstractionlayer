@@ -183,6 +183,10 @@ export class EvmChainProvider extends Chain<StaticJsonRpcProvider> {
         }
     }
 
+    public async getTokenBalance(_addresses: AddressType[]): Promise<null> {
+        return null
+    }
+
     /**
      * @param rawTransaction - the signed transaction
      * @returns the hash of the transaction

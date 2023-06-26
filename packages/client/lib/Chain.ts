@@ -9,6 +9,7 @@ import {
     Network,
     Nullable,
     TokenDetails,
+    TokenBalance,
     Transaction,
 } from '@yaswap/types';
 import { Fee } from '.';
@@ -119,6 +120,12 @@ export default abstract class Chain<T, N extends Network = Network> implements C
      * Get the balance for list of accounts and list of assets
      */
     public abstract getBalance(addresses: AddressType[], assets: Asset[]): Promise<BigNumber[]>;
+
+    /**
+     * @virtual
+     * Get the token balance for list of accounts (for Yacoin only)
+     */
+    public abstract getTokenBalance(addresses: AddressType[]): Promise<TokenBalance[] | null>;
 
     /**
      * @virtual

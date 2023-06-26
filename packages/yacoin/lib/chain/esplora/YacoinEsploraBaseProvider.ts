@@ -1,7 +1,7 @@
 import { HttpClient } from '@yaswap/client';
-import { AddressType } from '@yaswap/types';
+import { AddressType, BigNumber } from '@yaswap/types';
 import { TxNotFoundError } from '@yaswap/errors';
-import { flatten } from 'lodash';
+import { flatten, uniq } from 'lodash';
 import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { YacoinBaseChainProvider } from '../YacoinBaseChainProvider';
@@ -90,6 +90,40 @@ export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
 
         const utxos = flatten(utxoSets)
         return utxos
+    }
+
+    async getTokenUnspentTransactions(_addresses: AddressType[], tokenName: string): Promise<UTXO[]> {
+        const addresses = _addresses.map((a) => a.toString());
+        const data: EsploraTypes.BatchTokenUTXOInfo = await this.getAllTokenUnspentTransactions(addresses)
+
+        const utxos = data.filter(({ token_name }) => {
+            if (token_name === tokenName) {
+                return true;
+            }
+            return false;
+        })
+        .map(({ token_utxos }) => {
+            return token_utxos.map(({ address, utxo }) => {
+                return utxo.map((obj) => ({
+                    ...obj,
+                    address,
+                    satoshis: obj.value,
+                    amount: new BigNumber(obj.value).dividedBy(1e6).toNumber(),
+                    blockHeight: obj.status.block_height,
+                }));
+            });
+        });
+
+        return flatten(flatten(utxos));
+    }
+
+    async getAllTokenUnspentTransactions(_addresses: AddressType[]): Promise<EsploraTypes.BatchTokenUTXOInfo> {
+        const addresses = _addresses.map((a) => a.toString());
+        const data: EsploraTypes.BatchTokenUTXOInfo = await this.httpClient.nodePost('/addresses/token_utxo', {
+            addresses: uniq(addresses),
+        });
+
+        return data
     }
 
     public async getAddressTransactionCounts(_addresses: AddressType[]) {

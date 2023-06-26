@@ -1,6 +1,6 @@
 import { Chain, Fee, HttpClient } from '@yaswap/client';
 import { BlockNotFoundError } from '@yaswap/errors';
-import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yaswap/types';
+import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction, TokenBalance } from '@yaswap/types';
 import { flatten } from 'lodash';
 import { YacoinEsploraBaseProvider } from './YacoinEsploraBaseProvider';
 import { YacoinEsploraBatchBaseProvider } from './YacoinEsploraBatchBaseProvider';
@@ -73,6 +73,21 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
         const _utxos = await this.provider.getUnspentTransactions(addresses);
         const utxos = flatten(_utxos);
         return [utxos.reduce((acc, utxo) => acc.plus(utxo.value), new BigNumber(0))];
+    }
+
+    public async getTokenBalance(_addresses: AddressType[]): Promise<TokenBalance[]> {
+        const addresses = _addresses.map((a) => a.toString());
+        const batchTokenUTXOInfo = await this.provider.getAllTokenUnspentTransactions(addresses);
+        console.log('TACA ===> [CAL] getTokenBalance, batchTokenUTXOInfo = ', batchTokenUTXOInfo)
+        return batchTokenUTXOInfo.map(({ token_name, balance, token_info }) => ({
+            "name": token_name,
+            "balance": new BigNumber(balance).dividedBy(1e6/Math.pow(10, token_info.units)).toNumber(),
+            "totalSupply": token_info.amount,
+            "units": token_info.units,
+            "reissuable": token_info.reissuable,
+            "blockHash": token_info.block_hash,
+            "ipfsHash": token_info.ipfs_hash,
+        }))
     }
 
     async getFees(): Promise<FeeDetails> {

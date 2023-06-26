@@ -16,6 +16,26 @@ export type UTXO = {
     value: number;
 };
 
+export type BatchUTXOs = { address: string; utxo: UTXO[] }[];
+
+export type TokenInfo = {
+    token_type: string;
+    amount: number;
+    units: number;
+    reissuable: boolean;
+    block_hash?: string;
+    ipfs_hash?: string;
+};
+
+export type TokenUTXOInfo = {
+    token_name: string;
+    balance: number;
+    token_info: TokenInfo;
+    token_utxos: BatchUTXOs;
+};
+
+export type BatchTokenUTXOInfo = TokenUTXOInfo[];
+
 export type Address = {
     address: string
     funded_txo_count: number
@@ -66,8 +86,6 @@ export type Block = {
     bits: number;
     difficulty: number;
 };
-
-export type BatchUTXOs = { address: string; utxo: UTXO[] }[];
 
 export interface EsploraApiProviderOptions {
     url: string;

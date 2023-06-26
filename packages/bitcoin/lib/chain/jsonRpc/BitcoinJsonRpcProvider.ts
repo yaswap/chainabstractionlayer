@@ -111,6 +111,10 @@ export class BitcoinJsonRpcProvider extends Chain<BitcoinJsonRpcBaseProvider> {
         return [utxos.reduce((acc, utxo) => acc.plus(utxo.value), new BigNumber(0))];
     }
 
+    public async getTokenBalance(_addresses: AddressType[]): Promise<null> {
+        return null
+    }
+
     public async getFees(): Promise<FeeDetails> {
         if (this.feeProvider) {
             return this.feeProvider.getFees();

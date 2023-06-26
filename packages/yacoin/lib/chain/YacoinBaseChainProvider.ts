@@ -1,5 +1,5 @@
 import { AddressType, Transaction } from '@yaswap/types';
-import { AddressTxCounts, UTXO } from '../types';
+import { AddressTxCounts, UTXO, YacoinEsploraTypes } from '../types';
 
 export abstract class YacoinBaseChainProvider {
     public abstract formatTransaction(tx: any): Promise<Transaction>;
@@ -12,6 +12,8 @@ export abstract class YacoinBaseChainProvider {
     public abstract getFeePerByte(numberOfBlocks?: number): Promise<number>;
 
     public abstract getUnspentTransactions(addresses: AddressType[]): Promise<UTXO[]>;
+    public abstract getTokenUnspentTransactions(addresses: AddressType[], tokenName: string): Promise<UTXO[]>;
+    public abstract getAllTokenUnspentTransactions(addresses: AddressType[]): Promise<YacoinEsploraTypes.BatchTokenUTXOInfo>;
 
     public abstract getAddressTransactionCounts(_addresses: AddressType[]): Promise<AddressTxCounts>;
 
