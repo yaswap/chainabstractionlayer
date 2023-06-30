@@ -28,6 +28,15 @@ export default class HttpClient {
         return response as unknown as O;
     }
 
+    public static async head<I = any, O = any>(url: string, params: I = {} as I, config?: AxiosRequestConfig): Promise<any> {
+        const response = await axios
+            .get(url, { ...config, params })
+            .then((response) => response.headers)
+            .catch(HttpClient.handleError);
+
+        return response as unknown as O;
+    }
+
     public async nodeGet<I = any, O = any>(url: string, params: I = {} as I, config?: AxiosRequestConfig): Promise<O> {
         const response = await this._node
             .get(url, { ...config, params })
