@@ -29,6 +29,7 @@ export abstract class EvmBaseWalletProvider<Provider extends BaseProvider, S ext
     }
 
     public async sendTransaction(txRequest: EthereumTransactionRequest): Promise<Transaction<EthersTransactionResponse>> {
+        console.log('TACA ===> [chainify] EvmBaseWalletProvider.ts, sendTransaction, txRequest = ', txRequest)
         const chainId = Number(this.chainProvider.getNetwork().chainId);
 
         // default to average fee
