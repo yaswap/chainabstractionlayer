@@ -69,6 +69,7 @@ export interface UTXO {
     vout: number;
     value: number;
     address: string;
+    script?: string;
     derivationPath?: string;
 }
 

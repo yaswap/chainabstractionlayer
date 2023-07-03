@@ -14,6 +14,7 @@ export type UTXO = {
     vout: number;
     status: TxStatus;
     value: number;
+    script?: string;
 };
 
 export type BatchUTXOs = { address: string; utxo: UTXO[] }[];
