@@ -112,6 +112,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
     }
 
     public async sendTransaction(options: TransactionRequest) {
+        console.log('TACA ===> [chainify] YacoinBaseWallet.ts, sendTransaction, options = ', options)
         return this._sendTransaction(this.sendOptionsToOutputs([options]), options.fee as number);
     }
 
