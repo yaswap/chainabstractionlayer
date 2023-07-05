@@ -18,7 +18,7 @@ import {
     Transaction as YaTransaction,
     UTXO,
 } from '../types';
-import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
+import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins, getPubKeyHash } from '../utils';
 
 const ADDRESS_GAP = 10
 const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
@@ -477,10 +477,45 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
         transactions.forEach((tx) => {
             if (tx.to && tx.value && tx.value.gt(0)) {
-                targets.push({
-                    address: tx.to.toString(),
-                    value: tx.value.toNumber(),
-                });
+                // token output
+                console.log('TACA ===> [chainify] YacoinBaseWallet.ts, sendOptionsToOutputs, tx = ', tx)
+                if (tx.asset?.type !== 'native') {
+                    const recipientPubKeyHash = getPubKeyHash(tx.to.toString(), this._network);
+
+                    const yactBuffer = Buffer.alloc(4)
+                    yactBuffer.writeUInt32BE(0x79616374, 0)
+
+                    const tokenNameBuf = Buffer.from(tx.asset.name, "utf-8");
+
+                    const tokenNameLenBuf = Buffer.alloc(1);
+                    tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
+
+                    const tokenAmountBuf = Buffer.alloc(8)
+                    tokenAmountBuf.writeBigInt64LE(BigInt(tx.value.toNumber()))
+
+                    const tokenTransferScriptBuf = Buffer.concat([yactBuffer, tokenNameLenBuf, tokenNameBuf, tokenAmountBuf]);
+
+                    const scriptBuffer = script.compile([
+                        script.OPS.OP_DUP,
+                        script.OPS.OP_HASH160,
+                        recipientPubKeyHash,
+                        script.OPS.OP_EQUALVERIFY,
+                        script.OPS.OP_CHECKSIG,
+                        script.OPS.OP_NOP4,
+                        tokenTransferScriptBuf,
+                        script.OPS.OP_DROP
+                    ]);
+                    targets.push({
+                        value: 0,
+                        script: scriptBuffer,
+                    });
+                    return
+                } else { // coin output
+                    targets.push({
+                        address: tx.to.toString(),
+                        value: tx.value.toNumber(),
+                    });
+                }
             }
 
             if (tx.data) {
