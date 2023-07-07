@@ -21,6 +21,8 @@ export interface YacoinHDWalletProviderOptions extends YacoinWalletProviderOptio
 export interface OutputTarget {
     address?: string;
     script?: Buffer;
+    tokenName?: string;
+    token_value?: number;
     value: number;
 }
 
@@ -68,6 +70,7 @@ export interface UTXO {
     txid: string;
     vout: number;
     value: number;
+    token_value?: number;
     address: string;
     script?: string;
     derivationPath?: string;

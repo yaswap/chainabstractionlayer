@@ -1,1 +1,1 @@
-declare module 'coinselect';
+declare module '@yaswap/yacoinjs-coinselect';

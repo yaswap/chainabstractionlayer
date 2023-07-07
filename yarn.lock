@@ -3654,16 +3654,23 @@ __metadata:
     "@yaswap/errors": "workspace:*"
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
+    "@yaswap/yacoinjs-coinselect": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect"
     "@yaswap/yacoinjs-lib": ^v1.1.0
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
     bitcoinjs-message: 2.2.0
-    coinselect: ^3.1.12
     lodash: 4.17.21
     memoizee: ^0.4.15
   languageName: unknown
   linkType: soft
+
+"@yaswap/yacoinjs-coinselect@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect::locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin":
+  version: 1.0.0
+  resolution: "@yaswap/yacoinjs-coinselect@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect#/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect::hash=8403af&locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin"
+  checksum: a4cbe7763a7facc2dec17072a44fcd6f5153b5ee7caf439cd4c39c80205f8b90de38a3831827bdcdac2e505bfb2b06455989fa3c39411c9aa95c6c7ca04a164e
+  languageName: node
+  linkType: hard
 
 "@yaswap/yacoinjs-lib@npm:^v1.1.0":
   version: 1.1.0

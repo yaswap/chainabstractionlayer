@@ -1,1 +1,1 @@
-declare module 'coinselect/accumulative';
+declare module '@yaswap/yacoinjs-coinselect/accumulative';

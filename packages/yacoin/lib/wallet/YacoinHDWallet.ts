@@ -142,13 +142,17 @@ export class YacoinHDWalletProvider extends YacoinBaseWalletProvider implements 
         const network = this._network
 
         const unusedAddress = await this.getUnusedAddress(true)
-        const { inputs, change, fee } = await this.getInputsForAmount(targets, feePerByte, fixedInputs)
+        const { inputs, coinChange, tokenChange, fee } = await this.getInputsForAmount(targets, feePerByte, fixedInputs)
     
-        if (change) {
+        if (coinChange) {
           targets.push({
             address: unusedAddress.address,
-            value: change.value
+            value: coinChange.value,
           })
+        }
+
+        if (tokenChange) {
+            console.log('TACA ===> [chainify] YacoinHDWallet.ts, buildTransaction, tokenChange = ', tokenChange)
         }
     
         var tx = new TransactionBuilder(network);
@@ -182,9 +186,9 @@ export class YacoinHDWalletProvider extends YacoinBaseWalletProvider implements 
             _feePerByte = await this.chainProvider.getProvider().getFeePerByte();
         }
 
-        const { inputs, outputs, change } = await this.getInputsForAmount([], _feePerByte, [], true);
+        const { inputs, outputs, coinChange } = await this.getInputsForAmount([], _feePerByte, [], true);
 
-        if (change) {
+        if (coinChange) {
             throw new Error('There should not be any change for sweeping transaction');
         }
 

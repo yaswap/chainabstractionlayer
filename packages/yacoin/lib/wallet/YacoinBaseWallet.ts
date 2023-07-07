@@ -32,6 +32,16 @@ export enum AddressSearchType {
 
 type DerivationCache = { [index: string]: Address };
 
+function bigint_to_Buffer(input: bigint){
+    const bytesArray = [];
+    for(let i = 0; i < 8; i++){
+        let shift = input >> BigInt(8 * i)
+        shift &= BigInt(255)
+        bytesArray[i] = Number(String(shift))
+    }
+    return Buffer.from(bytesArray)
+}
+
 export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider = any, S = any> extends Wallet<T, S> {
     protected _baseDerivationPath: string;
     protected _network: YacoinNetwork;
@@ -333,6 +343,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
     protected async getTotalFee(opts: TransactionRequest, max: boolean) {
         const targets = this.sendOptionsToOutputs([opts]);
+        console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getTotalFee, opts = ', opts, ', max = ', max, ', targets = ', targets)
         if (!max) {
             const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
             return fee;
@@ -353,8 +364,10 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         fixedInputs: Input[] = [],
         sweep = false
     ) {
+        const tokenOutput = _targets.find((target) => target.tokenName !== undefined);
         const feePerBytePromise = this.chainProvider.getProvider().getFeePerByte();
         let utxos: UTXO[] = [];
+        let tokenUtxos: UTXO[] = [];
 
         const addresses: Address[] = await this.getUsedAddresses();
         const fixedUtxos: UTXO[] = [];
@@ -386,6 +399,19 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             utxos = fixedUtxos;
         }
 
+        if (tokenOutput) {
+            const _utxos: UTXO[] = await this.chainProvider.getProvider().getTokenUnspentTransactions(addresses, tokenOutput.tokenName);
+            tokenUtxos.push(
+                ..._utxos.map((utxo) => {
+                    const addr = addresses.find((a) => a.address === utxo.address);
+                    return {
+                        ...utxo,
+                        derivationPath: addr.derivationPath,
+                    };
+                })
+            );
+        }
+
         const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0);
 
         if (!feePerByte) feePerByte = await feePerBytePromise;
@@ -410,18 +436,20 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
 
-            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value }));
             targets.push({ id: 'main', value: amountToSend.minus(outputBalance).toNumber() });
         } else {
-            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value }));
         }
 
-        const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
+        const { inputs, outputs, fee, coinChange, tokenChange } = selectCoins(utxos, tokenUtxos, targets, Math.ceil(feePerByte), fixedUtxos);
 
+        console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getInputsForAmount, inputs = ', inputs, ', outputs = ', outputs, ', coinChange = ', coinChange, ', tokenChange = ', tokenChange);
         if (inputs && outputs) {
             return {
                 inputs,
-                change,
+                coinChange,
+                tokenChange,
                 outputs,
                 fee,
             };
@@ -448,8 +476,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                     const tokenNameLenBuf = Buffer.alloc(1);
                     tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
 
-                    const tokenAmountBuf = Buffer.alloc(8)
-                    tokenAmountBuf.writeBigInt64LE(BigInt(tx.value.toNumber()))
+                    const tokenAmountBuf = bigint_to_Buffer(BigInt(tx.value.toNumber()))
 
                     const tokenTransferScriptBuf = Buffer.concat([yactBuffer, tokenNameLenBuf, tokenNameBuf, tokenAmountBuf]);
 
@@ -465,7 +492,9 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                     ]);
                     targets.push({
                         value: 0,
+                        token_value: tx.value.toNumber(),
                         script: scriptBuffer,
+                        tokenName: tx.asset?.name,
                     });
                     return
                 } else { // coin output

@@ -14,6 +14,7 @@ export type UTXO = {
     vout: number;
     status: TxStatus;
     value: number;
+    token_value?: number;
     script?: string;
 };
 

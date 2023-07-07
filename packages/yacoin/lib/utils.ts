@@ -2,8 +2,8 @@ import { InvalidAddressError } from '@yaswap/errors';
 import { AddressType, BigNumber, Transaction, TxStatus } from '@yaswap/types';
 import * as yacoin from '@yaswap/yacoinjs-lib';
 import * as classify from '@yaswap/yacoinjs-lib/src/classify';
-import coinselect from 'coinselect';
-import coinselectAccumulative from 'coinselect/accumulative';
+import coinselect from '@yaswap/yacoinjs-coinselect';
+import { accumulativeCoin } from '@yaswap/yacoinjs-coinselect/accumulative';
 import { YacoinNetwork, Input, Output, Transaction as YacoinTransaction, UTXO } from './types';
 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
@@ -62,6 +62,8 @@ function compressPubKey(pubKey: string) {
 
 type CoinSelectTarget = {
     value: number;
+    tokenName?: string;
+    token_value?: number;
     script?: Buffer;
     id?: string;
 };
@@ -73,14 +75,14 @@ type CoinSelectResponse = {
     fee: number;
 };
 
-type CoinSelectFunction = (utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number) => CoinSelectResponse;
+type CoinSelectFunction = (utxos: UTXO[], tokenUtxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number) => CoinSelectResponse;
 
-function selectCoins(utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number, fixedInputs: UTXO[] = []) {
+function selectCoins(utxos: UTXO[], tokenUtxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number, fixedInputs: UTXO[] = []) {
     let selectUtxos = utxos;
 
     // Default coinselect won't accumulate some inputs
     // TODO: does coinselect need to be modified to ABSOLUTELY not skip an input?
-    const coinselectStrat: CoinSelectFunction = fixedInputs.length ? coinselectAccumulative : coinselect;
+    const coinselectStrat: CoinSelectFunction = fixedInputs.length ? accumulativeCoin : coinselect;
     if (fixedInputs.length) {
         selectUtxos = [
             // Order fixed inputs to the start of the list so they are used
@@ -89,14 +91,16 @@ function selectCoins(utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: num
         ];
     }
 
-    const { inputs, outputs, fee } = coinselectStrat(selectUtxos, targets, Math.ceil(feePerByte));
+    const { inputs, outputs, fee } = coinselectStrat(selectUtxos, tokenUtxos, targets, Math.ceil(feePerByte));
 
-    let change;
+    let coinChange;
+    let tokenChange;
     if (inputs && outputs) {
-        change = outputs.find((output) => output.id !== 'main');
+        coinChange = outputs.find((output) => output.id === 'coin_change');
+        tokenChange = outputs.find((output) => output.id === 'token_change');
     }
 
-    return { inputs, outputs, fee, change };
+    return { inputs, outputs, fee, coinChange, tokenChange };
 }
 
 const OUTPUT_TYPES_MAP = {
