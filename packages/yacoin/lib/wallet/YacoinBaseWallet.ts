@@ -341,7 +341,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                 targets.filter((t) => !t.value),
                 opts.fee as number,
                 [],
-                NUMBER_ADDRESS_PER_CALL,
                 true
             );
             return fee;
@@ -352,121 +351,80 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         _targets: OutputTarget[],
         feePerByte?: number,
         fixedInputs: Input[] = [],
-        numAddressPerCall = NUMBER_ADDRESS_PER_CALL,
         sweep = false
     ) {
-        let addressIndex = 0;
-        let changeAddresses: Address[] = [];
-        let externalAddresses: Address[] = [];
-        const addressCountMap = {
-            change: 0,
-            nonChange: 0,
-        };
-
         const feePerBytePromise = this.chainProvider.getProvider().getFeePerByte();
         let utxos: UTXO[] = [];
 
-        while (addressCountMap.change < ADDRESS_GAP || addressCountMap.nonChange < ADDRESS_GAP) {
-            let addrList: Address[] = [];
+        const addresses: Address[] = await this.getUsedAddresses();
+        const fixedUtxos: UTXO[] = [];
 
-            if (addressCountMap.change < ADDRESS_GAP) {
-                // Scanning for change addr
-                changeAddresses = await this.getAddresses(addressIndex, numAddressPerCall, true);
-                addrList = addrList.concat(changeAddresses);
-            } else {
-                changeAddresses = [];
+        if (fixedInputs.length > 0) {
+            for (const input of fixedInputs) {
+                const txHex = await this.chainProvider.getProvider().getRawTransactionByHash(input.txid);
+                const tx = decodeRawTransaction(txHex, this._network);
+                const value = new BigNumber(tx.vout[input.vout].value).times(1e6).toNumber();
+                const address = tx.vout[input.vout].scriptPubKey.addresses[0];
+                const walletAddress = await this.getWalletAddress(address);
+                const utxo = { ...input, value, address, derivationPath: walletAddress.derivationPath };
+                fixedUtxos.push(utxo);
             }
+        }
 
-            if (addressCountMap.nonChange < ADDRESS_GAP) {
-                // Scanning for non change addr
-                externalAddresses = await this.getAddresses(addressIndex, numAddressPerCall, false);
-                addrList = addrList.concat(externalAddresses);
-            }
+        if (!sweep || fixedUtxos.length === 0) {
+            const _utxos: UTXO[] = await this.chainProvider.getProvider().getUnspentTransactions(addresses);
+            utxos.push(
+                ..._utxos.map((utxo) => {
+                    const addr = addresses.find((a) => a.address === utxo.address);
+                    return {
+                        ...utxo,
+                        derivationPath: addr.derivationPath,
+                    };
+                })
+            );
+        } else {
+            utxos = fixedUtxos;
+        }
 
-            const fixedUtxos: UTXO[] = [];
-            if (fixedInputs.length > 0) {
-                for (const input of fixedInputs) {
-                    const txHex = await this.chainProvider.getProvider().getRawTransactionByHash(input.txid);
-                    const tx = decodeRawTransaction(txHex, this._network);
-                    const value = new BigNumber(tx.vout[input.vout].value).times(1e6).toNumber();
-                    const address = tx.vout[input.vout].scriptPubKey.addresses[0];
-                    const walletAddress = await this.getWalletAddress(address);
-                    const utxo = { ...input, value, address, derivationPath: walletAddress.derivationPath };
-                    fixedUtxos.push(utxo);
-                }
-            }
+        const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0);
 
-            if (!sweep || fixedUtxos.length === 0) {
-                const _utxos: UTXO[] = await this.chainProvider.getProvider().getUnspentTransactions(addrList);
-                utxos.push(
-                    ..._utxos.map((utxo) => {
-                        const addr = addrList.find((a) => a.address === utxo.address);
-                        return {
-                            ...utxo,
-                            derivationPath: addr.derivationPath,
-                        };
-                    })
-                );
-            } else {
-                utxos = fixedUtxos;
-            }
+        if (!feePerByte) feePerByte = await feePerBytePromise;
+        const minRelayFee = await this.chainProvider.getProvider().getMinRelayFee();
+        if (feePerByte < minRelayFee) {
+            throw new Error(`Fee supplied (${feePerByte} sat/b) too low. Minimum relay fee is ${minRelayFee} sat/b`);
+        }
 
-            const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0);
+        let targets: CoinSelectTarget[];
+        if (sweep) {
+            const outputBalance = _targets.reduce((a, b) => a + (b['value'] || 0), 0);
 
-            const transactionCounts: AddressTxCounts = await this.chainProvider.getProvider().getAddressTransactionCounts(addrList);
+            const sweepOutputSize = 39;
+            const paymentOutputSize = _targets.filter((t) => t.value && t.address).length * 39;
+            const scriptOutputSize = _targets
+                .filter((t) => !t.value && t.script)
+                .reduce((size, t) => size + 39 + t.script.byteLength, 0);
 
-            if (!feePerByte) feePerByte = await feePerBytePromise;
-            const minRelayFee = await this.chainProvider.getProvider().getMinRelayFee();
-            if (feePerByte < minRelayFee) {
-                throw new Error(`Fee supplied (${feePerByte} sat/b) too low. Minimum relay fee is ${minRelayFee} sat/b`);
-            }
+            const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
+            const inputSize = utxos.length * 153;
 
-            let targets: CoinSelectTarget[];
-            if (sweep) {
-                const outputBalance = _targets.reduce((a, b) => a + (b['value'] || 0), 0);
+            const sweepFee = feePerByte * (inputSize + outputSize);
+            const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
 
-                const sweepOutputSize = 39;
-                const paymentOutputSize = _targets.filter((t) => t.value && t.address).length * 39;
-                const scriptOutputSize = _targets
-                    .filter((t) => !t.value && t.script)
-                    .reduce((size, t) => size + 39 + t.script.byteLength, 0);
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
+            targets.push({ id: 'main', value: amountToSend.minus(outputBalance).toNumber() });
+        } else {
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
+        }
 
-                const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
-                const inputSize = utxos.length * 153;
+        const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
 
-                const sweepFee = feePerByte * (inputSize + outputSize);
-                const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
-
-                targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
-                targets.push({ id: 'main', value: amountToSend.minus(outputBalance).toNumber() });
-            } else {
-                targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
-            }
-
-            const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
-
-            if (inputs && outputs) {
-                return {
-                    inputs,
-                    change,
-                    outputs,
-                    fee,
-                };
-            }
-
-            for (const address of addrList) {
-                const isUsed = transactionCounts[address.address];
-                const isChangeAddress = changeAddresses.find((a) => address.address === a.address);
-                const key = isChangeAddress ? 'change' : 'nonChange';
-
-                if (isUsed) {
-                    addressCountMap[key] = 0;
-                } else {
-                    addressCountMap[key]++;
-                }
-            }
-
-            addressIndex += numAddressPerCall;
+        if (inputs && outputs) {
+            return {
+                inputs,
+                change,
+                outputs,
+                fee,
+            };
         }
 
         throw new InsufficientBalanceError('Not enough balance');
