@@ -3655,7 +3655,7 @@ __metadata:
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
     "@yaswap/yacoinjs-coinselect": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect"
-    "@yaswap/yacoinjs-lib": ^v1.1.0
+    "@yaswap/yacoinjs-lib": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib"
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
@@ -3672,9 +3672,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yaswap/yacoinjs-lib@npm:^v1.1.0":
+"@yaswap/yacoinjs-lib@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib::locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin":
   version: 1.1.0
-  resolution: "@yaswap/yacoinjs-lib@npm:1.1.0"
+  resolution: "@yaswap/yacoinjs-lib@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib#/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib::hash=fa7b1f&locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin"
   dependencies:
     bech32: ^1.1.2
     bip174: ^2.0.1
@@ -3691,7 +3691,7 @@ __metadata:
     typeforce: ^1.11.3
     varuint-bitcoin: ^1.0.4
     wif: ^2.0.1
-  checksum: cad40bcc7d068821656edf8b66e6b893434b1bbfc3225487eaacd25b99926cbcab8d6a60eed1ceca738cf979c5d017aeec6c754faa42a15bf773a5f6948a6c19
+  checksum: 4560ff5b50781606fb2da73424824ae3a30a4fed45e752bd0b2b5924aceab69ffd0314b9496a3b33c7824aeecc183cd5f0790d5aa7b75fcce671ba03df1f6c2c
   languageName: node
   linkType: hard
 

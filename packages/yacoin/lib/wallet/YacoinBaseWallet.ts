@@ -345,7 +345,9 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         const targets = this.sendOptionsToOutputs([opts]);
         console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getTotalFee, opts = ', opts, ', max = ', max, ', targets = ', targets)
         if (!max) {
-            const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
+            // const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
+            const { inputs, coinChange, tokenChange, fee } = await this.getInputsForAmount(targets, opts.fee as number);
+            console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getTotalFee, inputs = ', inputs, ', targets = ', targets, ', coinChange = ', coinChange, ', tokenChange = ', tokenChange, ', fee = ', fee)
             return fee;
         } else {
             const { fee } = await this.getInputsForAmount(
@@ -458,6 +460,39 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         throw new InsufficientBalanceError('Not enough balance');
     }
 
+    protected compileTokenTransferTarget(address: string, tokenName: string, tokenValue: number): OutputTarget {
+        const recipientPubKeyHash = getPubKeyHash(address, this._network);
+
+        const yactBuffer = Buffer.alloc(4)
+        yactBuffer.writeUInt32BE(0x79616374, 0)
+
+        const tokenNameBuf = Buffer.from(tokenName, "utf-8");
+
+        const tokenNameLenBuf = Buffer.alloc(1);
+        tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
+
+        const tokenAmountBuf = bigint_to_Buffer(BigInt(tokenValue))
+
+        const tokenTransferScriptBuf = Buffer.concat([yactBuffer, tokenNameLenBuf, tokenNameBuf, tokenAmountBuf]);
+
+        const scriptBuffer = script.compile([
+            script.OPS.OP_DUP,
+            script.OPS.OP_HASH160,
+            recipientPubKeyHash,
+            script.OPS.OP_EQUALVERIFY,
+            script.OPS.OP_CHECKSIG,
+            script.OPS.OP_NOP4,
+            tokenTransferScriptBuf,
+            script.OPS.OP_DROP
+        ]);
+        return {
+            value: 0,
+            token_value: tokenValue,
+            script: scriptBuffer,
+            tokenName
+        }
+    }
+
     protected sendOptionsToOutputs(transactions: TransactionRequest[]): OutputTarget[] {
         const targets: OutputTarget[] = [];
 
@@ -466,36 +501,8 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                 // token output
                 console.log('TACA ===> [chainify] YacoinBaseWallet.ts, sendOptionsToOutputs, tx = ', tx)
                 if (tx.asset?.type !== 'native') {
-                    const recipientPubKeyHash = getPubKeyHash(tx.to.toString(), this._network);
-
-                    const yactBuffer = Buffer.alloc(4)
-                    yactBuffer.writeUInt32BE(0x79616374, 0)
-
-                    const tokenNameBuf = Buffer.from(tx.asset.name, "utf-8");
-
-                    const tokenNameLenBuf = Buffer.alloc(1);
-                    tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
-
-                    const tokenAmountBuf = bigint_to_Buffer(BigInt(tx.value.toNumber()))
-
-                    const tokenTransferScriptBuf = Buffer.concat([yactBuffer, tokenNameLenBuf, tokenNameBuf, tokenAmountBuf]);
-
-                    const scriptBuffer = script.compile([
-                        script.OPS.OP_DUP,
-                        script.OPS.OP_HASH160,
-                        recipientPubKeyHash,
-                        script.OPS.OP_EQUALVERIFY,
-                        script.OPS.OP_CHECKSIG,
-                        script.OPS.OP_NOP4,
-                        tokenTransferScriptBuf,
-                        script.OPS.OP_DROP
-                    ]);
-                    targets.push({
-                        value: 0,
-                        token_value: tx.value.toNumber(),
-                        script: scriptBuffer,
-                        tokenName: tx.asset?.name,
-                    });
+                    const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.asset.name, tx.value.toNumber())
+                    targets.push(tokenTransferTarget);
                     return
                 } else { // coin output
                     targets.push({
