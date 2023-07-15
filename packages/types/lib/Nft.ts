@@ -6,6 +6,7 @@ export interface NFTAsset {
         symbol?: string;
         image_url?: string;
         external_link?: string;
+        ipfs_hash?: string;
     };
     collection?: {
         name: string;

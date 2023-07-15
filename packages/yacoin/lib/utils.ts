@@ -1,5 +1,6 @@
 import { InvalidAddressError } from '@yaswap/errors';
 import { AddressType, BigNumber, Transaction, TxStatus } from '@yaswap/types';
+import { HttpClient } from '@yaswap/client';
 import * as yacoin from '@yaswap/yacoinjs-lib';
 import * as classify from '@yaswap/yacoinjs-lib/src/classify';
 import coinselect from '@yaswap/yacoinjs-coinselect';
@@ -7,6 +8,11 @@ import { accumulativeCoin } from '@yaswap/yacoinjs-coinselect/accumulative';
 import { YacoinNetwork, Input, Output, Transaction as YacoinTransaction, UTXO } from './types';
 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
+interface TokenMetadata {
+    name?: string;
+    description?: string;
+    imageURL?: string;
+}
 
 function calculateFee(numInputs: number, numOutputs: number, feePerByte: number) {
 //   {
@@ -226,6 +232,25 @@ function validateAddress(_address: AddressType, network: YacoinNetwork) {
     }
 }
 
+async function getTokenMetadata(ipfsHash: string) {
+    const ipfsHashUrl = `https://ipfs.io/ipfs/${ipfsHash}`
+    const headers = await HttpClient.head(ipfsHashUrl)
+    let metadata: TokenMetadata = {}
+    console.log('TACA ===> [chainify] getTokenMetadata, ipfsHash = ', ipfsHash, ', headers = ', headers)
+    if (headers['content-type'] === 'application/json') {
+      const { name, description, image } = await HttpClient.get(ipfsHashUrl)
+      metadata = {
+        name,
+        description,
+        imageURL: image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+      }
+    } else if (headers['content-type']?.startsWith('image')) {
+      metadata.imageURL = ipfsHashUrl
+    }
+    console.log('TACA ===> [chainify] getTokenMetadata, headers = ', headers, ', metadata = ', metadata)
+    return metadata
+  }
+
 export {
     calculateFee,
     compressPubKey,
@@ -236,4 +261,5 @@ export {
     AddressTypes,
     getPubKeyHash,
     validateAddress,
+    getTokenMetadata
 };
