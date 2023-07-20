@@ -1,5 +1,5 @@
-import { ChainId } from '@liquality/cryptoassets';
-export { ChainId } from '@liquality/cryptoassets';
+import { ChainId } from '@yaswap/cryptoassets';
+export { ChainId } from '@yaswap/cryptoassets';
 
 export type AssetType = 'native' | 'erc20' | 'nft';
 

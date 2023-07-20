@@ -249,7 +249,7 @@ async function getTokenMetadata(ipfsHash: string) {
     }
     console.log('TACA ===> [chainify] getTokenMetadata, headers = ', headers, ', metadata = ', metadata)
     return metadata
-  }
+}
 
 export {
     calculateFee,
