@@ -498,7 +498,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
         transactions.forEach((tx) => {
             if (tx.to && tx.value && tx.value.gt(0)) {
-                // token output
+                // token/NFT output
                 console.log('TACA ===> [chainify] YacoinBaseWallet.ts, sendOptionsToOutputs, tx = ', tx)
                 if (tx.asset?.type !== 'native') {
                     const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.asset.name, tx.value.toNumber())

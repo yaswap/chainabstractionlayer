@@ -93,8 +93,16 @@ export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
     }
 
     async getTokenUnspentTransactions(_addresses: AddressType[], tokenName: string): Promise<UTXO[]> {
+        return this._getTokenUnspentTransactions(_addresses, tokenName, '/addresses/token_utxo')
+    }
+
+    async getNFTUnspentTransactions(_addresses: AddressType[], tokenName: string): Promise<UTXO[]> {
+        return this._getTokenUnspentTransactions(_addresses, tokenName, '/addresses/nft')
+    }
+
+    protected async _getTokenUnspentTransactions(_addresses: AddressType[], tokenName: string, url: string): Promise<UTXO[]> {
         const addresses = _addresses.map((a) => a.toString());
-        const data: EsploraTypes.BatchTokenUTXOInfo = await this.getAllTokenUnspentTransactions(addresses)
+        const data: EsploraTypes.BatchTokenUTXOInfo = await this._getAllTokenUnspentTransactions(addresses, url)
 
         const utxos = data.filter(({ token_name }) => {
             if (token_name === tokenName) {
@@ -118,8 +126,16 @@ export class YacoinEsploraBaseProvider extends YacoinBaseChainProvider {
     }
 
     async getAllTokenUnspentTransactions(_addresses: AddressType[]): Promise<EsploraTypes.BatchTokenUTXOInfo> {
+        return this._getAllTokenUnspentTransactions(_addresses, '/addresses/token_utxo')
+    }
+
+    async getAllNFTUnspentTransactions(_addresses: AddressType[]): Promise<EsploraTypes.BatchTokenUTXOInfo> {
+        return this._getAllTokenUnspentTransactions(_addresses, '/addresses/nft')
+    }
+
+    protected async _getAllTokenUnspentTransactions(_addresses: AddressType[], url: string): Promise<EsploraTypes.BatchTokenUTXOInfo> {
         const addresses = _addresses.map((a) => a.toString());
-        const data: EsploraTypes.BatchTokenUTXOInfo = await this.httpClient.nodePost('/addresses/token_utxo', {
+        const data: EsploraTypes.BatchTokenUTXOInfo = await this.httpClient.nodePost(url, {
             addresses: uniq(addresses),
         });
 

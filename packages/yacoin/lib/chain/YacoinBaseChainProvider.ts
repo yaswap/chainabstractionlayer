@@ -14,6 +14,8 @@ export abstract class YacoinBaseChainProvider {
     public abstract getUnspentTransactions(addresses: AddressType[]): Promise<UTXO[]>;
     public abstract getTokenUnspentTransactions(addresses: AddressType[], tokenName: string): Promise<UTXO[]>;
     public abstract getAllTokenUnspentTransactions(addresses: AddressType[]): Promise<YacoinEsploraTypes.BatchTokenUTXOInfo>;
+    public abstract getNFTUnspentTransactions(addresses: AddressType[], tokenName: string): Promise<UTXO[]>;
+    public abstract getAllNFTUnspentTransactions(addresses: AddressType[]): Promise<YacoinEsploraTypes.BatchTokenUTXOInfo>;
 
     public abstract getAddressTransactionCounts(_addresses: AddressType[]): Promise<AddressTxCounts>;
 

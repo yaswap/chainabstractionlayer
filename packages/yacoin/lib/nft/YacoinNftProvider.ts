@@ -1,26 +1,21 @@
-import { uniq } from 'lodash';
-import { Nft, Wallet, HttpClient } from '@yaswap/client';
+import { Nft, Wallet } from '@yaswap/client';
 import { UnsupportedMethodError } from '@yaswap/errors';
 import { Address, AddressType, AssetTypes, BigNumber, ChainId, NFTAsset, Transaction } from '@yaswap/types';
-import { BaseProvider } from '@ethersproject/providers';
+import { YacoinBaseChainProvider } from '../chain/YacoinBaseChainProvider';
 import { YacoinBaseWalletProvider } from '../wallet/YacoinBaseWallet';
-import { NftProviderConfig, YacoinEsploraTypes } from '../types';
+import { YacoinEsploraTypes } from '../types';
 import { getTokenMetadata } from '../utils';
 
-export class YacoinNftProvider extends Nft<BaseProvider, YacoinBaseWalletProvider> {
-    private readonly _batchHttpClient: HttpClient;
-
-    constructor(walletProvider: Wallet<BaseProvider, YacoinBaseWalletProvider>, config: NftProviderConfig) {
+export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWalletProvider> {
+    constructor(walletProvider: Wallet<YacoinBaseChainProvider, YacoinBaseWalletProvider>) {
         super(walletProvider);
-        this._batchHttpClient = new HttpClient({ baseURL: config.url });
     }
 
     async fetch(): Promise<NFTAsset[]> {
         const _addresses: Address[] = await this.walletProvider.getUsedAddresses();
         const addresses = _addresses.map((a) => a.toString());
-        const data: YacoinEsploraTypes.BatchTokenUTXOInfo = await this._batchHttpClient.nodePost('/addresses/nft', {
-            addresses: uniq(addresses),
-        });
+        const data: YacoinEsploraTypes.BatchTokenUTXOInfo = await this.walletProvider.getChainProvider().getProvider().getAllNFTUnspentTransactions(addresses)
+        console.log('TACA ===> YacoinNftProvider, data = ', data)
 
         const nftAssets: NFTAsset[] = [];
         for (const tokenInfo of data) {

@@ -97,7 +97,3 @@ export interface P2SHInput {
     vout: any;
     outputScript: Buffer;
 }
-
-export type NftProviderConfig = {
-    url: string;
-};
