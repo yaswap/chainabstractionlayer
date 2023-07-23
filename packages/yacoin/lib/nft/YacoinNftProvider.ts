@@ -60,18 +60,26 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
         return nftAssets;
     }
 
-    async transfer(contract: AddressType, receiver: AddressType): Promise<Transaction<any>> {
+    public async transfer(
+        contract: AddressType,
+        receiver: AddressType,
+        tokenIDs: string[],
+        values?: number[],
+        data?: string,
+        fee?: number
+    ): Promise<Transaction<any>> {
         return await this.walletProvider.sendTransaction({
             to: receiver,
-            value: new BigNumber(1), // transfer 1 nft
+            value: new BigNumber(1e6), // transfer 1 nft
             asset: {
                 contractAddress: contract.toString(),
-                chain: ChainId.Solana,
+                chain: ChainId.Yacoin,
                 decimals: 0,
-                code: '',
-                name: '',
+                code: tokenIDs[0],
+                name: tokenIDs[0],
                 type: AssetTypes.nft,
             },
+            fee
         });
     }
 
