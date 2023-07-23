@@ -402,7 +402,9 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         }
 
         if (tokenOutput) {
-            const _utxos: UTXO[] = await this.chainProvider.getProvider().getTokenUnspentTransactions(addresses, tokenOutput.tokenName);
+            const isNFTOutput = tokenOutput.tokenName.indexOf('#') !== -1
+            const _utxos: UTXO[] = isNFTOutput ? await this.chainProvider.getProvider().getNFTUnspentTransactions(addresses, tokenOutput.tokenName)
+                                                 : await this.chainProvider.getProvider().getTokenUnspentTransactions(addresses, tokenOutput.tokenName);
             tokenUtxos.push(
                 ..._utxos.map((utxo) => {
                     const addr = addresses.find((a) => a.address === utxo.address);
