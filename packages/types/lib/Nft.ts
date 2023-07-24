@@ -18,6 +18,7 @@ export interface NFTAsset {
     image_preview_url?: string;
     image_thumbnail_url?: string;
     name?: string;
+    metadataName?: string;
     amount?: string;
     standard?: string;
 }
