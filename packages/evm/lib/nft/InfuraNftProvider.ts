@@ -29,7 +29,7 @@ export class InfuraNftProvider extends EvmNftProvider {
         return (
             response?.assets?.reduce((result: NFTAsset[], nft: { contract: any; tokenId: any; supply: any; type: any; metadata: any }) => {
                 const { contract, tokenId, supply, type, metadata } = nft;
-                if (type in NftTypes && contract) {
+                if (type in NftTypes && contract && contract != '0x5734c666a977a44e51de24118f5272263a6bf9b0' && metadata?.name != '$ETH NFT EVENT') {
                     this.cache[contract] = {
                         contract: this.schemas[type].attach(contract),
                         schema: type as NftTypes,
