@@ -233,6 +233,9 @@ function validateAddress(_address: AddressType, network: YacoinNetwork) {
 }
 
 async function getTokenMetadata(ipfsHash: string) {
+    if (!ipfsHash) {
+        return {};
+    }
     const ipfsHashUrl = `https://ipfs.io/ipfs/${ipfsHash}`
     const headers = await HttpClient.head(ipfsHashUrl)
     let metadata: TokenMetadata = {}
