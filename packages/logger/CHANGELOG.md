@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.2.0
+
+### Minor Changes
+
+-   Integrate YA-token/YA-NFT
+
 ## 2.1.0
 
 ### Minor Changes
