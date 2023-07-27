@@ -78,7 +78,6 @@ export class YacoinEsploraBatchBaseProvider extends YacoinEsploraBaseProvider {
         const data: EsploraTypes.BatchTokenUTXOInfo = await this._batchHttpClient.nodePost(url, {
             addresses: uniq(addresses),
         });
-        console.log('TACA ===> [CAL] getAllTokenUnspentTransactions, data = ', data)
         return data
     }
 

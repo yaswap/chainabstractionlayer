@@ -122,7 +122,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
     }
 
     public async sendTransaction(options: TransactionRequest) {
-        console.log('TACA ===> [chainify] YacoinBaseWallet.ts, sendTransaction, options = ', options)
         return this._sendTransaction(this.sendOptionsToOutputs([options]), options.fee as number);
     }
 
@@ -343,11 +342,9 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
     protected async getTotalFee(opts: TransactionRequest, max: boolean) {
         const targets = this.sendOptionsToOutputs([opts]);
-        console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getTotalFee, opts = ', opts, ', max = ', max, ', targets = ', targets)
         if (!max) {
             // const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
-            const { inputs, coinChange, tokenChange, fee } = await this.getInputsForAmount(targets, opts.fee as number);
-            console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getTotalFee, inputs = ', inputs, ', targets = ', targets, ', coinChange = ', coinChange, ', tokenChange = ', tokenChange, ', fee = ', fee)
+            const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
             return fee;
         } else {
             const { fee } = await this.getInputsForAmount(
@@ -448,7 +445,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
         const { inputs, outputs, fee, coinChange, tokenChange } = selectCoins(utxos, tokenUtxos, targets, Math.ceil(feePerByte), fixedUtxos);
 
-        console.log('TACA ===> [chainify] YacoinBaseWallet.ts, getInputsForAmount, inputs = ', inputs, ', outputs = ', outputs, ', coinChange = ', coinChange, ', tokenChange = ', tokenChange);
         if (inputs && outputs) {
             return {
                 inputs,
@@ -501,7 +497,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         transactions.forEach((tx) => {
             if (tx.to && tx.value && tx.value.gt(0)) {
                 // token/NFT output
-                console.log('TACA ===> [chainify] YacoinBaseWallet.ts, sendOptionsToOutputs, tx = ', tx)
                 if (tx.asset?.type !== 'native') {
                     const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.asset.name, tx.value.toNumber())
                     targets.push(tokenTransferTarget);

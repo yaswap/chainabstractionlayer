@@ -78,7 +78,6 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
     public async getTokenBalance(_addresses: AddressType[]): Promise<TokenBalance[]> {
         const addresses = _addresses.map((a) => a.toString());
         const batchTokenUTXOInfo = await this.provider.getAllTokenUnspentTransactions(addresses);
-        console.log('TACA ===> [CAL] getTokenBalance, batchTokenUTXOInfo = ', batchTokenUTXOInfo)
         return batchTokenUTXOInfo.map(({ token_name, balance, token_info }) => ({
             "name": token_name,
             "balance": new BigNumber(balance).dividedBy(1e6/Math.pow(10, token_info.units)).toNumber(),

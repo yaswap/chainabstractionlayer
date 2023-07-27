@@ -15,18 +15,15 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
         const _addresses: Address[] = await this.walletProvider.getUsedAddresses();
         const addresses = _addresses.map((a) => a.toString());
         const data: YacoinEsploraTypes.BatchTokenUTXOInfo = await this.walletProvider.getChainProvider().getProvider().getAllNFTUnspentTransactions(addresses)
-        console.log('TACA ===> YacoinNftProvider, data = ', data)
 
         const nftAssets: NFTAsset[] = [];
         for (const tokenInfo of data) {
             if (tokenInfo.token_info) {
                 const { token_type, amount, units, reissuable, block_hash, ipfs_hash } = tokenInfo.token_info;
 
-                console.log('TACA ===> YacoinNftProvider, tokenInfo.token_info = ', tokenInfo.token_info)
                 // Sanity check NFT
                 if (token_type !== 'Unique-token' || amount !== 1 || units !== 0 || reissuable !== false) {
                     console.warn(`Invalid nft ${tokenInfo.token_name}`);
-                    console.log('TACA ===> YacoinNftProvider, token_type = ', token_type, ', amount = ', amount, ', units = ', units, ', reissuable = ', reissuable)
                 } else {
                     // Parse NFT name
                     const fullNFTName = tokenInfo.token_name

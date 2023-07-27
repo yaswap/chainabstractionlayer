@@ -152,7 +152,6 @@ export class YacoinHDWalletProvider extends YacoinBaseWalletProvider implements 
         }
 
         if (tokenChange) {
-            console.log('TACA ===> [chainify] YacoinHDWallet.ts, buildTransaction, tokenChange = ', tokenChange)
             const tokenTransferTarget = this.compileTokenTransferTarget(unusedAddress.address, tokenChange.tokenName, tokenChange.token_value)
             targets.push(tokenTransferTarget)
         }

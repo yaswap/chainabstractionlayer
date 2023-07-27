@@ -239,7 +239,6 @@ async function getTokenMetadata(ipfsHash: string) {
     const ipfsHashUrl = `https://ipfs.io/ipfs/${ipfsHash}`
     const headers = await HttpClient.head(ipfsHashUrl)
     let metadata: TokenMetadata = {}
-    console.log('TACA ===> [chainify] getTokenMetadata, ipfsHash = ', ipfsHash, ', headers = ', headers)
     if (headers['content-type'] === 'application/json') {
       const { name, description, image } = await HttpClient.get(ipfsHashUrl)
       metadata = {
@@ -250,7 +249,6 @@ async function getTokenMetadata(ipfsHash: string) {
     } else if (headers['content-type']?.startsWith('image')) {
       metadata.imageURL = ipfsHashUrl
     }
-    console.log('TACA ===> [chainify] getTokenMetadata, headers = ', headers, ', metadata = ', metadata)
     return metadata
 }
 

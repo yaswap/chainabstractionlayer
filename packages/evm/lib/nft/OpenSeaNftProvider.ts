@@ -27,7 +27,6 @@ export class OpenSeaNftProvider extends EvmNftProvider {
         const nfts = await this._httpClient.nodeGet(`assets?owner=${userAddress}`);
 
         return nfts.assets.reduce((result, nft) => {
-            console.log('TACA ===> OpenSeaNftProvider.ts, nft = ', nft)
             if (nft.asset_contract && nft.asset_contract.address != '0x5734c666a977a44e51de24118f5272263a6bf9b0' && nft.asset_contract.name != '$ETH NFT EVENT') {
                 const { schema_name, address } = nft.asset_contract;
 
