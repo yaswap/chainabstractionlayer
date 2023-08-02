@@ -1,6 +1,6 @@
 import { Chain, Wallet } from '@yaswap/client';
 import { InsufficientBalanceError } from '@yaswap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '@yaswap/types';
+import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest, CreateTokenTransaction } from '@yaswap/types';
 import { asyncSetImmediate } from '@yaswap/utils';
 import { BIP32Interface } from 'bip32';
 import { payments, script } from '@yaswap/yacoinjs-lib';
@@ -119,6 +119,10 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         }
 
         return addresses;
+    }
+
+    public async createToken(options: CreateTokenTransaction): Promise<Transaction> {
+        return this._sendTransaction(this.tokenInfoToOutputs(options), options.fee as number);
     }
 
     public async sendTransaction(options: TransactionRequest) {
@@ -489,6 +493,15 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             script: scriptBuffer,
             tokenName
         }
+    }
+
+    protected tokenInfoToOutputs(transaction: CreateTokenTransaction): OutputTarget[] {
+        const targets: OutputTarget[] = [];
+
+        const tokenTransferTarget = this.compileTokenTransferTarget(transaction.to.toString(), transaction.tokenName, transaction.tokenAmount)
+        targets.push(tokenTransferTarget);
+
+        return targets;
     }
 
     protected sendOptionsToOutputs(transactions: TransactionRequest[]): OutputTarget[] {

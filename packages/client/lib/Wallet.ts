@@ -10,6 +10,7 @@ import {
     Transaction,
     TransactionRequest,
     WalletProvider,
+    CreateTokenTransaction,
 } from '@yaswap/types';
 import Chain from './Chain';
 
@@ -56,6 +57,8 @@ export default abstract class Wallet<T, S> implements WalletProvider {
     public abstract getAddresses(start?: number, numAddresses?: number, change?: boolean): Promise<Address[]>;
 
     public abstract signMessage(message: string, from: AddressType): Promise<string>;
+
+    public abstract createToken(txRequest: CreateTokenTransaction): Promise<Transaction | null>;
 
     public abstract sendTransaction(txRequest: TransactionRequest): Promise<Transaction>;
 

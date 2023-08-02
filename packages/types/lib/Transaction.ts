@@ -46,6 +46,17 @@ export enum TxStatus {
     Unknown = 'UNKNOWN',
 }
 
+export type CreateTokenTransaction = {
+    to?: AddressType;
+    fee?: FeeType;
+    tokenType?: string;
+    tokenName?: string;
+    tokenAmount?: number;
+    decimals?: number;
+    reissuable?: boolean;
+    ipfsHash?: string;
+};
+
 export type TransactionRequest = {
     asset?: Asset;
     feeAsset?: Asset;

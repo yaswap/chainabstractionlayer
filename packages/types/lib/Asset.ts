@@ -24,6 +24,14 @@ export interface TokenDetails {
     symbol: string;
 }
 
+export type TokenInfo = {
+    token_type: string;
+    amount: number;
+    units: number;
+    reissuable: boolean;
+    block_hash?: string;
+    ipfs_hash?: string;
+};
 export interface TokenBalance { // for Yacoin only
     name: string;
     balance: number;

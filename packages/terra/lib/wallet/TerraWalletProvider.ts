@@ -1,6 +1,6 @@
 import { Wallet } from '@yaswap/client';
 import { UnimplementedMethodError } from '@yaswap/errors';
-import { Address, Asset, AssetTypes, BigNumber, FeeType, Transaction, TransactionRequest } from '@yaswap/types';
+import { Address, Asset, AssetTypes, BigNumber, FeeType, Transaction, TransactionRequest, CreateTokenTransaction } from '@yaswap/types';
 import { retry } from '@yaswap/utils';
 import {
     Coin,
@@ -90,6 +90,10 @@ export class TerraWalletProvider extends Wallet<LCDClient, MnemonicKey> {
 
     public async getConnectedNetwork(): Promise<TerraNetwork> {
         return this.chainProvider.getNetwork() as TerraNetwork;
+    }
+
+    public async createToken(txRequest: CreateTokenTransaction): Promise<null> {
+        return null
     }
 
     public async sendTransaction(txRequest: TerraTxRequest): Promise<Transaction<TerraTxInfo>> {

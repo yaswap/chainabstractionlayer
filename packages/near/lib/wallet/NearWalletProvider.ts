@@ -1,6 +1,6 @@
 import { Chain, HttpClient, Wallet } from '@yaswap/client';
 import { UnsupportedMethodError } from '@yaswap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction } from '@yaswap/types';
+import { Address, AddressType, Asset, BigNumber, Transaction, CreateTokenTransaction } from '@yaswap/types';
 import {
     BN,
     InMemorySigner,
@@ -84,6 +84,10 @@ export class NearWalletProvider extends Wallet<providers.JsonRpcProvider, InMemo
         );
 
         return Buffer.from(signed.signature).toString('hex');
+    }
+
+    public async createToken(txRequest: CreateTokenTransaction): Promise<null> {
+        return null
     }
 
     public async sendTransaction(txRequest: NearTxRequest): Promise<Transaction<NearTxLog>> {

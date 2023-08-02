@@ -1,6 +1,6 @@
 import { Chain, Wallet } from '@yaswap/client';
 import { UnimplementedMethodError } from '@yaswap/errors';
-import { Address, AddressType, Asset, BigNumber, FeeType, Network, Transaction, TransactionRequest } from '@yaswap/types';
+import { Address, AddressType, Asset, BigNumber, FeeType, Network, Transaction, TransactionRequest, CreateTokenTransaction } from '@yaswap/types';
 import { ECPair, Psbt, script, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
 import { flatten, isString, uniq } from 'lodash';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
@@ -49,6 +49,10 @@ export class BitcoinNodeWalletProvider extends Wallet<any, any> implements IBitc
 
     public async getAddresses() {
         return this.getUsedAddresses();
+    }
+
+    public async createToken(txRequest: CreateTokenTransaction): Promise<null> {
+        return null
     }
 
     public async sendTransaction(txRequest: TransactionRequest) {

@@ -1,6 +1,6 @@
 import { Chain, Wallet } from '@yaswap/client';
 import { NodeError, ReplaceFeeInsufficientError } from '@yaswap/errors';
-import { AddressType, Asset, AssetTypes, BigNumber, FeeType, NamingProvider, Network, Transaction } from '@yaswap/types';
+import { AddressType, Asset, AssetTypes, BigNumber, FeeType, NamingProvider, Network, Transaction, CreateTokenTransaction } from '@yaswap/types';
 import { ensure0x, remove0x } from '@yaswap/utils';
 import { Signer } from '@ethersproject/abstract-signer';
 import { BaseProvider, TransactionRequest as EthersTxRequest } from '@ethersproject/providers';
@@ -26,6 +26,10 @@ export abstract class EvmBaseWalletProvider<Provider extends BaseProvider, S ext
     public async signMessage(message: string, _from: AddressType): Promise<string> {
         const signedMessage = await this.signer.signMessage(message);
         return remove0x(signedMessage);
+    }
+
+    public async createToken(txRequest: CreateTokenTransaction): Promise<null> {
+        return null
     }
 
     public async sendTransaction(txRequest: EthereumTransactionRequest): Promise<Transaction<EthersTransactionResponse>> {

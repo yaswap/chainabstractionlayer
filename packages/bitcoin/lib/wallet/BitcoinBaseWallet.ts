@@ -1,6 +1,6 @@
 import { Chain, Wallet } from '@yaswap/client';
 import { InsufficientBalanceError } from '@yaswap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest } from '@yaswap/types';
+import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest, CreateTokenTransaction } from '@yaswap/types';
 import { asyncSetImmediate } from '@yaswap/utils';
 import { BIP32Interface } from 'bip32';
 import { payments, script } from 'bitcoinjs-lib';
@@ -106,6 +106,10 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         }
 
         return addresses;
+    }
+
+    public async createToken(txRequest: CreateTokenTransaction): Promise<null> {
+        return null
     }
 
     public async sendTransaction(options: TransactionRequest) {

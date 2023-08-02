@@ -1,4 +1,5 @@
 import { YacoinNetwork } from '../../types';
+import { TokenInfo } from '@yaswap/types';
 
 export type FeeEstimates = { [index: string]: number };
 
@@ -19,15 +20,6 @@ export type UTXO = {
 };
 
 export type BatchUTXOs = { address: string; utxo: UTXO[] }[];
-
-export type TokenInfo = {
-    token_type: string;
-    amount: number;
-    units: number;
-    reissuable: boolean;
-    block_hash?: string;
-    ipfs_hash?: string;
-};
 
 export type TokenUTXOInfo = {
     token_name: string;

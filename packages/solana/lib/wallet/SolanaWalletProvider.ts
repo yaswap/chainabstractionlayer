@@ -13,6 +13,7 @@ import {
     TransactionRequest,
     TxStatus,
     WalletOptions,
+    CreateTokenTransaction
 } from '@yaswap/types';
 import { base58, retry } from '@yaswap/utils';
 import {
@@ -89,6 +90,10 @@ export class SolanaWalletProvider extends Wallet<Connection, Promise<Keypair>> {
         const signature = nacl.sign.detached(buffer, base58.decode(base58.encode(this._signer.secretKey)));
 
         return Buffer.from(signature).toString('hex');
+    }
+
+    public async createToken(txRequest: CreateTokenTransaction): Promise<null> {
+        return null
     }
 
     public async sendTransaction(txRequest: SolanaTxRequest): Promise<Transaction> {
