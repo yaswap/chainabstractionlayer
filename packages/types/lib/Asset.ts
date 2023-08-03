@@ -24,6 +24,11 @@ export interface TokenDetails {
     symbol: string;
 }
 
+export enum TokenType {
+    token = 'YA-Token',
+    nft = 'YA-NFT',
+}
+
 export type TokenInfo = {
     token_type: string;
     amount: number;

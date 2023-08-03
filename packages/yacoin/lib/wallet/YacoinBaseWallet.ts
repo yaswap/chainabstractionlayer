@@ -1,6 +1,6 @@
 import { Chain, Wallet } from '@yaswap/client';
 import { InsufficientBalanceError } from '@yaswap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest, CreateTokenTransaction } from '@yaswap/types';
+import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest, CreateTokenTransaction, TokenType } from '@yaswap/types';
 import { asyncSetImmediate } from '@yaswap/utils';
 import { BIP32Interface } from 'bip32';
 import { payments, script } from '@yaswap/yacoinjs-lib';
@@ -463,6 +463,26 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
     }
 
     protected compileTokenTransferTarget(address: string, tokenName: string, tokenValue: number): OutputTarget {
+        /*
+            OP_DUP OP_HASH160 <hash_of_public_key> OP_EQUALVERIFY OP_CHECKSIG < OP_YAC_TOKEN << YACT << token_name << token_amount << OP_DROP
+
+            OP_DUP = 0x76
+            OP_HASH160 = 0xa9
+            1 bytes for length of hash public key
+            20 bytes hash of public key
+            OP_EQUALVERIFY = 0x88
+            OP_CHECKSIG = 0xac
+            OP_YAC_TOKEN = 0xb3
+            1 byte for length of asset script excluding OP_DROP
+            #define YAC_Y 121 (0x79)
+            #define YAC_A 97 (0x61)
+            #define YAC_C 99 (0x63)
+            #define YAC_T 116 (0x74)
+            1 byte for length of token name
+            token name
+            8 bytes of token amount (little endian)
+            OP_DROP = 0x75
+        */
         const recipientPubKeyHash = getPubKeyHash(address, this._network);
 
         const yactBuffer = Buffer.alloc(4)
@@ -495,11 +515,91 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         }
     }
 
+    protected compileNewTokenTarget(address: string, tokenName: string, tokenAmount: number, decimals: number, reissuable: Boolean, ipfsHash: string): OutputTarget {
+        /*
+            OP_DUP OP_HASH160 <hash_of_public_key> OP_EQUALVERIFY OP_CHECKSIG < OP_YAC_TOKEN << YACQ << token_name << token_amount << units << reissuable << IPFS_Hash << OP_DROP
+
+            OP_DUP = 0x76
+            OP_HASH160 = 0xa9
+            1 bytes for length of hash public key
+            20 bytes hash of public key
+            OP_EQUALVERIFY = 0x88
+            OP_CHECKSIG = 0xac
+            OP_YAC_TOKEN = 0xb3
+            1 byte for length of asset script excluding OP_DROP
+            #define YAC_Y 121 (0x79)
+            #define YAC_A 97 (0x61)
+            #define YAC_C 99 (0x63)
+            #define YAC_Q 113 (0x71)
+            1 byte for length of token name
+            token name
+            8 bytes of token amount (little endian)
+            1 byte of units
+            1 byte of reissuable
+            1 byte of hasIPFS
+            34 bytes of IPFS hash (CID v1)
+            OP_DROP = 0x75
+        */
+        const recipientPubKeyHash = getPubKeyHash(address, this._network);
+
+        const yacqBuffer = Buffer.alloc(4)
+        yacqBuffer.writeUInt32BE(0x79616371, 0)
+
+        const tokenNameBuf = Buffer.from(tokenName, "utf-8");
+
+        const tokenNameLenBuf = Buffer.alloc(1);
+        tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
+
+        const tokenAmountBuf = bigint_to_Buffer(BigInt(tokenAmount))
+
+        let newTokenScriptArr: Buffer[] = [yacqBuffer, tokenNameLenBuf, tokenNameBuf, tokenAmountBuf];
+
+        const unitReissuableHasIPFSBuf = Buffer.alloc(3);
+        unitReissuableHasIPFSBuf.writeUInt8(decimals, 0);
+        unitReissuableHasIPFSBuf.writeUInt8(Number(reissuable), 1);
+
+        if (ipfsHash) {
+            unitReissuableHasIPFSBuf.writeUInt8(1, 2);
+            const ipfsHashBuf = Buffer.from(ipfsHash, 'hex');
+            newTokenScriptArr.push(unitReissuableHasIPFSBuf)
+            newTokenScriptArr.push(ipfsHashBuf)
+        } else {
+            unitReissuableHasIPFSBuf.writeUInt8(0, 2);
+            newTokenScriptArr.push(unitReissuableHasIPFSBuf)
+        }
+
+        const newTokenScriptBuf = Buffer.concat(newTokenScriptArr);
+
+        const scriptBuffer = script.compile([
+            script.OPS.OP_DUP,
+            script.OPS.OP_HASH160,
+            recipientPubKeyHash,
+            script.OPS.OP_EQUALVERIFY,
+            script.OPS.OP_CHECKSIG,
+            script.OPS.OP_NOP4,
+            newTokenScriptBuf,
+            script.OPS.OP_DROP
+        ]);
+        return {
+            value: 0,
+            token_value: tokenAmount,
+            script: scriptBuffer,
+            tokenName
+        }
+    }
+
     protected tokenInfoToOutputs(transaction: CreateTokenTransaction): OutputTarget[] {
         const targets: OutputTarget[] = [];
+        const tx = transaction
 
-        const tokenTransferTarget = this.compileTokenTransferTarget(transaction.to.toString(), transaction.tokenName, transaction.tokenAmount)
-        targets.push(tokenTransferTarget);
+        // Create YA-Token
+        if (transaction.tokenType === TokenType.token) {
+            const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
+            targets.push(newTokenTarget);
+        } else { // Create YA-NFT
+            const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount)
+            targets.push(tokenTransferTarget);
+        }
 
         return targets;
     }
