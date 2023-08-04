@@ -588,6 +588,57 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         }
     }
 
+    protected compileTokenOwnerTarget(address: string, tokenName: string): OutputTarget {
+        /*
+            OP_DUP OP_HASH160 <hash_of_public_key> OP_EQUALVERIFY OP_CHECKSIG < OP_YAC_TOKEN << YACO << token_owner_name << OP_DROP
+
+            OP_DUP = 0x76
+            OP_HASH160 = 0xa9
+            1 bytes for length of hash public key
+            20 bytes hash of public key
+            OP_EQUALVERIFY = 0x88
+            OP_CHECKSIG = 0xac
+            OP_YAC_TOKEN = 0xb3
+            1 byte for length of asset script excluding OP_DROP
+            #define YAC_Y 121 (0x79)
+            #define YAC_A 97 (0x61)
+            #define YAC_C 99 (0x63)
+            #define YAC_O 111 (0x6F)
+            1 byte for length of token owner name
+            token owner name
+            OP_DROP = 0x75
+        */
+        const recipientPubKeyHash = getPubKeyHash(address, this._network);
+
+        const yacoBuffer = Buffer.alloc(4)
+        yacoBuffer.writeUInt32BE(0x7961636F, 0)
+
+        const onwerTokenName = tokenName + "!"
+        const tokenNameBuf = Buffer.from(onwerTokenName, "utf-8");
+
+        const tokenNameLenBuf = Buffer.alloc(1);
+        tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
+
+        const tokenOwnerScriptBuf = Buffer.concat([yacoBuffer, tokenNameLenBuf, tokenNameBuf]);
+
+        const scriptBuffer = script.compile([
+            script.OPS.OP_DUP,
+            script.OPS.OP_HASH160,
+            recipientPubKeyHash,
+            script.OPS.OP_EQUALVERIFY,
+            script.OPS.OP_CHECKSIG,
+            script.OPS.OP_NOP4,
+            tokenOwnerScriptBuf,
+            script.OPS.OP_DROP
+        ]);
+        return {
+            value: 0,
+            token_value: 1e6,
+            script: scriptBuffer,
+            tokenName: onwerTokenName
+        }
+    }
+
     protected tokenInfoToOutputs(transaction: CreateTokenTransaction): OutputTarget[] {
         const targets: OutputTarget[] = [];
         const tx = transaction
