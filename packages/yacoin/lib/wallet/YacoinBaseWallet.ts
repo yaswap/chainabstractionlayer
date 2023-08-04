@@ -24,6 +24,9 @@ const ADDRESS_GAP = 10
 const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
 const NUMBER_ADDRESS_LIMIT = 200
 
+const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
+const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
+
 export enum AddressSearchType {
     EXTERNAL,
     CHANGE,
@@ -636,6 +639,28 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             token_value: 1e6,
             script: scriptBuffer,
             tokenName: onwerTokenName
+        }
+    }
+
+    protected compileTimelockFeesTarget(address: string): OutputTarget {
+        /*
+            <locktime> OP_CHECKSEQUENCEVERIFY OP_DROP OP_DUP OP_HASH160 <hash_of_public_key> OP_EQUALVERIFY OP_CHECKSIG
+        */
+        const recipientPubKeyHash = getPubKeyHash(address, this._network);
+
+        const scriptBuffer = script.compile([
+            script.number.encode(TIMELOCK_FEE_DURATION),
+            script.OPS.OP_CHECKSEQUENCEVERIFY,
+            script.OPS.OP_DROP,
+            script.OPS.OP_DUP,
+            script.OPS.OP_HASH160,
+            recipientPubKeyHash,
+            script.OPS.OP_EQUALVERIFY,
+            script.OPS.OP_CHECKSIG,
+        ]);
+        return {
+            value: TIMELOCK_FEE_AMOUNT,
+            script: scriptBuffer,
         }
     }
 
