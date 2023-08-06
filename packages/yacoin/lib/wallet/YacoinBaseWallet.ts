@@ -125,6 +125,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
     }
 
     public async createToken(options: CreateTokenTransaction): Promise<Transaction> {
+        console.log('TACA ===> [chainify] createToken, options = ', options)
         return this._sendTransaction(this.tokenInfoToOutputs(options), options.fee as number);
     }
 
@@ -450,7 +451,11 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value, tokenScriptType: target.tokenScriptType}));
         }
 
+        console.log('TACA ===> [chainify] getInputsForAmount, utxos = ', utxos, ', tokenUtxos = ', tokenUtxos, ', targets = ', targets, ', feePerByte = ', feePerByte)
+
         const { inputs, outputs, fee, coinChange, tokenChange } = selectCoins(utxos, tokenUtxos, targets, Math.ceil(feePerByte), fixedUtxos);
+
+        console.log('TACA ===> [chainify] getInputsForAmount, inputs = ', inputs, ', outputs = ', outputs, ', fee = ', fee, ', coinChange = ', coinChange, ', tokenChange = ', tokenChange)
 
         if (inputs && outputs) {
             return {
@@ -698,6 +703,8 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             targets.push(tokenTransferTarget);
             targets.push(newTokenTarget);
         }
+
+        console.log('TACA ===> [chainify] tokenInfoToOutputs, targets = ', targets)
 
         return targets;
     }
