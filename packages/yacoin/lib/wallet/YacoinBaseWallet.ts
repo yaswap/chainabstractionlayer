@@ -24,8 +24,13 @@ const ADDRESS_GAP = 10
 const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
 const NUMBER_ADDRESS_LIMIT = 200
 
-const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
-const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
+// JUST FOR TESTING
+const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
+const TIMELOCK_FEE_AMOUNT = 10 * 1e6; // 2100 YAC
+
+// PRODUCTION
+// const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
+// const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
 
 export enum AddressSearchType {
     EXTERNAL,
@@ -695,7 +700,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             targets.push(tokenOwnerTarget);
             targets.push(newTokenTarget);
         } else { // Create YA-NFT
-            const ownerTokenName = tx.tokenName + '!'
+            const ownerTokenName = tx.tokenName.split('#')[0] + '!'
             const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
             const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), ownerTokenName, 1e6)
             const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);

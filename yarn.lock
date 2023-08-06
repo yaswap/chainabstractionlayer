@@ -3666,8 +3666,8 @@ __metadata:
     "@yaswap/errors": "workspace:*"
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
-    "@yaswap/yacoinjs-coinselect": ^1.0.1
-    "@yaswap/yacoinjs-lib": ^1.2.0
+    "@yaswap/yacoinjs-coinselect": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect"
+    "@yaswap/yacoinjs-lib": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib"
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
@@ -3677,16 +3677,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yaswap/yacoinjs-coinselect@npm:^1.0.1":
+"@yaswap/yacoinjs-coinselect@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect::locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin":
   version: 1.0.1
-  resolution: "@yaswap/yacoinjs-coinselect@npm:1.0.1"
-  checksum: 87f979d8d73c3a8b77027fef83c17e01e4641a24589f8f03823f342eb519b119e1866db0203f65df621c7887c8798acade1aca4c4d54795edabed121b6ab6262
+  resolution: "@yaswap/yacoinjs-coinselect@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect#/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect::hash=e92113&locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin"
+  checksum: 109e90de1da15b0032839b1a2286b4b2117237427b153951fca12deafc48eb1b34f8a0c4a6da50660aa901c19c5ff0742f906e7d2bece029d7f22e0fc4668864
   languageName: node
   linkType: hard
 
-"@yaswap/yacoinjs-lib@npm:^1.2.0":
+"@yaswap/yacoinjs-lib@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib::locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin":
   version: 1.2.0
-  resolution: "@yaswap/yacoinjs-lib@npm:1.2.0"
+  resolution: "@yaswap/yacoinjs-lib@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib#/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib::hash=4364aa&locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin"
   dependencies:
     bech32: ^1.1.2
     bip174: ^2.0.1
@@ -3703,7 +3703,7 @@ __metadata:
     typeforce: ^1.11.3
     varuint-bitcoin: ^1.0.4
     wif: ^2.0.1
-  checksum: 1eca32b24b17e79b16b280d412c37f8675ce45d169c0b051c4eefc1165194f09b73b22bdbcc5faa3bfe154a0d1f5d0cb6541f6215c1fe94e03f463433d912f6f
+  checksum: f20d53d1222a77fce76980b67c4356a70e5f9880e5f10f56fef5154cd1f7940a7dd6ab433e0757764077d05bd28909f159a36f53fe1260522a48435383f69313
   languageName: node
   linkType: hard
 
