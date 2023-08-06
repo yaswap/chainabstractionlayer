@@ -29,6 +29,13 @@ export enum TokenType {
     nft = 'YA-NFT',
 }
 
+export enum TokenScriptType {
+    newToken = 'newToken',
+    tokenOwner = 'tokenOwner',
+    transfer = 'transfer',
+    reissue = 'reissue',
+}
+
 export type TokenInfo = {
     token_type: string;
     amount: number;

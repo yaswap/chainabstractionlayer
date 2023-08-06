@@ -1,4 +1,4 @@
-import { Network } from '@yaswap/types';
+import { Network, TokenScriptType } from '@yaswap/types';
 import { Network as YacoinJsLibNetwork } from '@yaswap/yacoinjs-lib';
 
 export * as YacoinEsploraTypes from './chain/esplora/types';
@@ -24,6 +24,7 @@ export interface OutputTarget {
     tokenName?: string;
     token_value?: number;
     value: number;
+    tokenScriptType?: TokenScriptType;
 }
 
 export interface ScriptPubKey {

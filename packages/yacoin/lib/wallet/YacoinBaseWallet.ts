@@ -1,6 +1,6 @@
 import { Chain, Wallet } from '@yaswap/client';
 import { InsufficientBalanceError } from '@yaswap/errors';
-import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest, CreateTokenTransaction, TokenType } from '@yaswap/types';
+import { Address, AddressType, Asset, BigNumber, Transaction, TransactionRequest, CreateTokenTransaction, TokenType, TokenScriptType } from '@yaswap/types';
 import { asyncSetImmediate } from '@yaswap/utils';
 import { BIP32Interface } from 'bip32';
 import { payments, script } from '@yaswap/yacoinjs-lib';
@@ -370,7 +370,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         fixedInputs: Input[] = [],
         sweep = false
     ) {
-        const tokenOutput = _targets.find((target) => target.tokenName !== undefined);
+        const tokenTransferOutput = _targets.find((target) => target.tokenName !== undefined && target.tokenScriptType === TokenScriptType.transfer);
         const feePerBytePromise = this.chainProvider.getProvider().getFeePerByte();
         let utxos: UTXO[] = [];
         let tokenUtxos: UTXO[] = [];
@@ -405,10 +405,10 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             utxos = fixedUtxos;
         }
 
-        if (tokenOutput) {
-            const isNFTOutput = tokenOutput.tokenName.indexOf('#') !== -1
-            const _utxos: UTXO[] = isNFTOutput ? await this.chainProvider.getProvider().getNFTUnspentTransactions(addresses, tokenOutput.tokenName)
-                                                 : await this.chainProvider.getProvider().getTokenUnspentTransactions(addresses, tokenOutput.tokenName);
+        if (tokenTransferOutput) {
+            const isNFTOutput = tokenTransferOutput.tokenName.indexOf('#') !== -1
+            const _utxos: UTXO[] = isNFTOutput ? await this.chainProvider.getProvider().getNFTUnspentTransactions(addresses, tokenTransferOutput.tokenName)
+                                                 : await this.chainProvider.getProvider().getTokenUnspentTransactions(addresses, tokenTransferOutput.tokenName);
             tokenUtxos.push(
                 ..._utxos.map((utxo) => {
                     const addr = addresses.find((a) => a.address === utxo.address);
@@ -444,10 +444,10 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
 
-            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value }));
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value, tokenScriptType: target.tokenScriptType }));
             targets.push({ id: 'main', value: amountToSend.minus(outputBalance).toNumber() });
         } else {
-            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value }));
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value, tokenScriptType: target.tokenScriptType}));
         }
 
         const { inputs, outputs, fee, coinChange, tokenChange } = selectCoins(utxos, tokenUtxos, targets, Math.ceil(feePerByte), fixedUtxos);
@@ -514,7 +514,8 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             value: 0,
             token_value: tokenValue,
             script: scriptBuffer,
-            tokenName
+            tokenName,
+            tokenScriptType: TokenScriptType.transfer
         }
     }
 
@@ -587,11 +588,12 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             value: 0,
             token_value: tokenAmount,
             script: scriptBuffer,
-            tokenName
+            tokenName,
+            tokenScriptType: TokenScriptType.newToken
         }
     }
 
-    protected compileTokenOwnerTarget(address: string, tokenName: string): OutputTarget {
+    protected compileTokenOwnerTarget(address: string, ownerTokenName: string): OutputTarget {
         /*
             OP_DUP OP_HASH160 <hash_of_public_key> OP_EQUALVERIFY OP_CHECKSIG < OP_YAC_TOKEN << YACO << token_owner_name << OP_DROP
 
@@ -616,8 +618,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         const yacoBuffer = Buffer.alloc(4)
         yacoBuffer.writeUInt32BE(0x7961636F, 0)
 
-        const onwerTokenName = tokenName + "!"
-        const tokenNameBuf = Buffer.from(onwerTokenName, "utf-8");
+        const tokenNameBuf = Buffer.from(ownerTokenName, "utf-8");
 
         const tokenNameLenBuf = Buffer.alloc(1);
         tokenNameLenBuf.writeUInt8(tokenNameBuf.length, 0);
@@ -638,7 +639,8 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             value: 0,
             token_value: 1e6,
             script: scriptBuffer,
-            tokenName: onwerTokenName
+            tokenName: ownerTokenName,
+            tokenScriptType: TokenScriptType.tokenOwner
         }
     }
 
@@ -670,11 +672,31 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
         // Create YA-Token
         if (transaction.tokenType === TokenType.token) {
+            /*
+            YA-Token creation transaction will have
+            1) Inputs
+            + Any normal UTXO used as transaction fees + timelock fees
+            2) Outputs (at least 3 outputs) with following orders:
+            + Output containing "CSV-P2PKH Timelock script" (random position)
+            + Output containing YAC change (optional, random position)
+            + Output containing "Token Owner Script" (always the second last output)
+            + Output containing "New Token Script" (always the last output)
+            */
+            const ownerTokenName = tx.tokenName + '!'
+            const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+            const tokenOwnerTarget = this.compileTokenOwnerTarget(tx.to.toString(), ownerTokenName);
             const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
+            targets.push(timelockFeesTarget);
+            targets.push(tokenOwnerTarget);
             targets.push(newTokenTarget);
         } else { // Create YA-NFT
-            const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount)
+            const ownerTokenName = tx.tokenName + '!'
+            const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+            const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), ownerTokenName, 1e6)
+            const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
+            targets.push(timelockFeesTarget);
             targets.push(tokenTransferTarget);
+            targets.push(newTokenTarget);
         }
 
         return targets;
