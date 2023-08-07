@@ -79,7 +79,7 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
         const addresses = _addresses.map((a) => a.toString());
         const batchTokenUTXOInfo = await this.provider.getAllTokenUnspentTransactions(addresses);
         return batchTokenUTXOInfo.map(({ token_name, balance, token_info }) => ({
-            "name": token_name,
+            "name": token_name.split('/').join('|'), // Workaround for displaying sub YA-token
             "balance": new BigNumber(balance).dividedBy(1e6/Math.pow(10, token_info.units)).toNumber(),
             "totalSupply": token_info.amount,
             "units": token_info.units,

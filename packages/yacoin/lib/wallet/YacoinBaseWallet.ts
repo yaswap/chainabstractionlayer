@@ -680,8 +680,11 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         const targets: OutputTarget[] = [];
         const tx = transaction
 
+        // Workaround for displaying sub YA-token
+        tx.tokenName = tx.tokenName?.split('|').join('/')
+
         // Create YA-Token
-        if (transaction.tokenType === TokenType.token) {
+        if (tx.tokenType === TokenType.token) {
             const subDeliLastIndex = tx.tokenName.lastIndexOf('/')
             if (subDeliLastIndex === -1) { // YA-Token
                 /*
@@ -758,7 +761,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             if (tx.to && tx.value && tx.value.gt(0)) {
                 // token/NFT output
                 if (tx.asset?.type !== 'native') {
-                    const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.asset.name, tx.value.toNumber())
+                    const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.asset.name.split('|').join('/'), tx.value.toNumber())
                     targets.push(tokenTransferTarget);
                     return
                 } else { // coin output
