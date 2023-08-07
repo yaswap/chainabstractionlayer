@@ -682,24 +682,61 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
         // Create YA-Token
         if (transaction.tokenType === TokenType.token) {
-            /*
-            YA-Token creation transaction will have
-            1) Inputs
-            + Any normal UTXO used as transaction fees + timelock fees
-            2) Outputs (at least 3 outputs) with following orders:
-            + Output containing "CSV-P2PKH Timelock script" (random position)
-            + Output containing YAC change (optional, random position)
-            + Output containing "Token Owner Script" (always the second last output)
-            + Output containing "New Token Script" (always the last output)
-            */
-            const ownerTokenName = tx.tokenName + '!'
-            const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
-            const tokenOwnerTarget = this.compileTokenOwnerTarget(tx.to.toString(), ownerTokenName);
-            const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
-            targets.push(timelockFeesTarget);
-            targets.push(tokenOwnerTarget);
-            targets.push(newTokenTarget);
+            const subDeliLastIndex = tx.tokenName.lastIndexOf('/')
+            if (subDeliLastIndex === -1) { // YA-Token
+                /*
+                    YA-Token creation transaction will have
+                    1) Inputs
+                    + Any normal UTXO used as transaction fees + timelock fees
+                    2) Outputs (at least 3 outputs) with following orders:
+                    + Output containing "CSV-P2PKH Timelock script" (random position)
+                    + Output containing YAC change (optional, random position)
+                    + Output containing "Token Owner Script" (always the second last output)
+                    + Output containing "New Token Script" (always the last output)
+                */
+                const ownerTokenName = tx.tokenName + '!'
+                const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+                const tokenOwnerTarget = this.compileTokenOwnerTarget(tx.to.toString(), ownerTokenName);
+                const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
+                targets.push(timelockFeesTarget);
+                targets.push(tokenOwnerTarget);
+                targets.push(newTokenTarget);
+            } else { // sub YA-Token
+                /*
+                    sub YA-Token creation transaction will have
+                    1) Inputs
+                    + owner token UTXO
+                    + Any normal UTXO used as transaction fees + timelock fees
+                    2) Outputs (at least 4 outputs) with following orders:
+                    + Output containing "CSV-P2PKH Timelock script" (random position)
+                    + Output containing "Transfer Token Owner Script" (random position)
+                    + Output containing YAC change (optional, random position)
+                    + Output containing "Token Owner Script" (always the second last output)
+                    + Output containing "New Token Script" (always the last output)
+                */
+                const ownerTokenName = tx.tokenName.slice(0, subDeliLastIndex) + '!'
+                const subOwnerTokenName = tx.tokenName + '!'
+                const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+                const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), ownerTokenName, 1e6)
+                const tokenOwnerTarget = this.compileTokenOwnerTarget(tx.to.toString(), subOwnerTokenName);
+                const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
+                targets.push(timelockFeesTarget);
+                targets.push(tokenTransferTarget);
+                targets.push(tokenOwnerTarget);
+                targets.push(newTokenTarget);
+            }
         } else { // Create YA-NFT
+            /*
+                YA-NFT creation transaction will have
+                1) Inputs
+                + owner token UTXO
+                + Any normal UTXO used as transaction fees + timelock fees
+                2) Outputs (at least 3 outputs) with following orders:
+                + Output containing "CSV-P2PKH Timelock script" (random position)
+                + Output containing "Transfer Token Owner Script" (random position)
+                + Output containing YAC change (optional, random position)
+                + Output containing "New Token Script" (always the last output)
+            */
             const ownerTokenName = tx.tokenName.split('#')[0] + '!'
             const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
             const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), ownerTokenName, 1e6)
