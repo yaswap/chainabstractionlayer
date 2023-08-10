@@ -26,14 +26,15 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
                     console.warn(`Invalid nft ${tokenInfo.token_name}`);
                 } else {
                     // Parse NFT name
-                    const fullNFTName = tokenInfo.token_name
+                    // Workaround for displaying YA-NFT created by sub YA-Token
+                    const fullNFTName = tokenInfo.token_name.split('/').join('|')
                     const nftCollectionName = fullNFTName.split('#')[0];
                     const nftName = fullNFTName.split('#')[1];
 
                     // Get NFT metdata
                     const nftMetadata = await getTokenMetadata(ipfs_hash)
                     nftAssets.push({
-                        token_id: tokenInfo.token_name,
+                        token_id: fullNFTName,
                         asset_contract: {
                             address: block_hash,
                             image_url: nftMetadata.imageURL,
