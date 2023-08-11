@@ -18,19 +18,11 @@ import {
     Transaction as YaTransaction,
     UTXO,
 } from '../types';
-import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins, getPubKeyHash } from '../utils';
+import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins, getPubKeyHash, timelockFeeDuration, timelockFeeAmountInSatoshis } from '../utils';
 
 const ADDRESS_GAP = 10
 const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
 const NUMBER_ADDRESS_LIMIT = 200
-
-// JUST FOR TESTING
-const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
-const TIMELOCK_FEE_AMOUNT = 10 * 1e6; // 2100 YAC
-
-// PRODUCTION
-// const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
-// const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
 
 export enum AddressSearchType {
     EXTERNAL,
@@ -661,7 +653,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         const recipientPubKeyHash = getPubKeyHash(address, this._network);
 
         const scriptBuffer = script.compile([
-            script.number.encode(TIMELOCK_FEE_DURATION),
+            script.number.encode(timelockFeeDuration()),
             script.OPS.OP_CHECKSEQUENCEVERIFY,
             script.OPS.OP_DROP,
             script.OPS.OP_DUP,
@@ -671,7 +663,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             script.OPS.OP_CHECKSIG,
         ]);
         return {
-            value: TIMELOCK_FEE_AMOUNT,
+            value: timelockFeeAmountInSatoshis(),
             script: scriptBuffer,
         }
     }
