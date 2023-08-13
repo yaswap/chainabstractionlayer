@@ -1,5 +1,16 @@
 # @yaswap/client
 
+## 2.3.1
+
+### Patch Changes
+
+-   Change timelock fee duration and amount
+-   Updated dependencies
+    -   @yaswap/errors@2.3.1
+    -   @yaswap/logger@2.3.1
+    -   @yaswap/types@2.3.1
+    -   @yaswap/utils@2.3.1
+
 ## 2.3.0
 
 ### Minor Changes

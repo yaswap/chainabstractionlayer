@@ -1,5 +1,11 @@
 # @yaswap/types
 
+## 2.3.1
+
+### Patch Changes
+
+-   Change timelock fee duration and amount
+
 ## 2.3.0
 
 ### Minor Changes

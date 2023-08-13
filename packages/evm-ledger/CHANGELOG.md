@@ -1,5 +1,18 @@
 # @yaswap/evm-ledger
 
+## 2.3.1
+
+### Patch Changes
+
+-   Change timelock fee duration and amount
+-   Updated dependencies
+    -   @yaswap/client@2.3.1
+    -   @yaswap/errors@2.3.1
+    -   @yaswap/evm@2.3.1
+    -   @yaswap/hw-ledger@2.3.1
+    -   @yaswap/types@2.3.1
+    -   @yaswap/utils@2.3.1
+
 ## 2.3.0
 
 ### Minor Changes

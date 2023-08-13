@@ -10,12 +10,12 @@ import { YacoinNetwork, Input, Output, Transaction as YacoinTransaction, UTXO } 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
 
 // JUST FOR TESTING
-const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
-const TIMELOCK_FEE_AMOUNT = 10 * 1e6; // 2100 YAC
+// const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
+// const TIMELOCK_FEE_AMOUNT = 10 * 1e6; // 2100 YAC
 
 // PRODUCTION
-// const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
-// const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
+const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
+const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
 
 interface TokenMetadata {
     name?: string;
