@@ -144,7 +144,6 @@ export class YacoinHDWalletProvider extends YacoinBaseWalletProvider implements 
         const unusedAddress = await this.getUnusedAddress(true)
         const { inputs, coinChange, tokenChange, fee } = await this.getInputsForAmount(targets, feePerByte, fixedInputs)
     
-        console.log('TACA ===> [chainify] buildTransaction, inputs = ', inputs, ', coinChange = ', coinChange, ', tokenChange = ', tokenChange, ', fee = ', fee)
         if (coinChange) {
           targets.unshift({
             address: unusedAddress.address,
