@@ -1,5 +1,21 @@
 # @yaswap/evm-ledger
 
+## 2.3.0
+
+### Minor Changes
+
+-   Support create YA-Token/YA-NFT
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.3.0
+    -   @yaswap/errors@2.3.0
+    -   @yaswap/evm@2.3.0
+    -   @yaswap/hw-ledger@2.3.0
+    -   @yaswap/types@2.3.0
+    -   @yaswap/utils@2.3.0
+
 ## 2.2.0
 
 ### Minor Changes

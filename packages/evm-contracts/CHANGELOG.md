@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 2.3.0
+
+### Minor Changes
+
+-   Support create YA-Token/YA-NFT
+
 ## 2.2.0
 
 ### Minor Changes
