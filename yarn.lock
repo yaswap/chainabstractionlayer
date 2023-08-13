@@ -3666,8 +3666,8 @@ __metadata:
     "@yaswap/errors": "workspace:*"
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
-    "@yaswap/yacoinjs-coinselect": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect"
-    "@yaswap/yacoinjs-lib": "file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib"
+    "@yaswap/yacoinjs-coinselect": ^1.1.0
+    "@yaswap/yacoinjs-lib": ^1.3.0
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
@@ -3677,16 +3677,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yaswap/yacoinjs-coinselect@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect::locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin":
-  version: 1.0.1
-  resolution: "@yaswap/yacoinjs-coinselect@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect#/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-coinselect::hash=e92113&locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin"
-  checksum: 109e90de1da15b0032839b1a2286b4b2117237427b153951fca12deafc48eb1b34f8a0c4a6da50660aa901c19c5ff0742f906e7d2bece029d7f22e0fc4668864
+"@yaswap/yacoinjs-coinselect@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@yaswap/yacoinjs-coinselect@npm:1.1.0"
+  checksum: 45b980bfe432b1d44ed88c4e5ef8dd5d72cfb5eb631c35a790a3a6f5ce7915b2a5bd981f9529addfc2f37900ec2d60a60a629f61f2a44f4edebe41db16e2e419
   languageName: node
   linkType: hard
 
-"@yaswap/yacoinjs-lib@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib::locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin":
-  version: 1.2.0
-  resolution: "@yaswap/yacoinjs-lib@file:/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib#/home/chaunguyen/projects/yacoin/yaswap/yacoinjs-lib::hash=4364aa&locator=%40yaswap%2Fyacoin%40workspace%3Apackages%2Fyacoin"
+"@yaswap/yacoinjs-lib@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@yaswap/yacoinjs-lib@npm:1.3.0"
   dependencies:
     bech32: ^1.1.2
     bip174: ^2.0.1
@@ -3703,7 +3703,7 @@ __metadata:
     typeforce: ^1.11.3
     varuint-bitcoin: ^1.0.4
     wif: ^2.0.1
-  checksum: f20d53d1222a77fce76980b67c4356a70e5f9880e5f10f56fef5154cd1f7940a7dd6ab433e0757764077d05bd28909f159a36f53fe1260522a48435383f69313
+  checksum: bcc569440d2f7140c5f6c01862b1d97f14bd9ae42cdd2fe96792c5b8948294bf7788e46b1a763835675e84c7401bd8910a24685690699383a67c34d5eaa9cca3
   languageName: node
   linkType: hard
 
