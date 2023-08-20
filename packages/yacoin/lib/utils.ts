@@ -264,9 +264,18 @@ async function getTokenMetadata(ipfsHash: string) {
       const { name, description, image } = await HttpClient.get(ipfsHashUrl)
       metadata = {
         name,
-        description,
-        imageURL: image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+        description
       }
+
+      const isIPFSprefix = image.startsWith("ipfs://")
+      if (image.includes("://") && !isIPFSprefix) {
+        // Normal URL
+        metadata.imageURL = image
+      } else {
+        // Treat it as IPFS Hash
+        metadata.imageURL = isIPFSprefix ? image.replace('ipfs://', 'https://ipfs.io/ipfs/'): `https://ipfs.io/ipfs/${image}`
+      }
+
     } else if (headers['content-type']?.startsWith('image')) {
       metadata.imageURL = ipfsHashUrl
     }

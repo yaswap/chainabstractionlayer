@@ -15,7 +15,7 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
         const _addresses: Address[] = await this.walletProvider.getUsedAddresses();
         const addresses = _addresses.map((a) => a.toString());
         const data: YacoinEsploraTypes.BatchTokenUTXOInfo = await this.walletProvider.getChainProvider().getProvider().getAllNFTUnspentTransactions(addresses)
-
+        console.log('YacoinNftProvider.ts, addresses = ', addresses, ', data = ', data)
         const nftAssets: NFTAsset[] = [];
         for (const tokenInfo of data) {
             if (tokenInfo.token_info) {
