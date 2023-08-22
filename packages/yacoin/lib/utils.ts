@@ -8,14 +8,15 @@ import { accumulativeCoin } from '@yaswap/yacoinjs-coinselect/accumulative';
 import { YacoinNetwork, Input, Output, Transaction as YacoinTransaction, UTXO } from './types';
 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
+const GET_METADATA_TIMEOUT = 10000 // 10s
 
 // JUST FOR TESTING
-// const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
-// const TIMELOCK_FEE_AMOUNT = 10 * 1e6; // 2100 YAC
+const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
+const TIMELOCK_FEE_AMOUNT = 10 * 1e6; // 2100 YAC
 
 // PRODUCTION
-const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
-const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
+// const TIMELOCK_FEE_DURATION = 21000; // 21000 blocks
+// const TIMELOCK_FEE_AMOUNT = 2100 * 1e6; // 2100 YAC
 
 interface TokenMetadata {
     name?: string;
@@ -258,27 +259,33 @@ async function getTokenMetadata(ipfsHash: string) {
         return {};
     }
     const ipfsHashUrl = `https://ipfs.io/ipfs/${ipfsHash}`
-    const headers = await HttpClient.head(ipfsHashUrl)
     let metadata: TokenMetadata = {}
-    if (headers['content-type'] === 'application/json') {
-      const { name, description, image } = await HttpClient.get(ipfsHashUrl)
-      metadata = {
-        name,
-        description
-      }
+    try {
+        console.log('TACA ===> [chainify], getTokenMetadata, ipfsHashUrl = ', ipfsHashUrl)
+        const headers = await HttpClient.head(ipfsHashUrl, {}, {timeout: GET_METADATA_TIMEOUT})
+        console.log('TACA ===> [chainify], getTokenMetadata, ipfsHashUrl = ', ipfsHashUrl, ', headers = ', headers)
+        if (headers['content-type'] === 'application/json') {
+            const { name, description, image } = await HttpClient.get(ipfsHashUrl)
+            metadata = {
+                name,
+                description
+            }
 
-      const isIPFSprefix = image.startsWith("ipfs://")
-      if (image.includes("://") && !isIPFSprefix) {
-        // Normal URL
-        metadata.imageURL = image
-      } else {
-        // Treat it as IPFS Hash
-        metadata.imageURL = isIPFSprefix ? image.replace('ipfs://', 'https://ipfs.io/ipfs/'): `https://ipfs.io/ipfs/${image}`
-      }
-
-    } else if (headers['content-type']?.startsWith('image')) {
-      metadata.imageURL = ipfsHashUrl
+            const isIPFSprefix = image.startsWith("ipfs://")
+            if (image.includes("://") && !isIPFSprefix) {
+                // Normal URL
+                metadata.imageURL = image
+            } else {
+                // Treat it as IPFS Hash
+                metadata.imageURL = isIPFSprefix ? image.replace('ipfs://', 'https://ipfs.io/ipfs/'): `https://ipfs.io/ipfs/${image}`
+            }
+        } else if (headers['content-type']?.startsWith('image')) {
+            metadata.imageURL = ipfsHashUrl
+        }
+    } catch (e) {
+        console.warn(`Can't get token metadata from ipfs ${ipfsHashUrl}`)
     }
+
     return metadata
 }
 
