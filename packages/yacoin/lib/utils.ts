@@ -8,6 +8,7 @@ import { accumulativeCoin } from '@yaswap/yacoinjs-coinselect/accumulative';
 import { YacoinNetwork, Input, Output, Transaction as YacoinTransaction, UTXO } from './types';
 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
+const getTokenMetadataErr = "Can't get token metadata from ipfs. Please try again later."
 const GET_METADATA_TIMEOUT = 10000 // 10s
 
 // JUST FOR TESTING
@@ -284,6 +285,7 @@ async function getTokenMetadata(ipfsHash: string) {
         }
     } catch (e) {
         console.warn(`Can't get token metadata from ipfs ${ipfsHashUrl}`)
+        metadata.description = getTokenMetadataErr
     }
 
     return metadata
@@ -300,6 +302,7 @@ export {
     getPubKeyHash,
     validateAddress,
     getTokenMetadata,
+    getTokenMetadataErr,
     timelockFeeDuration,
     timelockFeeAmountInSatoshis,
     timelockFeeAmount
