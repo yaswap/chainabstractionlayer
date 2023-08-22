@@ -1,5 +1,17 @@
 # @yaswap/evm
 
+## 2.3.3
+
+### Patch Changes
+
+-   Change timelock values to production
+-   Updated dependencies
+    -   @yaswap/client@2.3.3
+    -   @yaswap/errors@2.3.3
+    -   @yaswap/logger@2.3.3
+    -   @yaswap/types@2.3.3
+    -   @yaswap/utils@2.3.3
+
 ## 2.3.2
 
 ### Patch Changes
