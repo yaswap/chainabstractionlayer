@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.3.2
+
+### Patch Changes
+
+-   Fix token issues
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.3.2
+    -   @yaswap/client@2.3.2
+    -   @yaswap/errors@2.3.2
+    -   @yaswap/hw-ledger@2.3.2
+    -   @yaswap/types@2.3.2
+    -   @yaswap/utils@2.3.2
+
 ## 2.3.1
 
 ### Patch Changes

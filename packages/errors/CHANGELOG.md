@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 2.3.2
+
+### Patch Changes
+
+-   Fix token issues
+
 ## 2.3.1
 
 ### Patch Changes

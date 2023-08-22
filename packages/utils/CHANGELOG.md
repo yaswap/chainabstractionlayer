@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.3.2
+
+### Patch Changes
+
+-   Fix token issues
+-   Updated dependencies
+    -   @yaswap/errors@2.3.2
+    -   @yaswap/types@2.3.2
+
 ## 2.3.1
 
 ### Patch Changes
