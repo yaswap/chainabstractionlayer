@@ -59,6 +59,10 @@ export default class HttpClient {
         this._node = axios.create(config);
     }
 
+    public getBaseURL() {
+        return this._node.defaults.baseURL;
+    }
+
     private static handleError(error: any): void {
         const { message, ...attrs } = error;
         const errorMessage = error?.response?.data || message;
