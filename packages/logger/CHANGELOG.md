@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.4.0
+
+### Minor Changes
+
+-   Add API to getBaseURL
+
 ## 2.3.3
 
 ### Patch Changes

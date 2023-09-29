@@ -1,5 +1,19 @@
 # @yaswap/near
 
+## 2.4.0
+
+### Minor Changes
+
+-   Add API to getBaseURL
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.4.0
+    -   @yaswap/errors@2.4.0
+    -   @yaswap/types@2.4.0
+    -   @yaswap/utils@2.4.0
+
 ## 2.3.3
 
 ### Patch Changes
