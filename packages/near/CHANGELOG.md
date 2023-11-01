@@ -1,5 +1,16 @@
 # @yaswap/near
 
+## 2.5.2
+
+### Patch Changes
+
+-   Add missing logic to find claim and refund transaction for EVM chain
+-   Updated dependencies
+    -   @yaswap/client@2.5.2
+    -   @yaswap/errors@2.5.2
+    -   @yaswap/types@2.5.2
+    -   @yaswap/utils@2.5.2
+
 ## 2.5.1
 
 ### Patch Changes
