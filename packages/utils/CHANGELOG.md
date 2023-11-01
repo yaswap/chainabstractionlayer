@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.5.1
+
+### Patch Changes
+
+-   Fix issue which fails to initiate swap transaction for YAC
+-   Updated dependencies
+    -   @yaswap/errors@2.5.1
+    -   @yaswap/types@2.5.1
+
 ## 2.5.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.5.1
+
+### Patch Changes
+
+-   Fix issue which fails to initiate swap transaction for YAC
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.5.1
+    -   @yaswap/client@2.5.1
+    -   @yaswap/errors@2.5.1
+    -   @yaswap/hw-ledger@2.5.1
+    -   @yaswap/types@2.5.1
+    -   @yaswap/utils@2.5.1
+
 ## 2.5.0
 
 ### Minor Changes

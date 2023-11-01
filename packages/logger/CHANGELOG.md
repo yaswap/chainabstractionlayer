@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.5.1
+
+### Patch Changes
+
+-   Fix issue which fails to initiate swap transaction for YAC
+
 ## 2.5.0
 
 ### Minor Changes
