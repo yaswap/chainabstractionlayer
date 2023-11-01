@@ -1,5 +1,19 @@
 # @yaswap/near
 
+## 2.5.0
+
+### Minor Changes
+
+-   Support litecoin chain
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.5.0
+    -   @yaswap/errors@2.5.0
+    -   @yaswap/types@2.5.0
+    -   @yaswap/utils@2.5.0
+
 ## 2.4.0
 
 ### Minor Changes
