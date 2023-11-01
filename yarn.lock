@@ -3574,6 +3574,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@yaswap/litecoin@workspace:packages/litecoin":
+  version: 0.0.0-use.local
+  resolution: "@yaswap/litecoin@workspace:packages/litecoin"
+  dependencies:
+    "@types/bip32": ^2.0.0
+    "@types/bip39": ^3.0.0
+    "@types/bitcoinjs-lib": ^5.0.0
+    "@types/lodash": ^4.14.178
+    "@types/memoizee": ^0.4.7
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
+    bip174: ^2.0.1
+    bip32: 2.0.6
+    bip39: ^3.0.4
+    bitcoinjs-lib: 5.2.0
+    bitcoinjs-message: 2.2.0
+    coinselect: ^3.1.12
+    lodash: 4.17.21
+    memoizee: ^0.4.15
+  languageName: unknown
+  linkType: soft
+
 "@yaswap/logger@workspace:*, @yaswap/logger@workspace:packages/logger":
   version: 0.0.0-use.local
   resolution: "@yaswap/logger@workspace:packages/logger"
