@@ -20,9 +20,9 @@ import {
 } from '../types';
 import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
 
-const ADDRESS_GAP = 10
+const ADDRESS_GAP = 1
 const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
-const NUMBER_ADDRESS_LIMIT = 100
+const NUMBER_ADDRESS_LIMIT = 1
 
 export enum AddressSearchType {
     EXTERNAL,
@@ -248,11 +248,10 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
             addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT
           ) {
             // Scanning for change addr
-            changeAddresses = await this.getAddresses(addressIndex, numAddressPerCall, true)
-            addrList = addrList.concat(changeAddresses)
+            const addresses = await this.getAddresses(addressIndex, numAddressPerCall, true)
+            changeAddresses = changeAddresses.concat(addresses)
+            addrList = addrList.concat(addresses)
             numAddressAlreadyGet['change'] += numAddressPerCall
-          } else {
-            changeAddresses = []
           }
   
           if (
@@ -260,8 +259,9 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
             addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT
           ) {
             // Scanning for non change addr
-            externalAddresses = await this.getAddresses(addressIndex, numAddressPerCall, false)
-            addrList = addrList.concat(externalAddresses)
+            const addresses = await this.getAddresses(addressIndex, numAddressPerCall, false)
+            externalAddresses = externalAddresses.concat(addresses)
+            addrList = addrList.concat(addresses)
             numAddressAlreadyGet['external'] += numAddressPerCall
           }
   
@@ -295,14 +295,16 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
           addressIndex += numAddressPerCall
         }
   
-        // In case it already reached NUMBER_ADDRESS_LIMIT, get the first used change address
+        // In case it already reached NUMBER_ADDRESS_LIMIT, get the random used change address
         if (!unusedAddressMap['change']) {
-          unusedAddressMap['change'] = usedAddresses[0]
+          const maxRange = changeAddresses.length - 1
+          unusedAddressMap['change'] = changeAddresses[Math.round(Math.random() * maxRange)]
         }
   
-        // In case it already reached NUMBER_ADDRESS_LIMIT, get the first used external address
+        // In case it already reached NUMBER_ADDRESS_LIMIT, get the random used external address
         if (!unusedAddressMap['external']) {
-          unusedAddressMap['external'] = usedAddresses[numAddressPerCall]
+          const maxRange = externalAddresses.length - 1
+          unusedAddressMap['external'] = externalAddresses[Math.round(Math.random() * maxRange)]
         }
   
         return {
