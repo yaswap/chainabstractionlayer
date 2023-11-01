@@ -237,9 +237,9 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
     protected async _getUsedUnusedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL, addressType: AddressSearchType) {
         const usedAddresses = []
-        const addressCountMap = { change: 0, external: 0 }
+        const addressCountMap = { change: 0, external: 0 } // track number of unused addresses
+        const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null } // store first unused address
         const numAddressAlreadyGet = { change: 0, external: 0 }
-        const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null }
   
         let addrList: Address[]
         let uniqueAddresses: string[] = []
@@ -285,12 +285,12 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
           const transactionCounts: AddressTxCounts = await this.chainProvider.getProvider().getAddressTransactionCounts(addrList);
   
           for (const address of addrList) {
-              // Remove duplicate addresses
-              if (!uniqueAddresses.includes(address.address)) {
+            // Remove duplicate addresses
+            if (!uniqueAddresses.includes(address.address)) {
                 uniqueAddresses.push(address.address);
-              } else {
+            } else {
                 continue
-              }
+            }
   
             const isUsed = transactionCounts[address.toString()] > 0;
             const isChangeAddress = changeAddresses.find((a) => address.toString() === a.toString());
@@ -312,19 +312,21 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
           addressIndex += numAddressPerCall
         }
   
+        // In case it already reached NUMBER_ADDRESS_LIMIT, get the first used change address
         if (!unusedAddressMap['change']) {
-          unusedAddressMap['change'] = changeAddresses[0]
+          unusedAddressMap['change'] = usedAddresses[0]
         }
   
+        // In case it already reached NUMBER_ADDRESS_LIMIT, get the first used external address
         if (!unusedAddressMap['external']) {
-          unusedAddressMap['external'] = externalAddresses[0]
+          unusedAddressMap['external'] = usedAddresses[numAddressPerCall]
         }
   
         return {
           usedAddresses,
           unusedAddress: unusedAddressMap
         }
-      }
+    }
 
     protected async withCachedUtxos(func: () => any) {
         const originalProvider = this.chainProvider.getProvider();

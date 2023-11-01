@@ -147,7 +147,7 @@ export class LitecoinHDWalletProvider extends LitecoinBaseWalletProvider impleme
             _feePerByte = await this.chainProvider.getProvider().getFeePerByte();
         }
 
-        const { inputs, outputs, change } = await this.getInputsForAmount([], _feePerByte, [], 100, true);
+        const { inputs, outputs, change } = await this.getInputsForAmount([], _feePerByte, [], true);
 
         if (change) {
             throw new Error('There should not be any change for sweeping transaction');
