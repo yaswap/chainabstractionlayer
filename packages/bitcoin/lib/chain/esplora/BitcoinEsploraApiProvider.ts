@@ -3,7 +3,7 @@ import { BlockNotFoundError, TxNotFoundError } from '@yaswap/errors';
 import { AddressType, BigNumber, Block, FeeDetail, FeeDetails, Transaction } from '@yaswap/types';
 import { flatten } from 'lodash';
 import { BitcoinEsploraBaseProvider } from './BitcoinEsploraBaseProvider';
-import { BitcoinEsploraBatchBaseProvider } from './BitcoinEsploraBatchBaseProvider';
+// import { BitcoinEsploraBatchBaseProvider } from './BitcoinEsploraBatchBaseProvider';
 import * as EsploraTypes from './types';
 
 export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider> {
@@ -16,7 +16,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
         feeProvider?: Fee,
         feeOptions?: EsploraTypes.FeeOptions
     ) {
-        const _provider = provider || new BitcoinEsploraBatchBaseProvider(options);
+        const _provider = provider || new BitcoinEsploraBaseProvider(options);
         super(options.network, _provider, feeProvider);
         this._httpClient = this.provider.httpClient;
         this._feeOptions = { slowTargetBlocks: 6, averageTargetBlocks: 3, fastTargetBlocks: 1, ...feeOptions };
