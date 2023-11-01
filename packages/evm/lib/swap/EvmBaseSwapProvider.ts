@@ -6,7 +6,7 @@ import { ensure0x, remove0x, validateSecret, validateSecretAndHash } from '@yasw
 import { Signer } from '@ethersproject/abstract-signer';
 import { BaseProvider, Log } from '@ethersproject/providers';
 import { LiqualityHTLC } from '../typechain';
-import { ClaimEvent, RefundEvent } from '../typechain/LiqualityHTLC';
+import { ClaimEvent } from '../typechain/LiqualityHTLC';
 import { EthersTransactionResponse, EvmSwapOptions, ScraperTransaction } from '../types';
 import { toEthersBigNumber, toEthereumTxRequest, hexToNumber } from '../utils';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
@@ -368,7 +368,7 @@ export abstract class EvmBaseSwapProvider extends Swap<BaseProvider, Signer, Evm
 
     abstract findFundSwapTransaction(swapParams: SwapParams, initiationTxHash: string, blockNumber?: number): Promise<Transaction | null>;
 
-    abstract findRefundSwapTransaction(swapParams: SwapParams, initTxHash: string, blockNumber?: number): Promise<Transaction<RefundEvent>>;
+    abstract findRefundSwapTransaction(swapParams: SwapParams, initTxHash: string, blockNumber?: number): Promise<Transaction<ScraperTransaction>>;
 
-    abstract findClaimSwapTransaction(swapParams: SwapParams, initTxHash: string, _blockNumber?: number): Promise<Transaction<ClaimEvent>>;
+    abstract findClaimSwapTransaction(swapParams: SwapParams, initTxHash: string, _blockNumber?: number): Promise<Transaction<ScraperTransaction>>;
 }

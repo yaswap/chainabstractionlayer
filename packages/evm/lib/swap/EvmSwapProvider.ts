@@ -1,9 +1,8 @@
 import { HttpClient } from '@yaswap/client';
 import { TxStatus, SwapParams, Transaction, BigNumber } from '@yaswap/types';
-import { Math, remove0x, ensure0x } from '@yaswap/utils';
+import { remove0x, ensure0x, validateSecretAndHash } from '@yaswap/utils';
 import { TxNotFoundError, PendingTxError } from '@yaswap/errors';
-import { BaseProvider, Log } from '@ethersproject/providers';
-import { ClaimEvent, RefundEvent } from '../typechain/LiqualityHTLC';
+import { BaseProvider } from '@ethersproject/providers';
 import { EvmSwapOptions, ScraperTransaction } from '../types';
 import { EvmBaseWalletProvider } from '../wallet/EvmBaseWalletProvider';
 import { EvmBaseSwapProvider } from './EvmBaseSwapProvider';
@@ -109,35 +108,35 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
       toBlock?: number,
       limit = 250,
       sort = 'desc'
-  ) {
-    erc20ContractAddress = ensure0x(erc20ContractAddress)
-    address = ensure0x(address)
-    for (let page = 1; ; page++) {
-      const data = await this._httpClient.nodeGet(`/events/erc20Transfer/${erc20ContractAddress}`, {
-        address,
-        limit,
-        page,
-        sort,
-        fromBlock,
-        toBlock
-      })
-
-      const transactions: any[] = data.data.txs
-      if (transactions.length === 0) return
-
-      const normalizedTransactions = transactions
-        .filter((tx) => {
-            return tx.status === true
+    ) {
+      erc20ContractAddress = ensure0x(erc20ContractAddress)
+      address = ensure0x(address)
+      for (let page = 1; ; page++) {
+        const data = await this._httpClient.nodeGet(`/events/erc20Transfer/${erc20ContractAddress}`, {
+          address,
+          limit,
+          page,
+          sort,
+          fromBlock,
+          toBlock
         })
-        .map(this.normalizeTransactionResponse)
-      const tx = normalizedTransactions.find(predicate)
-      if (tx) {
-        return this.ensureFeeInfo(tx)
-      }
 
-      if (transactions.length < limit) return
+        const transactions: any[] = data.data.txs
+        if (transactions.length === 0) return
+
+        const normalizedTransactions = transactions
+          .filter((tx) => {
+              return tx.status === true
+          })
+          .map(this.normalizeTransactionResponse)
+        const tx = normalizedTransactions.find(predicate)
+        if (tx) {
+          return this.ensureFeeInfo(tx)
+        }
+
+        if (transactions.length < limit) return
+      }
     }
-  }
     
     async findFundSwapTransaction(swapParams: SwapParams, initiationTxHash: string): Promise<Transaction> {
       this.validateSwapParams(swapParams)
@@ -147,10 +146,10 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
       if (initiationTransaction.status === TxStatus.Pending) {
           throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
       }
-  
+
       const contractAddress = initiationTransaction.contractAddress
       const erc20TokenContractAddress = swapParams.asset.contractAddress
-  
+
       const tx = await this.findErc20Events(
         erc20TokenContractAddress,
         contractAddress,
@@ -164,60 +163,41 @@ export class EvmSwapProvider extends EvmBaseSwapProvider {
       return tx
     }
 
-    async findClaimSwapTransaction(swapParams: SwapParams, initTxHash: string): Promise<Transaction<ClaimEvent>> {
-        const foundTx = await this.findTx<ClaimEvent>(swapParams, initTxHash, 'Claim');
-        const secret = foundTx?._raw?.args?.secret;
-        if (secret) {
-            return { ...foundTx, secret: remove0x(secret) };
-        }
+    async findAddressEvent(type: string, contractAddress: string) {
+      const data = await this._httpClient.nodeGet(`/events/${type}/${contractAddress}`)
+      const { tx } = data.data
+  
+      if (tx && tx.status === true) {
+        return this.ensureFeeInfo(this.normalizeTransactionResponse(tx))
+      }
     }
 
-    async findRefundSwapTransaction(swapParams: SwapParams, initTxHash: string): Promise<Transaction<RefundEvent>> {
-        return this.findTx<RefundEvent>(swapParams, initTxHash, 'Refund');
+    async findClaimSwapTransaction(swapParams: SwapParams, initiationTxHash: string): Promise<Transaction<ScraperTransaction>> {
+      this.validateSwapParams(swapParams)
+  
+      const initiationTransaction = await this.walletProvider.getChainProvider().getTransactionByHash(initiationTxHash);
+      if (!initiationTransaction) throw new TxNotFoundError(`Transaction not found: ${initiationTxHash}`)
+      if (initiationTransaction.status === TxStatus.Pending) {
+          throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
+      }
+
+      const tx = await this.findAddressEvent('swapClaim', initiationTransaction.contractAddress)
+  
+      if (tx) {
+        validateSecretAndHash(tx.secret, swapParams.secretHash)
+        return tx
+      }
     }
 
-    private async searchLogs(callback: (from: number, to: number) => Promise<Transaction>, currentBlock: number) {
-        // let from = Math.sub(currentBlock, this.swapOptions.numberOfBlocksPerRequest).toString();
-        let from = Math.sub(currentBlock, 0).toString();
-        let to = currentBlock.toString();
-
-        // while (Math.gte(from, Math.sub(currentBlock, this.swapOptions.totalNumberOfBlocks))) {
-        while (Math.gte(from, Math.sub(currentBlock, 0))) {
-            const result = await callback(Number(from), Number(to));
-            if (result) {
-                return result;
-            }
-            // from = Math.sub(from, this.swapOptions.numberOfBlocksPerRequest).toString();
-            // to = Math.sub(to, this.swapOptions.numberOfBlocksPerRequest).toString();
-            from = Math.sub(from, 0).toString();
-            to = Math.sub(to, 0).toString();
-        }
-    }
-
-    private async findTx<EventType>(swapParams: SwapParams, initTxHash: string, eventFilter: string): Promise<Transaction<EventType>> {
-        const txReceipt = await this.walletProvider.getChainProvider().getTransactionByHash(initTxHash);
-
-        if (txReceipt?.logs) {
-            for (const log of txReceipt.logs as Log[]) {
-                const initiate = this.tryParseLog(log);
-
-                if (initiate?.args?.id && initiate.args.htlc) {
-                    await this.verifyInitiateSwapTransaction(swapParams, { ...txReceipt, _raw: initiate });
-                    const currentBlock = await this.walletProvider.getChainProvider().getBlockHeight();
-                    return await this.searchLogs(async (from: number, to: number) => {
-                        const event = await this.contract.queryFilter(this.contract.filters[eventFilter](initiate.args.id), from, to);
-                        if (event.length > 1) {
-                            throw Error(`This should never happen. Found more than one ${eventFilter} TX`);
-                        } else {
-                            if (event[0]) {
-                                const tx = await this.walletProvider.getChainProvider().getTransactionByHash(event[0].transactionHash);
-                                return { ...tx, _raw: event[0] };
-                            }
-                        }
-                    }, currentBlock);
-                }
-            }
-        }
-        return null;
+    async findRefundSwapTransaction(swapParams: SwapParams, initiationTxHash: string): Promise<Transaction<ScraperTransaction>> {
+      this.validateSwapParams(swapParams)
+  
+      const initiationTransaction = await this.walletProvider.getChainProvider().getTransactionByHash(initiationTxHash);
+      if (!initiationTransaction) throw new TxNotFoundError(`Transaction not found: ${initiationTxHash}`)
+      if (initiationTransaction.status === TxStatus.Pending) {
+          throw new PendingTxError(`Transaction receipt is not available: ${initiationTxHash}`)
+      }
+  
+      return this.findAddressEvent('swapRefund', initiationTransaction.contractAddress)
     }
 }
