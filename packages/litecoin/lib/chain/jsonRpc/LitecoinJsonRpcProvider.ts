@@ -14,7 +14,7 @@ export class LitecoinJsonRpcProvider extends Chain<LitecoinJsonRpcBaseProvider> 
     constructor(options: ProviderOptions, feeProvider?: Fee, feeOptions?: FeeOptions) {
         super(options.network, new LitecoinJsonRpcBaseProvider(options), feeProvider);
         this.jsonRpc = this.provider.jsonRpc;
-        this._feeOptions = { slowTargetBlocks: 6, averageTargetBlocks: 3, fastTargetBlocks: 1, ...feeOptions };
+        this._feeOptions = { slowTargetBlocks: 24, averageTargetBlocks: 12, fastTargetBlocks: 1, ...feeOptions };
     }
 
     public async getBlockByHash(blockHash: string, includeTx = false): Promise<Block> {
@@ -170,7 +170,7 @@ export class LitecoinJsonRpcProvider extends Chain<LitecoinJsonRpcBaseProvider> 
 
     private async _getFee(targetBlocks: number): Promise<FeeDetail> {
         const value = await this.provider.getFeePerByte(targetBlocks);
-        const wait = targetBlocks * 10 * 60; // 10 minute blocks in seconds
+        const wait = targetBlocks * 2.5 * 60; // 2.5 minute blocks in seconds
         return { fee: value, wait };
     }
 }

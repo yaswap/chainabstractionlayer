@@ -4,7 +4,7 @@ import { FeeDetails, FeeProvider } from '@yaswap/types';
 export class LitecoinFeeApiProvider extends Fee implements FeeProvider {
     private _httpClient: HttpClient;
 
-    constructor(endpoint = 'https://mempool.space/api/v1/fees/recommended') {
+    constructor(endpoint = 'https://litecoinspace.org/api/v1/fees/recommended') {
         super();
         this._httpClient = new HttpClient({ baseURL: endpoint });
     }
@@ -23,7 +23,7 @@ export class LitecoinFeeApiProvider extends Fee implements FeeProvider {
             },
             fast: {
                 fee: data.fastestFee,
-                wait: 10 * 60,
+                wait: 2.5 * 60,
             },
         };
     }

@@ -15,7 +15,7 @@ export class LitecoinEsploraBaseProvider extends LitecoinBaseChainProvider {
         this.httpClient = new HttpClient({ baseURL: options.url });
         this._options = {
             numberOfBlockConfirmation: 1,
-            defaultFeePerByte: 3,
+            defaultFeePerByte: 3, // min relay tx fee = 1000/1kvB
             ...options,
         };
     }
@@ -70,7 +70,7 @@ export class LitecoinEsploraBaseProvider extends LitecoinBaseChainProvider {
     }
 
     public async getMinRelayFee() {
-        return 1;
+        return 1; // min relay tx fee = 1000/1kvB
     }
 
     private async _getUnspentTransactions(address: string): Promise<UTXO[]> {
