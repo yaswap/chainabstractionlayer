@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.5.3
+
+### Patch Changes
+
+-   Support documents field in token metadata
+-   Updated dependencies
+    -   @yaswap/errors@2.5.3
+    -   @yaswap/types@2.5.3
+
 ## 2.5.2
 
 ### Patch Changes

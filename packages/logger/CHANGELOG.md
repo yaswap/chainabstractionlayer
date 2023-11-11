@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.5.3
+
+### Patch Changes
+
+-   Support documents field in token metadata
+
 ## 2.5.2
 
 ### Patch Changes
