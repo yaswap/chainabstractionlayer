@@ -13,6 +13,7 @@ export interface NFTAsset {
     };
     id?: number;
     description?: string;
+    documents?: string[];
     external_link?: string;
     image_original_url?: string;
     image_preview_url?: string;

@@ -50,6 +50,7 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
                         image_thumbnail_url: nftMetadata.imageURL,
                         name: nftName,
                         metadataName: nftMetadata.name,
+                        documents: nftMetadata.documents,
                     });
                 }
             }

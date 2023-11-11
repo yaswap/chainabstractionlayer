@@ -23,6 +23,7 @@ interface TokenMetadata {
     name?: string;
     description?: string;
     imageURL?: string;
+    documents?: string[];
 }
 
 const timelockFeeDuration = () => {
@@ -255,6 +256,19 @@ function validateAddress(_address: AddressType, network: YacoinNetwork) {
     }
 }
 
+function convertToURL(ipfsHash: string) {
+    let url = ''
+    const isIPFSprefix = ipfsHash.startsWith("ipfs://")
+    if (ipfsHash.includes("://") && !isIPFSprefix) {
+        // Normal URL
+        url = ipfsHash
+    } else {
+        // Treat it as IPFS Hash
+        url = isIPFSprefix ? ipfsHash.replace('ipfs://', 'https://ipfs.io/ipfs/'): `https://ipfs.io/ipfs/${ipfsHash}`
+    }
+    return url
+}
+
 async function getTokenMetadata(ipfsHash: string) {
     if (!ipfsHash) {
         return {};
@@ -264,19 +278,15 @@ async function getTokenMetadata(ipfsHash: string) {
     try {
         const headers = await HttpClient.head(ipfsHashUrl, {}, {timeout: GET_METADATA_TIMEOUT})
         if (headers['content-type'] === 'application/json') {
-            const { name, description, image } = await HttpClient.get(ipfsHashUrl)
+            const { name, description, image, documents } = await HttpClient.get(ipfsHashUrl)
+            const convertedDocuments = (documents as string[])?.map((document) => {
+                return convertToURL(document);
+            })
             metadata = {
                 name,
-                description
-            }
-
-            const isIPFSprefix = image.startsWith("ipfs://")
-            if (image.includes("://") && !isIPFSprefix) {
-                // Normal URL
-                metadata.imageURL = image
-            } else {
-                // Treat it as IPFS Hash
-                metadata.imageURL = isIPFSprefix ? image.replace('ipfs://', 'https://ipfs.io/ipfs/'): `https://ipfs.io/ipfs/${image}`
+                description,
+                imageURL: convertToURL(image),
+                documents: convertedDocuments
             }
         } else if (headers['content-type']?.startsWith('image')) {
             metadata.imageURL = ipfsHashUrl
