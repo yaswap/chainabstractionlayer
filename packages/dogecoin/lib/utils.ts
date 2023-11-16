@@ -82,7 +82,6 @@ function decodeRawTransaction(hex: string, network: DogecoinNetwork): DogecoinTr
                 asm: dogecoin.script.toASM(input.script),
                 hex: input.script.toString('hex'),
             },
-            txinwitness: input.witness.map((w) => w.toString('hex')),
             sequence: input.sequence,
         };
     });
@@ -159,52 +158,15 @@ function normalizeTransactionObject(
     return result;
 }
 
-// TODO: This is copy pasta because it's not exported from bitcoinjs-lib
-// https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/csv.spec.ts#L477
-function witnessStackToScriptWitness(witness: Buffer[]): Buffer {
-    let buffer = Buffer.allocUnsafe(0);
-
-    function writeSlice(slice: Buffer): void {
-        buffer = Buffer.concat([buffer, Buffer.from(slice)]);
-    }
-
-    function writeVarInt(i: number): void {
-        const currentLen = buffer.length;
-        const varintLen = varuint.encodingLength(i);
-
-        buffer = Buffer.concat([buffer, Buffer.allocUnsafe(varintLen)]);
-        varuint.encode(i, buffer, currentLen);
-    }
-
-    function writeVarSlice(slice: Buffer): void {
-        writeVarInt(slice.length);
-        writeSlice(slice);
-    }
-
-    function writeVector(vector: Buffer[]): void {
-        writeVarInt(vector.length);
-        vector.forEach(writeVarSlice);
-    }
-
-    writeVector(witness);
-
-    return buffer;
-}
-
 function getPubKeyHash(address: string, network: DogecoinNetwork) {
     const outputScript = dogecoin.address.toOutputScript(address, network);
     const type = classify.output(outputScript);
-    if (![classify.types.P2PKH, classify.types.P2WPKH].includes(type)) {
+    if (type !== classify.types.P2PKH) {
         throw new Error(`Dogecoin swap doesn't support the address ${address} type of ${type}. Not possible to derive public key hash.`);
     }
 
-    try {
-        const bech32 = dogecoin.address.fromBech32(address);
-        return bech32.data;
-    } catch (e) {
-        const base58 = dogecoin.address.fromBase58Check(address);
-        return base58.hash;
-    }
+    const base58 = dogecoin.address.fromBase58Check(address)
+    return base58.hash
 }
 
 function validateAddress(_address: AddressType, network: DogecoinNetwork) {
@@ -233,7 +195,6 @@ export {
     selectCoins,
     decodeRawTransaction,
     normalizeTransactionObject,
-    witnessStackToScriptWitness,
     AddressTypes,
     getPubKeyHash,
     validateAddress,
