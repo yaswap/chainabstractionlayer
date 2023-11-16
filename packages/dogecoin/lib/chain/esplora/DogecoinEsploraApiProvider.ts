@@ -186,6 +186,37 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
                     "time": 1699504841,
                     "inputs_n": 4,
                     "inputs_value": "5950.60576904",
+                    "inputs": [
+                        {
+                            "pos": 0,
+                            "value": "2148.19276904",
+                            "address": "DLvPBH6wMyDJzrJhH4qbTtPJmxHuwRwJjd",
+                            "scriptSig": {
+                                "hex": "483045022100b1be48448eec0682f6bbbb1ed864f59449dca9993786acfb22ecb39941cc315202207685ea2568b4f9454d63ce69b9029742c680527afbe6db38037ace87caa65a43012102e41ac88881b0ce8d4688c8423c49d9648920a29da09a4d6f39ade3ca770a815a"
+                            },
+                            "previous_output": {
+                                "hash": "1e7b5e5c8532e4561af226e58452de1f985e4565a36386fa1e4d439c25557aee",
+                                "pos": 1
+                            }
+                        },
+            ...
+                    "outputs_n": 2,
+                    "outputs_value": "5949.76532481",
+                    "outputs": [
+                        {
+                            "pos": 0,
+                            "value": "5000.00000000",
+                            "type": "pubkeyhash",
+                            "address": "DNxw4nhbKH3DJSZEbxwSGpFu5fucjegxCU",
+                            "script": {
+                                "hex": "76a914c3863241a5d7de10e67b37d1df809acf12354f0088ac",
+                                "asm": "OP_DUP OP_HASH160 c3863241a5d7de10e67b37d1df809acf12354f00 OP_EQUALVERIFY OP_CHECKSIG"
+                            },
+                            "spent": {
+                                "hash": "1ac9291f54ccae485e15a1a0574d2248f218bc6312f77b56f2d169222d857e4d",
+                                "pos": 2
+                            }
+                        },
             ...
                     "fee": "0.84044423",
                     "price": "0.0768"
@@ -193,16 +224,16 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
             }
             */
             data = {
-                txid: txinfo.transaction.hash,
+                txid: txinfo.transaction.hash, // IMPORTANT
                 version: txinfo.transaction.version,
                 locktime: txinfo.transaction.locktime,
-                vin: txinfo.transaction.inputs,
+                vin: txinfo.transaction.inputs, // vin, vout will be parsed based on tx hex in formatTransaction
                 vout: txinfo.transaction.outputs,
                 size: txinfo.transaction.size,
                 weight: txinfo.transaction.weight,
-                fee: txinfo.transaction.fee*1e8,
-                status: { confirmed: txinfo.transaction.confirmations >= 1 ? true : false},
-                confirmations: txinfo.transaction.confirmations
+                fee: txinfo.transaction.fee*1e8, // IMPORTANT
+                status: { confirmed: txinfo.transaction.confirmations >= 1 ? true : false}, // IMPORTANT
+                confirmations: txinfo.transaction.confirmations // IMPORTANT
             }
         } catch (e) {
             if (e.name === 'NodeError' && e.message.includes('Transaction not found')) {

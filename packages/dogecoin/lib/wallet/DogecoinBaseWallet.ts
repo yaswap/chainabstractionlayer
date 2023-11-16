@@ -8,14 +8,14 @@ import memoize from 'memoizee';
 import { DogecoinBaseChainProvider } from '../chain/DogecoinBaseChainProvider';
 import {
     AddressTxCounts,
-    AddressType as BtcAddressType,
+    AddressType as DogeAddressType,
     DogecoinNetwork,
     DogecoinWalletProviderOptions,
     Input,
     OutputTarget,
     P2SHInput,
     PsbtInputTarget,
-    Transaction as BtcTransaction,
+    Transaction as DogeTransaction,
     UTXO,
 } from '../types';
 import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
@@ -35,12 +35,12 @@ type DerivationCache = { [index: string]: Address };
 export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProvider = any, S = any> extends Wallet<T, S> {
     protected _baseDerivationPath: string;
     protected _network: DogecoinNetwork;
-    protected _addressType: BtcAddressType;
+    protected _addressType: DogeAddressType;
     protected _derivationCache: DerivationCache;
 
     constructor(options: DogecoinWalletProviderOptions, chainProvider?: Chain<T>) {
-        const { baseDerivationPath, addressType = BtcAddressType.BECH32 } = options;
-        const addressTypes = Object.values(BtcAddressType);
+        const { baseDerivationPath, addressType = DogeAddressType.LEGACY } = options;
+        const addressTypes = Object.values(DogeAddressType);
         if (!addressTypes.includes(addressType)) {
             throw new Error(`addressType must be one of ${addressTypes.join(',')}`);
         }
@@ -65,6 +65,7 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
     ): Promise<{ hex: string; fee: number }>;
     protected abstract buildSweepTransaction(externalChangeAddress: string, feePerByte?: number): Promise<{ hex: string; fee: number }>;
     public abstract signPSBT(data: string, inputs: PsbtInputTarget[]): Promise<string>;
+    public abstract signTx(transaction: string, hash: string, derivationPath: string, txfee: number): Promise<string>
     public abstract signBatchP2SHTransaction(
         inputs: P2SHInput[],
         addresses: string,
@@ -128,9 +129,9 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
         return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
     }
 
-    public async updateTransactionFee(tx: Transaction<BtcTransaction> | string, newFeePerByte: number) {
+    public async updateTransactionFee(tx: Transaction<DogeTransaction> | string, newFeePerByte: number) {
         const txHash = typeof tx === 'string' ? tx : tx.hash;
-        const transaction: BtcTransaction = (await this.chainProvider.getTransactionByHash(txHash))._raw;
+        const transaction: DogeTransaction = (await this.chainProvider.getTransactionByHash(txHash))._raw;
         const fixedInputs = [transaction.vin[0]]; // TODO: should this pick more than 1 input? RBF doesn't mandate it
 
         const lookupAddresses = transaction.vout.map((vout) => vout.scriptPubKey.addresses[0]);
@@ -458,15 +459,8 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
     }
 
     protected getPaymentVariantFromPublicKey(publicKey: Buffer) {
-        if (this._addressType === BtcAddressType.LEGACY) {
+        if (this._addressType === DogeAddressType.LEGACY) {
             return payments.p2pkh({ pubkey: publicKey, network: this._network });
-        } else if (this._addressType === BtcAddressType.P2SH_SEGWIT) {
-            return payments.p2sh({
-                redeem: payments.p2wpkh({ pubkey: publicKey, network: this._network }),
-                network: this._network,
-            });
-        } else if (this._addressType === BtcAddressType.BECH32) {
-            return payments.p2wpkh({ pubkey: publicKey, network: this._network });
-        }
+        } else throw new Error('Unknown script type')
     }
 }

@@ -2,7 +2,7 @@ import { Chain } from '@yaswap/client';
 import { AddressType, Asset, BigNumber } from '@yaswap/types';
 import { BIP32Interface, fromSeed } from 'bip32';
 import { mnemonicToSeed } from 'bip39';
-import { ECPair, ECPairInterface, Psbt, script, Transaction as DogecoinJsTransaction } from 'bitcoinjs-lib';
+import { ECPair, ECPairInterface, Psbt, script, TransactionBuilder, Transaction as DogecoinJsTransaction } from 'bitcoinjs-lib';
 import { signAsync as signDogecoinMessage } from 'bitcoinjs-message';
 import { DogecoinBaseChainProvider } from '../chain/DogecoinBaseChainProvider';
 import { AddressType as DogecoinAddressType, DogecoinHDWalletProviderOptions, Input, OutputTarget, PsbtInputTarget } from '../types';
@@ -15,7 +15,7 @@ export class DogecoinHDWalletProvider extends DogecoinBaseWalletProvider impleme
     private _baseDerivationNode: BIP32Interface;
 
     constructor(options: DogecoinHDWalletProviderOptions, chainProvider?: Chain<DogecoinBaseChainProvider>) {
-        const { mnemonic, baseDerivationPath, addressType = DogecoinAddressType.BECH32, network } = options;
+        const { mnemonic, baseDerivationPath, addressType = DogecoinAddressType.LEGACY, network } = options;
         super({ baseDerivationPath, addressType, network }, chainProvider);
 
         if (!mnemonic) {
@@ -71,74 +71,41 @@ export class DogecoinHDWalletProvider extends DogecoinBaseWalletProvider impleme
     }
 
     protected async buildTransaction(targets: OutputTarget[], feePerByte?: number, fixedInputs?: Input[]) {
-        const network = this._network;
+        const network = this._network
 
-        const unusedAddress = await this.getUnusedAddress(true);
+        const unusedAddress = await this.getUnusedAddress(true)
         const { inputs, change, fee } = await this.getInputsForAmount(targets, feePerByte, fixedInputs);
 
         if (change) {
-            targets.push({
-                address: unusedAddress.address,
-                value: change.value,
-            });
+          targets.push({
+            address: unusedAddress.address,
+            value: change.value,
+          })
         }
 
-        const psbt = new Psbt({ network });
-
-        const needsWitness = [DogecoinAddressType.BECH32, DogecoinAddressType.P2SH_SEGWIT].includes(this._addressType);
-
+        var tx = new TransactionBuilder(network);
+        // Add input
         for (let i = 0; i < inputs.length; i++) {
-            const wallet = await this.getWalletAddress(inputs[i].address);
-            const keyPair = await this.keyPair(wallet.derivationPath);
-            const paymentVariant = this.getPaymentVariantFromPublicKey(keyPair.publicKey);
-
-            const psbtInput: any = {
-                hash: inputs[i].txid,
-                index: inputs[i].vout,
-                sequence: 0,
-            };
-
-            if (needsWitness) {
-                psbtInput.witnessUtxo = {
-                    script: paymentVariant.output,
-                    value: inputs[i].value,
-                };
-            } else {
-                const inputTxRaw = await this.chainProvider.getProvider().getRawTransactionByHash(inputs[i].txid);
-                psbtInput.nonWitnessUtxo = Buffer.from(inputTxRaw, 'hex');
-            }
-
-            if (this._addressType === DogecoinAddressType.P2SH_SEGWIT) {
-                psbtInput.redeemScript = paymentVariant.redeem.output;
-            }
-
-            psbt.addInput(psbtInput);
+          tx.addInput(inputs[i].txid, inputs[i].vout)
         }
 
+        // Add output
         for (const output of targets) {
-            if (output.script) {
-                psbt.addOutput({
-                    value: output.value,
-                    script: output.script,
-                });
-            } else {
-                psbt.addOutput({
-                    value: output.value,
-                    address: output.address,
-                });
-            }
+          if (output.script) {
+            tx.addOutput(output.script, output.value)
+          } else {
+            tx.addOutput(output.address, output.value)
+          }
         }
 
+        // Sign transaction
         for (let i = 0; i < inputs.length; i++) {
-            const wallet = await this.getWalletAddress(inputs[i].address);
-            const keyPair = await this.keyPair(wallet.derivationPath);
-            psbt.signInput(i, keyPair);
-            psbt.validateSignaturesOfInput(i);
+          const wallet = await this.getWalletAddress(inputs[i].address)
+          const keyPair = await this.keyPair(wallet.derivationPath)
+          tx.sign(i, keyPair)
         }
 
-        psbt.finalizeAllInputs();
-
-        return { hex: psbt.extractTransaction().toHex(), fee };
+        return { hex: tx.build().toHex(), fee }
     }
 
     protected async buildSweepTransaction(externalChangeAddress: string, feePerByte: number) {
@@ -166,6 +133,12 @@ export class DogecoinHDWalletProvider extends DogecoinBaseWalletProvider impleme
             psbt.signInput(input.index, keyPair);
         }
         return psbt.toBase64();
+    }
+
+    public async signTx(transaction: string, hash: string, derivationPath: string, txfee: number) {
+        const keyPair = await this.keyPair(derivationPath)
+        const result = keyPair.sign(Buffer.from(hash, 'hex'))
+        return result.toString('hex')
     }
 
     public async signBatchP2SHTransaction(

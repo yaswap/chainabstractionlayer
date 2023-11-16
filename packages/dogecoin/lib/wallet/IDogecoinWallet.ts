@@ -12,4 +12,5 @@ export interface IDogecoinWallet<T, S = any> extends Wallet<T, S> {
     getWalletAddress(address: string): Promise<Address>;
 
     signPSBT(data: string, inputs: PsbtInputTarget[]): Promise<string>;
+    signTx(transaction: string, hash: string, derivationPath: string, txfee: number): Promise<string>
 }
