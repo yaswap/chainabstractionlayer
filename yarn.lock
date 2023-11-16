@@ -2377,6 +2377,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@samouraiwallet/electrum-client@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@samouraiwallet/electrum-client@npm:1.4.0"
+  checksum: 2e9787689c9bffeb24378c6c16a48cb517bf2dd771e33a6564e528fed904ff5e7a19813943c8ed88cff5332b0b39f733f43881c14345448d5d0d9e0914aec127
+  languageName: node
+  linkType: hard
+
 "@sentry/core@npm:5.30.0":
   version: 5.30.0
   resolution: "@sentry/core@npm:5.30.0"
@@ -3444,6 +3451,31 @@ __metadata:
   checksum: d36cbe85fc5190c3584572ee1c1c9522a7c794c49812c92d37c9ac13dc3d56274d6e31c398cb2f59b1741578fee25682fcea05b0d1b159ffdbb56d7cc2b78fbc
   languageName: node
   linkType: hard
+
+"@yaswap/dogecoin@workspace:packages/dogecoin":
+  version: 0.0.0-use.local
+  resolution: "@yaswap/dogecoin@workspace:packages/dogecoin"
+  dependencies:
+    "@samouraiwallet/electrum-client": ^1.4.0
+    "@types/bip32": ^2.0.0
+    "@types/bip39": ^3.0.0
+    "@types/bitcoinjs-lib": ^5.0.0
+    "@types/lodash": ^4.14.178
+    "@types/memoizee": ^0.4.7
+    "@yaswap/client": "workspace:*"
+    "@yaswap/errors": "workspace:*"
+    "@yaswap/types": "workspace:*"
+    "@yaswap/utils": "workspace:*"
+    bip174: ^2.0.1
+    bip32: 2.0.6
+    bip39: ^3.0.4
+    bitcoinjs-lib: 5.2.0
+    bitcoinjs-message: 2.2.0
+    coinselect: ^3.1.12
+    lodash: 4.17.21
+    memoizee: ^0.4.15
+  languageName: unknown
+  linkType: soft
 
 "@yaswap/errors@workspace:*, @yaswap/errors@workspace:packages/errors":
   version: 0.0.0-use.local

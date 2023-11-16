@@ -2,7 +2,6 @@ import { Network } from '@yaswap/types';
 import { Network as DogecoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as DogecoinEsploraTypes from './chain/esplora/types';
-export * as DogecoinJsonRpcTypes from './chain/jsonRpc/types';
 export * from './swap/types';
 
 export interface DogecoinNetwork extends Network, DogecoinJsLibNetwork {}

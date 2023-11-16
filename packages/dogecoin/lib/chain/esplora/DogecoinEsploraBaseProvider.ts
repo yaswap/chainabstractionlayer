@@ -5,26 +5,40 @@ import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { DogecoinBaseChainProvider } from '../DogecoinBaseChainProvider';
 import * as EsploraTypes from './types';
+import { ElectrumClient } from "@samouraiwallet/electrum-client";
 
 export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
-    public httpClient: HttpClient;
+    public blockChairClient: HttpClient;
+    public blockCypherClient: HttpClient;
+    public dogeChainClient: HttpClient;
+    public electrumClient: ElectrumClient;
+
     protected _options: EsploraTypes.EsploraApiProviderOptions;
 
     constructor(options: EsploraTypes.EsploraApiProviderOptions) {
         super();
-        this.httpClient = new HttpClient({ baseURL: options.url });
+        this.blockChairClient = new HttpClient({ baseURL: "https://api.blockchair.com/dogecoin" });
+        this.blockCypherClient = new HttpClient({ baseURL: "https://api.blockcypher.com/v1/doge/main" });
+        this.dogeChainClient = new HttpClient({ baseURL: "https://dogechain.info/api/v1" });
+        this.electrumClient = new ElectrumClient(10060, 'electrum1.cipig.net', 'tcp');
+
         this._options = {
             numberOfBlockConfirmation: 1,
-            defaultFeePerByte: 3,
+            // Refer https://github.com/dogecoin/dogecoin/blob/master/doc/fee-recommendation.md
+            // min relay tx fee = 0.001 DOGE/kB = 100000/kB = 100/byte
+            // recommended fee = 0.01 DOGE/kB = 1000000/kB = 1000/byte
+            defaultFeePerByte: 2000, 
             ...options,
         };
     }
 
     public async formatTransaction(tx: EsploraTypes.Transaction, currentHeight: number) {
         const hex = await this.getTransactionHex(tx.txid);
-        const confirmations = tx.status.confirmed ? currentHeight - tx.status.block_height + 1 : 0;
-        const decodedTx = decodeRawTransaction(hex, this._options.network);
-        decodedTx.confirmations = confirmations;
+        if (tx.status.confirmed) {
+            tx.status.block_height = currentHeight - tx.confirmations + 1;
+        }
+        const decodedTx = decodeRawTransaction(hex as string, this._options.network);
+        decodedTx.confirmations = tx.confirmations;
         return normalizeTransactionObject(decodedTx, tx.fee, { hash: tx.status.block_hash, number: tx.status.block_height });
     }
 
@@ -33,17 +47,15 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     }
 
     public async getTransactionHex(transactionHash: string): Promise<string> {
-        return this.httpClient.nodeGet(`/tx/${transactionHash}/hex`);
+        // Refer https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.transaction.get
+        return await this.electrumClient.blockchainTransaction_get(transactionHash, false) as string;
     }
 
     public async getFeePerByte(numberOfBlocks = this._options.numberOfBlockConfirmation) {
         try {
-            const feeEstimates: EsploraTypes.FeeEstimates = await this.httpClient.nodeGet('/fee-estimates');
-            const blockOptions = Object.keys(feeEstimates).map((block) => parseInt(block));
-            const closestBlockOption = blockOptions.reduce((prev, curr) => {
-                return Math.abs(prev - numberOfBlocks) < Math.abs(curr - numberOfBlocks) ? prev : curr;
-            });
-            const rate = Math.round(feeEstimates[closestBlockOption]);
+            // Refer https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.estimatefee
+            const feeEstimates = await this.electrumClient.blockchainEstimatefee(numberOfBlocks);
+            const rate = Math.round(feeEstimates as number);
             return rate;
         } catch (e) {
             return this._options.defaultFeePerByte;
@@ -70,21 +82,58 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     }
 
     public async getMinRelayFee() {
-        return 1;
+        // Refer https://github.com/dogecoin/dogecoin/blob/master/doc/fee-recommendation.md
+        // min relay tx fee = 0.001 DOGE/kB = 100/byte
+        // recommended fee = 0.01 DOGE/kB = 1000/byte
+        return 1000;
     }
 
     private async _getUnspentTransactions(address: string): Promise<UTXO[]> {
-        const data: EsploraTypes.UTXO[] = await this.httpClient.nodeGet(`/address/${address}/utxo`);
+        // Refer https://api.blockcypher.com/v1/doge/main/addrs/DEn59H5NhNErVmANLW3jQiaiBEc1VqANam?unspentOnly=true
+        const response = await this.blockCypherClient.nodeGet(`/addrs/${address}?unspentOnly=true`);
+        /*
+        "txrefs": [
+            {
+                "tx_hash": "da9952795bff05ff743eb26f72a3b63bdd57b5db44f6c9b68d9dac830dc83b5a",
+                "block_height": 4906925,
+                "tx_input_n": -1,
+                "tx_output_n": 0,
+                "value": 100000000,
+                "ref_balance": 1259019264101964,
+                "spent": false,
+                "confirmations": 56502,
+                "confirmed": "2023-10-02T04:44:59Z",
+                "double_spend": false
+            },
+        */
+        // @ts-ignore
+        const data: EsploraTypes.UTXO[] = response.txrefs.map(tx => {
+            return {
+                txid: tx.tx_hash,
+                vout: tx.tx_output_n,
+                status: { confirmed: tx.confirmations >= 0 ? true : false },
+                value: tx.value,
+            }
+        })
         return data.map((utxo) => ({
             ...utxo,
             address,
-            value: utxo.value,
-            blockHeight: utxo.status.block_height,
         }));
     }
 
     private async _getAddressTransactionCount(address: string) {
-        const data: EsploraTypes.Address = await this.httpClient.nodeGet(`/address/${address}`);
-        return data.chain_stats.tx_count + data.mempool_stats.tx_count;
+        // Refer https://dogechain.info//api/v1/address/transaction_count/DEn59H5NhNErVmANLW3jQiaiBEc1VqANam
+        const data: EsploraTypes.Address = await this.dogeChainClient.nodeGet(`/address/transaction_count/${address}`);
+        /*
+        {
+            "transaction_count": {
+                "sent": 54,
+                "received": 447,
+                "total": 448
+            },
+            "success": 1
+        }
+        */
+        return data.transaction_count.total
     }
 }

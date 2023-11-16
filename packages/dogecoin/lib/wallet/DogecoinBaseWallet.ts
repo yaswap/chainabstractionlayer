@@ -391,7 +391,7 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
         if (!feePerByte) feePerByte = await feePerBytePromise;
         const minRelayFee = await this.chainProvider.getProvider().getMinRelayFee();
         if (feePerByte < minRelayFee) {
-            throw new Error(`Fee supplied (${feePerByte} sat/b) too low. Minimum relay fee is ${minRelayFee} sat/b`);
+            throw new Error(`Fee supplied (${feePerByte} sat/b) too low. The recommended fee is ${minRelayFee} sat/b`);
         }
 
         let targets: CoinSelectTarget[];

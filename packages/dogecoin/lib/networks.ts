@@ -1,4 +1,3 @@
-import { networks } from 'bitcoinjs-lib';
 import { DogecoinNetwork } from './types';
 
 const dogecoin: DogecoinNetwork = {

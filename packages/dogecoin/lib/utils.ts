@@ -1,6 +1,5 @@
 import { InvalidAddressError } from '@yaswap/errors';
 import { AddressType, BigNumber, Transaction, TxStatus } from '@yaswap/types';
-import * as varuint from 'bip174/src/lib/converter/varint';
 import * as dogecoin from 'bitcoinjs-lib';
 import * as classify from 'bitcoinjs-lib/src/classify';
 import coinselect from 'coinselect';
