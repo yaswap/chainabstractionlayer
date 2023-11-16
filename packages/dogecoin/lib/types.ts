@@ -46,7 +46,6 @@ export interface Input {
         asm: string;
         hex: string;
     };
-    txinwitness: string[];
     sequence: number;
     coinbase?: string;
 }
@@ -57,8 +56,8 @@ export interface Transaction {
     version: number;
     locktime: number;
     size: number;
-    vsize: number;
-    weight: number;
+    vsize: number; // DEPRECATED
+    weight: number; // DEPRECATED
     vin: Input[];
     vout: Output[];
     confirmations?: number;
@@ -74,15 +73,11 @@ export interface UTXO {
 }
 
 export enum AddressType {
-    LEGACY = 'legacy',
-    P2SH_SEGWIT = 'p2sh-segwit',
-    BECH32 = 'bech32',
+    LEGACY = 'legacy'
 }
 
 export enum SwapMode {
-    P2SH = 'p2sh',
-    P2SH_SEGWIT = 'p2shSegwit',
-    P2WSH = 'p2wsh',
+    P2SH = 'p2sh'
 }
 
 export type AddressTxCounts = { [index: string]: number };
