@@ -4,7 +4,6 @@ export { DogecoinEsploraBaseProvider } from './chain/esplora/DogecoinEsploraBase
 export { DogecoinNetworks } from './networks';
 export { DogecoinSwapBaseProvider } from './swap/DogecoinSwapBaseProvider';
 export { DogecoinSwapEsploraProvider } from './swap/DogecoinSwapEsploraProvider';
-export { DogecoinSwapRpcProvider } from './swap/DogecoinSwapRpcProvider';
 export * as DogecoinTypes from './types';
 export * as DogecoinUtils from './utils';
 export { DogecoinBaseWalletProvider } from './wallet/DogecoinBaseWallet';

@@ -6,11 +6,11 @@ import { DogecoinSwapBaseProvider } from './DogecoinSwapBaseProvider';
 import { DogecoinSwapProviderOptions, PaymentVariants, TransactionMatchesFunction } from './types';
 
 export class DogecoinSwapEsploraProvider extends DogecoinSwapBaseProvider {
-    private _httpClient: HttpClient;
+    private _dogeChainClient: HttpClient;
 
     constructor(options: DogecoinSwapProviderOptions, walletProvider?: DogecoinBaseWalletProvider) {
         super(options, walletProvider);
-        this._httpClient = new HttpClient({ baseURL: options.scraperUrl });
+        this._dogeChainClient = new HttpClient({ baseURL: "https://dogechain.info/api/v1" });
     }
 
     public async findSwapTransaction(swapParams: SwapParams, _blockNumber: number, predicate: TransactionMatchesFunction) {
@@ -26,13 +26,12 @@ export class DogecoinSwapEsploraProvider extends DogecoinSwapBaseProvider {
     private async findAddressTransaction(address: string, currentHeight: number, predicate: TransactionMatchesFunction) {
         // TODO: This does not go through pages as swap addresses have at most 2 transactions
         // Investigate whether retrieving more transactions is required.
-        const transactions = await this._httpClient.nodeGet(`/address/${address}/txs`);
+        const data = await this._dogeChainClient.nodeGet(`/address/transactions/${address}/1`);
 
-        for (const transaction of transactions) {
+        for (const transaction of data.transactions) {
             const formattedTransaction: Transaction<DogecoinTransaction> = await this.walletProvider
                 .getChainProvider()
-                .getProvider()
-                .formatTransaction(transaction, currentHeight);
+                .getTransactionByHash(transaction.hash);
             if (predicate(formattedTransaction)) {
                 return formattedTransaction;
             }

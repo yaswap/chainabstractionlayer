@@ -1,7 +1,7 @@
 import { Swap } from '@yaswap/client';
 import { Address, BigNumber, SwapParams, Transaction } from '@yaswap/types';
 import { validateExpiration, validateSecret, validateSecretAndHash, validateSecretHash, validateValue } from '@yaswap/utils';
-import { payments, Psbt, script as bScript } from 'bitcoinjs-lib';
+import { Transaction as TransactionDogecoinJs, payments, script as bScript,address as AddressDogecoinJs } from 'bitcoinjs-lib';
 import { DogecoinBaseChainProvider } from '../chain/DogecoinBaseChainProvider';
 import { DogecoinNetwork, Input, SwapMode, Transaction as DogecoinTransaction } from '../types';
 import {
@@ -10,7 +10,6 @@ import {
     getPubKeyHash,
     normalizeTransactionObject,
     validateAddress,
-    witnessStackToScriptWitness,
 } from '../utils';
 import { IDogecoinWallet } from '../wallet/IDogecoinWallet';
 import { DogecoinSwapProviderOptions, TransactionMatchesFunction } from './types';
@@ -21,7 +20,7 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
 
     constructor(options: DogecoinSwapProviderOptions, walletProvider?: IDogecoinWallet<DogecoinBaseChainProvider>) {
         super(walletProvider);
-        const { network, mode = SwapMode.P2WSH } = options;
+        const { network, mode = SwapMode.P2SH } = options;
         const swapModes = Object.values(SwapMode);
         if (!swapModes.includes(mode)) {
             throw new Error(`Mode must be one of ${swapModes.join(',')}`);
@@ -179,22 +178,12 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
     }
 
     protected getSwapPaymentVariants(swapOutput: Buffer) {
-        const p2wsh = payments.p2wsh({
-            redeem: { output: swapOutput, network: this._network },
-            network: this._network,
-        });
-        const p2shSegwit = payments.p2sh({
-            redeem: p2wsh,
-            network: this._network,
-        });
         const p2sh = payments.p2sh({
             redeem: { output: swapOutput, network: this._network },
             network: this._network,
         });
 
         return {
-            [SwapMode.P2WSH]: p2wsh,
-            [SwapMode.P2SH_SEGWIT]: p2shSegwit,
             [SwapMode.P2SH]: p2sh,
         };
     }
@@ -231,7 +220,6 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
         const initiationTx = decodeRawTransaction(initiationTxRaw, this._network);
 
         let swapVout;
-        let paymentVariantName: string;
         let paymentVariant: payments.Payment;
         for (const vout of initiationTx.vout) {
             const paymentVariantEntry = Object.entries(swapPaymentVariants).find(
@@ -239,7 +227,6 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
             );
             const voutValue = new BigNumber(vout.value).times(1e8);
             if (paymentVariantEntry && voutValue.eq(new BigNumber(value))) {
-                paymentVariantName = paymentVariantEntry[0];
                 paymentVariant = paymentVariantEntry[1];
                 swapVout = vout;
             }
@@ -259,77 +246,41 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
             throw new Error('Transaction amount does not cover fee.');
         }
 
-        const psbt = new Psbt({ network });
+        // BEGIN CHANGE
+        const hashType = TransactionDogecoinJs.SIGHASH_ALL
+        const redeemScript = paymentVariant.redeem.output
+
+        var tx = new TransactionDogecoinJs()
 
         if (!isClaim) {
-            psbt.setLocktime(expiration);
+          tx.locktime = expiration
         }
+        tx.addInput(Buffer.from(initiationTxHash, 'hex').reverse(), swapVout.n, 0)
+        tx.addOutput(AddressDogecoinJs.toOutputScript(address, network), swapValue - txfee)
+        let signatureHash = tx.hashForSignature(0, redeemScript, hashType)
 
-        const isSegwit = paymentVariantName === SwapMode.P2WSH || paymentVariantName === SwapMode.P2SH_SEGWIT;
-
-        const input: any = {
-            hash: initiationTxHash,
-            index: swapVout.n,
-            sequence: 0,
-        };
-
-        if (isSegwit) {
-            input.witnessUtxo = {
-                script: paymentVariant.output,
-                value: swapValue,
-            };
-            input.witnessScript = swapPaymentVariants.p2wsh.redeem.output; // Strip the push bytes (0020) off the script
-        } else {
-            input.nonWitnessUtxo = Buffer.from(initiationTxRaw, 'hex');
-            input.redeemScript = paymentVariant.redeem.output;
-        }
-
-        const output = {
-            address: address,
-            value: swapValue - txfee,
-        };
-
-        psbt.addInput(input);
-        psbt.addOutput(output);
-
+        // Sign transaction
         const walletAddress: Address = await this.walletProvider.getWalletAddress(address);
-        const signedPSBTHex: string = await this.walletProvider.signPSBT(psbt.toBase64(), [
-            { index: 0, derivationPath: walletAddress.derivationPath },
-        ]);
-        const signedPSBT = Psbt.fromBase64(signedPSBTHex, { network });
+        const signedSignatureHash = await this.walletProvider.signTx(tx.toHex(), signatureHash.toString('hex'), walletAddress.derivationPath, txfee)
+        const swapInput = this.getSwapInput(
+          bScript.signature.encode(Buffer.from(signedSignatureHash, 'hex'), hashType),
+          Buffer.from(walletAddress.publicKey, 'hex'),
+          isClaim,
+          secret
+        )
 
-        const sig = signedPSBT.data.inputs[0].partialSig[0].signature;
+        const redeemScriptSig = payments.p2sh({
+          network: network,
+          redeem: {
+            network: network,
+            output: redeemScript,
+            input: swapInput
+          }
+        }).input
+        tx.setInputScript(0, redeemScriptSig)
+        // END CHANGE
 
-        const swapInput = this.getSwapInput(sig, Buffer.from(walletAddress.publicKey, 'hex'), isClaim, secret);
-        const paymentParams = { redeem: { output: swapOutput, input: swapInput, network }, network };
-        const paymentWithInput = isSegwit ? payments.p2wsh(paymentParams) : payments.p2sh(paymentParams);
-
-        const getFinalScripts = () => {
-            let finalScriptSig;
-            let finalScriptWitness;
-
-            // create witness stack
-            if (isSegwit) {
-                finalScriptWitness = witnessStackToScriptWitness(paymentWithInput.witness);
-            }
-
-            if (paymentVariantName === SwapMode.P2SH_SEGWIT) {
-                // Adds the necessary push OP (PUSH34 (00 + witness script hash))
-                const inputScript = bScript.compile([swapPaymentVariants.p2shSegwit.redeem.output]);
-                finalScriptSig = inputScript;
-            } else if (paymentVariantName === SwapMode.P2SH) {
-                finalScriptSig = paymentWithInput.input;
-            }
-
-            return {
-                finalScriptSig,
-                finalScriptWitness,
-            };
-        };
-
-        psbt.finalizeInput(0, getFinalScripts);
-
-        const hex = psbt.extractTransaction().toHex();
+        const hex = tx.toHex();
         await this.walletProvider.getChainProvider().sendRawTransaction(hex);
         return normalizeTransactionObject(decodeRawTransaction(hex, this._network), txfee);
     }
@@ -400,10 +351,10 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
     }
 
     protected getInputScript(vin: Input) {
-        const inputScript = vin.txinwitness
-            ? vin.txinwitness
-            : bScript.decompile(Buffer.from(vin.scriptSig.hex, 'hex')).map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b));
-        return inputScript as string[];
+        const inputScript = bScript
+        .decompile(Buffer.from(vin.scriptSig.hex, 'hex'))
+        .map((b) => (Buffer.isBuffer(b) ? b.toString('hex') : b))
+        return inputScript as string[]
     }
 
     protected doesTransactionMatchRedeem(initiationTxHash: string, tx: Transaction<DogecoinTransaction>, isRefund: boolean) {
@@ -412,9 +363,9 @@ export abstract class DogecoinSwapBaseProvider extends Swap<DogecoinBaseChainPro
         const inputScript = this.getInputScript(swapInput);
         if (!inputScript) return false;
         if (isRefund) {
-            if (inputScript.length !== 4) return false;
+            if (inputScript.length !== 4) return false; // 4 because there are 4 parameters: signature, pubkey, false, original redeemscript
         } else {
-            if (inputScript.length !== 5) return false;
+            if (inputScript.length !== 5) return false; // 5 because there are 5 parameters: signature, pubkey, secretHash, true, original redeemscript
         }
         return true;
     }

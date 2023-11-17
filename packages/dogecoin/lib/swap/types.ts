@@ -11,7 +11,5 @@ export interface DogecoinSwapProviderOptions {
 export type TransactionMatchesFunction = (tx: Transaction<DogecoinTransaction>) => boolean;
 
 export type PaymentVariants = {
-    [SwapMode.P2WSH]?: payments.Payment;
-    [SwapMode.P2SH_SEGWIT]?: payments.Payment;
     [SwapMode.P2SH]?: payments.Payment;
 };
