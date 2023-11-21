@@ -5,13 +5,11 @@ import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { DogecoinBaseChainProvider } from '../DogecoinBaseChainProvider';
 import * as EsploraTypes from './types';
-import { ElectrumClient } from "@samouraiwallet/electrum-client";
 
 export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     public blockChairClient: HttpClient;
     public blockCypherClient: HttpClient;
     public dogeChainClient: HttpClient;
-    public electrumClient: ElectrumClient;
 
     protected _options: EsploraTypes.EsploraApiProviderOptions;
 
@@ -20,7 +18,6 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
         this.blockChairClient = new HttpClient({ baseURL: "https://api.blockchair.com/dogecoin" });
         this.blockCypherClient = new HttpClient({ baseURL: "https://api.blockcypher.com/v1/doge/main" });
         this.dogeChainClient = new HttpClient({ baseURL: "https://dogechain.info/api/v1" });
-        this.electrumClient = new ElectrumClient(10060, 'electrum1.cipig.net', 'tcp');
 
         this._options = {
             numberOfBlockConfirmation: 1,
@@ -47,15 +44,23 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     }
 
     public async getTransactionHex(transactionHash: string): Promise<string> {
-        // Refer https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.transaction.get
-        return await this.electrumClient.blockchainTransaction_get(transactionHash, false) as string;
+        // Refer https://api.blockchair.com/dogecoin/raw/transaction/104f2494728489914132f9fb70b87c74cafa56fe5b646be18716932d21ca93e0
+        const data = await this.blockChairClient.nodeGet(`/raw/transaction/${transactionHash}`)
+        return data[transactionHash]['raw_transaction']
     }
 
     public async getFeePerByte(numberOfBlocks = this._options.numberOfBlockConfirmation) {
         try {
-            // Refer https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.estimatefee
-            const feeEstimates = await this.electrumClient.blockchainEstimatefee(numberOfBlocks);
-            const rate = Math.round(feeEstimates as number);
+            // Refer https://api.blockcypher.com/v1/doge/main
+            const data = await this.blockCypherClient.nodeGet(`/v1/doge/main`)
+            let rate;
+            if (numberOfBlocks < 15) {
+                rate = Math.round(data.high_fee_per_kb / 1000);
+            } else if (numberOfBlocks >= 15 && numberOfBlocks < 30) {
+                rate = Math.round(data.medium_fee_per_kb / 1000);
+            } else {
+                rate = Math.round(data.low_fee_per_kb / 1000);
+            }
             return rate;
         } catch (e) {
             return this._options.defaultFeePerByte;

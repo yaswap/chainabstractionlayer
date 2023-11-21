@@ -15,7 +15,6 @@
         "clean": "rm -rf node_modules .turbo dist"
     },
     "dependencies": {
-        "@samouraiwallet/electrum-client": "^1.4.0",
         "@types/bip32": "^2.0.0",
         "@types/bip39": "^3.0.0",
         "@types/bitcoinjs-lib": "^5.0.0",

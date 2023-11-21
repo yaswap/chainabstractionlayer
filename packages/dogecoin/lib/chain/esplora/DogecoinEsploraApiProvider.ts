@@ -10,7 +10,6 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
     private _blockChairClient: HttpClient;
     private _blockCypherClient: HttpClient;
     private _dogeChainClient: HttpClient;
-    // private _electrumClient: ElectrumClient;
     private _feeOptions: EsploraTypes.FeeOptions;
 
     constructor(
@@ -24,7 +23,6 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
         this._blockChairClient = this.provider.blockChairClient;
         this._blockCypherClient = this.provider.blockCypherClient;
         this._dogeChainClient = this.provider.dogeChainClient;
-        // this._electrumClient = this.provider.electrumClient;
         // Options
         // fast: 1 block = 1 min
         // average: 15 blocks = 15 mins
