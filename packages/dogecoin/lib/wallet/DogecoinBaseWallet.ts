@@ -167,7 +167,13 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
 
     protected async _sendTransaction(transactions: OutputTarget[], feePerByte?: number) {
         const { hex, fee } = await this.buildTransaction(transactions, feePerByte);
-        await this.chainProvider.sendRawTransaction(hex);
+        console.log("TACA ===> DogecoinBaseWallet.ts, _sendTransaction, hex = ", hex)
+        try {
+            await this.chainProvider.sendRawTransaction(hex);
+        } catch (err) {
+            console.log("TACA ===> DogecoinBaseWallet.ts, failed to sendRawTransaction, err = ", err)
+            throw err;
+        }
         return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
     }
 
@@ -388,6 +394,8 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
         }
 
         const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0);
+
+        console.log("TACA ===> DogecoinBaseWallet.ts, getInputsForAmount, utxos = ", utxos)
 
         if (!feePerByte) feePerByte = await feePerBytePromise;
         const minRelayFee = await this.chainProvider.getProvider().getMinRelayFee();

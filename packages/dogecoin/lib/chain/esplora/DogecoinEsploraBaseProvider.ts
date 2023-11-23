@@ -46,13 +46,14 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     public async getTransactionHex(transactionHash: string): Promise<string> {
         // Refer https://api.blockchair.com/dogecoin/raw/transaction/104f2494728489914132f9fb70b87c74cafa56fe5b646be18716932d21ca93e0
         const data = await this.blockChairClient.nodeGet(`/raw/transaction/${transactionHash}`)
-        return data[transactionHash]['raw_transaction']
+        console.log('TACA ===> DogecoinEsploraBaseProvider.ts, getTransactionHex, data = ', data)
+        return data['data'][transactionHash]['raw_transaction']
     }
 
     public async getFeePerByte(numberOfBlocks = this._options.numberOfBlockConfirmation) {
         try {
             // Refer https://api.blockcypher.com/v1/doge/main
-            const data = await this.blockCypherClient.nodeGet(`/v1/doge/main`)
+            const data = await this.blockCypherClient.nodeGet(`/`)
             let rate;
             if (numberOfBlocks < 15) {
                 rate = Math.round(data.high_fee_per_kb / 1000);
@@ -94,32 +95,46 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     }
 
     private async _getUnspentTransactions(address: string): Promise<UTXO[]> {
-        // Refer https://api.blockcypher.com/v1/doge/main/addrs/DEn59H5NhNErVmANLW3jQiaiBEc1VqANam?unspentOnly=true
-        const response = await this.blockCypherClient.nodeGet(`/addrs/${address}?unspentOnly=true`);
-        /*
-        "txrefs": [
+        // Refer https://dogechain.info/api/v1/address/unspent/DEn59H5NhNErVmANLW3jQiaiBEc1VqANam/1 (10 UTXOs per page)
+        let page = 1;
+        let data: EsploraTypes.UTXO[] = []
+        let response;
+
+        while(1) {
+            response = await this.dogeChainClient.nodeGet(`/address/unspent/${address}/${page}`)
+            console.log(`TACA ===> DogecoinEsploraBaseProvider.ts, _getUnspentTransactions, page = ${page}, response = ${response}`)
+            /*
             {
-                "tx_hash": "da9952795bff05ff743eb26f72a3b63bdd57b5db44f6c9b68d9dac830dc83b5a",
-                "block_height": 4906925,
-                "tx_input_n": -1,
-                "tx_output_n": 0,
-                "value": 100000000,
-                "ref_balance": 1259019264101964,
-                "spent": false,
-                "confirmations": 56502,
-                "confirmed": "2023-10-02T04:44:59Z",
-                "double_spend": false
-            },
-        */
-        // @ts-ignore
-        const data: EsploraTypes.UTXO[] = response.txrefs.map(tx => {
-            return {
-                txid: tx.tx_hash,
-                vout: tx.tx_output_n,
-                status: { confirmed: tx.confirmations >= 0 ? true : false },
-                value: tx.value,
+                "unspent_outputs": [
+                    {
+                        "tx_hash": "dd2f0e3ba12d078bae5da3a47a890f43ef233bc81e23fa453a0bb829b459484d",
+                        "tx_output_n": 0,
+                        "script": "76a91469b75b6d71f71b6d0880b2bbcd236f4fcc61fc8088ac",
+                        "address": "DEn59H5NhNErVmANLW3jQiaiBEc1VqANam",
+                        "value": 55401985277,
+                        "confirmations": 9148,
+                        "tx_hex": "010000000292af9f466b549ef2cca7e54cf16db84f81e6c1f492d7fce963dd6a7631106817020000006a473044022001be40295456136b3010678e23d1c717ae61643a5c20d3d6e08bb91bad86f435022052e1c8397a72093ea8e86c8455ac4c72daa270a90ab8d4f205596d902fa2b6dd01210245f22c90c559eec2d203e2302effd23b6bcb0ace4fd99570367dc8658b0134eaffffffff13d4dd060ca75903215cb7a5fb57ebd60ea9bd9e59765886e99fc96dca07f906000000006b483045022100891bae909841d431ec082a3469b9133bb4d0567a4898309876dde82bbf9c3e9202206594fcbca1d64bc93dddc9ddc798ac81d25f4e8eb03a22ce10b91ae963a6dc430121031d26f585f25d58d72e8d5e0c8cf6f22ccf91d69dec86c0f635684fb0325e7930ffffffff02fd3437e60c0000001976a91469b75b6d71f71b6d0880b2bbcd236f4fcc61fc8088ac05b44b640a0000001976a914ad83d8db65b95796685de5efa54988d9c91c61b388ac00000000"
+                    }
+                ],
+                "success": 1
             }
-        })
+            */
+            if (response.unspent_outputs?.length > 0) {
+                // @ts-ignore
+                response.unspent_outputs.forEach(tx => {
+                    data.push({
+                        txid: tx.tx_hash,
+                        vout: tx.tx_output_n,
+                        status: { confirmed: tx.confirmations >= 0 ? true : false },
+                        value: tx.value,
+                    })
+                })
+            } else {
+                break
+            }
+            page++
+        }
+
         return data.map((utxo) => ({
             ...utxo,
             address,

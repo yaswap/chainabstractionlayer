@@ -125,7 +125,9 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
 
     public async getBalance(_addresses: AddressType[]): Promise<BigNumber[]> {
         const addresses = _addresses.map((a) => a.toString());
+        console.log('TACA ===> DogecoinEsploraApiProvider.ts, getBalance, addresses = ', addresses)
         const _utxos = await this.provider.getUnspentTransactions(addresses);
+        console.log('TACA ===> DogecoinEsploraApiProvider.ts, getBalance, _utxos = ', _utxos)
         const utxos = flatten(_utxos);
         return [utxos.reduce((acc, utxo) => acc.plus(utxo.value), new BigNumber(0))];
     }
@@ -155,7 +157,8 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
             Resource	Method	Request Object	Return Object
             /txs/push	POST	{"tx":$TXHEX}	TX
         */
-        return this._blockCypherClient.nodePost('/txs/push', `tx=${rawTransaction}`);
+        console.log('TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, rawTransaction = ', rawTransaction)
+        return this._blockCypherClient.nodePost('/txs/push', `{"tx": "${rawTransaction}"}`);
     }
 
     public async sendRpcRequest(_method: string, _params: any[]): Promise<any> {
@@ -234,9 +237,10 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
                 confirmations: txinfo.transaction.confirmations // IMPORTANT
             }
         } catch (e) {
-            if (e.name === 'NodeError' && e.message.includes('Transaction not found')) {
+            console.warn("DogecoinEsploraApiProvider.ts, error = ", e)
+            if (e.name === 'NodeError' && e.error.includes('Invalid transaction ID or transaction not yet indexed')) {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { name, message, ...attrs } = e;
+                const { name, error, ...attrs } = e;
                 throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs);
             }
 
