@@ -31,74 +31,69 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
     }
 
     public async getBlockByHash(blockHash: string | number): Promise<Block<any, any>> {
-        let data;
-
         try {
             // Refer https://api.blockchair.com/dogecoin/dashboards/block/6aba29318bf02d64c38129e30096163cd4d624778896841fe3c88c51b88a2c93 (WARNING: Because need median time)
-            data = await this._blockChairClient.nodeGet(`/dashboards/block/${blockHash}`);
-        } catch (e) {
-            if (e.name === 'NodeError' && e.message.includes('Block not found')) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { name, message, ...attrs } = e;
-                throw new BlockNotFoundError(`Block not found: ${blockHash}`, attrs);
+            const data = await this._blockChairClient.nodeGet(`/dashboards/block/${blockHash}`);
+            /*
+            "block": {
+                "id": 4958212,
+                "hash": "6aba29318bf02d64c38129e30096163cd4d624778896841fe3c88c51b88a2c93",
+                "date": "2023-11-09",
+                "time": "2023-11-09 04:40:41",
+                "median_time": "2023-11-09 04:38:14",
+                "size": 61583,
+                "version": 6422788,
+                "version_hex": "620104",
+                "version_bits": "000000011000100000000100000100",
+                "merkle_root": "ee9585999217c4228c1537d3060bae2f0a8e5907fc68722d5072cd1a80396ec3",
+                "nonce": 0,
+                "bits": 436296481,
+                "difficulty": 12372642.216396,
+                "chainwork": "000000000000000000000000000000000000000000000d8fb6c99ec593b8ab18",
+                "coinbase_data_hex": "0304a84b0fe4b883e5bda9e7a59ee4bb99e9b1bc205b323032332d31312d30395430343a34303a34312e3735333431343832325a5d",
+                "transaction_count": 154,
+                "input_count": 285,
+                "output_count": 335,
+                "input_total": 1222589579976503,
+                "input_total_usd": 920585,
+                "output_total": 1223589579976503,
+                "output_total_usd": 921338,
+                "fee_total": 2592824146,
+                "fee_total_usd": 1.95234,
+                "fee_per_kb": 42729500,
+                "fee_per_kb_usd": 0.0321744,
+                "cdd_total": 2772010.9505197,
+                "generation": 1000000000000,
+                "generation_usd": 752.98,
+                "reward": 1002592824146,
+                "reward_usd": 754.932,
+                "guessed_miner": "Unknown",
+                "is_aux": true
+            },
+            */
+            if (!data.data) {
+                throw new BlockNotFoundError(`Block not found: ${blockHash}`);
             }
+            const blockData = data["data"][blockHash]["block"]
+            const { hash, id: number, time, median_time, size, difficulty, nonce } = blockData;
 
-            throw e;
+            // Convert from date time string to epoch time
+            const timestamp = new Date(`${time} UTC`).getTime() / 1000
+            const mediantime = new Date(`${median_time} UTC`).getTime() / 1000
+
+            return {
+                hash,
+                number,
+                timestamp: mediantime || timestamp,
+                size,
+                difficulty,
+                nonce,
+                _raw: blockData,
+            };
+        } catch (e) {
+            console.warn("DogecoinEsploraApiProvider.ts, getBlockByHash, error = ", e)
+            throw new BlockNotFoundError(`Block not found: ${blockHash}`);
         }
-
-        /*
-        "block": {
-            "id": 4958212,
-            "hash": "6aba29318bf02d64c38129e30096163cd4d624778896841fe3c88c51b88a2c93",
-            "date": "2023-11-09",
-            "time": "2023-11-09 04:40:41",
-            "median_time": "2023-11-09 04:38:14",
-            "size": 61583,
-            "version": 6422788,
-            "version_hex": "620104",
-            "version_bits": "000000011000100000000100000100",
-            "merkle_root": "ee9585999217c4228c1537d3060bae2f0a8e5907fc68722d5072cd1a80396ec3",
-            "nonce": 0,
-            "bits": 436296481,
-            "difficulty": 12372642.216396,
-            "chainwork": "000000000000000000000000000000000000000000000d8fb6c99ec593b8ab18",
-            "coinbase_data_hex": "0304a84b0fe4b883e5bda9e7a59ee4bb99e9b1bc205b323032332d31312d30395430343a34303a34312e3735333431343832325a5d",
-            "transaction_count": 154,
-            "input_count": 285,
-            "output_count": 335,
-            "input_total": 1222589579976503,
-            "input_total_usd": 920585,
-            "output_total": 1223589579976503,
-            "output_total_usd": 921338,
-            "fee_total": 2592824146,
-            "fee_total_usd": 1.95234,
-            "fee_per_kb": 42729500,
-            "fee_per_kb_usd": 0.0321744,
-            "cdd_total": 2772010.9505197,
-            "generation": 1000000000000,
-            "generation_usd": 752.98,
-            "reward": 1002592824146,
-            "reward_usd": 754.932,
-            "guessed_miner": "Unknown",
-            "is_aux": true
-        },
-        */
-        const blockData = data["data"][blockHash]["block"]
-        const { hash, id: number, time, median_time, size, difficulty, nonce } = blockData;
-
-        // Convert from date time string to epoch time
-        const timestamp = new Date(`${time} UTC`).getTime() / 1000
-        const mediantime = new Date(`${median_time} UTC`).getTime() / 1000
-
-        return {
-            hash,
-            number,
-            timestamp: mediantime || timestamp,
-            size,
-            difficulty,
-            nonce,
-            _raw: blockData,
-        };
     }
 
     public async getBlockByNumber(blockNumber?: number): Promise<Block<any, any>> {
