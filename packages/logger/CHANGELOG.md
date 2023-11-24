@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.6.0
+
+### Minor Changes
+
+-   Support dogecoin chain
+
 ## 2.5.3
 
 ### Patch Changes

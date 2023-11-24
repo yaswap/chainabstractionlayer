@@ -1,5 +1,19 @@
 # @yaswap/dogecoin
 
+## 2.6.0
+
+### Minor Changes
+
+-   Support dogecoin chain
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.6.0
+    -   @yaswap/errors@2.6.0
+    -   @yaswap/types@2.6.0
+    -   @yaswap/utils@2.6.0
+
 ## 2.5.3
 
 ### Patch Changes
