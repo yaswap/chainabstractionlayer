@@ -1,5 +1,16 @@
 # @yaswap/litecoin
 
+## 2.6.1
+
+### Patch Changes
+
+-   Fix issue which failed to get block info
+-   Updated dependencies
+    -   @yaswap/client@2.6.1
+    -   @yaswap/errors@2.6.1
+    -   @yaswap/types@2.6.1
+    -   @yaswap/utils@2.6.1
+
 ## 2.6.0
 
 ### Minor Changes

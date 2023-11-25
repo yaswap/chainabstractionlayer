@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.6.1
+
+### Patch Changes
+
+-   Fix issue which failed to get block info
+
 ## 2.6.0
 
 ### Minor Changes
