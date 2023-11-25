@@ -111,7 +111,7 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
                 "blocks": 4967956,
                 "transactions": 175403187,
         */
-        return data.data.blocks;
+        return data.data.blocks - 1;
     }
 
     public async getTransactionByHash(txHash: string): Promise<Transaction<any>> {
