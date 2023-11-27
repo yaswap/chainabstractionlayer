@@ -104,14 +104,23 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
     }
 
     public async getBlockHeight(): Promise<number> {
-        const data = await this._blockChairClient.nodeGet('/stats');
-        /* Refer https://api.blockchair.com/dogecoin/stats
-        {
-            "data": {
-                "blocks": 4967956,
-                "transactions": 175403187,
-        */
-        return data.data.blocks - 1;
+        try {
+            const data = await this._blockChairClient.nodeGet('/stats');
+            /* Refer https://api.blockchair.com/dogecoin/stats
+            {
+                "data": {
+                    "blocks": 4967956,
+                    "transactions": 175403187,
+            */
+            if (!data.data) {
+                throw new BlockNotFoundError("Can't get latest block height");
+            }
+            return data.data.blocks - 1;
+        } catch (e) {
+            console.warn("DogecoinEsploraApiProvider.ts, getBlockHeight, error = ", e)
+            throw new BlockNotFoundError("Can't get latest block height");
+        }
+
     }
 
     public async getTransactionByHash(txHash: string): Promise<Transaction<any>> {
@@ -231,19 +240,13 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
                 status: { confirmed: txinfo.transaction.confirmations >= 1 ? true : false}, // IMPORTANT
                 confirmations: txinfo.transaction.confirmations // IMPORTANT
             }
+            const currentHeight = await this.getBlockHeight();
+            return this.provider.formatTransaction(data, currentHeight);
         } catch (e) {
             console.warn("DogecoinEsploraApiProvider.ts, error = ", e)
-            if (e.name === 'NodeError' && e.error.includes('Invalid transaction ID or transaction not yet indexed')) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { name, error, ...attrs } = e;
-                throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs);
-            }
-
-            throw e;
+            const { name, error, ...attrs } = e;
+            throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs);
         }
-
-        const currentHeight = await this.getBlockHeight();
-        return this.provider.formatTransaction(data, currentHeight);
     }
 
     private async _getFee(targetBlocks: number): Promise<FeeDetail> {
