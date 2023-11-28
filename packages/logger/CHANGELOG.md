@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.6.2
+
+### Patch Changes
+
+-   Improve error handling
+
 ## 2.6.1
 
 ### Patch Changes

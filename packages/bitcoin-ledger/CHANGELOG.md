@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.6.2
+
+### Patch Changes
+
+-   Improve error handling
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.6.2
+    -   @yaswap/client@2.6.2
+    -   @yaswap/errors@2.6.2
+    -   @yaswap/hw-ledger@2.6.2
+    -   @yaswap/types@2.6.2
+    -   @yaswap/utils@2.6.2
+
 ## 2.6.1
 
 ### Patch Changes

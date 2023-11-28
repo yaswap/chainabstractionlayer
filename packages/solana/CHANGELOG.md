@@ -1,5 +1,17 @@
 # @yaswap/solana
 
+## 2.6.2
+
+### Patch Changes
+
+-   Improve error handling
+-   Updated dependencies
+    -   @yaswap/client@2.6.2
+    -   @yaswap/errors@2.6.2
+    -   @yaswap/logger@2.6.2
+    -   @yaswap/types@2.6.2
+    -   @yaswap/utils@2.6.2
+
 ## 2.6.1
 
 ### Patch Changes
