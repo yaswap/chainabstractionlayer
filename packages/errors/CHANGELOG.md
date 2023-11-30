@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 2.6.3
+
+### Patch Changes
+
+-   Replace blockCypher with electrumClient
+
 ## 2.6.2
 
 ### Patch Changes

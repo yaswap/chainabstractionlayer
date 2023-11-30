@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.6.3
+
+### Patch Changes
+
+-   Replace blockCypher with electrumClient
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.6.3
+    -   @yaswap/client@2.6.3
+    -   @yaswap/errors@2.6.3
+    -   @yaswap/hw-ledger@2.6.3
+    -   @yaswap/types@2.6.3
+    -   @yaswap/utils@2.6.3
+
 ## 2.6.2
 
 ### Patch Changes
