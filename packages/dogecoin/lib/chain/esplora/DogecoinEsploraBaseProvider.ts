@@ -6,11 +6,14 @@ import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { DogecoinBaseChainProvider } from '../DogecoinBaseChainProvider';
 import * as EsploraTypes from './types';
+import { ElectrumWS } from 'ws-electrumx-client';
 
 export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     public blockChairClient: HttpClient;
     public blockCypherClient: HttpClient;
     public dogeChainClient: HttpClient;
+    public electrumEndpoint: string;
+    public electrumClient: ElectrumWS;
 
     protected _options: EsploraTypes.EsploraApiProviderOptions;
 
@@ -19,6 +22,7 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
         this.blockChairClient = new HttpClient({ baseURL: "https://api.blockchair.com/dogecoin" });
         this.blockCypherClient = new HttpClient({ baseURL: "https://api.blockcypher.com/v1/doge/main" });
         this.dogeChainClient = new HttpClient({ baseURL: "https://dogechain.info/api/v1" });
+        this.electrumEndpoint = 'wss://electrum1.cipig.net:30060'
 
         this._options = {
             numberOfBlockConfirmation: 1,
@@ -28,6 +32,18 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
             defaultFeePerByte: 2000, 
             ...options,
         };
+    }
+
+    public async checkAndReconnectElectrumClient() {
+        if (!this.electrumClient || !this.electrumClient.isConnected()) {
+            console.warn('Reconnecting electrum X')
+            this.electrumClient = new ElectrumWS(this.electrumEndpoint, {reconnect: false, verbose: false});
+            await this.electrumClient.request(
+                'server.version',
+                //@ts-ignore
+                ["electrum-client-js",["1.2","2.0"]],
+            );
+        }
     }
 
     public async formatTransaction(tx: EsploraTypes.Transaction, currentHeight: number) {
@@ -61,16 +77,16 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
 
     public async getFeePerByte(numberOfBlocks = this._options.numberOfBlockConfirmation) {
         try {
-            // Refer https://api.blockcypher.com/v1/doge/main
-            const data = await this.blockCypherClient.nodeGet(`/`)
-            let rate;
-            if (numberOfBlocks < 15) {
-                rate = Math.round(data.high_fee_per_kb / 1000);
-            } else if (numberOfBlocks >= 15 && numberOfBlocks < 30) {
-                rate = Math.round(data.medium_fee_per_kb / 1000);
-            } else {
-                rate = Math.round(data.low_fee_per_kb / 1000);
+            // Refer https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.estimatefee
+            await this.checkAndReconnectElectrumClient()
+            const feeEstimates = await this.electrumClient.request(
+                'blockchain.estimatefee',
+                numberOfBlocks,
+            );
+            if (feeEstimates === -1) {
+                return this._options.defaultFeePerByte;
             }
+            const rate = Math.round(feeEstimates as number)
             return rate;
         } catch (e) {
             return this._options.defaultFeePerByte;

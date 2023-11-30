@@ -8,7 +8,6 @@ import * as EsploraTypes from './types';
 
 export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvider> {
     private _blockChairClient: HttpClient;
-    private _blockCypherClient: HttpClient;
     private _dogeChainClient: HttpClient;
     private _feeOptions: EsploraTypes.FeeOptions;
 
@@ -21,7 +20,6 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
         const _provider = provider || new DogecoinEsploraBaseProvider(options);
         super(options.network, _provider, feeProvider);
         this._blockChairClient = this.provider.blockChairClient;
-        this._blockCypherClient = this.provider.blockCypherClient;
         this._dogeChainClient = this.provider.dogeChainClient;
         // Options
         // fast: 1 block = 1 min
@@ -156,13 +154,20 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
     }
 
     public async sendRawTransaction(rawTransaction: string): Promise<string> {
-        /* Refer https://api.blockcypher.com/v1/doge/main/txs/push
-            https://www.blockcypher.com/dev/bitcoin/#push-raw-transaction-endpoint
-            Resource	Method	Request Object	Return Object
-            /txs/push	POST	{"tx":$TXHEX}	TX
-        */
+        // Refer  https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.transaction.broadcast
         console.log('TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, rawTransaction = ', rawTransaction)
-        return this._blockCypherClient.nodePost('/txs/push', `{"tx": "${rawTransaction}"}`);
+        await this.provider.checkAndReconnectElectrumClient()
+        try {
+            let result = await this.provider.electrumClient.request(
+                'blockchain.transaction.broadcast',
+                rawTransaction,
+            );
+            console.log("TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, broadcast transaction result = ", result);
+            return result as string
+        } catch (error) {
+            console.log('TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, broadcast transaction error = ', error.message)
+            throw new TxNotFoundError(`Failed to broadcast transaction ${rawTransaction} with error = ${error}`);
+        }
     }
 
     public async sendRpcRequest(_method: string, _params: any[]): Promise<any> {
