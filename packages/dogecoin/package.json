@@ -24,6 +24,7 @@
         "@yaswap/errors": "workspace:*",
         "@yaswap/types": "workspace:*",
         "@yaswap/utils": "workspace:*",
+        "@yaswap/ws-electrumx-client": "^1.0.0",
         "bip174": "^2.0.1",
         "bip32": "2.0.6",
         "bip39": "^3.0.4",
@@ -31,7 +32,6 @@
         "bitcoinjs-message": "2.2.0",
         "coinselect": "^3.1.12",
         "lodash": "4.17.21",
-        "memoizee": "^0.4.15",
-        "ws-electrumx-client": "^1.0.5"
+        "memoizee": "^0.4.15"
     }
 }

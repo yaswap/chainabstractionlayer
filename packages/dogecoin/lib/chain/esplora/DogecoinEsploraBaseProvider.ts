@@ -6,7 +6,7 @@ import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { DogecoinBaseChainProvider } from '../DogecoinBaseChainProvider';
 import * as EsploraTypes from './types';
-import { ElectrumWS } from 'ws-electrumx-client';
+import { ElectrumWS } from '@yaswap/ws-electrumx-client';
 
 export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     public blockChairClient: HttpClient;
@@ -36,13 +36,15 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
 
     public async checkAndReconnectElectrumClient() {
         if (!this.electrumClient || !this.electrumClient.isConnected()) {
-            console.warn('Reconnecting electrum X')
+            console.warn('checkAndReconnectElectrumClient, Reconnecting electrum X')
             this.electrumClient = new ElectrumWS(this.electrumEndpoint, {reconnect: false, verbose: false});
-            await this.electrumClient.request(
+            console.log('TACA ==> checkAndReconnectElectrumClient, this.electrumClient = ', this.electrumClient)
+            const result = await this.electrumClient.request(
                 'server.version',
                 //@ts-ignore
                 ["electrum-client-js",["1.2","2.0"]],
             );
+            console.log('TACA ==> checkAndReconnectElectrumClient, result = ', result)
         }
     }
 
@@ -83,12 +85,15 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
                 'blockchain.estimatefee',
                 numberOfBlocks,
             );
+            console.log('TACA ===> getFeePerByte, feeEstimates = ', feeEstimates)
             if (feeEstimates === -1) {
                 return this._options.defaultFeePerByte;
             }
-            const rate = Math.round(feeEstimates as number)
+            const rate = Math.round(feeEstimates as number * 1e8 / 1000)
+            console.log('TACA ===> getFeePerByte, rate = ', rate)
             return rate;
         } catch (e) {
+            console.log('TACA ===> getFeePerByte, error = ', e)
             return this._options.defaultFeePerByte;
         }
     }

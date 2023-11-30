@@ -3458,6 +3458,7 @@ __metadata:
     "@yaswap/errors": "workspace:*"
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
+    "@yaswap/ws-electrumx-client": ^1.0.0
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
@@ -3466,7 +3467,6 @@ __metadata:
     coinselect: ^3.1.12
     lodash: 4.17.21
     memoizee: ^0.4.15
-    ws-electrumx-client: ^1.0.5
   languageName: unknown
   linkType: soft
 
@@ -3701,6 +3701,16 @@ __metadata:
     setimmediate: ^1.0.5
   languageName: unknown
   linkType: soft
+
+"@yaswap/ws-electrumx-client@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@yaswap/ws-electrumx-client@npm:1.0.0"
+  dependencies:
+    isomorphic-ws: ^5.0.0
+    ws: ^8.12.1
+  checksum: b56184c59e8c1a00ce1f503927d05f9af095a13bde611680a1edecee486d41074216598dc1670cf08166ff66747fa7fa2d8ebeaaf2fc6b623e1003d50537ca3c
+  languageName: node
+  linkType: hard
 
 "@yaswap/yacoin@workspace:packages/yacoin":
   version: 0.0.0-use.local
@@ -20130,16 +20140,6 @@ __metadata:
   dependencies:
     mkdirp: ^0.5.1
   checksum: 6496197ceb2d6faeeb8b5fe2659ca804e801e4989dff9fb8a66fe76179ce4ccc378c982ef906733caea1220c8dbe05a666d82127959ac4456e70111af8b8df73
-  languageName: node
-  linkType: hard
-
-"ws-electrumx-client@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "ws-electrumx-client@npm:1.0.5"
-  dependencies:
-    isomorphic-ws: ^5.0.0
-    ws: ^8.12.1
-  checksum: 4dd9ae47b7aae2367b509f49ca9990609dfa6621ddba7eda000412ee347789adcbe118e2bc98c5715edc98398510199a868bd19498baa8c21514dfdd8e5636f9
   languageName: node
   linkType: hard
 
