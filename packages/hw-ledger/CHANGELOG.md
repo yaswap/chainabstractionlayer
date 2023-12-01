@@ -1,5 +1,16 @@
 # @yaswap/hw-ledger
 
+## 2.6.4
+
+### Patch Changes
+
+-   Fix issue relating to integrate electrumClient
+-   Updated dependencies
+    -   @yaswap/errors@2.6.4
+    -   @yaswap/logger@2.6.4
+    -   @yaswap/types@2.6.4
+    -   @yaswap/utils@2.6.4
+
 ## 2.6.3
 
 ### Patch Changes

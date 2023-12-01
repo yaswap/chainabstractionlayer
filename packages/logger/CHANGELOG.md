@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.6.4
+
+### Patch Changes
+
+-   Fix issue relating to integrate electrumClient
+
 ## 2.6.3
 
 ### Patch Changes
