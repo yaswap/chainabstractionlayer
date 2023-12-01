@@ -83,8 +83,6 @@ export class DogecoinHDWalletProvider extends DogecoinBaseWalletProvider impleme
           })
         }
 
-        console.log("TACA ===> DogecoinHDWallet.ts, buildTransaction, targets = ", targets)
-
         var tx = new TransactionBuilder(network);
         // Add input
         for (let i = 0; i < inputs.length; i++) {

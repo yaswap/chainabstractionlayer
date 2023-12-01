@@ -38,13 +38,12 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
         if (!this.electrumClient || !this.electrumClient.isConnected()) {
             console.warn('checkAndReconnectElectrumClient, Reconnecting electrum X')
             this.electrumClient = new ElectrumWS(this.electrumEndpoint, {reconnect: false, verbose: false});
-            console.log('TACA ==> checkAndReconnectElectrumClient, this.electrumClient = ', this.electrumClient)
             const result = await this.electrumClient.request(
                 'server.version',
                 //@ts-ignore
                 ["electrum-client-js",["1.2","2.0"]],
             );
-            console.log('TACA ==> checkAndReconnectElectrumClient, result = ', result)
+            console.warn('Reconnecting result = ', result)
         }
     }
 
@@ -71,7 +70,6 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
                 transactionHash,
                 false,
             );
-            console.log('TACA ===> DogecoinEsploraBaseProvider.ts, getTransactionHex, txHex = ', txHex)
             return txHex as string;
         } catch (e) {
             console.warn("DogecoinEsploraBaseProvider.ts, getTransactionHex, error = ", e)
@@ -87,15 +85,13 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
                 'blockchain.estimatefee',
                 numberOfBlocks,
             );
-            console.log('TACA ===> getFeePerByte, feeEstimates = ', feeEstimates)
             if (feeEstimates === -1) {
                 return this._options.defaultFeePerByte;
             }
             const rate = Math.round(feeEstimates as number * 1e8 / 1000)
-            console.log('TACA ===> getFeePerByte, rate = ', rate)
             return rate;
         } catch (e) {
-            console.log('TACA ===> getFeePerByte, error = ', e)
+            console.warn('DogecoinEsploraBaseProvider.ts, getFeePerByte, error = ', e)
             return this._options.defaultFeePerByte;
         }
     }
@@ -134,7 +130,6 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
 
         while(1) {
             response = await this.dogeChainClient.nodeGet(`/address/unspent/${address}/${page}`)
-            console.log(`TACA ===> DogecoinEsploraBaseProvider.ts, _getUnspentTransactions, page = ${page}, response = ${response}`)
             /*
             {
                 "unspent_outputs": [

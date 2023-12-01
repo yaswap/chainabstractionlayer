@@ -127,9 +127,7 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
 
     public async getBalance(_addresses: AddressType[]): Promise<BigNumber[]> {
         const addresses = _addresses.map((a) => a.toString());
-        console.log('TACA ===> DogecoinEsploraApiProvider.ts, getBalance, addresses = ', addresses)
         const _utxos = await this.provider.getUnspentTransactions(addresses);
-        console.log('TACA ===> DogecoinEsploraApiProvider.ts, getBalance, _utxos = ', _utxos)
         const utxos = flatten(_utxos);
         return [utxos.reduce((acc, utxo) => acc.plus(utxo.value), new BigNumber(0))];
     }
@@ -155,17 +153,15 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
 
     public async sendRawTransaction(rawTransaction: string): Promise<string> {
         // Refer  https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.transaction.broadcast
-        console.log('TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, rawTransaction = ', rawTransaction)
         await this.provider.checkAndReconnectElectrumClient()
         try {
             let result = await this.provider.electrumClient.request(
                 'blockchain.transaction.broadcast',
                 rawTransaction,
             );
-            console.log("TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, broadcast transaction result = ", result);
             return result as string
         } catch (error) {
-            console.log('TACA ===> DogecoinEsploraApiProvider.ts, sendRawTransaction, broadcast transaction error = ', error.message)
+            console.warn('DogecoinEsploraApiProvider.ts, broadcast transaction error = ', error)
             throw new TxNotFoundError(`Failed to broadcast transaction ${rawTransaction} with error = ${error}`);
         }
     }
