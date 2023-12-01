@@ -63,14 +63,16 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
     }
 
     public async getTransactionHex(transactionHash: string): Promise<string> {
-        // Refer https://api.blockchair.com/dogecoin/raw/transaction/104f2494728489914132f9fb70b87c74cafa56fe5b646be18716932d21ca93e0
         try {
-            const data = await this.blockChairClient.nodeGet(`/raw/transaction/${transactionHash}`)
-            console.log('TACA ===> DogecoinEsploraBaseProvider.ts, getTransactionHex, data = ', data)
-            if (!data.data) {
-                throw new TxNotFoundError(`Transaction not found: ${transactionHash}`);
-            }
-            return data['data'][transactionHash]['raw_transaction']
+            // Refer https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.transaction.get
+            await this.checkAndReconnectElectrumClient()
+            const txHex = await this.electrumClient.request(
+                'blockchain.transaction.get',
+                transactionHash,
+                false,
+            );
+            console.log('TACA ===> DogecoinEsploraBaseProvider.ts, getTransactionHex, txHex = ', txHex)
+            return txHex as string;
         } catch (e) {
             console.warn("DogecoinEsploraBaseProvider.ts, getTransactionHex, error = ", e)
             throw new TxNotFoundError(`Transaction not found: ${transactionHash}`);
