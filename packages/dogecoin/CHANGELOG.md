@@ -1,5 +1,16 @@
 # @yaswap/dogecoin
 
+## 2.6.5
+
+### Patch Changes
+
+-   Use electrumClient to get transaction hex
+-   Updated dependencies
+    -   @yaswap/client@2.6.5
+    -   @yaswap/errors@2.6.5
+    -   @yaswap/types@2.6.5
+    -   @yaswap/utils@2.6.5
+
 ## 2.6.4
 
 ### Patch Changes

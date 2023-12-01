@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 2.6.5
+
+### Patch Changes
+
+-   Use electrumClient to get transaction hex
+
 ## 2.6.4
 
 ### Patch Changes
