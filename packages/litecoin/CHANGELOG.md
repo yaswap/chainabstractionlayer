@@ -1,5 +1,16 @@
 # @yaswap/litecoin
 
+## 2.6.6
+
+### Patch Changes
+
+-   Remove debug log
+-   Updated dependencies
+    -   @yaswap/client@2.6.6
+    -   @yaswap/errors@2.6.6
+    -   @yaswap/types@2.6.6
+    -   @yaswap/utils@2.6.6
+
 ## 2.6.5
 
 ### Patch Changes
