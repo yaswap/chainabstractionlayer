@@ -11,6 +11,11 @@ export interface BitcoinNodeWalletOptions {
     addressType?: AddressType;
     network?: BitcoinNetwork;
 }
+
+export interface BitcoinSingleWalletOptions extends BitcoinNodeWalletOptions {
+    privateKey: string;
+}
+
 export interface BitcoinWalletProviderOptions extends BitcoinNodeWalletOptions {
     baseDerivationPath: string;
 }

@@ -14,3 +14,4 @@ export * as BitcoinUtils from './utils';
 export { BitcoinBaseWalletProvider } from './wallet/BitcoinBaseWallet';
 export { BitcoinHDWalletProvider } from './wallet/BitcoinHDWallet';
 export { BitcoinNodeWalletProvider } from './wallet/BitcoinNodeWallet';
+export { BitcoinSingleWallet } from './wallet/BitcoinSingleWallet';
