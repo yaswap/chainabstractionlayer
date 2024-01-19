@@ -14,3 +14,4 @@ export * as LitecoinUtils from './utils';
 export { LitecoinBaseWalletProvider } from './wallet/LitecoinBaseWallet';
 export { LitecoinHDWalletProvider } from './wallet/LitecoinHDWallet';
 export { LitecoinNodeWalletProvider } from './wallet/LitecoinNodeWallet';
+export { LitecoinSingleWallet } from './wallet/LitecoinSingleWallet';

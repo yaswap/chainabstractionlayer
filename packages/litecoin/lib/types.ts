@@ -11,6 +11,11 @@ export interface LitecoinNodeWalletOptions {
     addressType?: AddressType;
     network?: LitecoinNetwork;
 }
+
+export interface LitecoinSingleWalletOptions extends LitecoinNodeWalletOptions {
+    privateKey: string;
+}
+
 export interface LitecoinWalletProviderOptions extends LitecoinNodeWalletOptions {
     baseDerivationPath: string;
 }
