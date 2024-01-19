@@ -1,5 +1,11 @@
 # @yaswap/bitcoin
 
+## 2.6.7
+
+### Patch Changes
+
+-   Try adding single wallet
+
 ## 2.6.6
 
 ### Patch Changes
