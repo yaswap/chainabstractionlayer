@@ -1,5 +1,11 @@
 # @yaswap/bitcoin
 
+## 2.6.8
+
+### Patch Changes
+
+-   Update BitcoinSingleWalletProvider
+
 ## 2.6.7
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @yaswap/bitcoin-ledger
 
+## 2.6.8
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.6.8
+
 ## 2.6.7
 
 ### Patch Changes
