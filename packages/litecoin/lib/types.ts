@@ -1,5 +1,5 @@
 import { Network } from '@yaswap/types';
-import { Network as LitecoinJsLibNetwork } from 'bitcoinjs-lib';
+import { ECPairInterface, Network as LitecoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as LitecoinEsploraTypes from './chain/esplora/types';
 export * as LitecoinJsonRpcTypes from './chain/jsonRpc/types';
@@ -13,7 +13,9 @@ export interface LitecoinNodeWalletOptions {
 }
 
 export interface LitecoinSingleWalletOptions extends LitecoinNodeWalletOptions {
-    privateKey: string;
+    wif?: string;
+    publicKey?: Buffer;
+    ecpair?: ECPairInterface;
 }
 
 export interface LitecoinWalletProviderOptions extends LitecoinNodeWalletOptions {

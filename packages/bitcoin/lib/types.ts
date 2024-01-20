@@ -1,5 +1,5 @@
 import { Network } from '@yaswap/types';
-import { Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib';
+import { ECPairInterface, Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as BitcoinEsploraTypes from './chain/esplora/types';
 export * as BitcoinJsonRpcTypes from './chain/jsonRpc/types';
@@ -13,7 +13,9 @@ export interface BitcoinNodeWalletOptions {
 }
 
 export interface BitcoinSingleWalletOptions extends BitcoinNodeWalletOptions {
-    privateKey: string;
+    wif?: string;
+    publicKey?: Buffer;
+    ecpair?: ECPairInterface;
 }
 
 export interface BitcoinWalletProviderOptions extends BitcoinNodeWalletOptions {

@@ -37,7 +37,29 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
 
     this._addressType = options?.addressType || BtcAddressType.BECH32;
     this._network = chainProvider ? (chainProvider.getNetwork() as BitcoinNetwork) : options.network;
-    this._ecpair = ECPair.fromWIF(options.privateKey, this._network);
+    if (options.ecpair) {
+      this._ecpair = { ...options.ecpair };
+    } else if (options.wif) {
+      this._ecpair = ECPair.fromWIF(options.wif, this._network);
+    } else if (options.publicKey) {
+      this._ecpair = ECPair.fromPublicKey(options.publicKey, { network: this._network });
+    }
+  }
+
+  public setNetwork(bitcoinNetwork: BitcoinNetwork) {
+    this._network = bitcoinNetwork;
+  }
+
+  public setECPair(ecpair: ECPairInterface) {
+    this._ecpair = { ...ecpair };
+  }
+
+  public setPublicKey(publicKey: Buffer) {
+    this._ecpair = ECPair.fromPublicKey(publicKey, { network: this._network });
+  }
+
+  public setWIF(wif: string) {
+    this._ecpair = ECPair.fromWIF(wif, this._network);
   }
 
   public async getUnusedAddress() {
@@ -86,18 +108,18 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
 
     let outputs = transaction.vout;
     if (changeOutput) {
-        outputs = outputs.filter((vout) => vout.scriptPubKey.addresses[0] !== changeOutput.scriptPubKey.addresses[0]);
+      outputs = outputs.filter((vout) => vout.scriptPubKey.addresses[0] !== changeOutput.scriptPubKey.addresses[0]);
     }
 
     // TODO more checks?
     const transactions = outputs.map((output) => ({
-        address: output.scriptPubKey.addresses[0],
-        value: new BigNumber(output.value).times(1e8).toNumber(),
+      address: output.scriptPubKey.addresses[0],
+      value: new BigNumber(output.value).times(1e8).toNumber(),
     }));
     const { hex, fee } = await this.buildTransaction(transactions, newFeePerByte, fixedInputs);
     await this.chainProvider.sendRawTransaction(hex);
     return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
-}
+  }
 
   public async getConnectedNetwork(): Promise<Network> {
     return this._network;
@@ -113,8 +135,8 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   }
 
   public async signMessage(message: string) {
-      const signature = await signBitcoinMessage(message, this._ecpair.privateKey, this._ecpair.compressed);
-      return signature.toString('hex');
+    const signature = await signBitcoinMessage(message, this._ecpair.privateKey, this._ecpair.compressed);
+    return signature.toString('hex');
   }
 
   public async getBalance(assets: Asset[]): Promise<BigNumber[]> {
