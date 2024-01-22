@@ -1,5 +1,11 @@
 # @yaswap/litecoin
 
+## 2.6.9
+
+### Patch Changes
+
+-   Fix issues with ECPair
+
 ## 2.6.8
 
 ### Patch Changes
