@@ -38,7 +38,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     this._addressType = options?.addressType || BtcAddressType.BECH32;
     this._network = chainProvider ? (chainProvider.getNetwork() as BitcoinNetwork) : options.network;
     if (options.ecpair) {
-      this._ecpair = { ...options.ecpair };
+      this._ecpair = ECPair.fromPrivateKey(options.ecpair.privateKey, { network: this._network });
     } else if (options.wif) {
       this._ecpair = ECPair.fromWIF(options.wif, this._network);
     } else if (options.publicKey) {
@@ -51,7 +51,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   }
 
   public setECPair(ecpair: ECPairInterface) {
-    this._ecpair = { ...ecpair };
+    this._ecpair = ECPair.fromPrivateKey(ecpair.privateKey, { network: this._network });
   }
 
   public setPublicKey(publicKey: Buffer) {
