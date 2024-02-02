@@ -157,6 +157,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
             const fees: { [index: number]: BigNumber } = {};
             for (const tx of transactions) {
                 const fee = await this.getTotalFee(tx, max);
+                console.log("TACA ===> BitcoinBaseWallet.ts, max = ", max, ", tx = ", tx, ", fee = ", fee)
                 fees[tx.fee as number] = new BigNumber(fee);
             }
             return fees;
@@ -333,6 +334,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
 
     protected async getTotalFee(opts: TransactionRequest, max: boolean) {
         const targets = this.sendOptionsToOutputs([opts]);
+        console.log("TACA ===> BitcoinBaseWallet.ts, getTotalFee, targets = ", targets);
         if (!max) {
             const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
             return fee;
@@ -359,6 +361,8 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         const addresses: Address[] = await this.getUsedAddresses();
         const fixedUtxos: UTXO[] = [];
 
+        const needsWitness = [BtcAddressType.BECH32, BtcAddressType.P2SH_SEGWIT].includes(this._addressType);
+
         if (fixedInputs.length > 0) {
             for (const input of fixedInputs) {
                 const txHex = await this.chainProvider.getProvider().getRawTransactionByHash(input.txid);
@@ -366,7 +370,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
                 const value = new BigNumber(tx.vout[input.vout].value).times(1e8).toNumber();
                 const address = tx.vout[input.vout].scriptPubKey.addresses[0];
                 const walletAddress = await this.getWalletAddress(address);
-                const utxo = { ...input, value, address, derivationPath: walletAddress.derivationPath };
+                const utxo = { ...input, value, address, derivationPath: walletAddress.derivationPath, witnessUtxo: needsWitness ? {script: new Uint8Array(0), value}: null };
                 fixedUtxos.push(utxo);
             }
         }
@@ -378,6 +382,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
                     const addr = addresses.find((a) => a.address === utxo.address);
                     return {
                         ...utxo,
+                        witnessUtxo: needsWitness ? {script: new Uint8Array(0), value: utxo.value}: null,
                         derivationPath: addr.derivationPath,
                     };
                 })
@@ -398,14 +403,15 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         if (sweep) {
             const outputBalance = _targets.reduce((a, b) => a + (b['value'] || 0), 0);
 
-            const sweepOutputSize = 39;
+            const sweepOutputSize = needsWitness ? 36 : 39; // TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT/TX_OUTPUT_PUBKEYHASH + LOCKTIME
             const paymentOutputSize = _targets.filter((t) => t.value && t.address).length * 39;
             const scriptOutputSize = _targets
                 .filter((t) => !t.value && t.script)
                 .reduce((size, t) => size + 39 + t.script.byteLength, 0);
 
             const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
-            const inputSize = utxos.length * 153;
+            const oneOutputSize = needsWitness? 73 : 153 // VERSION + 1 + TX_INPUT_BASE + TX_INPUT_SEGWIT/TX_INPUT_PUBKEYHASH
+            const inputSize = utxos.length * oneOutputSize;
 
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
@@ -417,6 +423,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         }
 
         const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
+        console.log("TACA ===> getInputsForAmount, utxos = ", utxos, ', targets = ', targets, ", feePerByte = ", feePerByte, ", inputs = ", inputs, ", outputs = ", outputs, ", change = ", change, ", fee = ", fee)
 
         if (inputs && outputs) {
             return {

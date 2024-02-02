@@ -78,6 +78,10 @@ export interface UTXO {
     value: number;
     address: string;
     derivationPath?: string;
+    witnessUtxo? : {
+        script: Uint8Array,
+        value: number
+    }
 }
 
 export enum AddressType {
