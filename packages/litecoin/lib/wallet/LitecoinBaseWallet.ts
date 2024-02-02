@@ -156,8 +156,14 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
         const fees = await this.withCachedUtxos(async () => {
             const fees: { [index: number]: BigNumber } = {};
             for (const tx of transactions) {
-                const fee = await this.getTotalFee(tx, max);
-                fees[tx.fee as number] = new BigNumber(fee);
+                try {
+                    const fee = await this.getTotalFee(tx, max);
+                    console.log("TACA ===> LitecoinBaseWallet.ts, getTotalFees, max = ", max, ", tx = ", tx, ", fee = ", fee)
+                    fees[tx.fee as number] = new BigNumber(fee);
+                } catch (err) {
+                    console.log("TACA ===> LitecoinBaseWallet.ts, getTotalFees, err = ", err)
+                    fees[tx.fee as number] = null;
+                }
             }
             return fees;
         });
@@ -408,8 +414,8 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
                 .reduce((size, t) => size + 39 + t.script.byteLength, 0);
 
             const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
-            const oneOutputSize = needsWitness? 73 : 153 // VERSION + 1 + TX_INPUT_BASE + TX_INPUT_SEGWIT/TX_INPUT_PUBKEYHASH
-            const inputSize = utxos.length * oneOutputSize;
+            const oneInputSize = needsWitness? 73 : 153 // VERSION + 1 + TX_INPUT_BASE + TX_INPUT_SEGWIT/TX_INPUT_PUBKEYHASH
+            const inputSize = utxos.length * oneInputSize;
 
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);

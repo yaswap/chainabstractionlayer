@@ -415,8 +415,8 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
                 .reduce((size, t) => size + 39 + t.script.byteLength, 0);
 
             const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
-            const oneOutputSize = needsWitness? 73 : 153 // VERSION + 1 + TX_INPUT_BASE + TX_INPUT_SEGWIT/TX_INPUT_PUBKEYHASH
-            const inputSize = utxos.length * oneOutputSize;
+            const oneInputSize = needsWitness? 73 : 153 // VERSION + 1 + TX_INPUT_BASE + TX_INPUT_SEGWIT/TX_INPUT_PUBKEYHASH
+            const inputSize = utxos.length * oneInputSize;
 
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
