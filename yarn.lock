@@ -3410,8 +3410,8 @@ __metadata:
     bip39: ^3.0.4
     bitcoinjs-lib: 5.2.0
     bitcoinjs-message: 2.2.0
-    bitcoinselect: 1.0.0
     coinselect: ^3.1.12
+    coinselect-segwit: 1.0.2
     lodash: 4.17.21
     memoizee: ^0.4.15
   languageName: unknown
@@ -3618,8 +3618,8 @@ __metadata:
     bip39: ^3.0.4
     bitcoinjs-lib: 5.2.0
     bitcoinjs-message: 2.2.0
-    bitcoinselect: 1.0.0
     coinselect: ^3.1.12
+    coinselect-segwit: 1.0.2
     lodash: 4.17.21
     memoizee: ^0.4.15
   languageName: unknown
@@ -5426,13 +5426,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bitcoinselect@npm:1.0.0":
-  version: 1.0.0
-  resolution: "bitcoinselect@npm:1.0.0"
-  checksum: 6d350fcb067abe8500a9b1659b96eb4f0e6f2830e8f560e1bfbd0d03d26444a3db1f6dd53c8368160eef7de393ff60185de5476f0a222ae9dfe688933c114ee8
-  languageName: node
-  linkType: hard
-
 "bl@npm:^4.0.3, bl@npm:^4.1.0":
   version: 4.1.0
   resolution: "bl@npm:4.1.0"
@@ -6483,6 +6476,13 @@ __metadata:
   version: 1.1.0
   resolution: "code-point-at@npm:1.1.0"
   checksum: 17d5666611f9b16d64fdf48176d9b7fb1c7d1c1607a189f7e600040a11a6616982876af148230336adb7d8fe728a559f743a4e29db3747e3b1a32fa7f4529681
+  languageName: node
+  linkType: hard
+
+"coinselect-segwit@npm:1.0.2":
+  version: 1.0.2
+  resolution: "coinselect-segwit@npm:1.0.2"
+  checksum: 2db01a9ce553a0f1f30b874a701e62a1252524068ee1503e9ec69e892110f2cda59d70ec2574676d9187f506bd2ca716cf77f57ce7c196aadb92a6d56d895aab
   languageName: node
   linkType: hard
 

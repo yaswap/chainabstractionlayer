@@ -3,8 +3,8 @@ import { AddressType, BigNumber, Transaction, TxStatus } from '@yaswap/types';
 import * as varuint from 'bip174/src/lib/converter/varint';
 import * as litecoin from 'bitcoinjs-lib';
 import * as classify from 'bitcoinjs-lib/src/classify';
-import bitcoinselect from 'bitcoinselect';
-import bitcoinselectAccumulative from 'bitcoinselect/accumulative';
+import coinselect from 'coinselect-segwit';
+import coinselectAccumulative from 'coinselect-segwit/accumulative';
 import { LitecoinNetwork, Input, Output, Transaction as LitecoinTransaction, UTXO } from './types';
 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
@@ -47,7 +47,7 @@ function selectCoins(utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: num
 
     // Default coinselect won't accumulate some inputs
     // TODO: does coinselect need to be modified to ABSOLUTELY not skip an input?
-    const coinselectStrat: CoinSelectFunction = fixedInputs.length ? bitcoinselectAccumulative : bitcoinselect;
+    const coinselectStrat: CoinSelectFunction = fixedInputs.length ? coinselectAccumulative : coinselect;
     if (fixedInputs.length) {
         selectUtxos = [
             // Order fixed inputs to the start of the list so they are used
