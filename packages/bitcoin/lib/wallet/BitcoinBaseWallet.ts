@@ -156,9 +156,14 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         const fees = await this.withCachedUtxos(async () => {
             const fees: { [index: number]: BigNumber } = {};
             for (const tx of transactions) {
-                const fee = await this.getTotalFee(tx, max);
-                console.log("TACA ===> BitcoinBaseWallet.ts, max = ", max, ", tx = ", tx, ", fee = ", fee)
-                fees[tx.fee as number] = new BigNumber(fee);
+                try {
+                    const fee = await this.getTotalFee(tx, max);
+                    console.log("TACA ===> BitcoinBaseWallet.ts, getTotalFees, max = ", max, ", tx = ", tx, ", fee = ", fee)
+                    fees[tx.fee as number] = new BigNumber(fee);
+                } catch (err) {
+                    console.log("TACA ===> BitcoinBaseWallet.ts, getTotalFees, err = ", err)
+                    fees[tx.fee as number] = null;
+                }
             }
             return fees;
         });
