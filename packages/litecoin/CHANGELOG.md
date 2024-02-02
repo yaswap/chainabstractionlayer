@@ -1,5 +1,11 @@
 # @yaswap/litecoin
 
+## 2.6.11
+
+### Patch Changes
+
+-   Use coinselect-segwit
+
 ## 2.6.10
 
 ### Patch Changes
