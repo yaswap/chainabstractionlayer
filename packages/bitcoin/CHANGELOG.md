@@ -1,5 +1,11 @@
 # @yaswap/bitcoin
 
+## 2.6.10
+
+### Patch Changes
+
+-   Calculate fee correctly based on sat/vB
+
 ## 2.6.9
 
 ### Patch Changes
