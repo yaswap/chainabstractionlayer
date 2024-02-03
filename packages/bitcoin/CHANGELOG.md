@@ -1,5 +1,11 @@
 # @yaswap/bitcoin
 
+## 2.6.12
+
+### Patch Changes
+
+-   Change sweep output size to 39
+
 ## 2.6.11
 
 ### Patch Changes
