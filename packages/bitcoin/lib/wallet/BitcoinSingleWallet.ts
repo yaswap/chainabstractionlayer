@@ -356,7 +356,9 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     if (sweep) {
       const outputBalance = _targets.reduce((a, b) => a + (b['value'] || 0), 0);
 
-      const sweepOutputSize = needsWitness ? 36 : 39; // TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT/TX_OUTPUT_PUBKEYHASH + LOCKTIME
+      // TODO: For segwit address, it should be 36 (TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT/TX_OUTPUT_PUBKEYHASH + LOCKTIME)
+      // At the moment, assume the worst case which output address is legacy address
+      const sweepOutputSize = 39
       const paymentOutputSize = _targets.filter((t) => t.value && t.address).length * 39;
       const scriptOutputSize = _targets
         .filter((t) => !t.value && t.script)
