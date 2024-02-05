@@ -1,5 +1,19 @@
 # @yaswap/litecoin
 
+## 2.7.0
+
+### Minor Changes
+
+-   Finalize single wallet version
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.7.0
+    -   @yaswap/errors@2.7.0
+    -   @yaswap/types@2.7.0
+    -   @yaswap/utils@2.7.0
+
 ## 2.6.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.7.0
+
+### Minor Changes
+
+-   Finalize single wallet version
+
 ## 2.6.6
 
 ### Patch Changes
