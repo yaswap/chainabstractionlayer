@@ -1,5 +1,18 @@
 # @yaswap/evm-ledger
 
+## 2.7.1
+
+### Patch Changes
+
+-   Use bitcoinselect
+-   Updated dependencies
+    -   @yaswap/client@2.7.1
+    -   @yaswap/errors@2.7.1
+    -   @yaswap/evm@2.7.1
+    -   @yaswap/hw-ledger@2.7.1
+    -   @yaswap/types@2.7.1
+    -   @yaswap/utils@2.7.1
+
 ## 2.7.0
 
 ### Minor Changes

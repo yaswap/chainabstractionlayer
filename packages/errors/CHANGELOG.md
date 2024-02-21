@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 2.7.1
+
+### Patch Changes
+
+-   Use bitcoinselect
+
 ## 2.7.0
 
 ### Minor Changes
