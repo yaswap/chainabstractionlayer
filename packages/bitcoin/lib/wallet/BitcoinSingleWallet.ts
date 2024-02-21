@@ -217,10 +217,8 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
       for (const tx of transactions) {
         try {
           const fee = await this.getTotalFee(tx, max);
-          console.log("TACA ===> BitcoinSingleWallet.ts, getTotalFees, max = ", max, ", tx = ", tx, ", fee = ", fee)
           fees[tx.fee as number] = new BigNumber(fee);
       } catch (err) {
-          console.log("TACA ===> BitcoinSingleWallet.ts, getTotalFees, err = ", err)
           fees[tx.fee as number] = null;
       }
       }
@@ -378,7 +376,6 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     }
 
     const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
-    console.log("TACA ===> BitcoinSingleWallet, getInputsForAmount, utxos = ", utxos, ', targets = ', targets, ", feePerByte = ", feePerByte, ", inputs = ", inputs, ", outputs = ", outputs, ", change = ", change, ", fee = ", fee)
 
     if (inputs && outputs) {
       return {

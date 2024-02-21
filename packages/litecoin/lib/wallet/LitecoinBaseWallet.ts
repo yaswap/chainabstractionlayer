@@ -158,10 +158,8 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
             for (const tx of transactions) {
                 try {
                     const fee = await this.getTotalFee(tx, max);
-                    console.log("TACA ===> LitecoinBaseWallet.ts, getTotalFees, max = ", max, ", tx = ", tx, ", fee = ", fee)
                     fees[tx.fee as number] = new BigNumber(fee);
                 } catch (err) {
-                    console.log("TACA ===> LitecoinBaseWallet.ts, getTotalFees, err = ", err)
                     fees[tx.fee as number] = null;
                 }
             }

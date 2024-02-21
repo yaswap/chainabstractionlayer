@@ -158,10 +158,8 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
             for (const tx of transactions) {
                 try {
                     const fee = await this.getTotalFee(tx, max);
-                    console.log("TACA ===> BitcoinBaseWallet.ts, getTotalFees, max = ", max, ", tx = ", tx, ", fee = ", fee)
                     fees[tx.fee as number] = new BigNumber(fee);
                 } catch (err) {
-                    console.log("TACA ===> BitcoinBaseWallet.ts, getTotalFees, err = ", err)
                     fees[tx.fee as number] = null;
                 }
             }
@@ -339,7 +337,6 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
 
     protected async getTotalFee(opts: TransactionRequest, max: boolean) {
         const targets = this.sendOptionsToOutputs([opts]);
-        console.log("TACA ===> BitcoinBaseWallet.ts, getTotalFee, targets = ", targets);
         if (!max) {
             const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
             return fee;
@@ -430,7 +427,6 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         }
 
         const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
-        console.log("TACA ===> getInputsForAmount, utxos = ", utxos, ', targets = ', targets, ", feePerByte = ", feePerByte, ", inputs = ", inputs, ", outputs = ", outputs, ", change = ", change, ", fee = ", fee)
 
         if (inputs && outputs) {
             return {
