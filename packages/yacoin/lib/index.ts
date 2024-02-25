@@ -11,3 +11,4 @@ export * as YacoinUtils from './utils';
 export { YacoinBaseWalletProvider } from './wallet/YacoinBaseWallet';
 export { YacoinHDWalletProvider } from './wallet/YacoinHDWallet';
 export { YacoinNftProvider } from './nft/YacoinNftProvider';
+export { YacoinSingleWallet } from './wallet/YacoinSingleWallet';

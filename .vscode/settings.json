@@ -20,5 +20,7 @@
         "setimmediate",
         "trivago",
         "typechain"
-    ]
+    ],
+    "prettier.configPath": "/home/chaunguyen/Desktop/KNOWLEDGE/MYLIFE/MYLIFE_20Dec2022/LEARNING/yacoin/Task/Circbit/CircBit_N_src_2021-12-20/.prettierrc",
+    "editor.formatOnSave": false
 }

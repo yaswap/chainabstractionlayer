@@ -1,5 +1,5 @@
 import { Network, TokenScriptType } from '@yaswap/types';
-import { Network as YacoinJsLibNetwork } from '@yaswap/yacoinjs-lib';
+import { ECPairInterface, Network as YacoinJsLibNetwork } from '@yaswap/yacoinjs-lib';
 
 export * as YacoinEsploraTypes from './chain/esplora/types';
 export * from './swap/types';
@@ -10,6 +10,13 @@ export interface YacoinNodeWalletOptions {
     addressType?: AddressType;
     network?: YacoinNetwork;
 }
+
+export interface YacoinSingleWalletOptions extends YacoinNodeWalletOptions {
+    wif?: string;
+    publicKey?: Buffer;
+    ecpair?: ECPairInterface;
+}
+
 export interface YacoinWalletProviderOptions extends YacoinNodeWalletOptions {
     baseDerivationPath: string;
 }
