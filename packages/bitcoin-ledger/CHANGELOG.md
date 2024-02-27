@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.7.2
+
+### Patch Changes
+
+-   Init YacoinSingleWallet
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.7.2
+    -   @yaswap/client@2.7.2
+    -   @yaswap/errors@2.7.2
+    -   @yaswap/hw-ledger@2.7.2
+    -   @yaswap/types@2.7.2
+    -   @yaswap/utils@2.7.2
+
 ## 2.7.1
 
 ### Patch Changes

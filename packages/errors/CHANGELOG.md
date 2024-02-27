@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 2.7.2
+
+### Patch Changes
+
+-   Init YacoinSingleWallet
+
 ## 2.7.1
 
 ### Patch Changes

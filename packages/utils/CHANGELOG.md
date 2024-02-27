@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.7.2
+
+### Patch Changes
+
+-   Init YacoinSingleWallet
+-   Updated dependencies
+    -   @yaswap/errors@2.7.2
+    -   @yaswap/types@2.7.2
+
 ## 2.7.1
 
 ### Patch Changes

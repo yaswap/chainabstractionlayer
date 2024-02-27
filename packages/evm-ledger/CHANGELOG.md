@@ -1,5 +1,18 @@
 # @yaswap/evm-ledger
 
+## 2.7.2
+
+### Patch Changes
+
+-   Init YacoinSingleWallet
+-   Updated dependencies
+    -   @yaswap/client@2.7.2
+    -   @yaswap/errors@2.7.2
+    -   @yaswap/evm@2.7.2
+    -   @yaswap/hw-ledger@2.7.2
+    -   @yaswap/types@2.7.2
+    -   @yaswap/utils@2.7.2
+
 ## 2.7.1
 
 ### Patch Changes
