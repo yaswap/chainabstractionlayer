@@ -287,6 +287,7 @@ export class YacoinSingleWallet extends Wallet<any, any> implements IYacoinWalle
 
   protected async getTotalFee(opts: TransactionRequest, max: boolean) {
     const targets = this.sendOptionsToOutputs([opts]);
+    console.log("TACA ===> getTotalFee, targets = ", targets, ", max = ", max)
     if (!max) {
       const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
       return fee;
@@ -748,6 +749,7 @@ export class YacoinSingleWallet extends Wallet<any, any> implements IYacoinWalle
       }));
     }
 
+    console.log("TACA ===> getInputsForAmount, utxos = ", utxos, ", targets = ", targets, ", feePerByte = ", feePerByte)
     const { inputs, outputs, fee, coinChange, tokenChange } = selectCoins(
       utxos,
       tokenUtxos,
@@ -755,6 +757,7 @@ export class YacoinSingleWallet extends Wallet<any, any> implements IYacoinWalle
       Math.ceil(feePerByte),
       fixedUtxos
     );
+    console.log("TACA ===> getInputsForAmount, inputs = ", inputs, ", outputs = ", outputs, ", fee = ", fee, ", coinChange = ", coinChange, ", tokenChange = ", tokenChange)
 
     if (inputs && outputs) {
       return {
