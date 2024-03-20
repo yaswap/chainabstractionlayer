@@ -1,5 +1,11 @@
 # @yaswap/types
 
+## 2.7.3
+
+### Patch Changes
+
+-   Change ipfs endpoint and timeout for getting token metadata
+
 ## 2.7.2
 
 ### Patch Changes

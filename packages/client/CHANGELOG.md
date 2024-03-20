@@ -1,5 +1,16 @@
 # @yaswap/client
 
+## 2.7.3
+
+### Patch Changes
+
+-   Change ipfs endpoint and timeout for getting token metadata
+-   Updated dependencies
+    -   @yaswap/errors@2.7.3
+    -   @yaswap/logger@2.7.3
+    -   @yaswap/types@2.7.3
+    -   @yaswap/utils@2.7.3
+
 ## 2.7.2
 
 ### Patch Changes
