@@ -9,7 +9,7 @@ import { YacoinNetwork, Input, Output, Transaction as YacoinTransaction, UTXO } 
 
 const AddressTypes = ['legacy', 'p2sh-segwit', 'bech32'];
 const getTokenMetadataErr = "Can't get token metadata from ipfs. Please try again later."
-const GET_METADATA_TIMEOUT = 10000 // 10s
+const GET_METADATA_TIMEOUT = 3000 // 3s
 
 // JUST FOR TESTING
 // const TIMELOCK_FEE_DURATION = 10; // 21000 blocks
