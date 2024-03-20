@@ -434,14 +434,14 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         if (sweep) {
             const outputBalance = _targets.reduce((a, b) => a + (b['value'] || 0), 0);
 
-            const sweepOutputSize = 39;
+            const sweepOutputSize = 39; // TX_OUTPUT_BASE + TX_OUTPUT_PUBKEYHASH + LOCKTIME
             const paymentOutputSize = _targets.filter((t) => t.value && t.address).length * 39;
             const scriptOutputSize = _targets
                 .filter((t) => !t.value && t.script)
                 .reduce((size, t) => size + 39 + t.script.byteLength, 0);
 
             const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
-            const inputSize = utxos.length * 153;
+            const inputSize = utxos.length * 161; // VERSION + TIME (8 bytes) + 1 + TX_INPUT_BASE + TX_INPUT_PUBKEYHASH
 
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
