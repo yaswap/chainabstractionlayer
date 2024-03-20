@@ -264,7 +264,7 @@ function convertToURL(ipfsHash: string) {
         url = ipfsHash
     } else {
         // Treat it as IPFS Hash
-        url = isIPFSprefix ? ipfsHash.replace('ipfs://', 'https://ipfs.io/ipfs/'): `https://ipfs.io/ipfs/${ipfsHash}`
+        url = isIPFSprefix ? ipfsHash.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/'): `https://cloudflare-ipfs.com/ipfs/${ipfsHash}`
     }
     return url
 }
@@ -273,7 +273,7 @@ async function getTokenMetadata(ipfsHash: string) {
     if (!ipfsHash) {
         return {};
     }
-    const ipfsHashUrl = `https://ipfs.io/ipfs/${ipfsHash}`
+    const ipfsHashUrl = `https://cloudflare-ipfs.com/ipfs/${ipfsHash}`
     let metadata: TokenMetadata = {}
     try {
         const headers = await HttpClient.head(ipfsHashUrl, {}, {timeout: GET_METADATA_TIMEOUT})
