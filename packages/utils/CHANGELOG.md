@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.7.4
+
+### Patch Changes
+
+-   Correct formular to calculate yacoin transaction bytes
+-   Updated dependencies
+    -   @yaswap/errors@2.7.4
+    -   @yaswap/types@2.7.4
+
 ## 2.7.3
 
 ### Patch Changes
