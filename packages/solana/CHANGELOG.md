@@ -1,5 +1,17 @@
 # @yaswap/solana
 
+## 2.7.5
+
+### Patch Changes
+
+-   Throw fee in InsufficientBalanceError for Yacoin
+-   Updated dependencies
+    -   @yaswap/client@2.7.5
+    -   @yaswap/errors@2.7.5
+    -   @yaswap/logger@2.7.5
+    -   @yaswap/types@2.7.5
+    -   @yaswap/utils@2.7.5
+
 ## 2.7.4
 
 ### Patch Changes
