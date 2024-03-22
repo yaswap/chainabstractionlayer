@@ -769,7 +769,7 @@ export class YacoinSingleWallet extends Wallet<any, any> implements IYacoinWalle
       };
     }
 
-    throw new InsufficientBalanceError('Not enough balance');
+    throw new InsufficientBalanceError(fee);
   }
 
   protected onChainProviderUpdate(chainProvider: Chain<YacoinBaseChainProvider>): void {
