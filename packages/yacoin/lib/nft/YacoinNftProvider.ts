@@ -16,7 +16,8 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
         const addresses = _addresses.map((a) => a.toString());
         const data: YacoinEsploraTypes.BatchTokenUTXOInfo = await this.walletProvider.getChainProvider().getProvider().getAllNFTUnspentTransactions(addresses)
         const nftAssets: NFTAsset[] = [];
-        for (const tokenInfo of data) {
+
+        let results = data.map(async (tokenInfo) => {
             if (tokenInfo.token_info) {
                 const { token_type, amount, units, reissuable, block_hash, ipfs_hash } = tokenInfo.token_info;
 
@@ -54,7 +55,48 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
                     });
                 }
             }
-        }
+        })
+        await Promise.all(results)
+
+        // for (const tokenInfo of data) {
+        //     if (tokenInfo.token_info) {
+        //         const { token_type, amount, units, reissuable, block_hash, ipfs_hash } = tokenInfo.token_info;
+
+        //         // Sanity check NFT
+        //         if (token_type !== 'Unique-token' || amount !== 1 || units !== 0 || reissuable !== false) {
+        //             console.warn(`Invalid nft ${tokenInfo.token_name}`);
+        //         } else {
+        //             // Parse NFT name
+        //             // Workaround for displaying YA-NFT created by sub YA-Token
+        //             const fullNFTName = tokenInfo.token_name.split('/').join('|')
+        //             const nftCollectionName = fullNFTName.split('#')[0];
+        //             const nftName = fullNFTName.split('#')[1];
+
+        //             // Get NFT metdata
+        //             const nftMetadata = await getTokenMetadata(ipfs_hash)
+        //             nftAssets.push({
+        //                 token_id: fullNFTName,
+        //                 asset_contract: {
+        //                     address: block_hash,
+        //                     image_url: nftMetadata.imageURL,
+        //                     name: nftName,
+        //                     symbol: nftName,
+        //                     ipfs_hash,
+        //                 },
+        //                 collection: {
+        //                     name: nftCollectionName,
+        //                 },
+        //                 description: nftMetadata.description,
+        //                 image_original_url: nftMetadata.imageURL,
+        //                 image_preview_url: nftMetadata.imageURL,
+        //                 image_thumbnail_url: nftMetadata.imageURL,
+        //                 name: nftName,
+        //                 metadataName: nftMetadata.name,
+        //                 documents: nftMetadata.documents,
+        //             });
+        //         }
+        //     }
+        // }
 
         return nftAssets;
     }
