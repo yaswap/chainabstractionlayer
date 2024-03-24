@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 2.7.6
+
+### Patch Changes
+
+-   Fetch multiple YA-NFT info at one time
+
 ## 2.7.5
 
 ### Patch Changes

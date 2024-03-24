@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.7.6
+
+### Patch Changes
+
+-   Fetch multiple YA-NFT info at one time
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.7.6
+    -   @yaswap/client@2.7.6
+    -   @yaswap/errors@2.7.6
+    -   @yaswap/hw-ledger@2.7.6
+    -   @yaswap/types@2.7.6
+    -   @yaswap/utils@2.7.6
+
 ## 2.7.5
 
 ### Patch Changes
