@@ -350,7 +350,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
 
     protected async getTotalFee(opts: TransactionRequest, max: boolean) {
         const targets = this.sendOptionsToOutputs([opts]);
-        console.log("TACA ===> getTotalFee, targets = ", targets, ", max = ", max);
         if (!max) {
             // const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
             const { fee } = await this.getInputsForAmount(targets, opts.fee as number);
@@ -452,9 +451,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, tokenName: target.tokenName, token_value: target.token_value, tokenScriptType: target.tokenScriptType}));
         }
 
-        console.log("TACA ===> getInputsForAmount, utxos = ", utxos, ", targets = ", targets, ", feePerByte = ", feePerByte)
         const { inputs, outputs, fee, coinChange, tokenChange } = selectCoins(utxos, tokenUtxos, targets, Math.ceil(feePerByte), fixedUtxos);
-        console.log("TACA ===> getInputsForAmount, inputs = ", inputs, ", outputs = ", outputs, ", fee = ", fee, ", coinChange = ", coinChange)
 
         if (inputs && outputs) {
             return {
