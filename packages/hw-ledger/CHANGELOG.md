@@ -1,5 +1,16 @@
 # @yaswap/hw-ledger
 
+## 2.7.7
+
+### Patch Changes
+
+-   Remove debug log
+-   Updated dependencies
+    -   @yaswap/errors@2.7.7
+    -   @yaswap/logger@2.7.7
+    -   @yaswap/types@2.7.7
+    -   @yaswap/utils@2.7.7
+
 ## 2.7.6
 
 ### Patch Changes

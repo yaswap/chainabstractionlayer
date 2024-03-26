@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 2.7.7
+
+### Patch Changes
+
+-   Remove debug log
+
 ## 2.7.6
 
 ### Patch Changes
