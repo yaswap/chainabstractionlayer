@@ -1,5 +1,20 @@
 # @yaswap/evm
 
+## 2.8.0
+
+### Minor Changes
+
+-   Add new return info to chain.getTokenBalance and nft.fetch
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.8.0
+    -   @yaswap/errors@2.8.0
+    -   @yaswap/logger@2.8.0
+    -   @yaswap/types@2.8.0
+    -   @yaswap/utils@2.8.0
+
 ## 2.7.7
 
 ### Patch Changes

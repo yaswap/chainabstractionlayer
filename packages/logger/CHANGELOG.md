@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.8.0
+
+### Minor Changes
+
+-   Add new return info to chain.getTokenBalance and nft.fetch
+
 ## 2.7.7
 
 ### Patch Changes
