@@ -78,7 +78,7 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
     public async getTokenBalance(_addresses: AddressType[]): Promise<TokenBalance[]> {
         const addresses = _addresses.map((a) => a.toString());
         const batchTokenUTXOInfo = await this.provider.getAllTokenUnspentTransactions(addresses);
-        return batchTokenUTXOInfo.map(({ token_name, balance, token_info }) => ({
+        return batchTokenUTXOInfo.map(({ token_name, balance, token_info, earliest_block_height, latest_block_height, earliest_timestamp, latest_timestamp }) => ({
             "name": token_name.split('/').join('|'), // Workaround for displaying sub YA-token
             "balance": new BigNumber(balance).dividedBy(1e6/Math.pow(10, token_info.units)).toNumber(),
             "totalSupply": token_info.amount,
@@ -86,6 +86,10 @@ export class YacoinEsploraApiProvider extends Chain<YacoinEsploraBaseProvider> {
             "reissuable": token_info.reissuable,
             "blockHash": token_info.block_hash,
             "ipfsHash": token_info.ipfs_hash,
+            "earliest_block_height": earliest_block_height,
+            "latest_block_height": latest_block_height,
+            "earliest_timestamp": earliest_timestamp,
+            "latest_timestamp": latest_timestamp,
         }))
     }
 

@@ -24,6 +24,10 @@ export type BatchUTXOs = { address: string; utxo: UTXO[] }[];
 export type TokenUTXOInfo = {
     token_name: string;
     balance: number;
+    earliest_block_height: number;
+    latest_block_height: number;
+    earliest_timestamp: number;
+    latest_timestamp: number;
     token_info: TokenInfo;
     token_utxos: BatchUTXOs;
 };

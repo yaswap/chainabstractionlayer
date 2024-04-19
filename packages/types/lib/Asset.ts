@@ -52,4 +52,8 @@ export interface TokenBalance { // for Yacoin only
     reissuable: boolean;
     blockHash: string;
     ipfsHash: string;
+    earliest_block_height: number;
+    latest_block_height: number;
+    earliest_timestamp: number;
+    latest_timestamp: number;
 }

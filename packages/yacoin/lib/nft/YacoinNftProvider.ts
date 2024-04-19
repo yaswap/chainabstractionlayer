@@ -52,6 +52,10 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
                         name: nftName,
                         metadataName: nftMetadata.name,
                         documents: nftMetadata.documents,
+                        earliest_block_height: tokenInfo.earliest_block_height,
+                        latest_block_height: tokenInfo.latest_block_height,
+                        earliest_timestamp: tokenInfo.earliest_timestamp,
+                        latest_timestamp: tokenInfo.latest_timestamp,
                     });
                 }
             }

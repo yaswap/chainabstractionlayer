@@ -22,4 +22,8 @@ export interface NFTAsset {
     metadataName?: string;
     amount?: string;
     standard?: string;
+    earliest_block_height?: number;
+    latest_block_height?: number;
+    earliest_timestamp?: number;
+    latest_timestamp?: number;
 }
