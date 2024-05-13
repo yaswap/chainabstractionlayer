@@ -256,7 +256,7 @@ function validateAddress(_address: AddressType, network: YacoinNetwork) {
     }
 }
 
-function convertToURL(ipfsHash: string) {
+function convertToURL(ipfsHash: string, ipfsGateway: string) {
     let url = ''
     const isIPFSprefix = ipfsHash.startsWith("ipfs://")
     if (ipfsHash.includes("://") && !isIPFSprefix) {
@@ -264,7 +264,7 @@ function convertToURL(ipfsHash: string) {
         url = ipfsHash
     } else {
         // Treat it as IPFS Hash
-        url = isIPFSprefix ? ipfsHash.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/'): `https://cloudflare-ipfs.com/ipfs/${ipfsHash}`
+        url = isIPFSprefix ? ipfsHash.replace('ipfs://', ipfsGateway): `${ipfsGateway}${ipfsHash}`
     }
     return url
 }
@@ -273,27 +273,37 @@ async function getTokenMetadata(ipfsHash: string) {
     if (!ipfsHash) {
         return {};
     }
-    const ipfsHashUrl = `https://cloudflare-ipfs.com/ipfs/${ipfsHash}`
+
+    const ipfsGateways = [
+        `http://73.43.63.213:8080/ipfs/`,
+        `https://cloudflare-ipfs.com/ipfs/`
+    ]
+
     let metadata: TokenMetadata = {}
-    try {
-        const headers = await HttpClient.head(ipfsHashUrl, {}, {timeout: GET_METADATA_TIMEOUT})
-        if (headers['content-type'] === 'application/json') {
-            const { name, description, image, documents } = await HttpClient.get(ipfsHashUrl)
-            const convertedDocuments = (documents as string[])?.map((document) => {
-                return convertToURL(document);
-            })
-            metadata = {
-                name,
-                description,
-                imageURL: convertToURL(image),
-                documents: convertedDocuments
+    let headers = null
+    for (const ipfsGateway of ipfsGateways) {
+        const ipfsHashUrl = `${ipfsGateway}${ipfsHash}`
+        try {
+            headers = await HttpClient.head(ipfsHashUrl, {}, {timeout: GET_METADATA_TIMEOUT})
+            if (headers['content-type'] === 'application/json') {
+                const { name, description, image, documents } = await HttpClient.get(ipfsHashUrl)
+                const convertedDocuments = (documents as string[])?.map((document) => {
+                    return convertToURL(document, ipfsGateway);
+                })
+                metadata = {
+                    name,
+                    description,
+                    imageURL: convertToURL(image, ipfsGateway),
+                    documents: convertedDocuments
+                }
+            } else if (headers['content-type']?.startsWith('image')) {
+                metadata.imageURL = ipfsHashUrl
             }
-        } else if (headers['content-type']?.startsWith('image')) {
-            metadata.imageURL = ipfsHashUrl
+            break
+        } catch (e) {
+            console.warn(`Can't get token metadata from ipfs ${ipfsHashUrl} from gateway ${ipfsGateway}`)
+            metadata.description = getTokenMetadataErr
         }
-    } catch (e) {
-        console.warn(`Can't get token metadata from ipfs ${ipfsHashUrl}`)
-        metadata.description = getTokenMetadataErr
     }
 
     return metadata
