@@ -126,6 +126,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
     }
 
     public async sendTransaction(options: TransactionRequest) {
+        console.log("TACA ===> CAL sendTransaction, options = ", options)
         return this._sendTransaction(this.sendOptionsToOutputs([options]), options.fee as number);
     }
 
@@ -645,14 +646,17 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         }
     }
 
-    protected compileTimelockFeesTarget(address: string): OutputTarget {
+    protected compileTimelockTarget(address: string, amount: number, duration: number): OutputTarget {
         /*
             <locktime> OP_CHECKSEQUENCEVERIFY OP_DROP OP_DUP OP_HASH160 <hash_of_public_key> OP_EQUALVERIFY OP_CHECKSIG
         */
         const recipientPubKeyHash = getPubKeyHash(address, this._network);
 
+        console.log("TACA ===> CAL compileTimelockTarget, address = ", address)
+        console.log("TACA ===> CAL compileTimelockTarget, amount = ", amount)
+        console.log("TACA ===> CAL compileTimelockTarget, duration = ", duration)
         const scriptBuffer = script.compile([
-            script.number.encode(timelockFeeDuration()),
+            script.number.encode(duration),
             script.OPS.OP_CHECKSEQUENCEVERIFY,
             script.OPS.OP_DROP,
             script.OPS.OP_DUP,
@@ -662,7 +666,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             script.OPS.OP_CHECKSIG,
         ]);
         return {
-            value: timelockFeeAmountInSatoshis(),
+            value: amount,
             script: scriptBuffer,
         }
     }
@@ -689,7 +693,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                     + Output containing "New Token Script" (always the last output)
                 */
                 const ownerTokenName = tx.tokenName + '!'
-                const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+                const timelockFeesTarget = this.compileTimelockTarget(tx.to.toString(), timelockFeeAmountInSatoshis(), timelockFeeDuration());
                 const tokenOwnerTarget = this.compileTokenOwnerTarget(tx.to.toString(), ownerTokenName);
                 const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
                 targets.push(timelockFeesTarget);
@@ -710,7 +714,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                 */
                 const ownerTokenName = tx.tokenName.slice(0, subDeliLastIndex) + '!'
                 const subOwnerTokenName = tx.tokenName + '!'
-                const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+                const timelockFeesTarget = this.compileTimelockTarget(tx.to.toString(), timelockFeeAmountInSatoshis(), timelockFeeDuration());
                 const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), ownerTokenName, 1e6)
                 const tokenOwnerTarget = this.compileTokenOwnerTarget(tx.to.toString(), subOwnerTokenName);
                 const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
@@ -732,7 +736,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                 + Output containing "New Token Script" (always the last output)
             */
             const ownerTokenName = tx.tokenName.split('#')[0] + '!'
-            const timelockFeesTarget = this.compileTimelockFeesTarget(tx.to.toString());
+            const timelockFeesTarget = this.compileTimelockTarget(tx.to.toString(), timelockFeeAmountInSatoshis(), timelockFeeDuration());
             const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), ownerTokenName, 1e6)
             const newTokenTarget = this.compileNewTokenTarget(tx.to.toString(), tx.tokenName, tx.tokenAmount, tx.decimals, tx.reissuable, tx.ipfsHash);
             targets.push(timelockFeesTarget);
@@ -753,7 +757,10 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
                     const tokenTransferTarget = this.compileTokenTransferTarget(tx.to.toString(), tx.asset.name.split('|').join('/'), tx.value.toNumber())
                     targets.push(tokenTransferTarget);
                     return
-                } else { // coin output
+                } else if (tx.timelockDuration != null) {
+                    const timelockTarget = this.compileTimelockTarget(tx.to.toString(), tx.value.toNumber(), tx.timelockDuration);
+                    targets.push(timelockTarget);
+                } else { // normal coin output
                     targets.push({
                         address: tx.to.toString(),
                         value: tx.value.toNumber(),
@@ -770,6 +777,7 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             }
         });
 
+        console.log("TACA ===> CAL sendOptionsToOutputs, targets = ", targets)
         return targets;
     }
 

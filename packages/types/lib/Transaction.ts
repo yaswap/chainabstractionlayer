@@ -65,4 +65,5 @@ export type TransactionRequest = {
     value?: BigNumber;
     fee?: FeeType;
     gasLimit?: number;
+    timelockDuration?: number;
 };
