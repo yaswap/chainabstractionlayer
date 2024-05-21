@@ -275,7 +275,7 @@ async function getTokenMetadata(ipfsHash: string) {
     }
 
     const ipfsGateways = [
-        `http://73.43.63.213:8080/ipfs/`,
+        `http://73.43.63.213:3000/ipfs/`,
         `https://cloudflare-ipfs.com/ipfs/`
     ]
 
