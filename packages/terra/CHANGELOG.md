@@ -1,5 +1,20 @@
 # @yaswap/terra
 
+## 2.9.0
+
+### Minor Changes
+
+-   Integrate with self-hosted IPFS node
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.9.0
+    -   @yaswap/errors@2.9.0
+    -   @yaswap/logger@2.9.0
+    -   @yaswap/types@2.9.0
+    -   @yaswap/utils@2.9.0
+
 ## 2.8.0
 
 ### Minor Changes

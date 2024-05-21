@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 2.9.0
+
+### Minor Changes
+
+-   Integrate with self-hosted IPFS node
+
 ## 2.8.0
 
 ### Minor Changes

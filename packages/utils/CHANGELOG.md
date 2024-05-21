@@ -1,5 +1,17 @@
 # @yaswap/utils
 
+## 2.9.0
+
+### Minor Changes
+
+-   Integrate with self-hosted IPFS node
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/errors@2.9.0
+    -   @yaswap/types@2.9.0
+
 ## 2.8.0
 
 ### Minor Changes
