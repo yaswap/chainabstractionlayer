@@ -126,7 +126,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
     }
 
     public async sendTransaction(options: TransactionRequest) {
-        console.log("TACA ===> CAL sendTransaction, options = ", options)
         return this._sendTransaction(this.sendOptionsToOutputs([options]), options.fee as number);
     }
 
@@ -652,9 +651,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
         */
         const recipientPubKeyHash = getPubKeyHash(address, this._network);
 
-        console.log("TACA ===> CAL compileTimelockTarget, address = ", address)
-        console.log("TACA ===> CAL compileTimelockTarget, amount = ", amount)
-        console.log("TACA ===> CAL compileTimelockTarget, duration = ", duration)
         const scriptBuffer = script.compile([
             script.number.encode(duration),
             script.OPS.OP_CHECKSEQUENCEVERIFY,
@@ -777,7 +773,6 @@ export abstract class YacoinBaseWalletProvider<T extends YacoinBaseChainProvider
             }
         });
 
-        console.log("TACA ===> CAL sendOptionsToOutputs, targets = ", targets)
         return targets;
     }
 
