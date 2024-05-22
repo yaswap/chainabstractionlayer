@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.9.1
+
+### Patch Changes
+
+-   Reset metadata before fetching from ipfs gateway
+-   Updated dependencies
+    -   @yaswap/errors@2.9.1
+    -   @yaswap/types@2.9.1
+
 ## 2.9.0
 
 ### Minor Changes
