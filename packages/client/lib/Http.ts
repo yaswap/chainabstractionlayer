@@ -30,7 +30,7 @@ export default class HttpClient {
 
     public static async head<I = any, O = any>(url: string, params: I = {} as I, config?: AxiosRequestConfig): Promise<any> {
         const response = await axios
-            .get(url, { ...config, params })
+            .head(url, { ...config, params })
             .then((response) => response.headers)
             .catch(HttpClient.handleError);
 
