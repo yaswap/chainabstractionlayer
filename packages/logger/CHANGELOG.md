@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.9.2
+
+### Patch Changes
+
+-   Support HEAD request for @yaswap/client
+
 ## 2.9.1
 
 ### Patch Changes

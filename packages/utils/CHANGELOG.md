@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.9.2
+
+### Patch Changes
+
+-   Support HEAD request for @yaswap/client
+-   Updated dependencies
+    -   @yaswap/errors@2.9.2
+    -   @yaswap/types@2.9.2
+
 ## 2.9.1
 
 ### Patch Changes

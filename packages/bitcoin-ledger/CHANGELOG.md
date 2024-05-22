@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.9.2
+
+### Patch Changes
+
+-   Support HEAD request for @yaswap/client
+-   Updated dependencies
+    -   @yaswap/bitcoin@2.9.2
+    -   @yaswap/client@2.9.2
+    -   @yaswap/errors@2.9.2
+    -   @yaswap/hw-ledger@2.9.2
+    -   @yaswap/types@2.9.2
+    -   @yaswap/utils@2.9.2
+
 ## 2.9.1
 
 ### Patch Changes
