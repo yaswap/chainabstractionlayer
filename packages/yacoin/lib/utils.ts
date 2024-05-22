@@ -283,6 +283,7 @@ async function getTokenMetadata(ipfsHash: string) {
     let headers = null
     for (const ipfsGateway of ipfsGateways) {
         const ipfsHashUrl = `${ipfsGateway}${ipfsHash}`
+        metadata = {}
         try {
             headers = await HttpClient.head(ipfsHashUrl, {}, {timeout: GET_METADATA_TIMEOUT})
             if (headers['content-type'] === 'application/json') {
