@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.9.3
+
+### Patch Changes
+
+-   Change IPFS endpoint
+-   Updated dependencies
+    -   @yaswap/errors@2.9.3
+    -   @yaswap/types@2.9.3
+
 ## 2.9.2
 
 ### Patch Changes

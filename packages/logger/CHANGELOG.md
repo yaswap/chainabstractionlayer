@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.9.3
+
+### Patch Changes
+
+-   Change IPFS endpoint
+
 ## 2.9.2
 
 ### Patch Changes

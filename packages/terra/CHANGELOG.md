@@ -1,5 +1,17 @@
 # @yaswap/terra
 
+## 2.9.3
+
+### Patch Changes
+
+-   Change IPFS endpoint
+-   Updated dependencies
+    -   @yaswap/client@2.9.3
+    -   @yaswap/errors@2.9.3
+    -   @yaswap/logger@2.9.3
+    -   @yaswap/types@2.9.3
+    -   @yaswap/utils@2.9.3
+
 ## 2.9.2
 
 ### Patch Changes
