@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 2.9.4
+
+### Patch Changes
+
+-   Change bitcoin fee API endpoint
+
 ## 2.9.3
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @yaswap/client
 
+## 2.9.4
+
+### Patch Changes
+
+-   Change bitcoin fee API endpoint
+-   Updated dependencies
+    -   @yaswap/errors@2.9.4
+    -   @yaswap/logger@2.9.4
+    -   @yaswap/types@2.9.4
+    -   @yaswap/utils@2.9.4
+
 ## 2.9.3
 
 ### Patch Changes
