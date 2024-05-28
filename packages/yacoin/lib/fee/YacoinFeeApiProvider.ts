@@ -5,7 +5,7 @@ import { FeeDetails, FeeProvider } from '@yaswap/types';
 export class YacoinFeeApiProvider extends Fee implements FeeProvider {
     // private _httpClient: HttpClient;
 
-    constructor(endpoint = 'https://mempool.space/api/v1/fees/recommended') {
+    constructor(endpoint = 'https://cb.yacoin.org/bitcoin_fee_api/api/v1/fees/recommended') {
         super();
         // this._httpClient = new HttpClient({ baseURL: endpoint });
     }
