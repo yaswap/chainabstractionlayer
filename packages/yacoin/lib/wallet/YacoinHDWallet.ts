@@ -91,7 +91,11 @@ export class YacoinHDWalletProvider extends YacoinBaseWalletProvider implements 
         var tx = new TransactionBuilder(network);
         // Add input
         for (let i = 0; i < inputs.length; i++) {
-          tx.addInput(inputs[i].txid, inputs[i].vout)
+          const timelockinfo = inputs[i].timelockinfo
+          if (timelockinfo && timelockinfo.locktime > 0) {
+            tx.setLockTime(timelockinfo.locktime)
+          }
+          tx.addInput(inputs[i].txid, inputs[i].vout, timelockinfo?.sequence)
         }
     
         // Add output

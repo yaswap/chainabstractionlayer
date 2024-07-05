@@ -82,6 +82,10 @@ export interface UTXO {
     address: string;
     script?: string;
     derivationPath?: string;
+    timelockinfo?: {
+        locktime?: number;
+        sequence?: number;
+    };
 }
 
 export enum AddressType {
