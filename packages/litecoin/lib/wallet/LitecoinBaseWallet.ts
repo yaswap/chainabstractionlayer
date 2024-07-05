@@ -420,10 +420,10 @@ export abstract class LitecoinBaseWalletProvider<T extends LitecoinBaseChainProv
             const sweepFee = feePerByte * (inputSize + outputSize);
             const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
 
-            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, address: target.address }));
             targets.push({ id: 'main', value: amountToSend.minus(outputBalance).toNumber() });
         } else {
-            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script }));
+            targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, address: target.address }));
         }
 
         const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
