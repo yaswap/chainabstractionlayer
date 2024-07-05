@@ -11,7 +11,8 @@ export function asyncSetImmediate() {
 }
 
 export function isNodeJs() {
-  if (typeof process === "object" && typeof require === "function") {
+  // @ts-ignore: service worker process object may have browser property
+  if (typeof process === "object" && typeof require === "function" && !process.browser) {
     return true;
   }
   return false;
