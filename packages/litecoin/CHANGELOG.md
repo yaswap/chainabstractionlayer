@@ -222,7 +222,7 @@
 
 ### Patch Changes
 
-- Use bitcoinselect
+- Use @yaswap/litecoinselect
 - Updated dependencies
   - @yaswap/client@2.7.1
   - @yaswap/errors@2.7.1

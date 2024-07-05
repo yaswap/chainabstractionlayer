@@ -3644,6 +3644,7 @@ __metadata:
     "@types/memoizee": ^0.4.7
     "@yaswap/client": "workspace:*"
     "@yaswap/errors": "workspace:*"
+    "@yaswap/litecoinselect": 1.0.0
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
     bip174: ^2.0.1
@@ -3651,12 +3652,18 @@ __metadata:
     bip39: ^3.0.4
     bitcoinjs-lib: 5.2.0
     bitcoinjs-message: 2.2.0
-    bitcoinselect: 1.0.0
     coinselect: ^3.1.12
     lodash: 4.17.21
     memoizee: ^0.4.15
   languageName: unknown
   linkType: soft
+
+"@yaswap/litecoinselect@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@yaswap/litecoinselect@npm:1.0.0"
+  checksum: ad56cceca536ae4767347e94cd74a5b599b1f79133de586ba3cbbccfe4990bbc2d824f66453fd2ab0b6886ef489d39964db7563ff35771b224852fc5e8fb38c0
+  languageName: node
+  linkType: hard
 
 "@yaswap/logger@workspace:*, @yaswap/logger@workspace:packages/logger":
   version: 0.0.0-use.local
