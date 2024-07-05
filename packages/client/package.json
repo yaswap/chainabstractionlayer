@@ -19,6 +19,6 @@
         "@yaswap/logger": "workspace:*",
         "@yaswap/types": "workspace:*",
         "@yaswap/utils": "workspace:*",
-        "axios": "^0.25.0"
+        "axios": "^1.7.2"
     }
 }
