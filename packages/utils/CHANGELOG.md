@@ -1,332 +1,341 @@
 # @yaswap/utils
 
+## 2.10.1
+
+### Patch Changes
+
+- Pump to version v2.10.1
+- Updated dependencies
+  - @yaswap/errors@2.10.1
+  - @yaswap/types@2.10.1
+
 ## 2.10.0
 
 ### Minor Changes
 
--   Use latest axios which support fetch adapter
+- Use latest axios which support fetch adapter
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.10.0
-    -   @yaswap/types@2.10.0
+- Updated dependencies
+  - @yaswap/errors@2.10.0
+  - @yaswap/types@2.10.0
 
 ## 2.9.4
 
 ### Patch Changes
 
--   Change bitcoin fee API endpoint
--   Updated dependencies
-    -   @yaswap/errors@2.9.4
-    -   @yaswap/types@2.9.4
+- Change bitcoin fee API endpoint
+- Updated dependencies
+  - @yaswap/errors@2.9.4
+  - @yaswap/types@2.9.4
 
 ## 2.9.3
 
 ### Patch Changes
 
--   Change IPFS endpoint
--   Updated dependencies
-    -   @yaswap/errors@2.9.3
-    -   @yaswap/types@2.9.3
+- Change IPFS endpoint
+- Updated dependencies
+  - @yaswap/errors@2.9.3
+  - @yaswap/types@2.9.3
 
 ## 2.9.2
 
 ### Patch Changes
 
--   Support HEAD request for @yaswap/client
--   Updated dependencies
-    -   @yaswap/errors@2.9.2
-    -   @yaswap/types@2.9.2
+- Support HEAD request for @yaswap/client
+- Updated dependencies
+  - @yaswap/errors@2.9.2
+  - @yaswap/types@2.9.2
 
 ## 2.9.1
 
 ### Patch Changes
 
--   Reset metadata before fetching from ipfs gateway
--   Updated dependencies
-    -   @yaswap/errors@2.9.1
-    -   @yaswap/types@2.9.1
+- Reset metadata before fetching from ipfs gateway
+- Updated dependencies
+  - @yaswap/errors@2.9.1
+  - @yaswap/types@2.9.1
 
 ## 2.9.0
 
 ### Minor Changes
 
--   Integrate with self-hosted IPFS node
+- Integrate with self-hosted IPFS node
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.9.0
-    -   @yaswap/types@2.9.0
+- Updated dependencies
+  - @yaswap/errors@2.9.0
+  - @yaswap/types@2.9.0
 
 ## 2.8.0
 
 ### Minor Changes
 
--   Add new return info to chain.getTokenBalance and nft.fetch
+- Add new return info to chain.getTokenBalance and nft.fetch
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.8.0
-    -   @yaswap/types@2.8.0
+- Updated dependencies
+  - @yaswap/errors@2.8.0
+  - @yaswap/types@2.8.0
 
 ## 2.7.7
 
 ### Patch Changes
 
--   Remove debug log
--   Updated dependencies
-    -   @yaswap/errors@2.7.7
-    -   @yaswap/types@2.7.7
+- Remove debug log
+- Updated dependencies
+  - @yaswap/errors@2.7.7
+  - @yaswap/types@2.7.7
 
 ## 2.7.6
 
 ### Patch Changes
 
--   Fetch multiple YA-NFT info at one time
--   Updated dependencies
-    -   @yaswap/errors@2.7.6
-    -   @yaswap/types@2.7.6
+- Fetch multiple YA-NFT info at one time
+- Updated dependencies
+  - @yaswap/errors@2.7.6
+  - @yaswap/types@2.7.6
 
 ## 2.7.5
 
 ### Patch Changes
 
--   Throw fee in InsufficientBalanceError for Yacoin
--   Updated dependencies
-    -   @yaswap/errors@2.7.5
-    -   @yaswap/types@2.7.5
+- Throw fee in InsufficientBalanceError for Yacoin
+- Updated dependencies
+  - @yaswap/errors@2.7.5
+  - @yaswap/types@2.7.5
 
 ## 2.7.4
 
 ### Patch Changes
 
--   Correct formular to calculate yacoin transaction bytes
--   Updated dependencies
-    -   @yaswap/errors@2.7.4
-    -   @yaswap/types@2.7.4
+- Correct formular to calculate yacoin transaction bytes
+- Updated dependencies
+  - @yaswap/errors@2.7.4
+  - @yaswap/types@2.7.4
 
 ## 2.7.3
 
 ### Patch Changes
 
--   Change ipfs endpoint and timeout for getting token metadata
--   Updated dependencies
-    -   @yaswap/errors@2.7.3
-    -   @yaswap/types@2.7.3
+- Change ipfs endpoint and timeout for getting token metadata
+- Updated dependencies
+  - @yaswap/errors@2.7.3
+  - @yaswap/types@2.7.3
 
 ## 2.7.2
 
 ### Patch Changes
 
--   Init YacoinSingleWallet
--   Updated dependencies
-    -   @yaswap/errors@2.7.2
-    -   @yaswap/types@2.7.2
+- Init YacoinSingleWallet
+- Updated dependencies
+  - @yaswap/errors@2.7.2
+  - @yaswap/types@2.7.2
 
 ## 2.7.1
 
 ### Patch Changes
 
--   Use bitcoinselect
--   Updated dependencies
-    -   @yaswap/errors@2.7.1
-    -   @yaswap/types@2.7.1
+- Use bitcoinselect
+- Updated dependencies
+  - @yaswap/errors@2.7.1
+  - @yaswap/types@2.7.1
 
 ## 2.7.0
 
 ### Minor Changes
 
--   Finalize single wallet version
+- Finalize single wallet version
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.7.0
-    -   @yaswap/types@2.7.0
+- Updated dependencies
+  - @yaswap/errors@2.7.0
+  - @yaswap/types@2.7.0
 
 ## 2.6.6
 
 ### Patch Changes
 
--   Remove debug log
--   Updated dependencies
-    -   @yaswap/errors@2.6.6
-    -   @yaswap/types@2.6.6
+- Remove debug log
+- Updated dependencies
+  - @yaswap/errors@2.6.6
+  - @yaswap/types@2.6.6
 
 ## 2.6.5
 
 ### Patch Changes
 
--   Use electrumClient to get transaction hex
--   Updated dependencies
-    -   @yaswap/errors@2.6.5
-    -   @yaswap/types@2.6.5
+- Use electrumClient to get transaction hex
+- Updated dependencies
+  - @yaswap/errors@2.6.5
+  - @yaswap/types@2.6.5
 
 ## 2.6.4
 
 ### Patch Changes
 
--   Fix issue relating to integrate electrumClient
--   Updated dependencies
-    -   @yaswap/errors@2.6.4
-    -   @yaswap/types@2.6.4
+- Fix issue relating to integrate electrumClient
+- Updated dependencies
+  - @yaswap/errors@2.6.4
+  - @yaswap/types@2.6.4
 
 ## 2.6.3
 
 ### Patch Changes
 
--   Replace blockCypher with electrumClient
--   Updated dependencies
-    -   @yaswap/errors@2.6.3
-    -   @yaswap/types@2.6.3
+- Replace blockCypher with electrumClient
+- Updated dependencies
+  - @yaswap/errors@2.6.3
+  - @yaswap/types@2.6.3
 
 ## 2.6.2
 
 ### Patch Changes
 
--   Improve error handling
--   Updated dependencies
-    -   @yaswap/errors@2.6.2
-    -   @yaswap/types@2.6.2
+- Improve error handling
+- Updated dependencies
+  - @yaswap/errors@2.6.2
+  - @yaswap/types@2.6.2
 
 ## 2.6.1
 
 ### Patch Changes
 
--   Fix issue which failed to get block info
--   Updated dependencies
-    -   @yaswap/errors@2.6.1
-    -   @yaswap/types@2.6.1
+- Fix issue which failed to get block info
+- Updated dependencies
+  - @yaswap/errors@2.6.1
+  - @yaswap/types@2.6.1
 
 ## 2.6.0
 
 ### Minor Changes
 
--   Support dogecoin chain
+- Support dogecoin chain
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.6.0
-    -   @yaswap/types@2.6.0
+- Updated dependencies
+  - @yaswap/errors@2.6.0
+  - @yaswap/types@2.6.0
 
 ## 2.5.3
 
 ### Patch Changes
 
--   Support documents field in token metadata
--   Updated dependencies
-    -   @yaswap/errors@2.5.3
-    -   @yaswap/types@2.5.3
+- Support documents field in token metadata
+- Updated dependencies
+  - @yaswap/errors@2.5.3
+  - @yaswap/types@2.5.3
 
 ## 2.5.2
 
 ### Patch Changes
 
--   Add missing logic to find claim and refund transaction for EVM chain
--   Updated dependencies
-    -   @yaswap/errors@2.5.2
-    -   @yaswap/types@2.5.2
+- Add missing logic to find claim and refund transaction for EVM chain
+- Updated dependencies
+  - @yaswap/errors@2.5.2
+  - @yaswap/types@2.5.2
 
 ## 2.5.1
 
 ### Patch Changes
 
--   Fix issue which fails to initiate swap transaction for YAC
--   Updated dependencies
-    -   @yaswap/errors@2.5.1
-    -   @yaswap/types@2.5.1
+- Fix issue which fails to initiate swap transaction for YAC
+- Updated dependencies
+  - @yaswap/errors@2.5.1
+  - @yaswap/types@2.5.1
 
 ## 2.5.0
 
 ### Minor Changes
 
--   Support litecoin chain
+- Support litecoin chain
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.5.0
-    -   @yaswap/types@2.5.0
+- Updated dependencies
+  - @yaswap/errors@2.5.0
+  - @yaswap/types@2.5.0
 
 ## 2.4.0
 
 ### Minor Changes
 
--   Add API to getBaseURL
+- Add API to getBaseURL
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.4.0
-    -   @yaswap/types@2.4.0
+- Updated dependencies
+  - @yaswap/errors@2.4.0
+  - @yaswap/types@2.4.0
 
 ## 2.3.3
 
 ### Patch Changes
 
--   Change timelock values to production
--   Updated dependencies
-    -   @yaswap/errors@2.3.3
-    -   @yaswap/types@2.3.3
+- Change timelock values to production
+- Updated dependencies
+  - @yaswap/errors@2.3.3
+  - @yaswap/types@2.3.3
 
 ## 2.3.2
 
 ### Patch Changes
 
--   Fix token issues
--   Updated dependencies
-    -   @yaswap/errors@2.3.2
-    -   @yaswap/types@2.3.2
+- Fix token issues
+- Updated dependencies
+  - @yaswap/errors@2.3.2
+  - @yaswap/types@2.3.2
 
 ## 2.3.1
 
 ### Patch Changes
 
--   Change timelock fee duration and amount
--   Updated dependencies
-    -   @yaswap/errors@2.3.1
-    -   @yaswap/types@2.3.1
+- Change timelock fee duration and amount
+- Updated dependencies
+  - @yaswap/errors@2.3.1
+  - @yaswap/types@2.3.1
 
 ## 2.3.0
 
 ### Minor Changes
 
--   Support create YA-Token/YA-NFT
+- Support create YA-Token/YA-NFT
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.3.0
-    -   @yaswap/types@2.3.0
+- Updated dependencies
+  - @yaswap/errors@2.3.0
+  - @yaswap/types@2.3.0
 
 ## 2.2.0
 
 ### Minor Changes
 
--   Integrate YA-token/YA-NFT
+- Integrate YA-token/YA-NFT
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.2.0
-    -   @yaswap/types@2.2.0
+- Updated dependencies
+  - @yaswap/errors@2.2.0
+  - @yaswap/types@2.2.0
 
 ## 2.1.0
 
 ### Minor Changes
 
--   Support batch request for Yacoin
+- Support batch request for Yacoin
 
 ### Patch Changes
 
--   Updated dependencies
-    -   @yaswap/errors@2.1.0
-    -   @yaswap/types@2.1.0
+- Updated dependencies
+  - @yaswap/errors@2.1.0
+  - @yaswap/types@2.1.0
 
 ## 2.0.0
 
--   First version
+- First version
