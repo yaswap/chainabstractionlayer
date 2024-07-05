@@ -1,5 +1,16 @@
 # @yaswap/litecoin
 
+## 2.10.2
+
+### Patch Changes
+
+- Pump to version v2.10.2
+- Updated dependencies
+  - @yaswap/client@2.10.2
+  - @yaswap/errors@2.10.2
+  - @yaswap/types@2.10.2
+  - @yaswap/utils@2.10.2
+
 ## 2.10.1
 
 ### Patch Changes
