@@ -28,7 +28,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
         try {
             data = await this._httpClient.nodeGet(`/block/${blockHash}`);
         } catch (e) {
-            if (e.name === 'NodeError' && e.message.includes('Block not found')) {
+            if ((e.name === 'NodeError' || e.name === 'AxiosError') && e.message.includes('Block not found')) {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { name, message, ...attrs } = e;
                 throw new BlockNotFoundError(`Block not found: ${blockHash}`, attrs);
@@ -114,7 +114,7 @@ export class BitcoinEsploraApiProvider extends Chain<BitcoinEsploraBaseProvider>
         try {
             data = await this._httpClient.nodeGet(`/tx/${transactionHash}`);
         } catch (e) {
-            if (e.name === 'NodeError' && e.message.includes('Transaction not found')) {
+            if ((e.name === 'NodeError' || e.name === 'AxiosError') && e.message.includes('Transaction not found')) {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { name, message, ...attrs } = e;
                 throw new TxNotFoundError(`Transaction not found: ${transactionHash}`, attrs);
