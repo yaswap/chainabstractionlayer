@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 3.0.1
+
+### Patch Changes
+
+- Handle AxiosError in case the transaction/block not found
+
 ## 3.0.0
 
 ### Major Changes

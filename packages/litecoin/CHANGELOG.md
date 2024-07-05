@@ -1,5 +1,16 @@
 # @yaswap/litecoin
 
+## 3.0.1
+
+### Patch Changes
+
+- Handle AxiosError in case the transaction/block not found
+- Updated dependencies
+  - @yaswap/client@3.0.1
+  - @yaswap/errors@3.0.1
+  - @yaswap/types@3.0.1
+  - @yaswap/utils@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
