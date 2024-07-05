@@ -1,5 +1,4 @@
 import 'setimmediate';
-import browser from "webextension-polyfill";
 export * from './crypto';
 export * from './hex';
 export * as Math from './math';
@@ -13,6 +12,16 @@ export function asyncSetImmediate() {
 export function isNodeJs() {
   // @ts-ignore: service worker process object may have browser property
   if (typeof process === "object" && typeof require === "function" && !process.browser) {
+    console.log("TACA ===> isNodeJs");
+    return true;
+  }
+  return false;
+}
+
+export function canAccessExtensionApi() {
+  // @ts-ignore: only web extension can access chrome APIs
+  if (typeof chrome == "object" && chrome && chrome.runtime) {
+    console.log("TACA ===> canAccessExtensionApi");
     return true;
   }
   return false;
@@ -42,8 +51,9 @@ export const retry = async <T>(method: () => Promise<T>, startWaitTime = 500, wa
 export async function sleep(ms: number) {
   await new Promise((resolve) => {
     let sleepTime = ms;
-    if (!isNodeJs()) {
-      browser.runtime.getPlatformInfo();
+    if (!isNodeJs() && canAccessExtensionApi()) {
+      // @ts-ignore: support for service worker in web extensions
+      chrome.runtime.getPlatformInfo();
       if (sleepTime >= 30000) {
         sleepTime = 25000;
       }
