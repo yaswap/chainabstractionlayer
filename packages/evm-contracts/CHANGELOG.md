@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 2.10.3
+
+### Patch Changes
+
+- Pump to version v2.10.3
+
 ## 2.10.2
 
 ### Patch Changes

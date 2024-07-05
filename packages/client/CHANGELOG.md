@@ -1,5 +1,16 @@
 # @yaswap/client
 
+## 2.10.3
+
+### Patch Changes
+
+- Pump to version v2.10.3
+- Updated dependencies
+  - @yaswap/errors@2.10.3
+  - @yaswap/logger@2.10.3
+  - @yaswap/types@2.10.3
+  - @yaswap/utils@2.10.3
+
 ## 2.10.2
 
 ### Patch Changes
