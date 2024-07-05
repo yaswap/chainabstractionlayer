@@ -1,5 +1,17 @@
 # @yaswap/solana
 
+## 2.10.7
+
+### Patch Changes
+
+- Pump to version v2.10.7
+- Updated dependencies
+  - @yaswap/client@2.10.7
+  - @yaswap/errors@2.10.7
+  - @yaswap/logger@2.10.7
+  - @yaswap/types@2.10.7
+  - @yaswap/utils@2.10.7
+
 ## 2.10.6
 
 ### Patch Changes
