@@ -1,5 +1,16 @@
 # @yaswap/hw-ledger
 
+## 2.10.6
+
+### Patch Changes
+
+- Pump to version v2.10.6
+- Updated dependencies
+  - @yaswap/errors@2.10.6
+  - @yaswap/logger@2.10.6
+  - @yaswap/types@2.10.6
+  - @yaswap/utils@2.10.6
+
 ## 2.10.5
 
 ### Patch Changes

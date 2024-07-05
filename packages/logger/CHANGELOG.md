@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 2.10.6
+
+### Patch Changes
+
+- Pump to version v2.10.6
+
 ## 2.10.5
 
 ### Patch Changes
