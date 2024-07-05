@@ -1,5 +1,18 @@
 # @yaswap/evm-ledger
 
+## 2.10.5
+
+### Patch Changes
+
+- Pump to version v2.10.5
+- Updated dependencies
+  - @yaswap/client@2.10.5
+  - @yaswap/errors@2.10.5
+  - @yaswap/evm@2.10.5
+  - @yaswap/hw-ledger@2.10.5
+  - @yaswap/types@2.10.5
+  - @yaswap/utils@2.10.5
+
 ## 2.10.4
 
 ### Patch Changes
