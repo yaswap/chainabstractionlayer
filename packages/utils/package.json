@@ -21,9 +21,11 @@
         "bech32": "^2.0.0",
         "bs58": "5.0.0",
         "crypto-hashing": "^1.0.0",
-        "setimmediate": "^1.0.5"
+        "setimmediate": "^1.0.5",
+        "webextension-polyfill": "^0.12.0"
     },
     "devDependencies": {
-        "@types/setimmediate": "^1.0.2"
+        "@types/setimmediate": "^1.0.2",
+        "@types/webextension-polyfill": "^0.10.7"
     }
 }

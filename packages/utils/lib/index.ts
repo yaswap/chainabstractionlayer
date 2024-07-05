@@ -1,4 +1,5 @@
 import 'setimmediate';
+import browser from "webextension-polyfill";
 export * from './crypto';
 export * from './hex';
 export * as Math from './math';
@@ -6,7 +7,14 @@ export * from './string';
 export * from './swap';
 
 export function asyncSetImmediate() {
-    return new Promise((resolve) => setImmediate(resolve));
+  return new Promise((resolve) => setImmediate(resolve));
+}
+
+export function isNodeJs() {
+  if (typeof process === "object" && typeof require === "function") {
+    return true;
+  }
+  return false;
 }
 
 export const retry = async <T>(method: () => Promise<T>, startWaitTime = 500, waitBackoff = 2, retryNumber = 5) => {
@@ -31,5 +39,14 @@ export const retry = async <T>(method: () => Promise<T>, startWaitTime = 500, wa
 };
 
 export async function sleep(ms: number) {
-    await new Promise((resolve) => setTimeout(resolve, ms));
+  await new Promise((resolve) => {
+    let sleepTime = ms;
+    if (!isNodeJs()) {
+      browser.runtime.getPlatformInfo();
+      if (sleepTime >= 30000) {
+        sleepTime = 25000;
+      }
+    }
+    setTimeout(resolve, sleepTime);
+  });
 }
