@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 2.10.4
+
+### Patch Changes
+
+- Pump to version v2.10.4
+- Updated dependencies
+  - @yaswap/bitcoin@2.10.4
+  - @yaswap/client@2.10.4
+  - @yaswap/errors@2.10.4
+  - @yaswap/hw-ledger@2.10.4
+  - @yaswap/types@2.10.4
+  - @yaswap/utils@2.10.4
+
 ## 2.10.3
 
 ### Patch Changes

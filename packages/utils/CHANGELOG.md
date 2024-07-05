@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 2.10.4
+
+### Patch Changes
+
+- Pump to version v2.10.4
+- Updated dependencies
+  - @yaswap/errors@2.10.4
+  - @yaswap/types@2.10.4
+
 ## 2.10.3
 
 ### Patch Changes

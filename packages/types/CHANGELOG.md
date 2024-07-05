@@ -1,5 +1,11 @@
 # @yaswap/types
 
+## 2.10.4
+
+### Patch Changes
+
+- Pump to version v2.10.4
+
 ## 2.10.3
 
 ### Patch Changes
