@@ -12,7 +12,6 @@ export function asyncSetImmediate() {
 export function isNodeJs() {
   // @ts-ignore: service worker process object may have browser property
   if (typeof process === "object" && typeof require === "function" && !process.browser) {
-    console.log("TACA ===> isNodeJs");
     return true;
   }
   return false;
@@ -20,7 +19,6 @@ export function isNodeJs() {
 
 export function canAccessExtensionApi() {
   if (typeof chrome == "object" && chrome && chrome.runtime) {
-    console.log("TACA ===> canAccessExtensionApi");
     return true;
   }
   return false;
