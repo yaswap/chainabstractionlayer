@@ -1,5 +1,11 @@
 # @yaswap/logger
 
+## 3.0.0
+
+### Major Changes
+
+- Support manifest v3
+
 ## 2.10.7
 
 ### Patch Changes

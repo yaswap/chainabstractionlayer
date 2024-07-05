@@ -1,5 +1,17 @@
 # @yaswap/utils
 
+## 3.0.0
+
+### Major Changes
+
+- Support manifest v3
+
+### Patch Changes
+
+- Updated dependencies
+  - @yaswap/errors@3.0.0
+  - @yaswap/types@3.0.0
+
 ## 2.10.7
 
 ### Patch Changes

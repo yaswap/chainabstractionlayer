@@ -1,5 +1,21 @@
 # @yaswap/evm-ledger
 
+## 3.0.0
+
+### Major Changes
+
+- Support manifest v3
+
+### Patch Changes
+
+- Updated dependencies
+  - @yaswap/client@3.0.0
+  - @yaswap/errors@3.0.0
+  - @yaswap/evm@3.0.0
+  - @yaswap/hw-ledger@3.0.0
+  - @yaswap/types@3.0.0
+  - @yaswap/utils@3.0.0
+
 ## 2.10.7
 
 ### Patch Changes
