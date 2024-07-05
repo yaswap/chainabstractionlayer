@@ -19,7 +19,6 @@ export function isNodeJs() {
 }
 
 export function canAccessExtensionApi() {
-  // @ts-ignore: only web extension can access chrome APIs
   if (typeof chrome == "object" && chrome && chrome.runtime) {
     console.log("TACA ===> canAccessExtensionApi");
     return true;
@@ -52,7 +51,6 @@ export async function sleep(ms: number) {
   await new Promise((resolve) => {
     let sleepTime = ms;
     if (!isNodeJs() && canAccessExtensionApi()) {
-      // @ts-ignore: support for service worker in web extensions
       chrome.runtime.getPlatformInfo();
       if (sleepTime >= 30000) {
         sleepTime = 25000;
