@@ -1,5 +1,20 @@
 # @yaswap/evm
 
+## 2.10.0
+
+### Minor Changes
+
+-   Use latest axios which support fetch adapter
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @yaswap/client@2.10.0
+    -   @yaswap/errors@2.10.0
+    -   @yaswap/logger@2.10.0
+    -   @yaswap/types@2.10.0
+    -   @yaswap/utils@2.10.0
+
 ## 2.9.4
 
 ### Patch Changes

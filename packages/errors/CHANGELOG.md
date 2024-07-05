@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 2.10.0
+
+### Minor Changes
+
+-   Use latest axios which support fetch adapter
+
 ## 2.9.4
 
 ### Patch Changes
