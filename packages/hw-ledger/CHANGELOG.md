@@ -1,5 +1,19 @@
 # @yaswap/hw-ledger
 
+## 3.1.0
+
+### Minor Changes
+
+- Integrate new dogecoin explorer
+
+### Patch Changes
+
+- Updated dependencies
+  - @yaswap/errors@3.1.0
+  - @yaswap/logger@3.1.0
+  - @yaswap/types@3.1.0
+  - @yaswap/utils@3.1.0
+
 ## 3.0.1
 
 ### Patch Changes
