@@ -3492,7 +3492,6 @@ __metadata:
     "@yaswap/errors": "workspace:*"
     "@yaswap/types": "workspace:*"
     "@yaswap/utils": "workspace:*"
-    "@yaswap/ws-electrumx-client": ^1.0.0
     bip174: ^2.0.1
     bip32: 2.0.6
     bip39: ^3.0.4
@@ -3743,16 +3742,6 @@ __metadata:
     setimmediate: ^1.0.5
   languageName: unknown
   linkType: soft
-
-"@yaswap/ws-electrumx-client@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@yaswap/ws-electrumx-client@npm:1.0.0"
-  dependencies:
-    isomorphic-ws: ^5.0.0
-    ws: ^8.12.1
-  checksum: b56184c59e8c1a00ce1f503927d05f9af095a13bde611680a1edecee486d41074216598dc1670cf08166ff66747fa7fa2d8ebeaaf2fc6b623e1003d50537ca3c
-  languageName: node
-  linkType: hard
 
 "@yaswap/yacoin@workspace:packages/yacoin":
   version: 0.0.0-use.local
@@ -11853,15 +11842,6 @@ __metadata:
   peerDependencies:
     ws: "*"
   checksum: d7190eadefdc28bdb93d67b5f0c603385aaf87724fa2974abb382ac1ec9756ed2cfb27065cbe76122879c2d452e2982bc4314317f3d6c737ddda6c047328771a
-  languageName: node
-  linkType: hard
-
-"isomorphic-ws@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "isomorphic-ws@npm:5.0.0"
-  peerDependencies:
-    ws: "*"
-  checksum: e20eb2aee09ba96247465fda40c6d22c1153394c0144fa34fe6609f341af4c8c564f60ea3ba762335a7a9c306809349f9b863c8beedf2beea09b299834ad5398
   languageName: node
   linkType: hard
 
@@ -20273,21 +20253,6 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: c3c100a181b731f40b7f2fddf004aa023f79d64f489706a28bc23ff88e87f6a64b3c6651fbec3a84a53960b75159574d7a7385709847a62ddb7ad6af76f49138
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.12.1":
-  version: 8.14.2
-  resolution: "ws@npm:8.14.2"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 3ca0dad26e8cc6515ff392b622a1467430814c463b3368b0258e33696b1d4bed7510bc7030f7b72838b9fdeb8dbd8839cbf808367d6aae2e1d668ce741d4308b
   languageName: node
   linkType: hard
 

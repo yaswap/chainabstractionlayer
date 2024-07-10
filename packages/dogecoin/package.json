@@ -24,7 +24,6 @@
         "@yaswap/errors": "workspace:*",
         "@yaswap/types": "workspace:*",
         "@yaswap/utils": "workspace:*",
-        "@yaswap/ws-electrumx-client": "^1.0.0",
         "bip174": "^2.0.1",
         "bip32": "2.0.6",
         "bip39": "^3.0.4",
