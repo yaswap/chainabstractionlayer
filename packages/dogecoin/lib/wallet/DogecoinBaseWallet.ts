@@ -157,8 +157,12 @@ export abstract class DogecoinBaseWalletProvider<T extends DogecoinBaseChainProv
         const fees = await this.withCachedUtxos(async () => {
             const fees: { [index: number]: BigNumber } = {};
             for (const tx of transactions) {
-                const fee = await this.getTotalFee(tx, max);
-                fees[tx.fee as number] = new BigNumber(fee);
+                try {
+                    const fee = await this.getTotalFee(tx, max);
+                    fees[tx.fee as number] = new BigNumber(fee);
+                } catch (err) {
+                    fees[tx.fee as number] = null;
+                }
             }
             return fees;
         });
