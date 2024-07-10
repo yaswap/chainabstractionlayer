@@ -5,14 +5,18 @@ import { UTXO } from '../../types';
 import { decodeRawTransaction, normalizeTransactionObject } from '../../utils';
 import { DogecoinBaseChainProvider } from '../DogecoinBaseChainProvider';
 import * as EsploraTypes from './types';
+import { ElectrumWS } from '@yaswap/ws-electrumx-client';
 
 export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
+    public electrumEndpoint: string;
+    public electrumClient: ElectrumWS;
     public httpClient: HttpClient;
 
     protected _options: EsploraTypes.EsploraApiProviderOptions;
 
     constructor(options: EsploraTypes.EsploraApiProviderOptions) {
         super();
+        this.electrumEndpoint = 'wss://electrum1.cipig.net:30060'
         this.httpClient = new HttpClient({ baseURL: options.url });
         this._options = {
             numberOfBlockConfirmation: 1,
@@ -22,6 +26,19 @@ export class DogecoinEsploraBaseProvider extends DogecoinBaseChainProvider {
             defaultFeePerByte: 2000, 
             ...options,
         };
+    }
+
+    public async checkAndReconnectElectrumClient() {
+        if (!this.electrumClient || !this.electrumClient.isConnected()) {
+            console.warn('checkAndReconnectElectrumClient, Reconnecting electrum X')
+            this.electrumClient = new ElectrumWS(this.electrumEndpoint, {reconnect: false, verbose: false});
+            const result = await this.electrumClient.request(
+                'server.version',
+                //@ts-ignore
+                ["electrum-client-js",["1.2","2.0"]],
+            );
+            console.warn('Reconnecting result = ', result)
+        }
     }
 
     public async formatTransaction(tx: EsploraTypes.Transaction, currentHeight: number) {

@@ -98,7 +98,26 @@ export class DogecoinEsploraApiProvider extends Chain<DogecoinEsploraBaseProvide
     }
 
     public async sendRawTransaction(rawTransaction: string): Promise<string> {
-        return this._httpClient.nodePost('/tx', rawTransaction);
+        let tx: string;
+        try {
+            tx = await this._httpClient.nodePost('/tx', rawTransaction);
+        } catch (error) {
+            // In case the cbdigi server has problem, we use electrumx servers to send transaction
+            console.warn('DogecoinEsploraApiProvider.ts, broadcast transaction error = ', error)
+            // Refer  https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-methods.html#blockchain.transaction.broadcast
+            await this.provider.checkAndReconnectElectrumClient()
+            try {
+                let result = await this.provider.electrumClient.request(
+                    'blockchain.transaction.broadcast',
+                    rawTransaction,
+                );
+                return result as string
+            } catch (error) {
+                console.warn('DogecoinEsploraApiProvider.ts, broadcast transaction error = ', error)
+                throw new TxNotFoundError(`Failed to broadcast transaction ${rawTransaction} with error = ${error}`);
+            }
+        }
+        return tx
     }
 
     public async sendRpcRequest(_method: string, _params: any[]): Promise<any> {
