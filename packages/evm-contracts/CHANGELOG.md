@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 3.2.0
+
+### Minor Changes
+
+- Add DogecoinSingleWallet
+
 ## 3.1.0
 
 ### Minor Changes

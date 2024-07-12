@@ -1,5 +1,21 @@
 # @yaswap/bitcoin-ledger
 
+## 3.2.0
+
+### Minor Changes
+
+- Add DogecoinSingleWallet
+
+### Patch Changes
+
+- Updated dependencies
+  - @yaswap/bitcoin@3.2.0
+  - @yaswap/client@3.2.0
+  - @yaswap/errors@3.2.0
+  - @yaswap/hw-ledger@3.2.0
+  - @yaswap/types@3.2.0
+  - @yaswap/utils@3.2.0
+
 ## 3.1.0
 
 ### Minor Changes
