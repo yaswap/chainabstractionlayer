@@ -1,5 +1,5 @@
 import { Network } from '@yaswap/types';
-import { Network as DogecoinJsLibNetwork } from 'bitcoinjs-lib';
+import { ECPairInterface, Network as DogecoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as DogecoinEsploraTypes from './chain/esplora/types';
 export * from './swap/types';
@@ -10,6 +10,13 @@ export interface DogecoinNodeWalletOptions {
     addressType?: AddressType;
     network?: DogecoinNetwork;
 }
+
+export interface DogecoinSingleWalletOptions extends DogecoinNodeWalletOptions {
+    wif?: string;
+    publicKey?: Buffer;
+    ecpair?: ECPairInterface;
+}
+
 export interface DogecoinWalletProviderOptions extends DogecoinNodeWalletOptions {
     baseDerivationPath: string;
 }

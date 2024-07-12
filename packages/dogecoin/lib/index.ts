@@ -8,3 +8,4 @@ export * as DogecoinTypes from './types';
 export * as DogecoinUtils from './utils';
 export { DogecoinBaseWalletProvider } from './wallet/DogecoinBaseWallet';
 export { DogecoinHDWalletProvider } from './wallet/DogecoinHDWallet';
+export { DogecoinSingleWallet } from './wallet/DogecoinSingleWallet';
