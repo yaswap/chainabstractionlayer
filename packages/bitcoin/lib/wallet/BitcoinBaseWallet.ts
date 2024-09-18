@@ -7,7 +7,6 @@ import { payments, script } from 'bitcoinjs-lib';
 import memoize from 'memoizee';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
 import {
-    AddressTxCounts,
     AddressType as BtcAddressType,
     BitcoinNetwork,
     BitcoinWalletProviderOptions,
@@ -20,8 +19,6 @@ import {
 } from '../types';
 import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
 
-const ADDRESS_GAP = 1
-const NUMBER_ADDRESS_PER_CALL = ADDRESS_GAP
 const NUMBER_ADDRESS_LIMIT = 1
 
 export enum AddressSearchType {
@@ -77,14 +74,14 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         return this._derivationCache;
     }
 
-    public async getUnusedAddress(change = false, numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
+    public async getUnusedAddress(change = false) {
         const addressType = change ? AddressSearchType.CHANGE : AddressSearchType.EXTERNAL;
         const key = change ? 'change' : 'external';
-        return this._getUsedUnusedAddresses(numAddressPerCall, addressType).then(({ unusedAddress }) => unusedAddress[key]);
+        return this._getUsedUnusedAddresses(addressType).then(({ unusedAddress }) => unusedAddress[key]);
     }
 
-    public async getUsedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL) {
-        return this._getUsedUnusedAddresses(numAddressPerCall, AddressSearchType.EXTERNAL_OR_CHANGE).then(
+    public async getUsedAddresses() {
+        return this._getUsedUnusedAddresses(AddressSearchType.EXTERNAL_OR_CHANGE).then(
             ({ usedAddresses }) => usedAddresses
         );
     }
@@ -222,99 +219,28 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         return addressObject;
     }
 
-    protected async _getUsedUnusedAddresses(numAddressPerCall = NUMBER_ADDRESS_PER_CALL, addressType: AddressSearchType) {
-        const usedAddresses = []
-        const addressCountMap = { change: 0, external: 0 } // track number of unused addresses
-        const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null } // store first unused address
-        const numAddressAlreadyGet = { change: 0, external: 0 }
-  
-        let addrList: Address[]
-        let uniqueAddresses: string[] = []
-        let addressIndex = 0
-        let changeAddresses: Address[] = []
-        let externalAddresses: Address[] = []
-  
-        /* eslint-disable no-unmodified-loop-condition */
-        while (
-          (addressType === AddressSearchType.EXTERNAL_OR_CHANGE &&
-            ((addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT) ||
-              (addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT)) ||
-          (addressType === AddressSearchType.EXTERNAL &&
-            addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT) ||
-          (addressType === AddressSearchType.CHANGE &&
-            addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT))
-        ) {
-          /* eslint-enable no-unmodified-loop-condition */
-          addrList = []
-  
-          if (
-            (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.CHANGE) &&
-            addressCountMap.change < ADDRESS_GAP && numAddressAlreadyGet['change'] < NUMBER_ADDRESS_LIMIT
-          ) {
-            // Scanning for change addr
-            const addresses = await this.getAddresses(addressIndex, numAddressPerCall, true)
-            changeAddresses = changeAddresses.concat(addresses)
-            addrList = addrList.concat(addresses)
-            numAddressAlreadyGet['change'] += numAddressPerCall
-          }
-  
-          if (
-            (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.EXTERNAL) &&
-            addressCountMap.external < ADDRESS_GAP && numAddressAlreadyGet['external'] < NUMBER_ADDRESS_LIMIT
-          ) {
-            // Scanning for non change addr
-            const addresses = await this.getAddresses(addressIndex, numAddressPerCall, false)
-            externalAddresses = externalAddresses.concat(addresses)
-            addrList = addrList.concat(addresses)
-            numAddressAlreadyGet['external'] += numAddressPerCall
-          }
-  
-          const transactionCounts: AddressTxCounts = await this.chainProvider.getProvider().getAddressTransactionCounts(addrList);
-  
-          for (const address of addrList) {
-            // Remove duplicate addresses
-            if (!uniqueAddresses.includes(address.address)) {
-                uniqueAddresses.push(address.address);
-            } else {
-                continue
-            }
-  
-            const isUsed = transactionCounts[address.toString()] > 0;
-            const isChangeAddress = changeAddresses.find((a) => address.toString() === a.toString());
-            const key = isChangeAddress ? 'change' : 'external'
-  
-            if (isUsed) {
-              usedAddresses.push(address)
-              addressCountMap[key] = 0
-              unusedAddressMap[key] = null
-            } else {
-              addressCountMap[key]++
-  
-              if (!unusedAddressMap[key]) {
-                unusedAddressMap[key] = address
-              }
-            }
-          }
-  
-          addressIndex += numAddressPerCall
+    protected async _getUsedUnusedAddresses(addressType: AddressSearchType) {
+        const usedAddresses: Address[] = [];
+        const unusedAddressMap: { change: Address; external: Address } = { change: null, external: null };
+
+        if (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.EXTERNAL) {
+            const externalAddresses = await this.getAddresses(0, 1, false);
+            const externalAddress = externalAddresses[0];
+            usedAddresses.push(externalAddress);
+            unusedAddressMap.external = externalAddress;
         }
-  
-        // In case it already reached NUMBER_ADDRESS_LIMIT, get the random used change address
-        if (!unusedAddressMap['change']) {
-          const maxRange = changeAddresses.length - 1
-          unusedAddressMap['change'] = changeAddresses[Math.round(Math.random() * maxRange)]
+
+        if (addressType === AddressSearchType.EXTERNAL_OR_CHANGE || addressType === AddressSearchType.CHANGE) {
+            const changeAddresses = await this.getAddresses(0, 1, true);
+            const changeAddress = changeAddresses[0];
+            usedAddresses.push(changeAddress);
+            unusedAddressMap.change = changeAddress;
         }
-  
-        // In case it already reached NUMBER_ADDRESS_LIMIT, get the random used external address
-        if (!unusedAddressMap['external']) {
-          const maxRange = externalAddresses.length - 1
-          unusedAddressMap['external'] = externalAddresses[Math.round(Math.random() * maxRange)]
-        }
-  
+
         return {
-          usedAddresses,
-          unusedAddress: unusedAddressMap
-        }
+            usedAddresses,
+            unusedAddress: unusedAddressMap,
+        };
     }
 
     protected async withCachedUtxos(func: () => any) {

@@ -50,9 +50,9 @@ export default abstract class Wallet<T, S> implements WalletProvider {
 
     public abstract getAddress(): Promise<AddressType>;
 
-    public abstract getUnusedAddress(change?: boolean, numAddressPerCall?: number): Promise<Address>;
+    public abstract getUnusedAddress(change?: boolean): Promise<Address>;
 
-    public abstract getUsedAddresses(numAddressPerCall?: number): Promise<Address[]>;
+    public abstract getUsedAddresses(): Promise<Address[]>;
 
     public abstract getAddresses(start?: number, numAddresses?: number, change?: boolean): Promise<Address[]>;
 
