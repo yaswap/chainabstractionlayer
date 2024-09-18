@@ -1,5 +1,17 @@
 # @yaswap/solana
 
+## 3.2.1
+
+### Patch Changes
+
+- Lower number requests
+- Updated dependencies
+  - @yaswap/client@3.2.1
+  - @yaswap/errors@3.2.1
+  - @yaswap/logger@3.2.1
+  - @yaswap/types@3.2.1
+  - @yaswap/utils@3.2.1
+
 ## 3.2.0
 
 ### Minor Changes

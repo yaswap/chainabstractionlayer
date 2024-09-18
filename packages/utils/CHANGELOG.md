@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 3.2.1
+
+### Patch Changes
+
+- Lower number requests
+- Updated dependencies
+  - @yaswap/errors@3.2.1
+  - @yaswap/types@3.2.1
+
 ## 3.2.0
 
 ### Minor Changes
