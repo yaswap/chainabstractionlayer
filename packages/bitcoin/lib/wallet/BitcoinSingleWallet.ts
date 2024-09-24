@@ -19,9 +19,9 @@ import {
   PsbtInputTarget,
   Transaction as BtcTransaction,
   OutputTarget,
-  Input,
   UTXO,
   BitcoinSingleWalletOptions,
+  TransactionFixedInputRequest,
 } from '../types';
 import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
 import { IBitcoinWallet } from './IBitcoinWallet';
@@ -116,7 +116,21 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
       address: output.scriptPubKey.addresses[0],
       value: new BigNumber(output.value).times(1e8).toNumber(),
     }));
-    const { hex, fee } = await this.buildTransaction(transactions, newFeePerByte, fixedInputs);
+
+    const fixedUtxos: UTXO[] = [];
+    const needsWitness = [BtcAddressType.BECH32, BtcAddressType.P2SH_SEGWIT].includes(this._addressType);
+    if (fixedInputs.length > 0) {
+      for (const input of fixedInputs) {
+        const txHex = await this.chainProvider.getProvider().getRawTransactionByHash(input.txid);
+        const tx = decodeRawTransaction(txHex, this._network);
+        const value = new BigNumber(tx.vout[input.vout].value).times(1e8).toNumber();
+        const address = tx.vout[input.vout].scriptPubKey.addresses[0];
+        const utxo = { ...input, value, address, witnessUtxo: needsWitness ? {script: new Uint8Array(0), value}: null };
+        fixedUtxos.push(utxo);
+      }
+    }
+
+    const { hex, fee } = await this.buildTransaction(transactions, newFeePerByte, fixedUtxos);
     await this.chainProvider.sendRawTransaction(hex);
     return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
   }
@@ -264,6 +278,17 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     return result;
   }
 
+  public async getTotalFeeFixedInputs(opts: TransactionFixedInputRequest, max: boolean) {
+    const targets = this.sendOptionsToOutputs([opts]);
+    const { fee } = await this.getInputsForAmount(
+      targets.filter((t) => !t.value),
+      opts.fee as number,
+      opts.inputs,
+      max
+    );
+    return fee;
+  }
+
   protected async getTotalFee(opts: TransactionRequest, max: boolean) {
     const targets = this.sendOptionsToOutputs([opts]);
     if (!max) {
@@ -280,7 +305,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     }
   }
 
-  protected sendOptionsToOutputs(transactions: TransactionRequest[]): OutputTarget[] {
+  protected sendOptionsToOutputs(transactions: TransactionRequest[] | TransactionFixedInputRequest[]): OutputTarget[] {
     const targets: OutputTarget[] = [];
 
     transactions.forEach((tx) => {
@@ -306,27 +331,14 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   protected async getInputsForAmount(
     _targets: OutputTarget[],
     feePerByte?: number,
-    fixedInputs: Input[] = [],
+    fixedUtxos: UTXO[] = [],
     sweep = false
   ) {
     const feePerBytePromise = this.chainProvider.getProvider().getFeePerByte();
     let utxos: UTXO[] = [];
 
     const addresses: Address[] = await this.getUsedAddresses();
-    const fixedUtxos: UTXO[] = [];
-
     const needsWitness = [BtcAddressType.BECH32, BtcAddressType.P2SH_SEGWIT].includes(this._addressType);
-
-    if (fixedInputs.length > 0) {
-      for (const input of fixedInputs) {
-        const txHex = await this.chainProvider.getProvider().getRawTransactionByHash(input.txid);
-        const tx = decodeRawTransaction(txHex, this._network);
-        const value = new BigNumber(tx.vout[input.vout].value).times(1e8).toNumber();
-        const address = tx.vout[input.vout].scriptPubKey.addresses[0];
-        const utxo = { ...input, value, address, witnessUtxo: needsWitness ? {script: new Uint8Array(0), value}: null };
-        fixedUtxos.push(utxo);
-      }
-    }
 
     if (!sweep || fixedUtxos.length === 0) {
       const _utxos: UTXO[] = await this.chainProvider.getProvider().getUnspentTransactions(addresses);
@@ -403,7 +415,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
   }
 
-  protected async buildTransaction(targets: OutputTarget[], feePerByte?: number, fixedInputs?: Input[]) {
+  protected async buildTransaction(targets: OutputTarget[], feePerByte?: number, fixedInputs?: UTXO[]) {
     const network = this._network;
 
     const unusedAddress = await this.getWalletAddress();
@@ -485,6 +497,6 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     const _outputs = [{ address: externalChangeAddress, value: outputs[0].value }];
 
     // TODO: fix the inherited legacy code
-    return this.buildTransaction(_outputs, feePerByte, inputs as unknown as Input[]);
+    return this.buildTransaction(_outputs, feePerByte, inputs);
   }
 }

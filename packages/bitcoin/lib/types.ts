@@ -1,4 +1,4 @@
-import { Network } from '@yaswap/types';
+import { Network, TransactionRequest } from '@yaswap/types';
 import { ECPairInterface, Network as BitcoinJsLibNetwork } from 'bitcoinjs-lib';
 
 export * as BitcoinEsploraTypes from './chain/esplora/types';
@@ -108,4 +108,8 @@ export interface P2SHInput {
     index: number;
     vout: any;
     outputScript: Buffer;
+}
+
+export interface TransactionFixedInputRequest extends TransactionRequest {
+    inputs?: UTXO[];
 }
