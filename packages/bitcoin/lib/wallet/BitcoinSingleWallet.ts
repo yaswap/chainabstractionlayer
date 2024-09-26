@@ -1,31 +1,24 @@
-import { Chain, Wallet } from '@yaswap/client';
+import { Chain,Wallet } from '@yaswap/client';
 import { InsufficientBalanceError } from '@yaswap/errors';
 import {
-  Address,
-  AddressType,
-  Asset,
-  BigNumber,
-  Network,
-  Transaction,
-  TransactionRequest,
-  CreateTokenTransaction,
+Address,
+AddressType,
+Asset,
+BigNumber,CreateTokenTransaction,Network,
+Transaction,
+TransactionRequest
 } from '@yaswap/types';
-import { ECPair, ECPairInterface, Psbt, script, payments, Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
+import { ECPair,ECPairInterface,payments,Psbt,script,Transaction as BitcoinJsTransaction } from 'bitcoinjs-lib';
 import { signAsync as signBitcoinMessage } from 'bitcoinjs-message';
+import memoize from 'memoizee';
 import { BitcoinBaseChainProvider } from '../chain/BitcoinBaseChainProvider';
 import {
-  AddressType as BtcAddressType,
-  BitcoinNetwork,
-  PsbtInputTarget,
-  Transaction as BtcTransaction,
-  OutputTarget,
-  UTXO,
-  BitcoinSingleWalletOptions,
-  TransactionFixedInputRequest,
+AddressType as BtcAddressType,
+BitcoinNetwork,BitcoinSingleWalletOptions,OutputTarget,PsbtInputTarget,
+Transaction as BtcTransaction,TransactionFixedInputRequest,UTXO
 } from '../types';
-import { CoinSelectTarget, decodeRawTransaction, normalizeTransactionObject, selectCoins } from '../utils';
+import { CoinSelectTarget,decodeRawTransaction,normalizeTransactionObject,selectCoins } from '../utils';
 import { IBitcoinWallet } from './IBitcoinWallet';
-import memoize from 'memoizee';
 
 export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWallet<BitcoinBaseChainProvider> {
   private _addressType: BtcAddressType;
@@ -85,10 +78,15 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   }
 
   public async sendTransactionFixedInputs(options: TransactionFixedInputRequest) {
+    console.log("TACA ===> sendTransactionFixedInputs, options = ", options);
     const targets = this.sendOptionsToOutputs([options]);
+    console.log("TACA ===> sendTransactionFixedInputs, targets = ", targets);
     const { hex, fee } = await this.buildTransaction(targets, options.fee as number, options.inputs);
-    await this.chainProvider.sendRawTransaction(hex);
-    return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
+    console.log("TACA ===> sendTransactionFixedInputs, hex = ", hex, ', fee = ', fee);
+    // await this.chainProvider.sendRawTransaction(hex);
+    const txInfo = normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
+    console.log("TACA ===> sendTransactionFixedInputs, txInfo = ", txInfo);
+    return txInfo;
   }
 
   public async sendTransaction(options: TransactionRequest) {
@@ -286,7 +284,9 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   }
 
   public async getTotalFeeFixedInputs(opts: TransactionFixedInputRequest, max: boolean) {
+    console.log("TACA ===> getTotalFeeFixedInputs, opts = ", opts, ', max = ', max);
     const targets = this.sendOptionsToOutputs([opts]);
+    console.log("TACA ===> getTotalFeeFixedInputs, targets = ", targets);
     const { fee } = await this.getInputsForAmount(
       targets.filter((t) => !t.value),
       opts.fee as number,
@@ -394,7 +394,34 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
       targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, address: target.address }));
     }
 
-    const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
+    console.log(
+      "TACA ===> getInputsForAmount, call selectCoins, utxos = ",
+      utxos,
+      ", targets = ",
+      targets,
+      ", feePerByte = ",
+      feePerByte,
+      ", fixedUtxos = ",
+      fixedUtxos
+    );
+
+    const { inputs, outputs, change, fee } = selectCoins(
+      utxos,
+      targets,
+      Math.ceil(feePerByte),
+      fixedUtxos
+    );
+
+    console.log(
+      "TACA ===> getInputsForAmount, output selectCoins, inputs = ",
+      inputs,
+      ", outputs = ",
+      outputs,
+      ", change = ",
+      change,
+      ", fee = ",
+      fee
+    );
 
     if (inputs && outputs) {
       return {
