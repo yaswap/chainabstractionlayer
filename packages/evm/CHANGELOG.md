@@ -1,5 +1,20 @@
 # @yaswap/evm
 
+## 3.3.0
+
+### Minor Changes
+
+- Support API for bitcoin utxo consolidation
+
+### Patch Changes
+
+- Updated dependencies
+  - @yaswap/client@3.3.0
+  - @yaswap/errors@3.3.0
+  - @yaswap/logger@3.3.0
+  - @yaswap/types@3.3.0
+  - @yaswap/utils@3.3.0
+
 ## 3.2.1
 
 ### Patch Changes

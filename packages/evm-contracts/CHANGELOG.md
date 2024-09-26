@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 3.3.0
+
+### Minor Changes
+
+- Support API for bitcoin utxo consolidation
+
 ## 3.2.1
 
 ### Patch Changes
