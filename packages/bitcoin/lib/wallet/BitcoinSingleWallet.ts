@@ -84,6 +84,13 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     return null;
   }
 
+  public async sendTransactionFixedInputs(options: TransactionFixedInputRequest) {
+    const targets = this.sendOptionsToOutputs([options]);
+    const { hex, fee } = await this.buildTransaction(targets, options.fee as number, options.inputs);
+    await this.chainProvider.sendRawTransaction(hex);
+    return normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
+  }
+
   public async sendTransaction(options: TransactionRequest) {
     return this._sendTransaction(this.sendOptionsToOutputs([options]), options.fee as number);
   }
