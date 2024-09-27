@@ -359,7 +359,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
             targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, address: target.address }));
         }
 
-        const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte), fixedUtxos);
+        const { inputs, outputs, change, fee } = selectCoins(utxos, targets, Math.ceil(feePerByte));
 
         if (inputs && outputs) {
             return {

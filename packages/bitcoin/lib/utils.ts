@@ -4,7 +4,6 @@ import * as varuint from 'bip174/src/lib/converter/varint';
 import * as bitcoin from 'bitcoinjs-lib';
 import * as classify from 'bitcoinjs-lib/src/classify';
 import coinselect from '@yaswap/bitcoinselect';
-import coinselectAccumulative from '@yaswap/bitcoinselect/accumulative';
 
 import { BitcoinNetwork, Input, Output, Transaction as BitcoinTransaction, UTXO } from './types';
 
@@ -43,30 +42,19 @@ type CoinSelectResponse = {
 
 type CoinSelectFunction = (utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number) => CoinSelectResponse;
 
-function selectCoins(utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number, fixedInputs: UTXO[] = []) {
-    let selectUtxos = utxos;
-
-    // Default coinselect won't accumulate some inputs
-    // TODO: does coinselect need to be modified to ABSOLUTELY not skip an input?
-    const coinselectStrat: CoinSelectFunction = fixedInputs.length ? coinselectAccumulative : coinselect;
-    if (fixedInputs.length) {
-        selectUtxos = [
-            // Order fixed inputs to the start of the list so they are used
-            ...fixedInputs,
-            ...utxos.filter((utxo) => !fixedInputs.find((input) => input.vout === utxo.vout && input.txid === utxo.txid)),
-        ];
-    }
+function selectCoins(utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number) {
+    const coinselectStrat: CoinSelectFunction = coinselect;
 
     console.log(
-        "TACA ===> selectCoins, call coinselectStrat, selectUtxos = ",
-        selectUtxos,
+        "TACA ===> selectCoins, call coinselectStrat, utxos = ",
+        utxos,
         ", targets = ",
         targets,
         ", feePerByte = ",
         feePerByte
       );
 
-    const { inputs, outputs, fee } = coinselectStrat(selectUtxos, targets, Math.ceil(feePerByte));
+    const { inputs, outputs, fee } = coinselectStrat(utxos, targets, Math.ceil(feePerByte));
 
     console.log(
         "TACA ===> selectCoins, output coinselectStrat, inputs = ",

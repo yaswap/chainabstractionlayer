@@ -416,7 +416,6 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
       utxos,
       targets,
       Math.ceil(feePerByte),
-      fixedUtxos
     );
 
     console.log(
