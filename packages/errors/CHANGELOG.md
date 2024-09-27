@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 3.3.2
+
+### Patch Changes
+
+- Modify selectCoins to not use fixedInputs anymore
+
 ## 3.3.1
 
 ### Patch Changes

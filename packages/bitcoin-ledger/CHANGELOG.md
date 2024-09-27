@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 3.3.2
+
+### Patch Changes
+
+- Modify selectCoins to not use fixedInputs anymore
+- Updated dependencies
+  - @yaswap/bitcoin@3.3.2
+  - @yaswap/client@3.3.2
+  - @yaswap/errors@3.3.2
+  - @yaswap/hw-ledger@3.3.2
+  - @yaswap/types@3.3.2
+  - @yaswap/utils@3.3.2
+
 ## 3.3.1
 
 ### Patch Changes

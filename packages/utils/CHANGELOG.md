@@ -1,5 +1,14 @@
 # @yaswap/utils
 
+## 3.3.2
+
+### Patch Changes
+
+- Modify selectCoins to not use fixedInputs anymore
+- Updated dependencies
+  - @yaswap/errors@3.3.2
+  - @yaswap/types@3.3.2
+
 ## 3.3.1
 
 ### Patch Changes
