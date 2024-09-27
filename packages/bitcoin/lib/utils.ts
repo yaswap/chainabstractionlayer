@@ -3,8 +3,8 @@ import { AddressType, BigNumber, Transaction, TxStatus } from '@yaswap/types';
 import * as varuint from 'bip174/src/lib/converter/varint';
 import * as bitcoin from 'bitcoinjs-lib';
 import * as classify from 'bitcoinjs-lib/src/classify';
-import coinselect from 'bitcoinselect';
-import coinselectAccumulative from 'bitcoinselect/accumulative';
+import coinselect from '@yaswap/bitcoinselect';
+import coinselectAccumulative from '@yaswap/bitcoinselect/accumulative';
 
 import { BitcoinNetwork, Input, Output, Transaction as BitcoinTransaction, UTXO } from './types';
 

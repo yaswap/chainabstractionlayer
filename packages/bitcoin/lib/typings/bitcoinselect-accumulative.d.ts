@@ -1,1 +1,1 @@
-declare module 'bitcoinselect/accumulative';
+declare module '@yaswap/bitcoinselect/accumulative';

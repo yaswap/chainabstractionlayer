@@ -20,6 +20,7 @@
         "@types/bitcoinjs-lib": "^5.0.0",
         "@types/lodash": "^4.14.178",
         "@types/memoizee": "^0.4.7",
+        "@yaswap/bitcoinselect": "1.0.0",
         "@yaswap/client": "workspace:*",
         "@yaswap/errors": "workspace:*",
         "@yaswap/types": "workspace:*",
@@ -29,7 +30,6 @@
         "bip39": "^3.0.4",
         "bitcoinjs-lib": "5.2.0",
         "bitcoinjs-message": "2.2.0",
-        "bitcoinselect": "1.0.0",
         "coinselect": "^3.1.12",
         "lodash": "4.17.21",
         "memoizee": "^0.4.15"

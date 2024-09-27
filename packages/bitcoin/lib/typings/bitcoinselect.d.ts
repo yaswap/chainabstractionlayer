@@ -1,1 +1,1 @@
-declare module 'bitcoinselect';
+declare module '@yaswap/bitcoinselect';
