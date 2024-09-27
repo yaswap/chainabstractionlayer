@@ -83,7 +83,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     console.log("TACA ===> sendTransactionFixedInputs, targets = ", targets);
     const { hex, fee } = await this.buildTransaction(targets, options.fee as number, options.inputs);
     console.log("TACA ===> sendTransactionFixedInputs, hex = ", hex, ', fee = ', fee);
-    // await this.chainProvider.sendRawTransaction(hex);
+    await this.chainProvider.sendRawTransaction(hex);
     const txInfo = normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
     console.log("TACA ===> sendTransactionFixedInputs, txInfo = ", txInfo);
     return txInfo;
