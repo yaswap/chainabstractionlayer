@@ -284,7 +284,7 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
         sweep = false
     ) {
         const feePerBytePromise = this.chainProvider.getProvider().getFeePerByte();
-        let utxos: UTXO[] = [];
+        const utxos: UTXO[] = [];
 
         const addresses: Address[] = await this.getUsedAddresses();
         const fixedUtxos: UTXO[] = [];
@@ -316,7 +316,14 @@ export abstract class BitcoinBaseWalletProvider<T extends BitcoinBaseChainProvid
                 })
             );
         } else {
-            utxos = fixedUtxos;
+            utxos.push(
+                ...fixedUtxos.map((utxo) => {
+                  return {
+                    ...utxo,
+                    witnessUtxo: needsWitness ? {script: new Uint8Array(0), value: utxo.value}: null,
+                  };
+                })
+            );
         }
 
         const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0);

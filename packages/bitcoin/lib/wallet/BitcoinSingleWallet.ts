@@ -342,7 +342,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     sweep = false
   ) {
     const feePerBytePromise = this.chainProvider.getProvider().getFeePerByte();
-    let utxos: UTXO[] = [];
+    const utxos: UTXO[] = [];
 
     const addresses: Address[] = await this.getUsedAddresses();
     const needsWitness = [BtcAddressType.BECH32, BtcAddressType.P2SH_SEGWIT].includes(this._addressType);
@@ -358,7 +358,14 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
         })
       );
     } else {
-      utxos = fixedUtxos;
+      utxos.push(
+        ...fixedUtxos.map((utxo) => {
+          return {
+            ...utxo,
+            witnessUtxo: needsWitness ? {script: new Uint8Array(0), value: utxo.value}: null,
+          };
+        })
+      );
     }
 
     const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0);
