@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 3.3.3
+
+### Patch Changes
+
+- Send transaction with fixed inputss
+
 ## 3.3.2
 
 ### Patch Changes

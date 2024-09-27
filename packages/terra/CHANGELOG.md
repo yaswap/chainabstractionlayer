@@ -1,5 +1,17 @@
 # @yaswap/terra
 
+## 3.3.3
+
+### Patch Changes
+
+- Send transaction with fixed inputss
+- Updated dependencies
+  - @yaswap/client@3.3.3
+  - @yaswap/errors@3.3.3
+  - @yaswap/logger@3.3.3
+  - @yaswap/types@3.3.3
+  - @yaswap/utils@3.3.3
+
 ## 3.3.2
 
 ### Patch Changes
