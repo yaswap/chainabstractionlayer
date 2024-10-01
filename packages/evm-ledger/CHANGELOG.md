@@ -1,5 +1,18 @@
 # @yaswap/evm-ledger
 
+## 3.3.5
+
+### Patch Changes
+
+- Correct the logic to calculate correct transaction size for sweeping case
+- Updated dependencies
+  - @yaswap/client@3.3.5
+  - @yaswap/errors@3.3.5
+  - @yaswap/evm@3.3.5
+  - @yaswap/hw-ledger@3.3.5
+  - @yaswap/types@3.3.5
+  - @yaswap/utils@3.3.5
+
 ## 3.3.4
 
 ### Patch Changes

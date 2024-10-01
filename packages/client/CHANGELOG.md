@@ -1,5 +1,16 @@
 # @yaswap/client
 
+## 3.3.5
+
+### Patch Changes
+
+- Correct the logic to calculate correct transaction size for sweeping case
+- Updated dependencies
+  - @yaswap/errors@3.3.5
+  - @yaswap/logger@3.3.5
+  - @yaswap/types@3.3.5
+  - @yaswap/utils@3.3.5
+
 ## 3.3.4
 
 ### Patch Changes
