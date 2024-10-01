@@ -19,6 +19,7 @@ Transaction as BtcTransaction,TransactionFixedInputRequest,UTXO
 } from '../types';
 import { CoinSelectTarget,decodeRawTransaction,normalizeTransactionObject,selectCoins } from '../utils';
 import { IBitcoinWallet } from './IBitcoinWallet';
+import BitcoinUtils from '@yaswap/bitcoinselect/utils';
 
 export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWallet<BitcoinBaseChainProvider> {
   private _addressType: BtcAddressType;
@@ -380,19 +381,28 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
     if (sweep) {
       const outputBalance = _targets.reduce((a, b) => a + (b['value'] || 0), 0);
 
-      // TODO: For segwit address, it should be 36 (TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT/TX_OUTPUT_PUBKEYHASH + LOCKTIME)
+      const transactionEmptySize = 10; // VERSION + MAKER + FLAG LOCKTIME (4+1+1+4)
+
+      // The sweep output size is normally 31-34
+      // For segwit address, it is 31 (TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT)
+      // For legacy address, it is 34 (TX_OUTPUT_BASE + TX_OUTPUT_P2PKH)
       // At the moment, assume the worst case which output address is legacy address
-      const sweepOutputSize = 39
-      const paymentOutputSize = _targets.filter((t) => t.value && t.address).length * 39;
-      const scriptOutputSize = _targets
-        .filter((t) => !t.value && t.script)
-        .reduce((size, t) => size + 39 + t.script.byteLength, 0);
+      const sweepOutputSize = 34
+      let paymentOutputSize = 0
+      if (outputBalance) {
+        paymentOutputSize = _targets.reduce(function (a, x) { return a + BitcoinUtils.outputBytes(x) }, 0)
+        console.log("TACA ===> getInputsForAmount, paymentOutputSize = ", paymentOutputSize)
+      }
 
-      const outputSize = sweepOutputSize + paymentOutputSize + scriptOutputSize;
-      const oneInputSize = needsWitness? 73 : 153 // VERSION + 1 + TX_INPUT_BASE + TX_INPUT_SEGWIT/TX_INPUT_PUBKEYHASH
-      const inputSize = utxos.length * oneInputSize;
+      const outputSize = sweepOutputSize + paymentOutputSize;
 
-      const sweepFee = feePerByte * (inputSize + outputSize);
+      const inputSize = utxos.reduce(function (a, x) { return a + BitcoinUtils.inputBytes(x) }, 0)
+      console.log("TACA ===> getInputsForAmount, inputSize = ", inputSize)
+
+      const totalTransactionSize = transactionEmptySize + inputSize + outputSize;
+      console.log("TACA ===> getInputsForAmount, totalTransactionSize = ", totalTransactionSize)
+
+      const sweepFee = feePerByte * (totalTransactionSize);
       const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
 
       targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, address: target.address }));
