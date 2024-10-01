@@ -19,7 +19,7 @@ Transaction as BtcTransaction,TransactionFixedInputRequest,UTXO
 } from '../types';
 import { CoinSelectTarget,decodeRawTransaction,normalizeTransactionObject,selectCoins } from '../utils';
 import { IBitcoinWallet } from './IBitcoinWallet';
-import BitcoinUtils from '@yaswap/bitcoinselect/utils';
+import BitcoinSelectUtils from '@yaswap/bitcoinselect/utils';
 
 export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWallet<BitcoinBaseChainProvider> {
   private _addressType: BtcAddressType;
@@ -383,20 +383,21 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
 
       const transactionEmptySize = 10; // VERSION + MAKER + FLAG LOCKTIME (4+1+1+4)
 
-      // The sweep output size is normally 31-34
+      // The sweep output size is normally 31-43
       // For segwit address, it is 31 (TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT)
       // For legacy address, it is 34 (TX_OUTPUT_BASE + TX_OUTPUT_P2PKH)
-      // At the moment, assume the worst case which output address is legacy address
-      const sweepOutputSize = 34
+      // For segwit scripthash address, it is 43 (TX_OUTPUT_BASE + TX_OUTPUT_SEGWIT_SCRIPTHASH)
+      // At the moment, assume the worst case which output address is segwit scripthash address
+      const sweepOutputSize = 43
       let paymentOutputSize = 0
       if (outputBalance) {
-        paymentOutputSize = _targets.reduce(function (a, x) { return a + BitcoinUtils.outputBytes(x) }, 0)
+        paymentOutputSize = _targets.reduce(function (a, x) { return a + BitcoinSelectUtils.outputBytes(x) }, 0)
         console.log("TACA ===> getInputsForAmount, paymentOutputSize = ", paymentOutputSize)
       }
 
       const outputSize = sweepOutputSize + paymentOutputSize;
 
-      const inputSize = utxos.reduce(function (a, x) { return a + BitcoinUtils.inputBytes(x) }, 0)
+      const inputSize = utxos.reduce(function (a, x) { return a + BitcoinSelectUtils.inputBytes(x) }, 0)
       console.log("TACA ===> getInputsForAmount, inputSize = ", inputSize)
 
       const totalTransactionSize = transactionEmptySize + inputSize + outputSize;
