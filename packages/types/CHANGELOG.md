@@ -1,5 +1,11 @@
 # @yaswap/types
 
+## 3.3.4
+
+### Patch Changes
+
+- Correct the logic to calculate correct transaction size for sweeping case
+
 ## 3.3.3
 
 ### Patch Changes

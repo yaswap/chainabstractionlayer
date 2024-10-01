@@ -1,5 +1,16 @@
 # @yaswap/litecoin
 
+## 3.3.4
+
+### Patch Changes
+
+- Correct the logic to calculate correct transaction size for sweeping case
+- Updated dependencies
+  - @yaswap/client@3.3.4
+  - @yaswap/errors@3.3.4
+  - @yaswap/types@3.3.4
+  - @yaswap/utils@3.3.4
+
 ## 3.3.3
 
 ### Patch Changes
