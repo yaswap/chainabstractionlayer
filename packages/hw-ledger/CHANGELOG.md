@@ -1,5 +1,16 @@
 # @yaswap/hw-ledger
 
+## 3.3.6
+
+### Patch Changes
+
+- Pump to version v3.3.6
+- Updated dependencies
+  - @yaswap/errors@3.3.6
+  - @yaswap/logger@3.3.6
+  - @yaswap/types@3.3.6
+  - @yaswap/utils@3.3.6
+
 ## 3.3.5
 
 ### Patch Changes

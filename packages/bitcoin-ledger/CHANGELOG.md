@@ -1,5 +1,18 @@
 # @yaswap/bitcoin-ledger
 
+## 3.3.6
+
+### Patch Changes
+
+- Pump to version v3.3.6
+- Updated dependencies
+  - @yaswap/bitcoin@3.3.6
+  - @yaswap/client@3.3.6
+  - @yaswap/errors@3.3.6
+  - @yaswap/hw-ledger@3.3.6
+  - @yaswap/types@3.3.6
+  - @yaswap/utils@3.3.6
+
 ## 3.3.5
 
 ### Patch Changes

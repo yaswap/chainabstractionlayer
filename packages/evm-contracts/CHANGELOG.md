@@ -1,5 +1,11 @@
 # @yaswap/evm-contracts
 
+## 3.3.6
+
+### Patch Changes
+
+- Pump to version v3.3.6
+
 ## 3.3.5
 
 ### Patch Changes
