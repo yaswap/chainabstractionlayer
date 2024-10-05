@@ -44,26 +44,7 @@ type CoinSelectFunction = (utxos: UTXO[], targets: CoinSelectTarget[], feePerByt
 
 function selectCoins(utxos: UTXO[], targets: CoinSelectTarget[], feePerByte: number) {
     const coinselectStrat: CoinSelectFunction = coinselect;
-
-    console.log(
-        "TACA ===> selectCoins, call coinselectStrat, utxos = ",
-        utxos,
-        ", targets = ",
-        targets,
-        ", feePerByte = ",
-        feePerByte
-      );
-
     const { inputs, outputs, fee } = coinselectStrat(utxos, targets, Math.ceil(feePerByte));
-
-    console.log(
-        "TACA ===> selectCoins, output coinselectStrat, inputs = ",
-        inputs,
-        ", outputs = ",
-        outputs,
-        ", fee = ",
-        fee
-      );
 
     let change;
     if (inputs && outputs) {

@@ -79,14 +79,10 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   }
 
   public async sendTransactionFixedInputs(options: TransactionFixedInputRequest) {
-    console.log("TACA ===> sendTransactionFixedInputs, options = ", options);
     const targets = this.sendOptionsToOutputs([options]);
-    console.log("TACA ===> sendTransactionFixedInputs, targets = ", targets);
     const { hex, fee } = await this.buildTransaction(targets, options.fee as number, options.inputs);
-    console.log("TACA ===> sendTransactionFixedInputs, hex = ", hex, ', fee = ', fee);
     await this.chainProvider.sendRawTransaction(hex);
     const txInfo = normalizeTransactionObject(decodeRawTransaction(hex, this._network), fee);
-    console.log("TACA ===> sendTransactionFixedInputs, txInfo = ", txInfo);
     return txInfo;
   }
 
@@ -285,9 +281,7 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
   }
 
   public async getTotalFeeFixedInputs(opts: TransactionFixedInputRequest, max: boolean) {
-    console.log("TACA ===> getTotalFeeFixedInputs, opts = ", opts, ', max = ', max);
     const targets = this.sendOptionsToOutputs([opts]);
-    console.log("TACA ===> getTotalFeeFixedInputs, targets = ", targets);
     const { fee } = await this.getInputsForAmount(
       targets.filter((t) => !t.value),
       opts.fee as number,
@@ -392,16 +386,13 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
       let paymentOutputSize = 0
       if (outputBalance) {
         paymentOutputSize = _targets.reduce(function (a, x) { return a + BitcoinSelectUtils.outputBytes(x) }, 0)
-        console.log("TACA ===> getInputsForAmount, paymentOutputSize = ", paymentOutputSize)
       }
 
       const outputSize = sweepOutputSize + paymentOutputSize;
 
       const inputSize = utxos.reduce(function (a, x) { return a + BitcoinSelectUtils.inputBytes(x) }, 0)
-      console.log("TACA ===> getInputsForAmount, inputSize = ", inputSize)
 
       const totalTransactionSize = transactionEmptySize + inputSize + outputSize;
-      console.log("TACA ===> getInputsForAmount, totalTransactionSize = ", totalTransactionSize)
 
       const sweepFee = feePerByte * (totalTransactionSize);
       const amountToSend = new BigNumber(utxoBalance).minus(sweepFee);
@@ -412,32 +403,10 @@ export class BitcoinSingleWallet extends Wallet<any, any> implements IBitcoinWal
       targets = _targets.map((target) => ({ id: 'main', value: target.value, script: target.script, address: target.address }));
     }
 
-    console.log(
-      "TACA ===> getInputsForAmount, call selectCoins, utxos = ",
-      utxos,
-      ", targets = ",
-      targets,
-      ", feePerByte = ",
-      feePerByte,
-      ", fixedUtxos = ",
-      fixedUtxos
-    );
-
     const { inputs, outputs, change, fee } = selectCoins(
       utxos,
       targets,
       Math.ceil(feePerByte),
-    );
-
-    console.log(
-      "TACA ===> getInputsForAmount, output selectCoins, inputs = ",
-      inputs,
-      ", outputs = ",
-      outputs,
-      ", change = ",
-      change,
-      ", fee = ",
-      fee
     );
 
     if (inputs && outputs) {
