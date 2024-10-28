@@ -1,5 +1,16 @@
 # @yaswap/dogecoin
 
+## 3.3.7
+
+### Patch Changes
+
+- Add boolean param to convert token/nft name
+- Updated dependencies
+  - @yaswap/client@3.3.7
+  - @yaswap/errors@3.3.7
+  - @yaswap/types@3.3.7
+  - @yaswap/utils@3.3.7
+
 ## 3.3.6
 
 ### Patch Changes

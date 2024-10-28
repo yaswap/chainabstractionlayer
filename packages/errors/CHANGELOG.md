@@ -1,5 +1,11 @@
 # @yaswap/errors
 
+## 3.3.7
+
+### Patch Changes
+
+- Add boolean param to convert token/nft name
+
 ## 3.3.6
 
 ### Patch Changes
