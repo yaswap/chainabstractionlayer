@@ -11,13 +11,13 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
         super(walletProvider);
     }
 
-    async fetch(): Promise<NFTAsset[]> {
+    async fetch(isConvertNftName: boolean = true): Promise<NFTAsset[]> {
         const _addresses: Address[] = await this.walletProvider.getUsedAddresses();
         const addresses = _addresses.map((a) => a.toString());
         const data: YacoinEsploraTypes.BatchTokenUTXOInfo = await this.walletProvider.getChainProvider().getProvider().getAllNFTUnspentTransactions(addresses)
         const nftAssets: NFTAsset[] = [];
 
-        let results = data.map(async (tokenInfo) => {
+        const results = data.map(async (tokenInfo) => {
             if (tokenInfo.token_info) {
                 const { token_type, amount, units, reissuable, block_hash, ipfs_hash } = tokenInfo.token_info;
 
@@ -27,7 +27,7 @@ export class YacoinNftProvider extends Nft<YacoinBaseChainProvider, YacoinBaseWa
                 } else {
                     // Parse NFT name
                     // Workaround for displaying YA-NFT created by sub YA-Token
-                    const fullNFTName = tokenInfo.token_name.split('/').join('|')
+                    const fullNFTName = isConvertNftName ? tokenInfo.token_name.split('/').join('|') : tokenInfo.token_name;
                     const nftCollectionName = fullNFTName.split('#')[0];
                     const nftName = fullNFTName.split('#')[1];
 

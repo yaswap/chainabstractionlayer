@@ -13,5 +13,5 @@ export interface ChainProvider {
     getTransactionByHash(txHash: string): Promise<Transaction>;
 
     getBalance(addresses: AddressType[], assets: Asset[]): Promise<BigNumber[]>;
-    getTokenBalance(addresses: AddressType[]): Promise<TokenBalance[] | null>; // for Yacoin only
+    getTokenBalance(addresses: AddressType[], isConvertTokenName?: boolean): Promise<TokenBalance[] | null>; // for Yacoin only
 }

@@ -125,7 +125,7 @@ export default abstract class Chain<T, N extends Network = Network> implements C
      * @virtual
      * Get the token balance for list of accounts (for Yacoin only)
      */
-    public abstract getTokenBalance(addresses: AddressType[]): Promise<TokenBalance[] | null>;
+    public abstract getTokenBalance(addresses: AddressType[], isConvertTokenName?: boolean): Promise<TokenBalance[] | null>;
 
     /**
      * @virtual

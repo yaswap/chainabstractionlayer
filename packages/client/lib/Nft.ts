@@ -52,5 +52,5 @@ export default abstract class Nft<T, S> {
         throw new UnsupportedMethodError('Method not supported');
     }
 
-    public abstract fetch(): Promise<NFTAsset[]>;
+    public abstract fetch(isConvertNftName?: boolean): Promise<NFTAsset[]>;
 }
